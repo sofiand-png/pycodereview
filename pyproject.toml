@@ -1,0 +1,46 @@
+[build-system]
+requires = ["setuptools>=69", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pycodereview"
+version = "0.1.0"
+description = "Human-friendly static checks for Python: correctness, security, robustness — grouped by impact."
+readme = { file = "README.md", content-type = "text/markdown" }
+requires-python = ">=3.9"
+license = { file = "LICENSE" }
+authors = [{ name = "Sofian Daghsen", email = "sofianjava@gmail.com" }]
+keywords = ["static-analysis", "code-review", "lint", "security", "ast", "python"]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Developers",
+  "Environment :: Console",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Software Development :: Quality Assurance",
+  "Topic :: Software Development :: Testing",
+]
+
+# No runtime deps needed right now; add here if that changes.
+# dependencies = []
+
+[project.urls]
+Homepage = "https://github.com/sofiand-png/pycodereview"
+Issues = "https://github.com/sofiand-png/pycodereview/issues"
+Changelog = "https://github.com/sofiand-png/pycodereview/releases"
+Documentation = "https://github.com/sofiand-png/pycodereview#readme"
+
+[project.scripts]
+pycodereview = "pycodereview.code_review:main"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]
