@@ -146,7 +146,7 @@ Correctness;MEDIUM;257,332,380,396,401,426;"Asserts can be stripped with -O; cri
 ```yaml
 # .pre-commit-config.yaml
 - repo: https://github.com/<you>/pycodereview
-  rev: v0.1.0
+  rev: v0.1.1
   hooks:
     - id: pycodereview
       args: [--min-priority, MEDIUM, --merge-issues]

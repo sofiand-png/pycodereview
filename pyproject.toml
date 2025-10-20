@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pycodereview"
-version = "0.1.0"
+version = "0.1.1"
 description = "Human-friendly static checks for Python: correctness, security, robustness — grouped by impact."
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
@@ -36,11 +36,14 @@ Issues = "https://github.com/sofiand-png/pycodereview/issues"
 Changelog = "https://github.com/sofiand-png/pycodereview/releases"
 Documentation = "https://github.com/sofiand-png/pycodereview#readme"
 
-[project.scripts]
-pycodereview = "pycodereview.code_review:main"
-
 [tool.setuptools]
-package-dir = { "" = "src" }
+package-dir = {"" = "src"}
 
 [tool.setuptools.packages.find]
 where = ["src"]
+include = ["pycodereview*"]
+
+[project.scripts]
+pycodereview = "pycodereview.code_review:main"
+
+
