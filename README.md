@@ -4,14 +4,13 @@ Static checks for common Python code risks and hygiene issues.
 Runs on a single file and outputs a concise CSV report you can diff, gate in CI, or share with a teammate.
 
 [![PyPI - Version](https://img.shields.io/pypi/v/pycodereview)](https://pypi.org/project/pycodereview/)
-[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
-[![Downloads](https://static.pepy.tech/badge/pycodereview)](https://pepy.tech/project/pycodereview)
-[![Downloads - Monthly](https://static.pepy.tech/badge/pycodereview/month)](https://pepy.tech/project/pycodereview)
-[![GitHub Stars](https://img.shields.io/github/stars/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/stargazers)
-[![GitHub Forks](https://img.shields.io/github/forks/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/network/members)
-[![GitHub Issues](https://img.shields.io/github/issues/sofiand-png/pycodereview)](https://github.com/sofiand-png/pycodereview/issues)
-[![GitHub PRs](https://img.shields.io/github/issues-pr/sofiand-png/pycodereview)](https://github.com/sofiand-png/pycodereview/pulls)
+[![Python versions](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Downloads](https://static.pepy.tech/personalized-badge/pycodereview?period=total&units=international_system&left_color=black&right_color=green&left_text=downloads)](https://pepy.tech/projects/pycodereview)
+[![Downloads / month](https://static.pepy.tech/personalized-badge/pycodereview?period=month&units=international_system&left_color=black&right_color=green&left_text=downloads%2Fmonth)](https://pepy.tech/projects/pycodereview)
+[![GitHub stars](https://img.shields.io/github/stars/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/stargazers)
+[![GitHub forks](https://img.shields.io/github/forks/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/network/members)
+[![GitHub issues](https://img.shields.io/github/issues/sofiand-png/pycodereview)](https://github.com/sofiand-png/pycodereview/issues)
 
 
 ## Why pycodereview?
