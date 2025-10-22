@@ -10,25 +10,21 @@
 [![Codecov](https://codecov.io/gh/sofiand-png/pycodereview/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sofiand-png/pycodereview)
 [![Security scan](https://github.com/sofiand-png/pycodereview/actions/workflows/security-scan.yml/badge.svg)](https://github.com/sofiand-png/pycodereview/actions/workflows/security-scan.yml)
 
-Static checks for common Python code risks and hygiene issues.  
-Runs on a single file and outputs a concise CSV report you can diff, gate in CI, or share with a teammate.
-
----
+Static checks for common Python code risks and hygiene issues.
+Runs on a single file and outputs concise reports in **CSV** or **JSON** format.
 
 ## Why pycodereview?
 
-Most static analysis tools (like **pylint**, **flake8**, or **ruff**) focus on **style rules and PEP8/typing**.  
-**pycodereview** is different: it’s designed for **human code review augmentation**, not just linting.
+Most static analysis tools (like **pylint**, **flake8**, or **ruff**) focus on **style compliance** and **lint rules**.
+**pycodereview** is different. It's built to support **human code review** with clear, impact-based findings.
 
 It aims to:
 
-- Group findings by impact rather than rule ID.  
-  You get concise categories (Correctness, Security, Robustness, etc.) with human-readable explanations.
+- Group findings by **impact** (Correctness, Security, Robustness, etc.) instead of rule codes.
 - Bridge readability and auditability.  
-  The CSV format and per-issue “potential impact” line make it easy to share with QA/auditors/PMs.
+- Be lightweight and dependency-free (built on Python’s `ast`/`tokenize`).
 - Highlight **risky patterns**, not just style issues (mutable defaults, unsafe deserialization, misuse of assert, etc.).
-- Run with zero setup (no configs, no rule IDs); just point it at a file.
-- Stay lightweight (built on Python’s `ast`/`tokenize`).
+- Provide reports you can share in CSV or JSON for auditing or CI review.
 
 ---
 
@@ -41,110 +37,137 @@ It aims to:
 - **Maintainability & Style**: wildcard imports, shadowing builtins, naming conventions, missing docstrings (for public API), non-Pythonic loops, `len(...)` comparisons.  
 - **Process**: TODO/FIXME markers.
 
-Each finding has **category**, **priority**, **impacted lines**, **potential impact**, and **description**.
-
 ---
 
 ## Installation
 
-Users of the tool:
 ```bash
 pip install pycodereview
 ```
 
-> No extra dependencies are required for normal use.
+For local development and testing:
+
+```bash
+pip install -r requirements-dev.txt
+```
 
 ---
 
-## Quick start
+## Quick Start
 
-Analyze a file:
+Run analysis on a file:
+
 ```bash
 pycodereview path/to/file.py
 ```
 
-Write a CSV report:
+Write CSV report:
+
 ```bash
 pycodereview path/to/file.py --out review_report.csv
 ```
 
-Show only MEDIUM and higher:
+Generate JSON output:
+
 ```bash
-pycodereview path/to/file.py --min-priority MEDIUM
+pycodereview path/to/file.py --json-output review.json
 ```
 
-Merge identical issues across multiple lines:
-```bash
-pycodereview path/to/file.py --merge-issues
-```
+Example **JSON output**:
 
-Limit displayed impacted lines (cap to 600 lines):
-```bash
-pycodereview path/to/file.py --max-lines 600
-```
-
-> One-off usage without install is also possible:
-> ```bash
-> python -m pycodereview.code_review path/to/target.py
-> ```
-
----
-
-## Local development
-
-**These steps are only needed if you want to run unit tests or contribute.** Regular users can ignore this section.
-
-Clone and set up a virtual environment:
-```bash
-python -m venv .venv
-# Windows:
-# .venv\Scripts\activate
-# POSIX:
-. .venv/bin/activate
-
-python -m pip install -U pip
-pip install -r requirements-dev.txt   # pytest + pytest-cov only
-# optional, to import from the local src/ tree:
-pip install -e .
-```
-
-Run tests:
-```bash
-pytest -q
-pytest --cov=pycodereview --cov-report=term --cov-report=html
-# open htmlcov/index.html
+```json
+[
+  {
+    "file": ".\tests\data\sample_cases.py",
+    "category": "Correctness",
+    "priority": "HIGH",
+    "impacted_lines": "65",
+    "potential_impact": "Shared mutable state across calls; surprising behavior.",
+    "description": "sample_cases.py: Mutable default in function \"bad_defaults_a\"."
+  },
+  {
+    "file": ".\tests\data\sample_cases.py",
+    "category": "Correctness",
+    "priority": "HIGH",
+    "impacted_lines": "70",
+    "potential_impact": "Shared mutable state across calls; surprising behavior.",
+    "description": "sample_cases.py: Mutable default in function \"bad_defaults_b\"."
+  }
+]
 ```
 
 ---
 
-## CLI options
+## Output Formats
+
+### CSV
+
+Columns:
+1. Category
+2. Priority
+3. Impacted lines
+4. Potential impact
+5. Description
+
+### JSON
+
+Each finding is a JSON object with keys:
+- `file`
+- `category`
+- `priority`
+- `impacted_lines`
+- `potential_impact`
+- `description`
+
+---
+
+## Example CLI options
 
 ```
 pycodereview FILE [options]
 
 Options:
-  --out OUT                    Output CSV path (semicolon-delimited). Default: review_report.csv
-  --log LOG                    Optional path to write a short text log (e.g., analysis.log).
+  --out OUT            Output CSV path. Default: review_report.csv
+  --json-output PATH   Write JSON-formatted report.
   --min-priority {LOW,MEDIUM,HIGH}
-                               Only report issues at or above this priority. Default: LOW
-  --fail-on {LOW,MEDIUM,HIGH}  Exit with code 2 if any issue at/above this priority is found.
-  --max-lines N                Cap the displayed impacted lines for very noisy issues (default: 1200)
-  --merge-issues               Merge identical issues across multiple lines into a single row.
-  --version                    Show version and exit
-  -h, --help                   Show help and exit
+                       Only report issues at or above this priority.
+  --merge-issues       Merge identical issues across multiple lines.
+  --max-lines N        Cap the number of lines listed per issue (default: 1200)
+  --version            Show version and exit
+  -h, --help           Show help message and exit
 ```
 
 ---
 
-## Links
+## Example Local Testing
 
-- PyPI: https://pypi.org/project/pycodereview/
-- Pepy downloads: https://pepy.tech/project/pycodereview
-- PyPI project stats: https://pypistats.org/packages/pycodereview
-- Codecov: https://app.codecov.io/
+Run all unit tests with coverage:
+
+```bash
+pip install -r requirements-dev.txt
+pytest --cov=src/pycodereview --cov-report=term --cov-report=html
+```
+
+---
+
+## Limitations
+
+- Static checks are not a replacement for full linters or type checkers (ruff, flake8, mypy).
+- Some security rules are conservative; false positives are possible.
+- Reports only; no auto-fixes.
+
+---
+
+## Contributing
+
+PRs welcome. Please:
+- add unit tests for new rules,
+- keep messages concise and actionable,
+- document new options in the README,
+- run black and ruff before committing.
 
 ---
 
 ## License
 
-MIT. See LICENSE.
+MIT License. See LICENSE for details.

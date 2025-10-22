@@ -1,5 +1,5 @@
 """
-Outputs a semicolon-delimited CSV with headers:
+Outputs a semicolon-delimited CSV with headers or a json file:
 category of issue; priority of issue; impacted lines; potential impact; description
 """
 
@@ -11,6 +11,7 @@ import csv
 import os
 import re
 import sys
+import json
 from dataclasses import dataclass
 from typing import List, Tuple, Optional, Iterable, Dict, Set
 
@@ -1476,6 +1477,35 @@ def write_csv(issues: List[Tuple[str, Issue]], out_path: str):
             full_desc = f"{os.path.basename(filename)}: {issue.description}"
             w.writerow([issue.category, issue.priority, issue.impacted_lines, issue.potential_impact, full_desc])
 
+
+def write_json(issues: List[Tuple[str, Issue]], out_path: str) -> None:
+    """
+    Write machine-readable JSON. Schema (array of objects):
+      [
+        {
+          "file": "path/to/file.py",
+          "category": "...",
+          "priority": "LOW|MEDIUM|HIGH",
+          "impacted_lines": "1,2,3" | "10-12" | "",
+          "potential_impact": "...",
+          "description": "filename: message"
+        },
+        ...
+      ]
+    """
+    data = []
+    for filename, issue in issues:
+        item = {
+            "file": filename,
+            "category": issue.category,
+            "priority": issue.priority,
+            "impacted_lines": issue.impacted_lines,
+            "potential_impact": issue.potential_impact,
+            "description": f"{os.path.basename(filename)}: {issue.description}",
+        }
+        data.append(item)
+    with open(out_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, ensure_ascii=False, indent=2)
 def write_text_log(issues: List[Tuple[str, Issue]], filename: str, log_path: str) -> None:
     """
     Write a short, human-friendly log summary:
@@ -1560,6 +1590,12 @@ def main(argv: Optional[List[str]] = None) -> int:
         help="Output CSV path (semicolon-delimited). Default: review_report.csv",
     )
     parser.add_argument(
+        "--json-output",
+        dest="json_output",
+        default=None,
+        help="Optional path to also write machine-readable JSON output.",
+    )
+    parser.add_argument(
         "--log",
         default=None,
         help="Optional path to write a short text log/summary (e.g., analysis.log).",
@@ -1618,6 +1654,8 @@ def main(argv: Optional[List[str]] = None) -> int:
 
     # ---- Outputs ----
     write_csv(all_issues, args.out)
+    if args.json_output:
+        write_json(all_issues, args.json_output)
     if args.log:
         write_text_log(all_issues, args.file, args.log)
 
