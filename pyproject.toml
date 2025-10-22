@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "pycodereview"
-version = "0.1.2"
+version = "1.0.0"
 description = "Human-friendly static checks for Python: correctness, security, robustness — grouped by impact."
 readme = { file = "README.md", content-type = "text/markdown" }
 requires-python = ">=3.9"
@@ -12,7 +12,7 @@ license = { file = "LICENSE" }
 authors = [{ name = "Sofian Daghsen", email = "sofianjava@gmail.com" }]
 keywords = ["static-analysis", "code-review", "lint", "security", "ast", "python"]
 classifiers = [
-  "Development Status :: 3 - Alpha",
+  "Development Status :: 5 - Production/Stable"",
   "Intended Audience :: Developers",
   "Environment :: Console",
   "Programming Language :: Python :: 3",

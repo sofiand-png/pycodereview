@@ -2,7 +2,15 @@
 
 All notable changes to this project will be documented in this file.
 
-## [0.1.2] - 2025-10-21
+## [1.0.0] - 2025-10-22
+### Added
+- `--json-output PATH`: write machine-readable JSON report (non-breaking).
+### Improved
+- Substantial unit test coverage; parity test for JSON/CSV outputs.
+- README clarifications and examples.
+
+
+## [1.0.0] - 2025-10-21
 - Clarified that v0.1.x analyzes a single file only; added shell workarounds for directories.
 - Improved README: badges for version, Python versions, license, and download metrics (Pepy).
 - Add changelog file
