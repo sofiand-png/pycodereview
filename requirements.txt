@@ -2,3 +2,5 @@
 # Keep empty if the package uses only the Python standard library.
 # Example (uncomment if you later add deps):
 # pyyaml>=6.0
+pytest
+pytest-cov
