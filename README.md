@@ -2,7 +2,7 @@
 
 Static checks for common Python code risks and hygiene issues.
 Runs on a single file and outputs a concise CSV report you can diff, gate in CI, or share with a teammate.
-[![pycodereview version](https://img.shields.io/pypi/v/pycodereview.svg?logo=pycodereview&logoColor=FFE873)](https://pypi.org/project/pycodereview/)
+[![pycodereview version](https://img.shields.io/pycodereview/v/pycodereview.svg?logo=pycodereview&logoColor=FFE873)](https://pypi.org/project/pycodereview/)
 [![Python versions](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
 [![PyPI downloads](https://img.shields.io/pypi/dm/pycodereview.svg)](https://pycodereview.org/packages/pycodereview)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
