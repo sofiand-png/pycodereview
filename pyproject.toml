@@ -46,13 +46,13 @@ include = ["pycodereview*"]
 [project.scripts]
 pycodereview = "pycodereview.code_review:main"
 
-[tool.pytest.ini_options]
-addopts = "-q"
-
 [tool.coverage.run]
 branch = true
-source = ["pycodereview"]
+source = ["src/pycodereview"]
+omit = [
+  "*site-packages*",
+]
 
 [tool.coverage.report]
 show_missing = true
-skip_empty = true
+skip_covered = false
