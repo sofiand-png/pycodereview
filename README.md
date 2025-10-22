@@ -1,6 +1,7 @@
 # pycodereview <p align="right">
-  <img src="assets/logo.svg" width="110" alt="pycodereview logo">
+  <img src="https://raw.githubusercontent.com/sofiand-png/pycodereview/main/assets/logo.png" width="110" alt="pycodereview logo">
 </p>
+
 
 [![pycodereview](https://img.shields.io/pypi/v/pycodereview.svg?label=pycodereview&logo=python)](https://pypi.org/project/pycodereview/)
 [![Python versions](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
