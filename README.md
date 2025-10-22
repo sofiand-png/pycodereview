@@ -4,9 +4,9 @@ Static checks for common Python code risks and hygiene issues.
 Runs on a single file and outputs a concise CSV report you can diff, gate in CI, or share with a teammate.
 
 [![Python versions](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
-[![PyPI downloads](https://img.shields.io/pypi/dm/pypistats.svg)](https://pypistats.org/packages/pycodereview)
+[![PyPI downloads](https://img.shields.io/pypi/dm/pycodereview.svg)](https://pycodereview.org/packages/pycodereview)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Codecov](https://codecov.io/gh/hugovk/pycodereview/branch/main/graph/badge.svg)](https://codecov.io/gh/hugovk/pypistats)
+[![Codecov](https://codecov.io/gh/hugovk/pycodereview/branch/main/graph/badge.svg)](https://codecov.io/gh/hugovk/pycodereview)
 [![GitHub stars](https://img.shields.io/github/stars/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/stargazers)
 [![GitHub forks](https://img.shields.io/github/forks/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/network/members)
 [![GitHub issues](https://img.shields.io/github/issues/sofiand-png/pycodereview)](https://github.com/sofiand-png/pycodereview/issues)
@@ -201,7 +201,7 @@ jobs:
 
 - PyPI: https://pypi.org/project/pycodereview/
 - Pepy downloads: https://pepy.tech/project/pycodereview
-- PyPI Stats: https://pypistats.org/packages/pycodereview
+- PyPI Stats: https://pycodereview.org/packages/pycodereview
 
 ---
 
