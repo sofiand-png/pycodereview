@@ -1,0 +1,13 @@
+[run]
+branch = True
+source = 
+    src/pycodereview
+omit =
+    */site-packages/*
+    */dist-packages/*
+    */.venv/*
+    */venv/*
+
+[report]
+show_missing = True
+skip_covered = False

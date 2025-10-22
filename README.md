@@ -1,59 +1,41 @@
-# pycodereview
+# pycodereview <p align="right">
+  <img src="assets/logo.svg" width="110" alt="pycodereview logo">
+</p>
+
+[![pycodereview](https://img.shields.io/pypi/v/pycodereview.svg?label=pycodereview&logo=python)](https://pypi.org/project/pycodereview/)
+[![Python versions](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
+[![downloads](https://img.shields.io/pypi/dm/pycodereview.svg)](https://pycodereview.org/packages/pycodereview)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![CI](https://github.com/sofiand-png/pycodereview/actions/workflows/ci.yml/badge.svg)](https://github.com/sofiand-png/pycodereview/actions/workflows/ci.yml)
+[![Codecov](https://codecov.io/gh/sofiand-png/pycodereview/branch/main/graph/badge.svg)](https://app.codecov.io/gh/sofiand-png/pycodereview)
+[![Security scan](https://github.com/sofiand-png/pycodereview/actions/workflows/security-scan.yml/badge.svg)](https://github.com/sofiand-png/pycodereview/actions/workflows/security-scan.yml)
 
 Static checks for common Python code risks and hygiene issues.
-Runs on a single file and outputs a concise CSV report you can diff, gate in CI, or share with a teammate.
-
-[![PyPI - Version](https://img.shields.io/pypi/v/pycodereview)](https://pypi.org/project/pycodereview/)
-[![Python versions](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Downloads](https://static.pepy.tech/badge/pycodereview)](https://pepy.tech/project/pycodereview)
-[![Downloads / month](https://static.pepy.tech/badge/pycodereview/month)](https://pepy.tech/project/pycodereview)
-[![GitHub stars](https://img.shields.io/github/stars/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/sofiand-png/pycodereview?style=flat)](https://github.com/sofiand-png/pycodereview/network/members)
-[![GitHub issues](https://img.shields.io/github/issues/sofiand-png/pycodereview)](https://github.com/sofiand-png/pycodereview/issues)
-
-
+Runs on a single file and outputs concise reports in **CSV** or **JSON** format.
 
 ## Why pycodereview?
 
-Most static analysis tools (like **pylint**, **flake8**, or **ruff**) focus on **style compliance, lint rules, and PEP8/typing**.  
-**pycodereview** is different. It’s designed for **human code review augmentation**, not just linting.
+Most static analysis tools (like **pylint**, **flake8**, or **ruff**) focus on **style compliance** and **lint rules**.
+**pycodereview** is different. It's built to support **human code review** with clear, impact-based findings.
 
 It aims to:
 
-- Group findings by impact rather than rule ID.
-  You get concise categories (Correctness, Security, Robustness, etc.) with human-readable explanations instead of cryptic codes.
-
-- Bridge readability and auditability.
-  The CSV format and per-issue "potential impact" line make it easy to share results with non-developers (QA, auditors, project managers).
-
-- Highlight "risky patterns," not just style issues.
-  For example: mutable default arguments, missing joins on threads, unsafe deserialization, misuse of assert.
-
-- Run with zero setup.
-  No configs, plugins, or rule IDs needed; just point it to a file and go.
-
-- Stay lightweight.
-  Uses Python's built-in ast and tokenize, no heavy dependencies.
-
-- Complement other tools.
-  Meant to run alongside type checkers and formatters, catching logic and lifecycle issues they miss.
+- Group findings by **impact** (Correctness, Security, Robustness, etc.) instead of rule codes.
+- Bridge readability and auditability.  
+- Be lightweight and dependency-free (built on Python’s `ast`/`tokenize`).
+- Highlight **risky patterns**, not just style issues (mutable defaults, unsafe deserialization, misuse of assert, etc.).
+- Provide reports you can share in CSV or JSON for auditing or CI review.
 
 ---
 
 ## What it checks
 
-- **Error Handling**: catch-alls, empty `except`, exception re-raise quality.
-- **Correctness**: mutable default args, misuse of `assert`, identity vs equality, undefined names, magic token numbers, ignored returns, return/annotation mismatches, premature exits.
-- **Security**: `eval/exec`, unsafe `subprocess`, `os.system`, unsafe YAML/Pickle loads.
-- **Concurrency**: thread/process lifecycle, import-time multiprocessing, shared mutable globals.
-- **Resource Management**: `open()` without context manager, read/write mode mismatches, missing encodings.
-- **Robustness**: brittle CSV parsing, unguarded dict/key access, potential type/len pitfalls.
-- **Maintainability & Style**: wildcard imports, unused imports/variables, naming conventions, docstrings (optional), print statements, non-Pythonic loops, len comparisons, import order, magic literals.
-- **Portability**: hardcoded platform paths.
+- **Error Handling**: catch-alls, empty `except`, exception re-raise quality.  
+- **Correctness**: mutable defaults, misuse of `assert`, identity vs equality, undefined names, return vs annotation mismatches.  
+- **Security**: `eval/exec`, unsafe `subprocess`/`os.system`, unsafe YAML/Pickle.  
+- **Resource Management**: missing context managers, mode/encoding mismatches.  
+- **Maintainability & Style**: wildcard imports, shadowing builtins, naming conventions, missing docstrings (for public API), non-Pythonic loops, `len(...)` comparisons.  
 - **Process**: TODO/FIXME markers.
-
-Each finding has **category**, **priority**, **impacted lines**, **potential impact**, and **description**.
 
 ---
 
@@ -63,28 +45,17 @@ Each finding has **category**, **priority**, **impacted lines**, **potential imp
 pip install pycodereview
 ```
 
-Optional virtualenv for local development:
+For local development and testing:
 
 ```bash
-python -m venv .venv
-# Windows:
-# .venv\Scripts\activate
-# POSIX:
-. .venv/bin/activate
-pip install -U pip
-pip install -e .
-```
-
-### One-off usage (no install)
-```bash
-python -m pycodereview.code_review path/to/target.py
+pip install -r requirements-dev.txt
 ```
 
 ---
 
-## Quick start
+## Quick Start
 
-Analyze a single file:
+Run analysis on a file:
 
 ```bash
 pycodereview path/to/file.py
@@ -96,113 +67,86 @@ Write CSV report:
 pycodereview path/to/file.py --out review_report.csv
 ```
 
-Show only MEDIUM and higher:
+Generate JSON output:
 
 ```bash
-pycodereview path/to/file.py --min-priority MEDIUM
+pycodereview path/to/file.py --json-output review.json
 ```
 
-Merge identical issues across multiple lines:
+Example **JSON output**:
 
-```bash
-pycodereview path/to/file.py --merge-issues
-```
-
-Limit displayed impacted lines for very noisy issues (cap to 600 lines):
-
-```bash
-pycodereview path/to/file.py --max-lines 600
-```
-
-### Batch a directory (workaround)
-
-Directory scanning is not implemented in v0.1.x.
-You can batch files using your shell.
-
-POSIX:
-
-```bash
-mkdir -p reports
-find ./src -name "*.py" -print0 | while IFS= read -r -d '' f; do
-  out="reports/$(basename "$f").csv"
-  pycodereview "$f" --merge-issues --out "$out"
-done
-```
-
-PowerShell:
-
-```powershell
-New-Item -ItemType Directory -Force -Path reports | Out-Null
-Get-ChildItem -Recurse -Filter *.py .\src | ForEach-Object {
-  $out = "reports\$($_.BaseName).csv"
-  pycodereview $_.FullName --merge-issues --out $out
-}
+```json
+[
+  {
+    "file": ".\tests\data\sample_cases.py",
+    "category": "Correctness",
+    "priority": "HIGH",
+    "impacted_lines": "65",
+    "potential_impact": "Shared mutable state across calls; surprising behavior.",
+    "description": "sample_cases.py: Mutable default in function \"bad_defaults_a\"."
+  },
+  {
+    "file": ".\tests\data\sample_cases.py",
+    "category": "Correctness",
+    "priority": "HIGH",
+    "impacted_lines": "70",
+    "potential_impact": "Shared mutable state across calls; surprising behavior.",
+    "description": "sample_cases.py: Mutable default in function \"bad_defaults_b\"."
+  }
+]
 ```
 
 ---
 
-## CLI options
+## Output Formats
+
+### CSV
+
+Columns:
+1. Category
+2. Priority
+3. Impacted lines
+4. Potential impact
+5. Description
+
+### JSON
+
+Each finding is a JSON object with keys:
+- `file`
+- `category`
+- `priority`
+- `impacted_lines`
+- `potential_impact`
+- `description`
+
+---
+
+## Example CLI options
 
 ```
 pycodereview FILE [options]
 
 Options:
-  --out OUT                    Output CSV path (semicolon-delimited). Default: review_report.csv
-  --log LOG                    Optional path to write a short text log/summary (e.g., analysis.log).
+  --out OUT            Output CSV path. Default: review_report.csv
+  --json-output PATH   Write JSON-formatted report.
   --min-priority {LOW,MEDIUM,HIGH}
-                               Only report issues at or above this priority. Default: LOW
-  --fail-on {LOW,MEDIUM,HIGH}  Exit with code 2 if any issue at/above this priority is found.
-  --max-lines N                If an issue lists many impacted lines, cap the shown count to N (default: 1200)
-  --merge-issues               Merge identical issues across multiple lines into a single row.
-  --version                    Show version and exit
-  -h, --help                   Show this help message and exit
+                       Only report issues at or above this priority.
+  --merge-issues       Merge identical issues across multiple lines.
+  --max-lines N        Cap the number of lines listed per issue (default: 1200)
+  --version            Show version and exit
+  -h, --help           Show help message and exit
 ```
 
 ---
 
-## Output format (CSV)
+## Example Local Testing
 
-Columns:
+Run all unit tests with coverage:
 
-1. category of issue
-2. priority of issue
-3. impacted lines (single line, range a-b, or comma-separated list)
-4. potential impact
-5. description (<file>: <message>)
-
-Example:
-
+```bash
+pip install -r requirements-dev.txt
+pytest --cov=src/pycodereview --cov-report=term --cov-report=html
 ```
-Correctness;MEDIUM;257,332,380,396,401,426;"Asserts can be stripped with -O; critical checks may disappear.";"testfile.py: Avoid assert for runtime validation; raise exceptions instead."
-```
-
----
-
-## Example CI
-
-GitHub Actions:
-
-```yaml
-name: Static review
-on: [push, pull_request]
-jobs:
-  review:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with: { python-version: '3.11' }
-      - run: pip install pycodereview
-      - run: pycodereview ./src/main.py --min-priority MEDIUM --merge-issues --out review_report.csv
-```
-
----
-
-## Links
-
-- PyPI: https://pypi.org/project/pycodereview/
-- Pepy downloads: https://pepy.tech/project/pycodereview
-- PyPI Stats: https://pypistats.org/packages/pycodereview
 
 ---
 
@@ -226,4 +170,4 @@ PRs welcome. Please:
 
 ## License
 
-MIT. See LICENSE.
+MIT License. See LICENSE for details.

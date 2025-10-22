@@ -1,0 +1,23 @@
+name: Security scan
+on:
+  pull_request:
+    types: [opened, synchronize, reopened, edited]
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  kics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: KICS GitHub Action
+        uses: Checkmarx/kics-github-action@v2.1.13
+        with:
+          path: .
+          exclude_paths: .github
+          fail_on: high,medium
+          enable_annotations: true
