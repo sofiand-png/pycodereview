@@ -2,7 +2,7 @@
   <img src="assets/logo.svg" width="110" alt="pycodereview logo">
 </p>
 
-[![pycodereview version](https://img.shields.io/pycodereview/v/pycodereview.svg?logo=pycodereview&logoColor=FFE873)](https://pypi.org/project/pycodereview/)
+[![pycodereview](https://img.shields.io/pypi/v/pycodereview.svg?label=pycodereview&logo=python)](https://pypi.org/project/pycodereview/)
 [![Python versions](https://img.shields.io/pypi/pyversions/pycodereview)](https://pypi.org/project/pycodereview/)
 [![downloads](https://img.shields.io/pypi/dm/pycodereview.svg)](https://pycodereview.org/packages/pycodereview)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
