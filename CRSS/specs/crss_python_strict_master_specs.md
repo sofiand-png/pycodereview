@@ -301,7 +301,8 @@ they are described here (Core: N/A, Strict: MUST/SHOULD/MUST-NOT).
 - **Type:** Static  
 - **Profiles:**
   - **Core:** N/A  
-  - **Strict:** MUST NOT  
+  - **Strict:** MUST NOT
+- **Scope**: `all_code`
 
 In Strict code (including critical units), **structural typing SHALL NOT be
 used.** This includes, but is not limited to:
@@ -338,7 +339,8 @@ Strict requires **explicit, verifiable, nominal interfaces**.
 - **Type**: Static / Process  
 - **Profiles**:
   - Core: N/A
-  - Strict: MUST  
+  - Strict: MUST
+- **Scope**: `all_code`
 
 All loops in Strict units must be demonstrably finite:
 
@@ -378,7 +380,8 @@ data-dependent recursion is not allowed.
 - **Type**: Process / Static (partial)  
 - **Profiles**:
   - Core: N/A
-  - Strict: MUST  
+  - Strict: MUST
+- **Scope**: `all_code`
 
 Strict code must not rely on:
 
@@ -396,6 +399,7 @@ valid schedules are safe.
 - **Profiles**:
   - Core: N/A
   - Strict: MUST
+- **Scope**: `critical`
 
 For each @critical function / Strict Level A unit:
 
@@ -434,6 +438,7 @@ Blocking destroys timing guarantees and can deadlock critical loops.
 - **Profiles**:
   - Core: N/A
   - Strict: MUST-NOT
+- **Scope**: `all_code`
 
 Strict units shall not use wall-clock time (e.g. time.time(), datetime.now()) to determine core safety decisions. Time-based behavior in Strict code must:
 - rely on monotonic tick counters or externally provided timing signals, and
@@ -468,7 +473,8 @@ In Strict modules:
 - **Type**: Static  
 - **Profiles**:
   - Core: N/A
-  - Strict: MUST  
+  - Strict: MUST
+- **Scope**: `all_code`
 
 Only a small, vetted set of decorators may be used in Strict code,
 for example:
@@ -488,7 +494,8 @@ documented as deviations.
 - **Scope**: critical_only
 - **Profiles**:
   - Core: N/A
-  - Strict: MUST  
+  - Strict: MUST
+- **Scope**: `critical`
 
 Functions implementing core algorithms (often in critical units such as
 those marked `@critical`) must not perform file or network I/O; they
@@ -503,6 +510,7 @@ boundaries.
 - **Profiles**:
   - Core: N/A
   - Strict: MUST
+- **Scope**: `critical`
 
 Functions in Strict units that are part of a critical control cycle (e.g. @critical) shall not perform dynamic memory allocation during normal execution. In particular, within such functions:
 - Creation of new lists, dicts, sets, tuples, user objects, or large strings is forbidden.
@@ -526,6 +534,7 @@ Eliminates allocation-induced latency and GC pressure inside timing-critical pat
 - **Profiles**:
   - Core: N/A
   - Strict: MUST
+- **Scope**: `critical`
 
 During execution of Strict critical cycles:
 -The cyclic garbage collector (gc) shall be disabled (e.g. via gc.disable()).
@@ -547,6 +556,7 @@ Disables non-deterministic GC pauses during the most time-critical operations, a
 - **Profiles**:
   - Core: N/A
   - Strict: MUST-NOT
+- **Scope**: `all_code`
 
 Classes used by Strict units shall not define __del__ methods, nor rely on finalizer semantics for releasing resources. Strict code must use explicit cleanup methods or context managers instead.
 
@@ -560,6 +570,7 @@ Finalizers introduce unpredictable, GC-driven behavior at object destruction and
 - **Profiles**:
   - Core: N/A
   - Strict: MUST
+- **Scope**: `all_code`
 
 Object graphs owned or manipulated by Strict units shall be designed to be acyclic (no reference cycles) except for a small set of explicitly documented internal structures with proven bounded size and lifetime.
 
@@ -755,6 +766,7 @@ This mirrors MISRA-Compliance-style reporting.
 - **Profiles**:
   - Core: N/A
   - Strict: SHOULD (MUST for level A) 
+- **Scope**: `critical`
 
 Safety mechanisms implemented in Strict code (range checks, error paths, safe-state transitions) must be validated with fault injection tests, e.g.:
 
