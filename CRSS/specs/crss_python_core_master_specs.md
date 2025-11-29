@@ -1871,53 +1871,189 @@ Projects should define policies for:
 
 
 -   **Category**: Security / Caching
-
 -   **Type**: Design / Static
-
 -   **Profiles**:
-
     -   Core: SHOULD
-
     -   Strict: MUST
 
 Sensitive data (secrets, tokens, credentials, personal data) SHALL NOT:
-
-be stored in long-lived caches, especially shared caches,
-
-be cached across user sessions, tenants, or security boundaries,
-
-be written into caches without at-rest protection equivalent to their primary storage.
+- be stored in long-lived caches, especially shared caches,
+- be cached across user sessions, tenants, or security boundaries,
+- be written into caches without at-rest protection equivalent to their primary storage.
 
 If short-lived caching is unavoidable (e.g. token validation results):
-
-TTLs MUST be short,
-
-cache scope MUST be limited (per-process, per-session),
-
-logs MUST NOT contain cached payloads.
+- TTLs MUST be short,
+- cache scope MUST be limited (per-process, per-session),
+- logs MUST NOT contain cached payloads.
 
 ### CRSS-6.4.8 - Cache isolation between tenants/security domains
 
 
 -   **Category**: Security / Multi-tenancy
-
 -   **Type**: Design / Process
-
 -   **Profiles**:
-
     -   Core: SHOULD
-
     -   Strict: MUST when multi-tenant
 
 In multi-tenant environments or mixed-trust setups, cache keys and namespaces MUST be designed so that:
-
-one tenant cannot read or infer another tenant’s cached data,
-
-cross-domain poisoning (one domain populates cache used by another) is not possible.
+- one tenant cannot read or infer another tenant’s cached data,
+- cross-domain poisoning (one domain populates cache used by another) is not possible.
 
 This applies both to in-memory and distributed caches.
 
-7. HTTP Caching & Proxies
+## **CRSS-6.4.9 – Secret Storage & Lifecycle**
+
+- **Category**: Security / Secrets  
+- **Type**: Design / Process  
+- **Profiles**:  
+  - Core: SHOULD  
+  - Strict: MUST  
+
+Secrets (passwords, private keys, certificates, tokens, API keys, connection strings) SHALL NOT:
+
+- be stored in source control (including private repos),  
+- be embedded directly in source code, comments, test data, or documentation,  
+- be hardcoded in configuration files without proper encryption/protection.
+
+Projects SHALL:
+
+- retrieve secrets exclusively from:
+  - a secure vault / KMS / password manager, OR  
+  - a tightly controlled environment/config file with restricted OS permissions;
+- define for each secret:
+  - a named **owner**,  
+  - a **rotation policy**,  
+  - a **maximum lifetime**;
+- upon suspected or confirmed exposure:
+  - rotate the secret immediately,  
+  - invalidate all derived tokens/sessions,  
+  - record a **security incident** in safety logs.
+
+**Rationale**  
+Secret leakage leads to system compromise and loss of trust in safety-significant operations.
+
+---
+
+## **CRSS-6.4.10 – Password & Credential Policy**
+
+- **Category**: Security / Authentication  
+- **Type**: Design / Process  
+- **Profiles**:  
+  - Core: SHOULD  
+  - Strict: MUST  
+
+Where password-based authentication is used:
+
+- Passwords MUST be hashed using strong, modern algorithms:
+  - PBKDF2, bcrypt, scrypt, Argon2, or equivalent.
+- Plaintext passwords SHALL NOT be logged, stored, or captured in analytics.
+- Authentication endpoints SHALL implement:
+  - rate limiting,  
+  - exponential backoff OR  
+  - account lockout thresholds.
+- Shared passwords SHALL NOT be used for safety-significant actions.
+- Password reuse across environments (dev/test/stage/prod) is forbidden.
+
+**Rationale**  
+Weak credential handling is a major source of compromise in operational systems.
+
+---
+
+# 2. Token & Session Management Rules (6.4.x)
+
+---
+
+## **CRSS-6.4.11 – Token & Session Lifetime Management**
+
+- **Category**: Security / Sessions & Tokens  
+- **Type**: Design / Process  
+- **Profiles**:  
+  - Core: SHOULD  
+  - Strict: MUST  
+
+Access tokens, session identifiers, and refresh tokens MUST:
+
+- have explicit **expiry times**,  
+- be bounded in total lifetime,  
+- be integrity-protected (e.g., HMAC/JWT signatures),
+- be validated on **every use**, not just at login.
+
+Tokens and sessions MUST be invalidated when:
+
+- passwords/credentials change,  
+- roles/permissions change,  
+- anomalies or compromises are detected,  
+- a device or client is revoked.
+
+Safety-significant operations MUST require **fresh authorization** (e.g., re-auth or time-bounded session).
+
+**Rationale**  
+Long-lived or unchecked sessions create unsafe implicit trust.
+
+---
+
+## **CRSS-6.4.12 – Authentication vs Authorization Separation**
+
+- **Category**: Security / Access Control  
+- **Type**: Design / Static  
+- **Profiles**:  
+  - Core: SHOULD  
+  - Strict: MUST  
+
+The system SHALL maintain strict separation between:
+
+- **Authentication** (identity verification), and  
+- **Authorization** (permission verification).
+
+Authorization MUST:
+
+- be performed on the server side,  
+- NEVER rely solely on UI/client checks,  
+- NOT be bypassable via debug flags, local toggles, or test hooks.
+
+Roles tied to safety MUST:
+
+- be explicitly defined,  
+- follow least-privilege principles,  
+- be auditable.
+
+**Rationale**  
+Auth bypass is one of the most common and catastrophic security failures.
+
+---
+
+## **CRSS-6.4.13 – Safety-Significant Action Authorization**
+
+- **Category**: Security / Safety Interaction  
+- **Type**: Design / Process  
+- **Profiles**:  
+  - Core: SHOULD  
+  - Strict: MUST  
+
+Operations affecting:
+
+- safety configurations,  
+- thresholds,  
+- supervisory logic,  
+- indirect actuation parameters,
+
+MUST:
+
+- require explicit authorization based on roles/capabilities,  
+- be logged as safety events (without secrets),  
+- require fresh authorization (Strict-Level-A).
+
+Systems SHALL NOT trust:
+
+- long-lived admin sessions,  
+- generic credentials,  
+- debug interfaces.
+
+**Rationale**  
+Safety configuration changes must not rely on weak or stale access control.
+
+---
+
 
 ## 7. Robustness & Portability
 
@@ -2937,6 +3073,69 @@ annotated `@critical`) must pass strict static type checking (e.g.
 `mypy --strict` or an equivalent configuration) with zero errors.
 Type-ignores (`# type: ignore`) are disallowed or must be treated as
 explicit deviations with justification and impact analysis.
+
+## **CRSS-9.2.1 – Authentication, Token & Session Negative Testing**
+
+- **Category**: Testing & Security  
+- **Type**: Process  
+- **Profiles**:  
+  - Core: SHOULD  
+  - Strict: MUST  
+
+Projects SHALL test:
+
+- invalid credentials,  
+- brute-force attempts → rate limiting or lockout behavior,  
+- expired tokens,  
+- tampered or modified tokens,  
+- access after:
+  - role change,  
+  - password change,  
+  - revocation,  
+- concurrent session behavior (if applicable),
+- replay or duplicate token usage.
+
+For internet-exposed systems, additional tests SHOULD include:
+
+- CSRF or replay attempts,  
+- credential stuffing simulations.
+
+**Rationale**  
+Negative testing is essential for verifying robustness under malicious or degraded conditions.
+
+---
+
+## **CRSS-9.2.2 – SCEM Evidence for Authentication & Authorization**
+
+- **Category**: SCEM & Compliance  
+- **Type**: Process  
+- **Profiles**:  
+  - Core: SHOULD  
+  - Strict: MUST  
+
+SCEM SHALL include:
+
+- list of all authentication mechanisms (passwords, tokens, mTLS, SSO, OAuth, etc.),  
+- token/session model documentation:
+  - structure,  
+  - lifetime,  
+  - scope,  
+  - validation logic,
+- mapping of roles → safety-significant operations,
+- test evidence for:
+  - expiry behavior,  
+  - revocation behavior,  
+  - lockout,  
+  - privilege changes,
+- documentation of:
+  - how secrets are stored,  
+  - how they are rotated,  
+  - how compromise is detected and handled.
+
+Absence of this section SHALL be a **blocking failure** for Strict-Level-A certification.
+
+**Rationale**  
+Authentication/authorization control must be demonstrably safe in operation.
 
 ### CRSS-9.3.1 - MC/DC for Level A decisions
 

@@ -1,0 +1,273 @@
+# CRSS-Python Deviation Policy — Full Expanded Specification (v3.0)
+
+Version: 3.0.0  
+Status: Normative  
+© 2025 Sofian Daghsen — All rights reserved  
+
+---
+
+## 1. Purpose
+
+This document defines the formal deviation policy for the CRSS-Python Standard.
+It provides:
+
+- Allowed deviation types  
+- Forbidden deviations  
+- Deviation process  
+- Required deviation content  
+- Deviation classification matrix  
+- Relationship with Profiles, Modes, Safety Levels, and Phases  
+
+This specification is machine-parsable, auditor-ready, and aligned with  
+ASIL-D / SIL-3 supervisory safety expectations.
+
+---
+
+## 2. Principles (Foundational)
+
+### 2.1 Deviations Are **NEVER Allowed** for MUST / MUST-NOT
+
+A CRSS rule of type:
+
+- **MUST**
+- **MUST NOT**
+
+is *non-deviable*, meaning:
+
+- ❌ No waiver  
+- ❌ No justification  
+- ❌ No conditional allowance  
+
+A violation of a MUST/MUST-NOT rule is **always non-compliant**.
+
+---
+
+### 2.2 Deviations Are **NEVER Allowed** Inside Strict-A @critical
+
+Inside **Strict-Level-A + @critical phase**:
+
+- ❌ No deviations permitted  
+- ❌ No exceptions  
+- ❌ No compensating measures  
+
+Strict-A critical code is a **zero-tolerance** zone.
+
+---
+
+### 2.3 Deviations Are Allowed **Only for SHOULD / SHOULD-NOT**
+
+Valid deviation candidates must be rules of type:
+
+- **SHOULD**
+- **SHOULD NOT**
+
+These represent strong guidance but can be deviated through a **controlled process**.
+
+---
+
+## 3. Deviation Types (Formal)
+
+### 3.1 **RIC — Rule Interpretation Clarification**
+
+Used when:
+
+- No violation exists  
+- The rule text requires contextual clarification  
+
+**Approval:** Technical lead  
+**Risk analysis:** Not required  
+
+---
+
+### 3.2 **CD — Conditional Deviation**
+
+Used when:
+
+- A SHOULD / SHOULD-NOT rule is violated  
+- Risk impact is low  
+- Compensating conditions mitigate impact  
+
+**Approval:** Component Owner + Technical Lead  
+**Required:** Justification + Limited impact analysis  
+
+---
+
+### 3.3 **ED — Exceptional Deviation**
+
+Used when:
+
+- A SHOULD / SHOULD-NOT rule is violated  
+- Safety-impact exists  
+- Must introduce **Compensating Safety Mechanisms (CSM)**  
+
+**Approval:** Independent Safety Authority  
+**Requires:**  
+- Safety analysis  
+- SCEM update  
+- Verification evidence  
+
+This is the **highest severity** deviation.
+
+---
+
+## 4. Deviations — Forbidden Categories
+
+These rules can **NEVER** be deviated:
+
+| Category | Reason |
+|----------|--------|
+| MUST / MUST-NOT rules | Non-negotiable safety requirements |
+| Any rule inside Strict-A @critical | Zero tolerance |
+| GC behavior rules | Determinism must be guaranteed |
+| Determinism rules (loop bounds, recursion limits) | Safety timing |
+| Race-condition prohibitions | Concurrency safety |
+| I/O forbidden in @critical | Deterministic critical loops |
+| Dynamic imports (Strict) | Non-analyzable |
+| Monkeypatching (Strict) | Runtime mutation |
+| eval/exec | Arbitrary code execution |
+| Environment mutation rules | Platform integrity |
+| Deployment integrity rules | Certification boundaries |
+
+Violating any of these is always unsafe.
+
+---
+
+## 5. Deviations — Allowed Categories
+
+Permitted ONLY for SHOULD/SHOULD-NOT rules in:
+
+- **Core A/B/C**
+- **Strict B/C**
+- **Strict-A non-critical only**
+- Architectural exceptions  
+- Import exceptions  
+- Logging/monitoring exceptions (never in @critical)  
+- Performance-tuning exceptions  
+- Toolchain/analysis limitations  
+- Legacy refactors  
+
+Approval level depends on deviation type (RIC/CD/ED).
+
+---
+
+## 6. Required Contents of a Deviation (DMR)
+
+Every deviation MUST include:
+
+### Identification
+- Rule ID  
+- Rule text excerpt  
+- Deviation type: RIC / CD / ED  
+- Safety Level: A/B/C  
+- Profile: Core / Strict  
+- Phase: Critical / Non-critical  
+- Scope: line/function/class/module  
+
+### Technical Justification
+- Why deviation is needed  
+- Why no compliant alternative exists  
+- Expected lifetime  
+
+### Risk Analysis
+- Determinism impact  
+- Safety logic impact  
+- Resource usage impact  
+- External interface impact  
+- Hazard consequences  
+- Propagation impact  
+
+### Compensating Safety Measures
+- Bounds  
+- Guards  
+- Validations  
+- Monitoring  
+- Containment  
+
+### Evidence
+- Tests  
+- Static analysis  
+- Review notes  
+
+### Approvals
+- Technical Lead  
+- Safety Lead  
+- Independent Safety Authority (ED only)  
+
+### Traceability
+- SCEM linkage  
+- RCR linkage  
+- CBM linkage  
+
+---
+
+## 7. Deviation Matrix (Formal, v2.0)
+
+A rule is evaluated by:
+
+(Profile) × (Safety Level) × (Phase)
+
+Example rows:
+
+| Rule ID | Core A/B/C | Strict-A | Strict B/C | Phase | Allowed? | Deviation Type | Approval |
+|---------|-------------|----------|------------|--------|----------|----------------|----------|
+| CRSS-7.8.3 | YES | NO | CD | Critical | ❌ | — | — |
+| CRSS-5.4.9 | YES | NO | YES | Non-Critical | ✔️ | CD | TL + SA |
+| CRSS-6.4.4 | YES | ED | ED | Any | ✔️ | ED | ISA |
+
+---
+
+## 8. Scope Rules
+
+Deviations MUST specify:
+
+- line range  
+- function/method  
+- class  
+- module/package  
+- phase (critical/non-critical)  
+
+**Unscoped deviations = forbidden.**
+
+---
+
+## 9. Integration With Mode Model
+
+| Mode | Deviation Allowed? |
+|-------|---------------------|
+| Core (A/B/C) | ✔️ SHOULD rules only |
+| Strict B/C | ✔️ SHOULD rules only |
+| Strict-A Non-Critical | ✔️ SHOULD rules only (CD/ED required) |
+| Strict-A Critical | ❌ NEVER |
+
+---
+
+## 10. Final Policy Statement (Normative)
+
+**Deviations are permitted ONLY for SHOULD / SHOULD-NOT rules,  
+NEVER for MUST / MUST-NOT rules,  
+and NEVER inside Strict-Level-A @critical code.**
+
+Every deviation must include:
+
+- justification  
+- bounded scope  
+- risk analysis  
+- traceability  
+- independent approval (for ED)  
+
+Unscoped/open-ended deviations are prohibited.
+
+---
+
+## 11. Summary
+
+This deviation model:
+
+- Preserves strictness of MUST/MUST-NOT  
+- Protects Strict-A critical execution  
+- Allows safe, auditable flexibility  
+- Supports legacy constraints and real-world integration  
+- Is fully certifier-ready  
+- Enables automated tooling  
+
+This is the **normative deviation scheme for CRSS-Python v3.0**.
