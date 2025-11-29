@@ -225,3 +225,9 @@ Yes. As of 2025, it is the **most comprehensive and strict Python safety framewo
 
 ---
 
+## 21. Which components define what in the overall CRSS ?
+
+- Core + Strict define the what
+- Phase model + scopes + phase-aware notes define the how and where
+- SCEM / compliance process define the proof
+
