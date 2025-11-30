@@ -1,8 +1,33 @@
-
 # CRSS-Python Frequently Asked Questions (FAQ)
-Version: v3.0.0  
-Status: Informative  
-© 2025 Sofian Daghsen – All rights reserved  
+
+## Table of Contents
+
+- [CRSS-Python Frequently Asked Questions (FAQ)](#crss-python-frequently-asked-questions-faq)
+  - [1. What is CRSS-Python?](#1-what-is-crss-python)
+  - [2. What problem does CRSS-Python solve?](#2-what-problem-does-crss-python-solve)
+  - [3. Does CRSS-Python certify Python applications for ASIL-D / SIL3?](#3-does-crss-python-certify-python-applications-for-asil-d-sil3)
+  - [4. What are Profiles, Levels, and Modes?](#4-what-are-profiles-levels-and-modes)
+  - [5. What is `@critical`?](#5-what-is-critical)
+  - [6. What is `@non_critical_phase`?](#6-what-is-noncriticalphase)
+  - [7. Can we use multiple Python versions in a project?](#7-can-we-use-multiple-python-versions-in-a-project)
+  - [8. Does CRSS-Python allow hotfixes?](#8-does-crss-python-allow-hotfixes)
+  - [9. Is automated deployment allowed?](#9-is-automated-deployment-allowed)
+  - [10. Can Python install dependencies at runtime?](#10-can-python-install-dependencies-at-runtime)
+  - [11. Can CRSS-Python software use threads?](#11-can-crss-python-software-use-threads)
+  - [12. Can we build microservices under CRSS-Python?](#12-can-we-build-microservices-under-crss-python)
+  - [13. How are violations handled?](#13-how-are-violations-handled)
+  - [14. How do we know if a project is compliant?](#14-how-do-we-know-if-a-project-is-compliant)
+  - [15. Can CRSS-Python be extended?](#15-can-crss-python-be-extended)
+  - [16. Can CRSS-Python be used for Machine Learning systems?](#16-can-crss-python-be-used-for-machine-learning-systems)
+  - [17. Does CRSS-Python replace ISO 26262 / IEC 61508?](#17-does-crss-python-replace-iso-26262-iec-61508)
+  - [18. Where do I start?](#18-where-do-i-start)
+  - [19. How do I contribute?](#19-how-do-i-contribute)
+  - [20. Is CRSS-Python unique?](#20-is-crss-python-unique)
+  - [21. Which components define what in the overall CRSS ?](#21-which-components-define-what-in-the-overall-crss)
+
+Version: v3.0.0
+Status: Informative
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -25,15 +50,15 @@ CRSS-Python introduces architecture, rules, and governance to control risks and 
 
 ## 3. Does CRSS-Python certify Python applications for ASIL-D / SIL3?
 CRSS-Python enables Python to be used in:
-✅ ASIL-D supervisory roles  
-✅ SIL3 supervisory/control roles  
-✅ IEC 62304 Class C (multi-layer systems)  
-✅ DO-278 ground systems  
+✅ ASIL-D supervisory roles
+✅ SIL3 supervisory/control roles
+✅ IEC 62304 Class C (multi-layer systems)
+✅ DO-278 ground systems
 
 However, it **does not certify** Python for:
-❌ Primary actuation loops (e.g., braking, flight control)  
-❌ Single-channel safety enforcement  
-❌ Hard real-time DAL A avionics  
+❌ Primary actuation loops (e.g., braking, flight control)
+❌ Single-channel safety enforcement
+❌ Hard real-time DAL A avionics
 
 Python must operate as part of a **multilayer safety architecture**.
 
@@ -67,17 +92,17 @@ Critical code **may not call non-critical code**.
 
 ## 6. What is `@non_critical_phase`?
 It marks pre/post-critical functions where:
-✅ Initialization  
-✅ Object creation  
-✅ File I/O  
-✅ Configuration  
+✅ Initialization
+✅ Object creation
+✅ File I/O
+✅ Configuration
 
 are allowed **before** critical execution begins.
 
 However:
-❌ Strict-A rules still apply  
-❌ MUST violations remain blocking  
-❌ Critical code cannot call non-critical code  
+❌ Strict-A rules still apply
+❌ MUST violations remain blocking
+❌ Critical code cannot call non-critical code
 
 ---
 
@@ -85,31 +110,31 @@ However:
 ❌ No.
 
 The standard covers Python **3.9–3.12**, but each project MUST:
-✅ Select exactly one version  
-✅ Freeze it in the CBM  
-✅ Never change it after approval  
+✅ Select exactly one version
+✅ Freeze it in the CBM
+✅ Never change it after approval
 
 Switching versions = new baseline + new certification.
 
 ---
 
 ## 8. Does CRSS-Python allow hotfixes?
-❌ No hotfixes.  
-❌ No patch-in-production.  
+❌ No hotfixes.
+❌ No patch-in-production.
 ❌ No runtime edits.
 
 Any change → new:
-✅ CBM  
-✅ Release  
-✅ Compliance cycle  
+✅ CBM
+✅ Release
+✅ Compliance cycle
 
 This ensures reproducibility and safety traceability.
 
 ---
 
 ## 9. Is automated deployment allowed?
-✅ In TEST environment  
-❌ Never in PROD  
+✅ In TEST environment
+❌ Never in PROD
 
 Prod deployments must be:
 - Manual approval
@@ -119,19 +144,19 @@ Prod deployments must be:
 ---
 
 ## 10. Can Python install dependencies at runtime?
-❌ Absolutely not.  
+❌ Absolutely not.
 Runtime installation (pip, apt, conda, etc.) is prohibited.
 
 Dependencies must be:
-✅ Frozen  
-✅ Private repository  
-✅ Version-locked  
+✅ Frozen
+✅ Private repository
+✅ Version-locked
 
 ---
 
 ## 11. Can CRSS-Python software use threads?
-In Strict-A `@critical`: ❌ No  
-In Strict: ⚠ Allowed with restrictions  
+In Strict-A `@critical`: ❌ No
+In Strict: ⚠ Allowed with restrictions
 In Core: ✅ Allowed
 
 Strict-A requires single-threaded critical execution to guarantee determinism.
@@ -160,11 +185,11 @@ BLOCKER = certification failure.
 
 ## 14. How do we know if a project is compliant?
 A project is compliant only if:
-✅ Compliance phases completed  
-✅ SCEM complete  
-✅ CRC approved  
-✅ CBM frozen  
-✅ Toolchain fixed  
+✅ Compliance phases completed
+✅ SCEM complete
+✅ CRC approved
+✅ CBM frozen
+✅ Toolchain fixed
 
 Compliance is **binary**:
 ✅ PASS or ❌ FAIL
@@ -202,12 +227,12 @@ It is a **coding and software governance standard**, not a full system-level saf
 ---
 
 ## 18. Where do I start?
-1. Read Unified Safety Spec v3.0.0  
-2. Assign Modes in MAR  
-3. Annotate `@critical` and `@non_critical_phase`  
-4. Generate SCEM  
-5. Freeze CBM  
-6. Begin compliance cycle  
+1. Read Unified Safety Spec v3.0.0
+2. Assign Modes in MAR
+3. Annotate `@critical` and `@non_critical_phase`
+4. Generate SCEM
+5. Freeze CBM
+6. Begin compliance cycle
 
 ---
 
@@ -230,4 +255,3 @@ Yes. As of 2025, it is the **most comprehensive and strict Python safety framewo
 - Core + Strict define the what
 - Phase model + scopes + phase-aware notes define the how and where
 - SCEM / compliance process define the proof
-

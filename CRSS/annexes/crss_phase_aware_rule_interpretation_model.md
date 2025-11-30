@@ -1,7 +1,22 @@
-# CRSS Phase-Aware Rule Interpretation Model  
-Version: 1.0  
-Status: Normative  
-© 2025 Sofian Daghsen — All rights reserved  
+# CRSS Phase-Aware Rule Interpretation Model
+
+## Table of Contents
+
+- [CRSS Phase-Aware Rule Interpretation Model](#crss-phase-aware-rule-interpretation-model)
+  - [1. Interpretation in `@critical` Code](#1-interpretation-in-critical-code)
+    - [❌ Forbidden in Critical Code](#❌-forbidden-in-critical-code)
+    - [Critical Code Principle](#critical-code-principle)
+  - [2. Interpretation in Non-Critical Code](#2-interpretation-in-non-critical-code)
+    - [✅ Permitted in Non-Critical Code](#✅-permitted-in-non-critical-code)
+  - [3. Meaning for Compliance Tools](#3-meaning-for-compliance-tools)
+    - [📌 Tool Interpretation Matrix](#📌-tool-interpretation-matrix)
+  - [4. Meaning for Human Review](#4-meaning-for-human-review)
+  - [5. Meaning for Runtime / Architecture](#5-meaning-for-runtime-architecture)
+  - [Summary](#summary)
+
+Version: 1.0
+Status: Normative
+© 2025 Sofian Daghsen — All rights reserved
 
 ---
 
@@ -9,36 +24,36 @@ A rule marked **`Scope: all_code (phase-aware)`** **shall be interpreted using t
 
 ---
 
-## 1. Interpretation in `@critical` Code  
+## 1. Interpretation in `@critical` Code
 Applicable to:
 
-- Strict-A critical functions  
-- Core-profile code explicitly marked as critical (Core-critical)  
+- Strict-A critical functions
+- Core-profile code explicitly marked as critical (Core-critical)
 - Any function identified as critical in the Mode Assignment Register (MAR)
 
 When inside a **critical execution phase**, a phase-aware rule is enforced at **maximum strictness**:
 
 ### ❌ Forbidden in Critical Code
 
-- **I/O of any kind**  
-  - filesystem  
-  - network  
-  - database  
-  - IPC  
-- **Blocking operations**  
-  - locks  
-  - waits  
-  - condition variables  
-  - blocking queues  
-- **Dynamic memory allocation** beyond trivial proven-bounded temporaries  
-- **Subprocess invocation / OS commands**  
-- **Environment variable access**  
-- **Runtime scheduling-dependent behavior**  
-- **Operations that may trigger GC**  
-- **Unbounded or non-deterministic timing operations**  
-- **String or collection growth** beyond statically provable limits  
-- **Cache interaction** except read-only access to bounded structures  
-- **Interaction with external systems** of any kind  
+- **I/O of any kind**
+  - filesystem
+  - network
+  - database
+  - IPC
+- **Blocking operations**
+  - locks
+  - waits
+  - condition variables
+  - blocking queues
+- **Dynamic memory allocation** beyond trivial proven-bounded temporaries
+- **Subprocess invocation / OS commands**
+- **Environment variable access**
+- **Runtime scheduling-dependent behavior**
+- **Operations that may trigger GC**
+- **Unbounded or non-deterministic timing operations**
+- **String or collection growth** beyond statically provable limits
+- **Cache interaction** except read-only access to bounded structures
+- **Interaction with external systems** of any kind
 
 ### Critical Code Principle
 
@@ -46,34 +61,34 @@ When inside a **critical execution phase**, a phase-aware rule is enforced at **
 
 ---
 
-## 2. Interpretation in Non-Critical Code  
+## 2. Interpretation in Non-Critical Code
 
 Phase-aware rules still apply, but with **operational relaxation**.
 
 ### ✅ Permitted in Non-Critical Code
 
-- File / network I/O  
-- Memory allocation & object creation  
-- Caching, buffering, lookup tables  
-- Subprocess invocation  
-- Configuration loading  
-- Platform / environment access  
+- File / network I/O
+- Memory allocation & object creation
+- Caching, buffering, lookup tables
+- Subprocess invocation
+- Configuration loading
+- Platform / environment access
 
 However, these allowances are valid only if:
 
-1. **All other rule semantics remain respected**  
+1. **All other rule semantics remain respected**
    - (e.g., security, correctness, boundedness, purity constraints)
 
-2. **No dynamic / non-deterministic behavior leaks into critical execution**  
-   - results must be validated  
+2. **No dynamic / non-deterministic behavior leaks into critical execution**
+   - results must be validated
    - results must be frozen or immutable before entering critical execution
 
-3. **Non-critical effects MUST NOT occur during a critical phase**  
+3. **Non-critical effects MUST NOT occur during a critical phase**
    - All external interactions must happen strictly **before** or **after** each critical call.
 
 ---
 
-## 3. Meaning for Compliance Tools  
+## 3. Meaning for Compliance Tools
 
 A **phase-aware rule** MUST be evaluated in two contexts:
 
@@ -84,7 +99,6 @@ A **phase-aware rule** MUST be evaluated in two contexts:
 | **Critical**     | *Stricter interpretation:* I/O forbidden, allocation forbidden, boundedness MUST be statically provable, determinism required |
 | **Non-Critical** | *Normal interpretation:* I/O & allocation allowed, but rule semantics still enforced; must ensure no leakage into critical |
 
-
 Tools must:
 
 - identify critical regions (via annotations: `@critical`, MAR rules)
@@ -94,7 +108,7 @@ Tools must:
 
 ---
 
-## 4. Meaning for Human Review  
+## 4. Meaning for Human Review
 
 Human reviewers must apply this principle:
 
@@ -108,7 +122,7 @@ Meaning:
 
 ---
 
-## 5. Meaning for Runtime / Architecture  
+## 5. Meaning for Runtime / Architecture
 
 A phase-aware rule MUST guarantee:
 
@@ -118,7 +132,7 @@ A phase-aware rule MUST guarantee:
   - If MAR classifies a function as critical, phase-aware strictness applies.
   - If MAR classifies a function as non-critical, relaxed interpretation applies — but rule still applies.
 
-> **Phase boundaries (critical / non-critical) are architectural—  
+> **Phase boundaries (critical / non-critical) are architectural—
 > not dynamic, not implicit, not inferred by tools.**
 
 ---
@@ -127,10 +141,9 @@ A phase-aware rule MUST guarantee:
 
 This model ensures:
 
-- Deterministic and analyzable critical behavior  
-- Safe operational flexibility outside critical regions  
-- No surprises for tooling or certification reviewers  
+- Deterministic and analyzable critical behavior
+- Safe operational flexibility outside critical regions
+- No surprises for tooling or certification reviewers
 - Full alignment with CRSS Mode semantics (Core/Strict × Phase)
 
 It is now the **normative interpretation model** used across CRSS-Python for any rule tagged with:
-

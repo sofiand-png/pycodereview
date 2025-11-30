@@ -1,8 +1,34 @@
-
 # CRSS-Python Study Path & Learning Curriculum
-Version: v3.0.0  
-Status: Informative  
-© 2025 Sofian Daghsen – All rights reserved  
+
+## Table of Contents
+
+- [CRSS-Python Study Path & Learning Curriculum](#crss-python-study-path-learning-curriculum)
+- [✅ Overview](#✅-overview)
+- [✅ Stage 1 — Foundation (Beginner)](#✅-stage-1-foundation-beginner)
+    - [📌 Learning Objectives](#📌-learning-objectives)
+    - [📚 Required Reading](#📚-required-reading)
+    - [🧩 Skills Gained](#🧩-skills-gained)
+- [✅ Stage 2 — Practitioner (Core Profile)](#✅-stage-2-practitioner-core-profile)
+    - [📌 Learning Objectives](#📌-learning-objectives)
+    - [📚 Required Reading](#📚-required-reading)
+    - [🧩 Hands-On Tasks](#🧩-hands-on-tasks)
+- [✅ Stage 3 — Advanced (Strict Profile)](#✅-stage-3-advanced-strict-profile)
+    - [📌 Learning Objectives](#📌-learning-objectives)
+    - [📚 Required Reading](#📚-required-reading)
+    - [🧩 Hands-On Tasks](#🧩-hands-on-tasks)
+- [✅ Stage 4 — Specialist (Strict-A)](#✅-stage-4-specialist-strict-a)
+    - [📌 Learning Objectives](#📌-learning-objectives)
+    - [📚 Required Reading](#📚-required-reading)
+    - [🧩 Hands-On Tasks](#🧩-hands-on-tasks)
+- [✅ Stage 5 — Auditor/Expert](#✅-stage-5-auditorexpert)
+    - [📌 Learning Objectives](#📌-learning-objectives)
+    - [📚 Required Reading](#📚-required-reading)
+    - [🧩 Hands-On Tasks](#🧩-hands-on-tasks)
+- [✅ Summary](#✅-summary)
+
+Version: v3.0.0
+Status: Informative
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -12,11 +38,11 @@ This curriculum provides a structured learning path from **zero knowledge** to *
 
 It is divided into five stages:
 
-1️⃣ Foundation  
-2️⃣ Practitioner  
-3️⃣ Advanced  
-4️⃣ Specialist (Strict-A)  
-5️⃣ Auditor/Expert  
+1️⃣ Foundation
+2️⃣ Practitioner
+3️⃣ Advanced
+4️⃣ Specialist (Strict-A)
+5️⃣ Auditor/Expert
 
 Each stage builds on the previous one.
 
@@ -135,10 +161,10 @@ Each stage builds on the previous one.
 
 This curriculum:
 
-✅ Provides a step-by-step path  
-✅ Supports all roles (developer → auditor)  
-✅ Aligns with the v3.0.0 framework  
-✅ Prepares teams for real-world certification  
+✅ Provides a step-by-step path
+✅ Supports all roles (developer → auditor)
+✅ Aligns with the v3.0.0 framework
+✅ Prepares teams for real-world certification
 
 CRSS-Python isn’t just rules — it’s a guided journey toward safe, reliable, and certifiable software.
 
