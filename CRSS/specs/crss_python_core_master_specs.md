@@ -4,9 +4,226 @@ Status: Early Public Release (Rule IDs stable; text may evolve)
 © 2025 Sofian Daghsen – All rights reserved
 Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
-
-
 # CRSS-Python Core Profile
+
+## Table of Contents
+
+  - [0.1 Purpose and Objectives](#01-purpose-and-objectives)
+  - [0.2 What Core Is Not](#02-what-core-is-not)
+  - [0.3 Relation to Strict](#03-relation-to-strict)
+- [0.4 Versioning and Rule ID Stability](#04-versioning-and-rule-id-stability)
+  - [0.5 Chapter Structure and ID Ranges](#05-chapter-structure-and-id-ranges)
+  - [0.6 Companion Documents and Annexes](#06-companion-documents-and-annexes)
+  - [0.7 Tooling](#07-tooling)
+  - [0.8 Python Version Scope](#08-python-version-scope)
+  - [0.9 Project-Declared Python Target Range](#09-project-declared-python-target-range)
+- [1. Scope & Goals](#1-scope-goals)
+- [2. Rule Model](#2-rule-model)
+- [3. Core Language Usage](#3-core-language-usage)
+  - [CRSS-3.1.1 - Avoid runtime code generation](#crss-311-avoid-runtime-code-generation)
+  - [CRSS-3.1.2 - Constrain dynamic imports](#crss-312-constrain-dynamic-imports)
+  - [CRSS-3.1.3 - No runtime monkeypatching of imported modules](#crss-313-no-runtime-monkeypatching-of-imported-modules)
+  - [CRSS-3.1.4 - Limit lambda usage to simple local expressions](#crss-314-limit-lambda-usage-to-simple-local-expressions)
+  - [CRSS-3.1.5 - Identifiers shall not reuse reserved keywords or builtins](#crss-315-identifiers-shall-not-reuse-reserved-keywords-or-builtins)
+  - [CRSS-3.1.6 – Ban custom metaclasses in Strict](#crss-316-ban-custom-metaclasses-in-strict)
+  - [CRSS-3.2.1 - Reflection shall not drive high-level control flow](#crss-321-reflection-shall-not-drive-high-level-control-flow)
+  - [CRSS-3.2.2 - globals/locals/vars for introspection only](#crss-322-globalslocalsvars-for-introspection-only)
+  - [CRSS-3.2.3 - Cross-profile import policy](#crss-323-cross-profile-import-policy)
+  - [CRSS-3.3.1 - Assignment expressions (walrus) limited / forbidden](#crss-331-assignment-expressions-walrus-limited-forbidden)
+  - [CRSS-3.4.1 - Inheritance across profiles](#crss-341-inheritance-across-profiles)
+- [4. Error Handling, Exceptions & Control Flow](#4-error-handling-exceptions-control-flow)
+  - [CRSS-4.1.1 - Assertions not for runtime validation](#crss-411-assertions-not-for-runtime-validation)
+  - [CRSS-4.2.1 - No bare except:](#crss-421-no-bare-except)
+  - [CRSS-4.2.2 - except Exception requires explicit handling](#crss-422-except-exception-requires-explicit-handling)
+  - [CRSS-4.2.3 - Exceptions shall not be used for normal control flow](#crss-423-exceptions-shall-not-be-used-for-normal-control-flow)
+  - [CRSS-4.2.4 - Preserve exception context when re-raising](#crss-424-preserve-exception-context-when-re-raising)
+  - [CRSS-4.3.1 - Avoid multiple evaluations of function calls in one condition](#crss-431-avoid-multiple-evaluations-of-function-calls-in-one-condition)
+  - [CRSS-4.3.2 - Loop conditions should be free of hidden side effects](#crss-432-loop-conditions-should-be-free-of-hidden-side-effects)
+  - [CRSS-4.3.3 – Async only for non-hard-real-time paths](#crss-433-async-only-for-non-hard-real-time-paths)
+  - [CRSS-4.4.1 - Index bounds validation on externally derived indices](#crss-441-index-bounds-validation-on-externally-derived-indices)
+  - [CRSS-4.4.2 - Safe dictionary access for external keys](#crss-442-safe-dictionary-access-for-external-keys)
+  - [CRSS-4.4.3 - Safe unpacking and length assumptions](#crss-443-safe-unpacking-and-length-assumptions)
+- [4. Parsing & Data Validation (7.9.x)](#4-parsing-data-validation-79x)
+- [5. Types, Data & Interfaces](#5-types-data-interfaces)
+  - [CRSS-5.1.1 - Type hints on public APIs](#crss-511-type-hints-on-public-apis)
+  - [CRSS-5.1.2 - Constrain use of Any](#crss-512-constrain-use-of-any)
+  - [CRSS-5.1.3 – Use nominal interfaces (ABCs) for Strict code](#crss-513-use-nominal-interfaces-abcs-for-strict-code)
+  - [CRSS-5.1.4 – Control polymorphism and ban duck typing in Strict](#crss-514-control-polymorphism-and-ban-duck-typing-in-strict)
+  - [CRSS-5.1.5 - Restrict use of `typing.cast`](#crss-515-restrict-use-of-typingcast)
+  - [CRSS-5.1.6 – Explicit module exports via `__all__` in Strict](#crss-516-explicit-module-exports-via-all-in-strict)
+  - [CRSS-5.2.1 - Avoid hidden mutable global state](#crss-521-avoid-hidden-mutable-global-state)
+  - [CRSS-5.2.2 - No implicit side effects on import](#crss-522-no-implicit-side-effects-on-import)
+  - [CRSS-5.3.1 - Constrain nondeterministic random number generation](#crss-531-constrain-nondeterministic-random-number-generation)
+  - [CRSS-5.3.2 - No nondeterministic randomness in Strict code](#crss-532-no-nondeterministic-randomness-in-strict-code)
+  - [CRSS-5.3.3 - Cryptographic-strength randomness only via approved APIs](#crss-533-cryptographic-strength-randomness-only-via-approved-apis)
+  - [CRSS-5.3.4 - NaN/Inf checks on Strict numeric outputs](#crss-534-naninf-checks-on-strict-numeric-outputs)
+  - [CRSS-5.3.5 - Explicit range margins for safety-critical signals](#crss-535-explicit-range-margins-for-safety-critical-signals)
+  - [CRSS-5.3.6 - Unified internal time representation (UTC)](#crss-536-unified-internal-time-representation-utc)
+  - [CRSS-5.3.7 - Ban on naive datetimes in cross-boundary logic](#crss-537-ban-on-naive-datetimes-in-cross-boundary-logic)
+  - [CRSS-5.3.8 - Controlled date parsing and formatting](#crss-538-controlled-date-parsing-and-formatting)
+  - [CRSS-5.3.9 - Declared numeric precision and tolerance](#crss-539-declared-numeric-precision-and-tolerance)
+  - [CRSS-5.3.10 - Prefer fixed-point or decimal for exact domains](#crss-5310-prefer-fixed-point-or-decimal-for-exact-domains)
+  - [CRSS-5.4.1 - Avoid unbounded growth of in-memory collections](#crss-541-avoid-unbounded-growth-of-in-memory-collections)
+  - [CRSS-5.4.2 - Explicit lifecycle for large objects and buffers](#crss-542-explicit-lifecycle-for-large-objects-and-buffers)
+  - [CRSS-5.4.3 - Resource pools and caches must support explicit reset](#crss-543-resource-pools-and-caches-must-support-explicit-reset)
+  - [CRSS-5.4.4 – No silent failure](#crss-544-no-silent-failure)
+  - [CRSS-5.4.5 – Explicit preconditions and range checks](#crss-545-explicit-preconditions-and-range-checks)
+  - [CRSS-5.4.6 – Bounded heap usage for Strict processes](#crss-546-bounded-heap-usage-for-strict-processes)
+  - [CRSS-5.5.1 - Bounded memory usage for bulk data](#crss-551-bounded-memory-usage-for-bulk-data)
+  - [CRSS-5.5.2 - Chunked processing and pagination](#crss-552-chunked-processing-and-pagination)
+  - [CRSS-5.5.3 - Query efficiency and index awareness](#crss-553-query-efficiency-and-index-awareness)
+- [3. Robustness Against Index / Key / Buffer Errors (4.4.x)](#3-robustness-against-index-key-buffer-errors-44x)
+  - [CRSS-5.6.1 - Explicit cache policy and scope](#crss-561-explicit-cache-policy-and-scope)
+  - [CRSS-5.6.2 - Bounded cache size and eviction policy](#crss-562-bounded-cache-size-and-eviction-policy)
+  - [CRSS-5.6.3 - Freshness requirements for cached safety-relevant data](#crss-563-freshness-requirements-for-cached-safety-relevant-data)
+  - [CRSS-5.6.4 - Defined behavior on cache miss/failure](#crss-564-defined-behavior-on-cache-missfailure)
+  - [CRSS-5.6.5 - No hidden dependence on cache availability](#crss-565-no-hidden-dependence-on-cache-availability)
+  - [CRSS-5.7.1 – Document operating ranges and thresholds for safety-relevant signals](#crss-571-document-operating-ranges-and-thresholds-for-safety-relevant-signals)
+  - [CRSS-5.7.2 – Test behavior around thresholds and noise margins](#crss-572-test-behavior-around-thresholds-and-noise-margins)
+  - [CRSS-5.7.3 – Bound and document filter/processing latency](#crss-573-bound-and-document-filterprocessing-latency)
+- [6. Security Rules (Core)](#6-security-rules-core)
+  - [CRSS-6.1.1 - Dangerous functions and APIs](#crss-611-dangerous-functions-and-apis)
+  - [CRSS-6.1.2 - Hardcoded secrets](#crss-612-hardcoded-secrets)
+  - [CRSS-6.1.3 – Concurrency only via approved patterns](#crss-613-concurrency-only-via-approved-patterns)
+  - [CRSS-6.2.1 - Insecure HTTP and disabled TLS verification](#crss-621-insecure-http-and-disabled-tls-verification)
+  - [CRSS-6.2.3 – Prohibition of subprocess execution in Strict units](#crss-623-prohibition-of-subprocess-execution-in-strict-units)
+  - [CRSS-6.2.4 – Shell invocation forbidden](#crss-624-shell-invocation-forbidden)
+  - [CRSS-6.3.1 - Input validation for external data](#crss-631-input-validation-for-external-data)
+  - [CRSS-6.4.1 - Data classification and tagging](#crss-641-data-classification-and-tagging)
+  - [CRSS-6.4.2 - Encryption in transit and at rest for sensitive data](#crss-642-encryption-in-transit-and-at-rest-for-sensitive-data)
+  - [CRSS-6.4.3 - Redaction and minimization in logs](#crss-643-redaction-and-minimization-in-logs)
+  - [CRSS-6.4.4 - Access control for sensitive data flows](#crss-644-access-control-for-sensitive-data-flows)
+- [6. Network Failure Modes & Partial Operations](#6-network-failure-modes-partial-operations)
+  - [CRSS-6.4.5 - Approved key exchange and storage](#crss-645-approved-key-exchange-and-storage)
+  - [CRSS-6.4.6 - Key rotation and expiry](#crss-646-key-rotation-and-expiry)
+- [8. OS Interaction & Environment Variables (7.10.x)](#8-os-interaction-environment-variables-710x)
+  - [CRSS-6.4.7 - No long-lived caching of sensitive data](#crss-647-no-long-lived-caching-of-sensitive-data)
+  - [CRSS-6.4.8 - Cache isolation between tenants/security domains](#crss-648-cache-isolation-between-tenantssecurity-domains)
+  - [CRSS-6.4.9 – Centralize RBAC and access checks](#crss-649-centralize-rbac-and-access-checks)
+- [**CRSS-6.4.10 – Secret Storage & Lifecycle**](#crss-6410-secret-storage-lifecycle)
+- [**CRSS-6.4.11 – Password & Credential Policy**](#crss-6411-password-credential-policy)
+- [**CRSS-6.4.12 – Token & Session Lifetime Management**](#crss-6412-token-session-lifetime-management)
+- [**CRSS-6.4.13 – Authentication vs Authorization Separation**](#crss-6413-authentication-vs-authorization-separation)
+- [**CRSS-6.4.14 – Safety-Significant Action Authorization**](#crss-6414-safety-significant-action-authorization)
+- [7. Robustness & Portability](#7-robustness-portability)
+  - [CRSS-7.1.1 - Explicit encoding for text file I/O](#crss-711-explicit-encoding-for-text-file-io)
+  - [CRSS-7.1.2 - Use context managers for file I/O](#crss-712-use-context-managers-for-file-io)
+  - [CRSS-7.1.3 - Maximum length for external string inputs](#crss-713-maximum-length-for-external-string-inputs)
+  - [CRSS-7.1.4 - Encoding and Unicode handling](#crss-714-encoding-and-unicode-handling)
+  - [CRSS-7.1.5 - Special character and control character validation](#crss-715-special-character-and-control-character-validation)
+  - [CRSS-7.1.6 - Language and locale configuration](#crss-716-language-and-locale-configuration)
+  - [CRSS-7.2.1 - Avoid platform-specific hardcoded paths](#crss-721-avoid-platform-specific-hardcoded-paths)
+  - [CRSS-7.2.2 - Third-party dependency documentation](#crss-722-third-party-dependency-documentation)
+  - [CRSS-7.2.3 - Interface schema verification](#crss-723-interface-schema-verification)
+  - [CRSS-7.6.1 - Explicit architecture definition](#crss-761-explicit-architecture-definition)
+  - [CRSS-7.6.2 - Architecture Decision Records (ADR)](#crss-762-architecture-decision-records-adr)
+  - [CRSS-7.6.3 - Avoidance of single point of failure for critical paths](#crss-763-avoidance-of-single-point-of-failure-for-critical-paths)
+  - [CRSS-7.6.4 - Bounded retries and timeouts for network calls](#crss-764-bounded-retries-and-timeouts-for-network-calls)
+  - [CRSS-7.6.5 - Idempotent semantics for retried operations](#crss-765-idempotent-semantics-for-retried-operations)
+  - [CRSS-7.6.6 - Architecture responsibility and approval roles](#crss-766-architecture-responsibility-and-approval-roles)
+  - [CRSS-7.7.1 - No unmanaged global single connection for shared resources](#crss-771-no-unmanaged-global-single-connection-for-shared-resources)
+  - [CRSS-7.7.2 - Connection health check before use](#crss-772-connection-health-check-before-use)
+  - [CRSS-7.7.3 - Bounded reconnect policies](#crss-773-bounded-reconnect-policies)
+  - [CRSS-7.7.4 - Safe file transfer preconditions](#crss-774-safe-file-transfer-preconditions)
+  - [CRSS-7.8.1 - Stable service contracts and versioning](#crss-781-stable-service-contracts-and-versioning)
+  - [CRSS-7.8.2 - Bounded payload sizes and rates](#crss-782-bounded-payload-sizes-and-rates)
+  - [CRSS-7.8.3 - Circuit breakers and backpressure for critical dependencies](#crss-783-circuit-breakers-and-backpressure-for-critical-dependencies)
+  - [CRSS-7.8.4 - Latency budgets for critical network operations](#crss-784-latency-budgets-for-critical-network-operations)
+- [2. Big Data & Large Dataset Handling (5.5.x)](#2-big-data-large-dataset-handling-55x)
+  - [CRSS-7.8.5 - Distributed cache consistency for critical data](#crss-785-distributed-cache-consistency-for-critical-data)
+  - [CRSS-7.8.6 - Cache is never the source of truth](#crss-786-cache-is-never-the-source-of-truth)
+  - [CRSS-7.8.7 - Explicit HTTP caching directives](#crss-787-explicit-http-caching-directives)
+- [9. Summary](#9-summary)
+  - [CRSS-7.9.1 - Strict JSON parsing and schema validation](#crss-791-strict-json-parsing-and-schema-validation)
+  - [CRSS-7.9.2 - Explicit CSV dialect and header handling](#crss-792-explicit-csv-dialect-and-header-handling)
+  - [CRSS-7.9.3 - Handling malformed or binary-like text input](#crss-793-handling-malformed-or-binary-like-text-input)
+- [5. Sensitive Data Handling (6.4.x)](#5-sensitive-data-handling-64x)
+  - [CRSS-7.9.4 - Detection of partial network writes and reads](#crss-794-detection-of-partial-network-writes-and-reads)
+  - [CRSS-7.9.5 - Integrity checks for critical transfers](#crss-795-integrity-checks-for-critical-transfers)
+  - [CRSS-7.9.6 - Safe behavior on mid-operation disconnection](#crss-796-safe-behavior-on-mid-operation-disconnection)
+- [7. Key Exchange & Cryptographic Material (6.4.x continuation)](#7-key-exchange-cryptographic-material-64x-continuation)
+  - [CRSS-7.10.1 - Restricted operating system interaction](#crss-7101-restricted-operating-system-interaction)
+  - [CRSS-7.10.2 - Environment variables as configuration inputs](#crss-7102-environment-variables-as-configuration-inputs)
+  - [CRSS-7.10.3 - No hidden behavior toggles in environment](#crss-7103-no-hidden-behavior-toggles-in-environment)
+  - [CRSS-7.11.0 – Regex Usage in Critical Phases](#crss-7110-regex-usage-in-critical-phases)
+  - [CRSS-7.11.1 – Bounded Input for Regex Operations](#crss-7111-bounded-input-for-regex-operations)
+  - [CRSS-7.11.2 – Prohibited High-Complexity Regex Patterns](#crss-7112-prohibited-high-complexity-regex-patterns)
+  - [CRSS-7.11.3 – User-Supplied or Dynamic Regex Patterns](#crss-7113-user-supplied-or-dynamic-regex-patterns)
+  - [CRSS-7.11.4 – Regex Testing & Worst-Case Behavior](#crss-7114-regex-testing-worst-case-behavior)
+  - [CRSS-7.11.5 – SCEM Evidence for Regex Safety](#crss-7115-scem-evidence-for-regex-safety)
+- [Summary](#summary)
+- [8. Maintainability & Documentation](#8-maintainability-documentation)
+  - [CRSS-8.1.1 - Limit cyclomatic complexity](#crss-811-limit-cyclomatic-complexity)
+  - [CRSS-8.1.2 - Require docstrings on public APIs](#crss-812-require-docstrings-on-public-apis)
+  - [CRSS-8.2.1 - Do not shadow Python builtins or core types](#crss-821-do-not-shadow-python-builtins-or-core-types)
+- [9. Testing & Coverage Guidelines (Core)](#9-testing-coverage-guidelines-core)
+  - [9.0 Criticality Levels](#90-criticality-levels)
+  - [CRSS-9.1.1 - Target high branch coverage](#crss-911-target-high-branch-coverage)
+  - [CRSS-9.1.2 - Every bugfix must have a regression test](#crss-912-every-bugfix-must-have-a-regression-test)
+  - [CRSS-9.1.3 – Strict type checking for critical units (Strict)](#crss-913-strict-type-checking-for-critical-units-strict)
+- [**CRSS-9.2.1 – Authentication, Token & Session Negative Testing**](#crss-921-authentication-token-session-negative-testing)
+- [**CRSS-9.2.2 – SCEM Evidence for Authentication & Authorization**](#crss-922-scem-evidence-for-authentication-authorization)
+  - [CRSS-9.3.1 - MC/DC for Level A decisions](#crss-931-mcdc-for-level-a-decisions)
+  - [CRSS-9.3.2 - On-target / hardware-in-the-loop testing for Strict units](#crss-932-on-target-hardware-in-the-loop-testing-for-strict-units)
+  - [CRSS-9.4.1 - Guideline Compliance Summary (GCS)](#crss-941-guideline-compliance-summary-gcs)
+  - [CRSS-9.5.1 - Declared target platform set](#crss-951-declared-target-platform-set)
+  - [CRSS-9.5.2 - Full configuration testing matrix](#crss-952-full-configuration-testing-matrix)
+  - [CRSS-9.5.3 - Environment delta documentation](#crss-953-environment-delta-documentation)
+- [10. Python Version & Tooling Compatibility](#10-python-version-tooling-compatibility)
+  - [CRSS-10.1.1 - Declare target Python version range](#crss-1011-declare-target-python-version-range)
+  - [CRSS-10.1.2 - Static analysis uses the declared target version](#crss-1012-static-analysis-uses-the-declared-target-version)
+  - [CRSS-10.1.3 - No usage of features newer than the minimum supported version](#crss-1013-no-usage-of-features-newer-than-the-minimum-supported-version)
+  - [CRSS-10.1.4 - No use of removed or deprecated-in-target features](#crss-1014-no-use-of-removed-or-deprecated-in-target-features)
+  - [CRSS-10.2.1 - Analysis Python version may differ, but must be documented](#crss-1021-analysis-python-version-may-differ-but-must-be-documented)
+  - [CRSS-10.2.2 - Feature usage must be consistent with the declared profile](#crss-1022-feature-usage-must-be-consistent-with-the-declared-profile)
+  - [CRSS-10.3.1 - Frozen interpreter and OS configuration](#crss-1031-frozen-interpreter-and-os-configuration)
+  - [CRSS-10.3.2 - Interpreter conformance test suite for CRSS subset](#crss-1032-interpreter-conformance-test-suite-for-crss-subset)
+  - [CRSS-10.4.1 - No automated updates in deployed environments](#crss-1041-no-automated-updates-in-deployed-environments)
+  - [CRSS-10.4.2 - Frozen dependency set](#crss-1042-frozen-dependency-set)
+  - [CRSS-10.4.3 - Interpreter immutability](#crss-1043-interpreter-immutability)
+  - [CRSS-10.5.1 - Frozen container images](#crss-1051-frozen-container-images)
+  - [CRSS-10.5.2 - Single-purpose containers for Strict execution](#crss-1052-single-purpose-containers-for-strict-execution)
+  - [CRSS-12.0.1 - Compliance Process Requirement](#crss-1201-compliance-process-requirement)
+  - [CRSS-12.0.2 - Safety Baseline Establishment](#crss-1202-safety-baseline-establishment)
+  - [CRSS-12.0.3 - Artifact Versioning](#crss-1203-artifact-versioning)
+  - [CRSS-12.0.4 - Mandatory Artifact Completeness](#crss-1204-mandatory-artifact-completeness)
+  - [CRSS-12.0.5 - Artifact-to-Baseline Linkage](#crss-1205-artifact-to-baseline-linkage)
+  - [CRSS-12.0.6 - Re-Approval Requirement](#crss-1206-re-approval-requirement)
+  - [CRSS-12.0.7 - Private Dependency Repository](#crss-1207-private-dependency-repository)
+  - [CRSS-12.0.8 - Reproducible Build Requirement](#crss-1208-reproducible-build-requirement)
+  - [CRSS-12.0.9 - Interpreter Version Range with Single-Baseline Freeze](#crss-1209-interpreter-version-range-with-single-baseline-freeze)
+  - [CRSS-12.1.1 - Unified Versioning](#crss-1211-unified-versioning)
+  - [CRSS-12.1.2 - Interpreter Version Range with Single-Baseline Freeze](#crss-1212-interpreter-version-range-with-single-baseline-freeze)
+  - [CRSS-12.1.3 - Emergency Release](#crss-1213-emergency-release)
+  - [CRSS-12.1.4 - Scope Limitation](#crss-1214-scope-limitation)
+  - [CRSS-12.1.5 - Backport Requirement](#crss-1215-backport-requirement)
+- [CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3](#crss-541-crss-542-crss-543)
+  - [Phase-Aware Interpretation Note — Collections & Allocation](#phase-aware-interpretation-note-collections-allocation)
+  - [**Critical Phase**](#critical-phase)
+  - [**Non-Critical Phase**](#non-critical-phase)
+- [CRSS-5.5.2 / CRSS-5.5.3](#crss-552-crss-553)
+  - [Phase-Aware Interpretation Note — Big Data & Queries](#phase-aware-interpretation-note-big-data-queries)
+  - [**Critical Phase**](#critical-phase)
+  - [**Non-Critical Phase**](#non-critical-phase)
+- [Cache Rules (CRSS-5.6.1 / 5.6.2 / 5.6.3 / 7.8.5 / 7.8.6)](#cache-rules-crss-561-562-563-785-786)
+  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
+  - [**Critical Phase**](#critical-phase)
+  - [**Non-Critical Phase**](#non-critical-phase)
+- [Network & Microservices](#network-microservices)
+  - [(CRSS-7.6.4 / 7.6.5 / 7.7.x / 7.8.2–7.8.4 / 7.9.4–7.9.6)](#crss-764-765-77x-782-784-794-796)
+  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
+  - [**Critical Phase**](#critical-phase)
+  - [**Non-Critical Phase**](#non-critical-phase)
+- [Parsing & Transfer Integrity](#parsing-transfer-integrity)
+  - [(CRSS-7.9.1–7.9.3 / 7.9.5)](#crss-791-793-795)
+  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
+  - [**Critical Phase**](#critical-phase)
+  - [**Non-Critical Phase**](#non-critical-phase)
+- [OS & Environment Interaction](#os-environment-interaction)
+  - [(CRSS-7.10.1 / 7.10.2)](#crss-7101-7102)
+  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
+  - [**Critical Phase**](#critical-phase)
+  - [**Non-Critical Phase**](#non-critical-phase)
 
 **CRSS-Python** (Critical Reliability & Security Standard for Python)
 defines a family of coding standards and profiles to improve robustness,
@@ -28,38 +245,38 @@ the **CRSS-Python Strict** profile.
 
 The **CRSS-Python Core** profile establishes a baseline safety and reliability rule set for Python projects that require:
 
-- Defect reduction  
-- Predictable behavior  
-- Static analyzability  
-- Secure coding practices  
-- Long-term maintainability  
+- Defect reduction
+- Predictable behavior
+- Static analyzability
+- Secure coding practices
+- Long-term maintainability
 
 Its objectives are:
 
-- **Reduce common Python failure modes**  
+- **Reduce common Python failure modes**
   such as dynamic surprises, silent type coercion, unsafe mutation, and unchecked exceptions.
 
-- **Promote deterministic, testable software**  
+- **Promote deterministic, testable software**
   by encouraging explicit state, traceable flow, and defensive design.
 
-- **Enable automated code review and compliance**  
+- **Enable automated code review and compliance**
   via rules that are directly enforceable by tools like *pycodereview*.
 
-- **Provide a foundation for higher assurance profiles**  
+- **Provide a foundation for higher assurance profiles**
   such as CRSS-Python Strict.
 
-- **Remain broadly usable**  
+- **Remain broadly usable**
   across non-critical and mixed-criticality systems without prohibitive cost.
 
 ### 0.2 What Core Is Not
 
-- It is **not** a formal certification standard.  
-- It is **not** a performance or optimization guide.  
-- It **does not** enforce the extreme constraints required for mission-critical logic (that is Strict’s role).  
+- It is **not** a formal certification standard.
+- It is **not** a performance or optimization guide.
+- It **does not** enforce the extreme constraints required for mission-critical logic (that is Strict’s role).
 
 ### 0.3 Relation to Strict
 
-- **Strict builds on Core.**  
+- **Strict builds on Core.**
 - Core can be used alone for general reliability, while Strict applies to critical paths requiring the highest assurance.
 
 ## 0.4 Versioning and Rule ID Stability
@@ -112,7 +329,6 @@ Additional guidance and process details are provided in companion documents:
 Where there is any conflict between this specification and a companion document,
 **this specification is authoritative for the meaning and applicability of CRSS rule IDs**.
 
-
 ### 0.7 Tooling
 CRSS-Python is tool-independent.
 pycodereview is a reference implementation that can enforce CRSS profiles (Core and Strict).
@@ -124,7 +340,7 @@ CRSS-Python Core v0.1.0 defines rules for a stable subset of the Python
 language. To ensure deterministic behaviour and consistent analysis,
 this specification is defined for:
 
-- **Interpreter:** CPython  
+- **Interpreter:** CPython
 - **Supported Python versions (normative):** 3.9–3.12 (inclusive)
 
 Within this range, CRSS-Core rules and their intended semantics are
@@ -136,10 +352,10 @@ user’s risk and is not covered by this specification.
 Each project applying CRSS-Core MUST declare the Python versions it
 intends to support. This **project-declared range** is expressed as:
 
-- `target_python_min` – lowest supported Python version  
+- `target_python_min` – lowest supported Python version
 - `target_python_max` – highest supported Python version
 
-The project-declared range expresses the Python versions the project 
+The project-declared range expresses the Python versions the project
 claims to support at runtime, deployment, testing, and certification.
 
 The following constraints apply:
@@ -158,7 +374,7 @@ The following constraints apply:
    - warn or reject configurations where the project-declared range is
      incompatible with the CRSS-Core version in use.
 4. CRSS v0.1.0 requires that projects declare a continuous Python version
-   range [min, max] fully contained within the CRSS-supported range.  
+   range [min, max] fully contained within the CRSS-supported range.
    Non-contiguous version sets (e.g. {3.9, 3.11} without 3.10) are not
    considered CRSS-compliant in v0.1.0.
 
@@ -166,8 +382,6 @@ This separation between **spec range** and **project range** ensures that
 CRSS-Core remains stable and conservative at the standard level, while each
 project can make precise and auditable claims about the Python versions it
 supports.
-
-
 
 ------------------------------------------------------------------------
 
@@ -214,8 +428,6 @@ This document is the **canonical catalog** of CRSS rules.
 The **Strict** profile reuses these IDs with stronger requirements and
 adds a small number of Strict-only rules (see `crss_python_strict.md`).
 
-
-
 ------------------------------------------------------------------------
 
 ## 3. Core Language Usage
@@ -227,12 +439,13 @@ adds a small number of Strict-only rules (see `crss_python_strict.md`).
 -   **Profiles**:
     -   Core: MUST-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Use of `eval()` and `exec()` is forbidden in production logic. It may be
 allowed in isolated tooling scripts or REPL helpers that are clearly
 separated from main application code (for example, dev-only notebooks).
 
-**Rationale**
+**Rationale**:
 
 Dynamic code generation is extremely hard to analyze, easy to misuse,
 and a major security risk when combined with untrusted input.
@@ -244,7 +457,7 @@ result = eval(user_input)
 exec(config_snippet)
 ```
 
-**Compliant**
+**Compliant**:
 
 ``` python
 # Use explicit parsing:
@@ -262,6 +475,7 @@ OPERATORS[op](a, b)
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Dynamic imports like `importlib.import_module(name)` where name is not a
 literal string should be avoided in Core code and are forbidden in
@@ -273,7 +487,7 @@ Strict code.
 module = importlib.import_module(plugin_name)  # plugin_name from user
 ```
 
-**Compliant**
+**Compliant**:
 
 ``` python
 ALLOWED_PLUGINS = {
@@ -290,6 +504,7 @@ module = importlib.import_module(ALLOWED_PLUGINS[plugin_name])
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Rebinding functions, methods, or attributes of imported modules at
 runtime is strongly discouraged in Core and forbidden in Strict code,
@@ -308,13 +523,13 @@ math.sin = custom_sin  # monkeypatching
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 In the Core profile, lambda usage is reported as warning.
 
 `lambda` expressions shall not be used in Strict units or functions
 annotated `@critical`. Use named functions instead. This improves
 traceability, stack traces, logging, and static analysis.
-
 
 **Non-compliant (Core)**
 
@@ -326,7 +541,7 @@ handler = lambda req: (
 )
 ```
 
-**Compliant**
+**Compliant**:
 
 ``` python
 def choose_handler(req: Request) -> Response:
@@ -341,18 +556,19 @@ handler = choose_handler
 
 ### CRSS-3.1.5 - Identifiers shall not reuse reserved keywords or builtins
 
-- **Category**: Core Language Usage / Maintainability  
-- **Type**: Static  
+- **Category**: Core Language Usage / Maintainability
+- **Type**: Static
 - **Profiles**:
+- **Scope**: all_code
   - Core: MUST-NOT
   - Strict: MUST-NOT
 
 Identifiers for variables, functions, methods, classes and modules shall not:
 
-- reuse Python reserved keywords (e.g. `class`, `async`, `await`, `yield`, `global`, ...), or  
+- reuse Python reserved keywords (e.g. `class`, `async`, `await`, `yield`, `global`, ...), or
 - shadow builtins such as `list`, `dict`, `len`, `sum`, `id`, `type`, `input`, `open`, etc.
 
-**Rationale**
+**Rationale**:
 
 Shadowing reserved keywords or builtins reduces code clarity, complicates static analysis
 and can lead to subtle runtime failures when the original builtin is expected.
@@ -365,7 +581,7 @@ list = [1, 2, 3]
 def len(x): ...
 ```
 
-**Compliant**
+**Compliant**:
 
 ``` items_list = [1, 2, 3]
 
@@ -375,18 +591,18 @@ def length(value: str) -> int:
 
 ### CRSS-3.1.6 – Ban custom metaclasses in Strict
 
-- **Category**: Dynamic Features / Metaprogramming  
-- **Type**: Static  
-- **Profiles**:  
-  - Core: SHOULD-NOT  
-  - Strict: MUST-NOT  
+- **Category**: Dynamic Features / Metaprogramming
+- **Type**: Static
+- **Profiles**:
+  - Core: SHOULD-NOT
+  - Strict: MUST-NOT
 
 **Rule**
 
-- In the **Strict** profile, user-defined or third-party **custom metaclasses** MUST NOT be used in safety-relevant code.  
+- In the **Strict** profile, user-defined or third-party **custom metaclasses** MUST NOT be used in safety-relevant code.
 - Only a small, explicitly-defined whitelist of standard library metaclasses (e.g. `abc.ABCMeta`) **MAY** be allowed, and only if:
-  - They are used in a simple, conventional way (for declaring abstract methods), and  
-  - Their behavior is well understood and documented in the safety case.  
+  - They are used in a simple, conventional way (for declaring abstract methods), and
+  - Their behavior is well understood and documented in the safety case.
 - In the **Core** profile, metaclasses SHOULD-NOT be used. If they are used, their behavior MUST be:
   - Documented,
   - Limited to non-safety-critical modules,
@@ -396,9 +612,9 @@ def length(value: str) -> int:
 
 Metaclasses can arbitrarily alter class creation and behavior at runtime. This makes code:
 
-- Harder to reason about statically  
-- More difficult to analyze and verify  
-- Vulnerable to hidden behavior changes  
+- Harder to reason about statically
+- More difficult to analyze and verify
+- Vulnerable to hidden behavior changes
 
 In a safety standard, classes must be **predictable, explicit, and analyzable**. Metaclasses are therefore incompatible with Strict, except for tightly-controlled whitelisted cases.
 
@@ -433,6 +649,7 @@ class SafetyInterface(ABC):
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Avoid using `getattr`, `setattr`, `globals()`, `locals()`, or `vars()`
 as primary drivers of control flow.
@@ -461,11 +678,12 @@ ACTIONS[cmd]()
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-3.2.3 - Cross-profile import policy
 
-- **Category**: Modules & Dependencies  
-- **Type**: Static / Process  
+- **Category**: Modules & Dependencies
+- **Type**: Static / Process
 - **Profiles**:
   - Core: SHOULD
   - Strict: MUST
@@ -489,6 +707,7 @@ See also: *CRSS Import Policy* (`docs/annexes/crss_import_policy.md`) for policy
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 The `:=` assignment expression (walrus operator, Python ≥ 3.8) must not be
 used in Strict code. In Core code, its use should be limited to **simple,
@@ -519,15 +738,15 @@ while True:
 
 ### CRSS-3.4.1 - Inheritance across profiles
 
-- **Category**: Design / Types  
-- **Type**: Static / Process  
+- **Category**: Design / Types
+- **Type**: Static / Process
 - **Profiles**:
   - Core: SHOULD
   - Strict: MUST
 
 Inheritance relationships between Core and Strict classes SHALL follow these principles:
 
-- A Strict class SHOULD-NOT inherit from a Core class.  
+- A Strict class SHOULD-NOT inherit from a Core class.
 - A Core class MAY inherit from a Strict class.
 
 For Strict code:
@@ -544,8 +763,6 @@ the critical unit. Core → Strict is safer because Strict provides stronger gua
 
 See also: *CRSS Inheritance Policy* (`docs/annexes/crss_inheritance_policy.md`) for policy modes and examples.
 
-
-
 ------------------------------------------------------------------------
 
 ## 4. Error Handling, Exceptions & Control Flow
@@ -557,6 +774,7 @@ See also: *CRSS Inheritance Policy* (`docs/annexes/crss_inheritance_policy.md`) 
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-4.2.1 - No bare except:
 
@@ -565,6 +783,7 @@ See also: *CRSS Inheritance Policy* (`docs/annexes/crss_inheritance_policy.md`) 
 -   **Profiles**:
     -   Core: MUST-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 **Non-compliant**
 
@@ -592,6 +811,7 @@ except (IOError, ValueError) as exc:
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-4.2.3 - Exceptions shall not be used for normal control flow
 
@@ -600,6 +820,7 @@ except (IOError, ValueError) as exc:
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-4.2.4 - Preserve exception context when re-raising
 
@@ -608,11 +829,12 @@ except (IOError, ValueError) as exc:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 When an exception is re-raised or converted to another type, the
 original context (stack trace and message) should be preserved using
 either bare `raise` or exception chaining (`raise NewError(...) from exc`).
-Losing context makes diagnosis and forensics significantly harder.	
+Losing context makes diagnosis and forensics significantly harder.
 
 ### CRSS-4.3.1 - Avoid multiple evaluations of function calls in one condition
 
@@ -621,6 +843,7 @@ Losing context makes diagnosis and forensics significantly harder.
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 A function with potential **side effects** or non-trivial cost shall not
 be called more than once within a single boolean expression or condition.
@@ -656,6 +879,7 @@ if ready and not_ready_condition(ready):
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Loop conditions (`while` and `for` with generator expressions) should not rely
 on function calls that perform non-trivial side effects. Side effects
@@ -686,11 +910,11 @@ while True:
 
 ### CRSS-4.3.3 – Async only for non-hard-real-time paths
 
-- **Category**: Async  
-- **Type**: Static  
+- **Category**: Async
+- **Type**: Static
 - **Profiles**:
   - Core: SHOULD
-  - Strict: MUST  
+  - Strict: MUST
 
 Time-critical logic must be synchronous and deterministic.
 `async`/`await` may be used for coordination layers or non-critical
@@ -698,19 +922,18 @@ paths, not for core safety decisions.
 
 ------------------------------------------------------------------------
 
-
-
 ### CRSS-4.4.1 - Index bounds validation on externally derived indices
 
--   **Category**: Defensive Programming  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Defensive Programming
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Where list or array indices are derived from external data (user input, network, files), Strict code shall:
 
-- validate that indices are within valid bounds before access, or  
+- validate that indices are within valid bounds before access, or
 - use safe patterns (`for element in sequence`) instead of direct indexing.
 
 Blind indexing based on external offsets without validation is forbidden.
@@ -719,16 +942,17 @@ Blind indexing based on external offsets without validation is forbidden.
 
 ### CRSS-4.4.2 - Safe dictionary access for external keys
 
--   **Category**: Defensive Programming  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Defensive Programming
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 When accessing dictionaries with keys from external sources, Strict code must:
 
-- check key presence (`if key in mapping`), or  
-- use `mapping.get(key)` with a well-defined default, or  
+- check key presence (`if key in mapping`), or
+- use `mapping.get(key)` with a well-defined default, or
 - catch `KeyError` and handle it explicitly.
 
 Relying on unguarded key access without error handling in critical logic is prohibited.
@@ -737,17 +961,18 @@ Relying on unguarded key access without error handling in critical logic is proh
 
 ### CRSS-4.4.3 - Safe unpacking and length assumptions
 
--   **Category**: Defensive Programming  
--   **Type**: Static  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Defensive Programming
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Strict code shall not assume that sequences derived from external data have a fixed length when unpacking (for example `a, b, c = external_list`).
 
 Length assumptions must be validated, and invalid length must be treated as an error path.
 
-**Rationale**  
+**Rationale**
 Malformed input can produce sequences of unexpected length, causing `ValueError` or misaligned semantics.
 
 ---
@@ -763,6 +988,7 @@ Malformed input can produce sequences of unexpected length, causing `ValueError`
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 ### CRSS-5.1.2 - Constrain use of Any
 
@@ -771,48 +997,49 @@ Malformed input can produce sequences of unexpected length, causing `ValueError`
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-5.1.3 – Use nominal interfaces (ABCs) for Strict code
 
-- **Category**: Types & Interfaces  
-- **Type**: Static / Design  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Types & Interfaces
+- **Type**: Static / Design
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
 
 **Rule**
 
 - In **Strict** units, interfaces between components (especially safety-relevant ones) MUST be expressed using:
-  - Abstract base classes (`abc.ABC` + `@abstractmethod`), or  
-  - Concrete base classes with clearly documented “abstract” methods to be implemented by subclasses.  
-- Strict code MUST NOT rely on **implicit structural interfaces** (e.g. “anything with a `.run()` method” without a shared base class).  
+  - Abstract base classes (`abc.ABC` + `@abstractmethod`), or
+  - Concrete base classes with clearly documented “abstract” methods to be implemented by subclasses.
+- Strict code MUST NOT rely on **implicit structural interfaces** (e.g. “anything with a `.run()` method” without a shared base class).
 - Core code SHOULD follow the same pattern for clarity and maintainability.
 
 **Rationale**
 
 Nominal interfaces:
 
-- Make type relationships explicit  
-- Enable static analysis and tooling to reason about contracts  
-- Prevent accidental interface drift  
-- Support safe polymorphism and substitute implementations  
+- Make type relationships explicit
+- Enable static analysis and tooling to reason about contracts
+- Prevent accidental interface drift
+- Support safe polymorphism and substitute implementations
 
 In safety-critical contexts, “if it quacks like a duck” is not sufficient; interfaces must be explicit and analyzable.
 
 ### CRSS-5.1.4 – Control polymorphism and ban duck typing in Strict
 
-- **Category**: Types & Interfaces  
-- **Type**: Static / Design  
-- **Profiles**:  
-  - Core: SHOULD-NOT (for safety-relevant code paths)  
-  - Strict: MUST-NOT  
+- **Category**: Types & Interfaces
+- **Type**: Static / Design
+- **Profiles**:
+  - Core: SHOULD-NOT (for safety-relevant code paths)
+  - Strict: MUST-NOT
 
 **Rule**
 
-- In **Strict** units, **duck-typed polymorphism** (behavior based solely on the presence of methods or attributes without a common base class or protocol) MUST-NOT be used in safety-relevant code.  
+- In **Strict** units, **duck-typed polymorphism** (behavior based solely on the presence of methods or attributes without a common base class or protocol) MUST-NOT be used in safety-relevant code.
 - Strict units MUST:
-  - Depend on explicit, nominal base classes or approved `Protocol` types (if allowed by the project’s type discipline), and  
-  - Avoid polymorphism based on `hasattr`, `getattr` with string method names, or ad-hoc duck-typing.  
+  - Depend on explicit, nominal base classes or approved `Protocol` types (if allowed by the project’s type discipline), and
+  - Avoid polymorphism based on `hasattr`, `getattr` with string method names, or ad-hoc duck-typing.
 - In **Core** units, such patterns SHOULD-NOT be used in safety-relevant paths (e.g. input validation, decision logic), and SHOULD be limited to non-critical glue code if used at all.
 
 **Non-compliant (Strict)**
@@ -841,9 +1068,9 @@ def run_task(task: Task) -> None:
 
 Duck typing makes it difficult to:
 
-- Know which implementations are valid  
-- Guarantee that all variants respect safety contracts  
-- Reason about future changes  
+- Know which implementations are valid
+- Guarantee that all variants respect safety contracts
+- Reason about future changes
 
 Explicit polymorphism allows Stronger guarantees and better tool support.
 
@@ -854,6 +1081,7 @@ Explicit polymorphism allows Stronger guarantees and better tool support.
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 The `typing.cast()` helper shall not be used in Strict code, and should
 be avoided in Core code except in tightly controlled situations.
@@ -891,26 +1119,26 @@ def get_speed(raw: Any) -> float:
 ```
 ### CRSS-5.1.6 – Explicit module exports via `__all__` in Strict
 
-- **Category**: Types & Interfaces / Encapsulation  
-- **Type**: Static  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Types & Interfaces / Encapsulation
+- **Type**: Static
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
 
 **Rule**
 
-- Strict modules MUST define `__all__` to explicitly enumerate public symbols (functions, classes, constants) intended for external use.  
-- Names not listed in `__all__` MUST be treated as internal implementation details and MUST NOT be imported or used in other modules.  
+- Strict modules MUST define `__all__` to explicitly enumerate public symbols (functions, classes, constants) intended for external use.
+- Names not listed in `__all__` MUST be treated as internal implementation details and MUST NOT be imported or used in other modules.
 - Core modules SHOULD follow this pattern for safety-relevant components.
 
 **Rationale**
 
 Explicit exports:
 
-- Make the public API surface clear  
-- Encapsulate internal details  
-- Reduce coupling and unintended dependencies  
-- Make refactoring safer  
+- Make the public API surface clear
+- Encapsulate internal details
+- Reduce coupling and unintended dependencies
+- Make refactoring safer
 
 This also helps tooling understand which parts of a module may be referenced across boundaries.
 
@@ -933,6 +1161,7 @@ __all__ = ["SafetyController"]
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-5.2.2 - No implicit side effects on import
 
@@ -941,6 +1170,7 @@ __all__ = ["SafetyController"]
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-5.3.1 - Constrain nondeterministic random number generation
 
@@ -949,6 +1179,7 @@ __all__ = ["SafetyController"]
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code (phase-aware)`
 
 Use of nondeterministic randomness via the `random` module or `secrets`
 in core computational logic should be avoided unless:
@@ -982,7 +1213,6 @@ value = rng.random()
 process_sample(value)
 ```
 
-
 ### CRSS-5.3.2 - No nondeterministic randomness in Strict code
 
 -   **Category**: Determinism / Safety
@@ -990,6 +1220,7 @@ process_sample(value)
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Strict code shall not use non-seeded or nondeterministic random number
 generation (`random.random()`, `random.randint()`, `secrets`, or
@@ -1021,7 +1252,6 @@ rng = random.Random(12345)  # fixed seed
 nonce = rng.randint(1000, 9999)  # permitted only if not safety-critical
 ```
 
-
 ### CRSS-5.3.3 - Cryptographic-strength randomness only via approved APIs
 
 -   **Category**: Security
@@ -1029,6 +1259,7 @@ nonce = rng.randint(1000, 9999)  # permitted only if not safety-critical
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Strict security-relevant code (authentication, key generation, secure
 tokens) must use `secrets` or `os.urandom()` --- but only in
@@ -1055,6 +1286,7 @@ def generate_session_key() -> str:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Strict numeric functions that produce floating-point results must:
 - check results for NaN and Inf (math.isnan, math.isinf, or equivalent),
@@ -1076,6 +1308,7 @@ NaN/Inf propagation can silently poison control loops and is often triggered onl
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 For each safety-critical numeric input and output:
 - the valid range and safety margin (e.g. min/max, clamping, sanitization behavior) must be documented,
@@ -1088,7 +1321,6 @@ Strict code must enforce these ranges and either:
 
 Strongly aligns with ISO 26262 expectations: no unchecked value should reach a safety-critical actuator or algorithm.
 
-
 ### CRSS-5.3.6 - Unified internal time representation (UTC)
 
 -   **Category**: Data Semantics / Date-Time
@@ -1096,6 +1328,7 @@ Strongly aligns with ISO 26262 expectations: no unchecked value should reach a s
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Strict systems shall represent all internal timestamps in a single canonical format:
 - UTC time, and
@@ -1115,6 +1348,7 @@ Inconsistent handling of local vs UTC time leads to subtle bugs around daylight 
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Strict code shall not use naive `datetime` objects for values that:
 - may cross time zones,
@@ -1134,6 +1368,7 @@ Naive datetimes are ambiguous and lead to non-portable behavior across platforms
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Strict code shall use a small, vetted set of functions or utilities for date/time parsing and formatting. It must:
 - avoid ad-hoc parsing logic scattered throughout the code,
@@ -1151,6 +1386,7 @@ Multiple ad-hoc date formats lead to inconsistent behavior and fragile code when
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 For each safety-critical numeric algorithm, the project shall:
 - document the required precision and tolerated numerical error,
@@ -1168,6 +1404,7 @@ Many numeric failures arise from unstated assumptions about precision. Making th
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Where arithmetic requires exact decimal behavior (for example financial calculations, billing, or business-critical accounting), Strict code shall use a fixed-point or decimal representation such as `decimal.Decimal` with:
 - a configured precision,
@@ -1180,7 +1417,6 @@ Use of binary floating-point in such domains must be justified as a deviation wi
 
 Binary floating-point cannot represent many decimal fractions exactly and can cause invisible rounding errors that are unacceptable in financial or exact business logic.
 
-
 ### CRSS-5.4.1 - Avoid unbounded growth of in-memory collections
 
 -   **Category**: State & Resources
@@ -1188,6 +1424,7 @@ Binary floating-point cannot represent many decimal fractions exactly and can ca
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Long-lived collections (lists, dicts, sets, caches, queues) used in
 services or background processes **must not grow without a defined bound**
@@ -1232,6 +1469,7 @@ def handle_request(req):
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Objects holding **large data** (e.g. huge lists, numpy arrays, big JSON
 structures, large strings or byte buffers) must have an **explicit
@@ -1276,6 +1514,7 @@ def load_snapshot():
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Custom resource pools and caches (DB connections, sessions, object pools)
 must provide an **explicit reset/clear interface** that:
@@ -1313,11 +1552,12 @@ def reset_connection_pool() -> None:
 ```
 ### CRSS-5.4.4 – No silent failure
 
-- **Category**: Defensive Programming  
-- **Type**: Static / Process  
+- **Category**: Defensive Programming
+- **Type**: Static / Process
 - **Profiles**:
-  - Core: SHOULD-NOT
+  - Core: SHOULD-NOT TODO VERIFY THIS
   - Strict: MUST-NOT
+- **Scope**: `all_code`
 
 Catching an exception or detecting an error must either:
 
@@ -1328,11 +1568,11 @@ Silent `pass` or no-op handlers are forbidden in Strict code.
 
 ### CRSS-5.4.5 – Explicit preconditions and range checks
 
-- **Category**: Defensive Programming  
-- **Type**: Process / Static (partial) 
+- **Category**: Defensive Programming
+- **Type**: Process / Static (partial)
 - **Profiles**:
   - Core: SHOULD
-  - Strict: MUST  
+  - Strict: MUST
 
 Functions in Strict units must explicitly validate their inputs (ranges,
 types, enums) before use. Violations must lead to defined behavior (error,
@@ -1341,7 +1581,7 @@ safe fallback), not undefined states.
 ### CRSS-5.4.6 – Bounded heap usage for Strict processes
 
 - **Category**: State & Processes
-- **Type**: Process 
+- **Type**: Process
 - **Profiles**:
   - Core: SHOULD
   - Strict: MUST
@@ -1358,15 +1598,14 @@ Prevents unbounded memory usage from causing unpredictable failures or OS-level 
 
 ------------------------------------------------------------------------
 
-
-
 ### CRSS-5.5.1 - Bounded memory usage for bulk data
 
--   **Category**: Memory & Performance  
--   **Type**: Design / Static  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Memory & Performance
+-   **Type**: Design / Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Operations over large datasets must be designed to:
 
@@ -1374,18 +1613,19 @@ Operations over large datasets must be designed to:
 - use streaming or iterator-based processing where feasible,
 - define and respect upper bounds on in-memory working sets.
 
-**Rationale**  
+**Rationale**
 Naively loading “big data” into lists or DataFrames can exhaust memory, causing unpredictable failures.
 
 ---
 
 ### CRSS-5.5.2 - Chunked processing and pagination
 
--   **Category**: Big Data / IO  
--   **Type**: Design / Static  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Big Data / IO
+-   **Type**: Design / Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 When interacting with data sources (databases, APIs, files) that may hold large datasets, Strict code should:
 
@@ -1393,26 +1633,27 @@ When interacting with data sources (databases, APIs, files) that may hold large 
 - commit partial progress where safe,
 - avoid assuming the full dataset fits into memory or within a single transaction.
 
-**Rationale**  
+**Rationale**
 Chunking and pagination keep processing within resource limits and improve resilience to failures.
 
 ---
 
 ### CRSS-5.5.3 - Query efficiency and index awareness
 
--   **Category**: Database Performance  
--   **Type**: Design / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: SHOULD (MUST when DB load affects safety)  
+-   **Category**: Database Performance
+-   **Type**: Design / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: SHOULD (MUST when DB load affects safety)
+-   **Scope**: `all_code (phase-aware)`
 
 For database-backed systems where performance or load can affect safety (for example time-critical alerts), queries and schema design must:
 
-- be reviewed for index usage,  
-- avoid N+1 query patterns in critical paths,  
+- be reviewed for index usage,
+- avoid N+1 query patterns in critical paths,
 - be profiled under expected load.
 
-**Rationale**  
+**Rationale**
 Inefficient queries can cause slowdowns or lock contention, impacting timely safety decisions.
 
 ---
@@ -1425,28 +1666,19 @@ Inefficient queries can cause slowdowns or lock contention, impacting timely saf
 
 ### CRSS-5.6.1 - Explicit cache policy and scope
 
-
 -   **Category**: Caching / Data Semantics
-
 -   **Type**: Design / Process
-
 -   **Profiles**:
-
+-   **Scope**: `all_code (phase-aware)`
     -   Core: SHOULD
-
     -   Strict: MUST
 
 Any cache used in the system (in-memory, HTTP cache, distributed cache, on-disk cache) SHALL have an explicitly defined policy which includes:
-
-What is cached (keys, value types).
-
-Why it is cached (performance vs availability vs cost).
-
-Maximum lifetime (TTL) of cached entries.
-
-Consistency model (eventually consistent, read-through, write-through, etc.).
-
-Which components are allowed to access it.
+- What is cached (keys, value types).
+- Why it is cached (performance vs availability vs cost).
+- Maximum lifetime (TTL) of cached entries.
+- Consistency model (eventually consistent, read-through, write-through, etc.).
+- Which components are allowed to access it.
 
 This policy MUST be documented (ADR + Safety Baseline) and not live only “in code”.
 
@@ -1457,24 +1689,17 @@ Caches are invisible state. Without an explicit policy, their behavior and impac
 
 ### CRSS-5.6.2 - Bounded cache size and eviction policy
 
-
 -   **Category**: Memory & Performance / Caching
-
 -   **Type**: Design / Static
-
 -   **Profiles**:
-
+-   **Scope**: `all_code (phase-aware)`
     -   Core: SHOULD
-
     -   Strict: MUST
 
 All caches SHALL:
-
-have explicit upper bounds on size (number of entries and/or memory usage),
-
-use a defined eviction strategy (LRU, LFU, FIFO, etc.),
-
-avoid unbounded growth driven by external input.
+- have explicit upper bounds on size (number of entries and/or memory usage),
+- use a defined eviction strategy (LRU, LFU, FIFO, etc.),
+- avoid unbounded growth driven by external input.
 
 Monitoring or inspection MUST be possible to confirm cache size stays within configured limits.
 
@@ -1485,26 +1710,18 @@ Unbounded caches behave like memory leaks: over time they can starve the system 
 
 ### CRSS-5.6.3 - Freshness requirements for cached safety-relevant data
 
-
 -   **Category**: Safety Semantics / Caching
-
 -   **Type**: Design / Process
-
 -   **Profiles**:
-
+-   **Scope**: `all_code (phase-aware)`
     -   Core: SHOULD
-
     -   Strict Level A/B: MUST
 
 For any safety-relevant decision that uses cached information (e.g. latest sensor values, status of another system, configuration flags):
-
-maximum acceptable age of cached data SHALL be documented,
-
-cache entries older than this age MUST be treated as invalid (cache miss),
-
-behavior on stale data MUST be defined (e.g. re-fetch, enter safe state).
-
-Safety logic MUST NOT rely on indefinitely stale cached state.
+- maximum acceptable age of cached data SHALL be documented,
+- cache entries older than this age MUST be treated as invalid (cache miss),
+- behavior on stale data MUST be defined (e.g. re-fetch, enter safe state).
+- Safety logic MUST NOT rely on indefinitely stale cached state.
 
 **Rationale**
 “Fast but stale” is dangerous; using outdated data for safety-critical decisions is often worse than having no data.
@@ -1513,15 +1730,11 @@ Safety logic MUST NOT rely on indefinitely stale cached state.
 
 ### CRSS-5.6.4 - Defined behavior on cache miss/failure
 
-
 -   **Category**: Robustness / Caching
-
 -   **Type**: Design / Static
-
 -   **Profiles**:
-
+-   **Scope**: `all_code (phase-aware)`
     -   Core: SHOULD
-
     -   Strict: MUST
 
 For each cache, the system SHALL define:
@@ -1544,47 +1757,41 @@ It is forbidden for Strict code to treat cache failures as “just ignore and co
 
 ### CRSS-5.6.5 - No hidden dependence on cache availability
 
-
 -   **Category**: Reliability / Architecture
-
 -   **Type**: Design / Process
-
 -   **Profiles**:
-
+-   **Scope**: `all_code (phase-aware)`
     -   Core: SHOULD
-
     -   Strict: MUST
 
 The system SHALL NOT have a mode where:
-
-it appears operational but silently produces degraded or incorrect behavior solely due to cache outages or corruption.
+- it appears operational but silently produces degraded or incorrect behavior solely due to cache outages or corruption.
 
 If a critical cache becomes unavailable or corrupt and data cannot be re-fetched or recomputed within defined limits, the system MUST:
-
-signal a clear fault, and
-
-follow a defined safe state strategy.
+- signal a clear fault, and
+- follow a defined safe state strategy.
 
 **Rationale**
 Caches are optimizations; they must not become hidden single points of correctness.
 
 ### CRSS-5.7.1 – Document operating ranges and thresholds for safety-relevant signals
 
-- **Category**: Numeric / Signal Processing  
-- **Type**: Design / Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Numeric / Signal Processing
+- **Type**: Design / Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+-   **Scope**: `all_code`
 
 **Rule**
 
 - For any signal or numeric value that influences safety decisions (e.g., thresholds for alarms, shutdowns, or degraded modes), the following MUST be documented:
-  - Expected operating range(s)  
-  - Units (e.g. °C, m/s²)  
-  - Threshold values used for safety decisions  
-  - Assumptions about noise, jitter, or measurement error  
+  - Expected operating range(s)
+  - Units (e.g. °C, m/s²)
+  - Threshold values used for safety decisions
+  - Assumptions about noise, jitter, or measurement error
 - The documentation MUST be:
-  - Traceable to requirements, and  
+  - Traceable to requirements, and
   - Referenced in design descriptions and tests.
 
 **Rationale**
@@ -1593,20 +1800,20 @@ Implicit, undocumented thresholds and ranges increase the risk of misinterpretat
 
 ### CRSS-5.7.2 – Test behavior around thresholds and noise margins
 
-- **Category**: Numeric / Signal Processing / Testing  
-- **Type**: Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Numeric / Signal Processing / Testing
+- **Type**: Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
 
 **Rule**
 
 - Tests for safety-relevant numeric decisions (alarms, shutdowns, degraded modes, etc.) MUST:
-  - Cover values **below, at, and above** each threshold,  
-  - Cover realistic noisy variations around thresholds, and  
-  - Check both false-positive and false-negative scenarios (spuriously triggering vs failing to trigger when needed).  
+  - Cover values **below, at, and above** each threshold,
+  - Cover realistic noisy variations around thresholds, and
+  - Check both false-positive and false-negative scenarios (spuriously triggering vs failing to trigger when needed).
 - In Strict projects:
-  - These tests MUST be part of the Test Evidence Package (TEP) and linked in the SCEM.  
+  - These tests MUST be part of the Test Evidence Package (TEP) and linked in the SCEM.
 
 **Rationale**
 
@@ -1616,17 +1823,17 @@ Many real-world failures in safety systems arise at boundary conditions: just be
 
 ### CRSS-5.7.3 – Bound and document filter/processing latency
 
-- **Category**: Numeric / Signal Processing / Timing  
-- **Type**: Design / Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Numeric / Signal Processing / Timing
+- **Type**: Design / Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
 
 **Rule**
 
 - If safety-relevant decisions depend on filtered or processed signals (e.g. moving averages, low-pass filters, debouncing), the design MUST:
-  - Document the worst-case **latency** introduced by the filter, and  
-  - Show that this latency is acceptable for the safety function (e.g. system can still respond in time).  
+  - Document the worst-case **latency** introduced by the filter, and
+  - Show that this latency is acceptable for the safety function (e.g. system can still respond in time).
 - For Strict-A critical logic:
   - The latency bounds MUST be verified via tests or analysis on the target platform.
 
@@ -1647,6 +1854,7 @@ Filters improve stability but also add delay. In safety applications, this delay
 -   **Profiles**:
     -   Core: MUST-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-6.1.2 - Hardcoded secrets
 
@@ -1660,14 +1868,15 @@ Filters improve stability but also add delay. In safety applications, this delay
 -   **Deviation**:
     -   Core: must not; only with strong justification
     -   Strict: Not allowed
+-   **Scope**: `all_code`
 
 ### CRSS-6.1.3 – Concurrency only via approved patterns
 
-- **Category**: Concurrency  
-- **Type**: Process + Static hints  
+- **Category**: Concurrency
+- **Type**: Process + Static hints
 - **Profiles**:
   - Core: SHOULD
-  - Strict: MUST  
+  - Strict: MUST
 
 Use of `threading`, `multiprocessing`, low-level locks, or similar
 primitives in Strict modules must be:
@@ -1683,11 +1892,12 @@ primitives in Strict modules must be:
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 ### CRSS-6.2.3 – Prohibition of subprocess execution in Strict units
 
 - **Category**: Execution & External Interfaces
-- **Type**: Static  
+- **Type**: Static
 - **Profiles**:
   - Core: SHOULD-NOT
   - Strict: MUST-NOT
@@ -1708,12 +1918,12 @@ External command execution is non-deterministic, platform-dependent, and cannot 
 ### CRSS-6.2.4 – Shell invocation forbidden
 
 - **Category**: Execution
-- **Type**: Static  
+- **Type**: Static
 - **Profiles**:
   - Core: SHOULD-NOT
   - Strict: MUST-NOT
 
-Use of shell=True or equivalent parameterization that spawns a command interpreter is strictly prohibited. 
+Use of shell=True or equivalent parameterization that spawns a command interpreter is strictly prohibited.
 
 ### CRSS-6.3.1 - Input validation for external data
 
@@ -1722,39 +1932,40 @@ Use of shell=True or equivalent parameterization that spawns a command interpret
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 ------------------------------------------------------------------------
 
-
-
 ### CRSS-6.4.1 - Data classification and tagging
 
--   **Category**: Security / Data Protection  
--   **Type**: Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Security / Data Protection
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Projects shall classify data handled by the system (for example public, internal, confidential, safety-critical, personal data) and document:
 
-- which data falls into which category,  
-- where it is stored and transmitted,  
+- which data falls into which category,
+- where it is stored and transmitted,
 - what protection mechanisms apply (encryption, access control, masking).
 
 ---
 
 ### CRSS-6.4.2 - Encryption in transit and at rest for sensitive data
 
--   **Category**: Security / Cryptography  
--   **Type**: Design / Static  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Security / Cryptography
+-   **Type**: Design / Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Sensitive and safety-critical data shall:
 
-- be transmitted only over encrypted channels (for example TLS, mTLS),  
-- be stored using database or filesystem encryption mechanisms where appropriate,  
+- be transmitted only over encrypted channels (for example TLS, mTLS),
+- be stored using database or filesystem encryption mechanisms where appropriate,
 - never be sent in clear text over untrusted networks.
 
 Use of home-grown cryptography or custom key exchange is forbidden.
@@ -1763,32 +1974,34 @@ Use of home-grown cryptography or custom key exchange is forbidden.
 
 ### CRSS-6.4.3 - Redaction and minimization in logs
 
--   **Category**: Security / Logging  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Security / Logging
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Logs in Strict systems must:
 
-- avoid recording secrets (keys, tokens, passwords) and highly sensitive data (for example full personal identifiers),  
-- use masking or truncation when such data must be referenced,  
+- avoid recording secrets (keys, tokens, passwords) and highly sensitive data (for example full personal identifiers),
+- use masking or truncation when such data must be referenced,
 - be reviewed to ensure that error paths do not accidentally leak sensitive payloads.
 
 ---
 
 ### CRSS-6.4.4 - Access control for sensitive data flows
 
--   **Category**: Security / Access Control  
--   **Type**: Design / Static  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Security / Access Control
+-   **Type**: Design / Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Access to sensitive data in code must:
 
-- be mediated by explicit interfaces (for example service methods, repositories),  
-- enforce role-based or capability-based access checks where applicable,  
+- be mediated by explicit interfaces (for example service methods, repositories),
+- enforce role-based or capability-based access checks where applicable,
 - not be spread as raw direct database access across arbitrary modules.
 
 ---
@@ -1797,70 +2010,32 @@ Access to sensitive data in code must:
 
 ### CRSS-6.4.5 - Approved key exchange and storage
 
--   **Category**: Security / Cryptography  
--   **Type**: Design / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Security / Cryptography
+-   **Type**: Design / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Cryptographic keys and certificates must:
 
-- be generated and exchanged using standard, vetted protocols (for example TLS, mTLS, SSH),  
-- be stored in secure mechanisms (for example OS key stores, HSMs, secret managers),  
+- be generated and exchanged using standard, vetted protocols (for example TLS, mTLS, SSH),
+- be stored in secure mechanisms (for example OS key stores, HSMs, secret managers),
 - never be hard-coded in source code or stored in version control.
-
----
-
-### CRSS-6.4.9 – Centralize RBAC and access checks
-
-- **Category**: Security / Access Control  
-- **Type**: Design / Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
-
-**Rule**
-
-- Role-based access control (RBAC), permission checks, and authorization logic MUST be **centralized** in a small number of dedicated components (e.g. `authz_service`, `AccessManager`).  
-- Strict units MUST NOT:
-  - Implement ad-hoc RBAC logic scattered across modules (e.g. `if user.role == "admin"` in random functions).  
-  - Access raw user/role data and apply their own independent rules without going through the central RBAC component.  
-- Core units SHOULD avoid duplicated or inline RBAC logic and SHOULD use the central RBAC service when present.  
-- The central RBAC layer MUST:
-  - Have clearly documented policies and data sources,  
-  - Be covered by comprehensive tests, and  
-  - Be treated as a safety-relevant component if its decisions affect safety behavior.
-
-**Rationale**
-
-Scattered and ad-hoc RBAC logic:
-
-- Is hard to audit  
-- Is prone to inconsistencies and gaps  
-- Is easy to break when roles/permissions evolve  
-
-Centralizing authorization logic improves:
-
-- Traceability  
-- Auditability  
-- Consistency  
-
-and reduces security-related safety failures.
-
----
 
 ### CRSS-6.4.6 - Key rotation and expiry
 
--   **Category**: Security / Lifecycle  
--   **Type**: Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: SHOULD (MUST for internet-exposed systems)  
+-   **Category**: Security / Lifecycle
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: SHOULD (MUST for internet-exposed systems)
+-   **Scope**: `all_code`
 
 Projects should define policies for:
 
-- key and certificate rotation,  
-- expiry and revocation handling,  
+- key and certificate rotation,
+- expiry and revocation handling,
 - updating running systems to new keys without downtime where required.
 
 ---
@@ -1869,12 +2044,12 @@ Projects should define policies for:
 
 ### CRSS-6.4.7 - No long-lived caching of sensitive data
 
-
 -   **Category**: Security / Caching
 -   **Type**: Design / Static
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Sensitive data (secrets, tokens, credentials, personal data) SHALL NOT:
 - be stored in long-lived caches, especially shared caches,
@@ -1888,10 +2063,10 @@ If short-lived caching is unavoidable (e.g. token validation results):
 
 ### CRSS-6.4.8 - Cache isolation between tenants/security domains
 
-
 -   **Category**: Security / Multi-tenancy
 -   **Type**: Design / Process
 -   **Profiles**:
+-   **Scope**: `all_code`
     -   Core: SHOULD
     -   Strict: MUST when multi-tenant
 
@@ -1901,46 +2076,88 @@ In multi-tenant environments or mixed-trust setups, cache keys and namespaces MU
 
 This applies both to in-memory and distributed caches.
 
-## **CRSS-6.4.9 – Secret Storage & Lifecycle**
+---
 
-- **Category**: Security / Secrets  
-- **Type**: Design / Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+### CRSS-6.4.9 – Centralize RBAC and access checks
+
+- **Category**: Security / Access Control
+- **Type**: Design / Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+
+**Rule**
+
+- Role-based access control (RBAC), permission checks, and authorization logic MUST be **centralized** in a small number of dedicated components (e.g. `authz_service`, `AccessManager`).
+- Strict units MUST NOT:
+  - Implement ad-hoc RBAC logic scattered across modules (e.g. `if user.role == "admin"` in random functions).
+  - Access raw user/role data and apply their own independent rules without going through the central RBAC component.
+- Core units SHOULD avoid duplicated or inline RBAC logic and SHOULD use the central RBAC service when present.
+- The central RBAC layer MUST:
+  - Have clearly documented policies and data sources,
+  - Be covered by comprehensive tests, and
+  - Be treated as a safety-relevant component if its decisions affect safety behavior.
+
+**Rationale**
+
+Scattered and ad-hoc RBAC logic:
+
+- Is hard to audit
+- Is prone to inconsistencies and gaps
+- Is easy to break when roles/permissions evolve
+
+Centralizing authorization logic improves:
+
+- Traceability
+- Auditability
+- Consistency
+
+and reduces security-related safety failures.
+
+---
+
+## **CRSS-6.4.10 – Secret Storage & Lifecycle**
+
+- **Category**: Security / Secrets
+- **Type**: Design / Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 Secrets (passwords, private keys, certificates, tokens, API keys, connection strings) SHALL NOT:
 
-- be stored in source control (including private repos),  
-- be embedded directly in source code, comments, test data, or documentation,  
+- be stored in source control (including private repos),
+- be embedded directly in source code, comments, test data, or documentation,
 - be hardcoded in configuration files without proper encryption/protection.
 
 Projects SHALL:
 
 - retrieve secrets exclusively from:
-  - a secure vault / KMS / password manager, OR  
+  - a secure vault / KMS / password manager, OR
   - a tightly controlled environment/config file with restricted OS permissions;
 - define for each secret:
-  - a named **owner**,  
-  - a **rotation policy**,  
+  - a named **owner**,
+  - a **rotation policy**,
   - a **maximum lifetime**;
 - upon suspected or confirmed exposure:
-  - rotate the secret immediately,  
-  - invalidate all derived tokens/sessions,  
+  - rotate the secret immediately,
+  - invalidate all derived tokens/sessions,
   - record a **security incident** in safety logs.
 
-**Rationale**  
+**Rationale**
 Secret leakage leads to system compromise and loss of trust in safety-significant operations.
 
 ---
 
-## **CRSS-6.4.10 – Password & Credential Policy**
+## **CRSS-6.4.11 – Password & Credential Policy**
 
-- **Category**: Security / Authentication  
-- **Type**: Design / Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Security / Authentication
+- **Type**: Design / Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 Where password-based authentication is used:
 
@@ -1948,13 +2165,13 @@ Where password-based authentication is used:
   - PBKDF2, bcrypt, scrypt, Argon2, or equivalent.
 - Plaintext passwords SHALL NOT be logged, stored, or captured in analytics.
 - Authentication endpoints SHALL implement:
-  - rate limiting,  
-  - exponential backoff OR  
+  - rate limiting,
+  - exponential backoff OR
   - account lockout thresholds.
 - Shared passwords SHALL NOT be used for safety-significant actions.
 - Password reuse across environments (dev/test/stage/prod) is forbidden.
 
-**Rationale**  
+**Rationale**
 Weak credential handling is a major source of compromise in operational systems.
 
 ---
@@ -1963,97 +2180,99 @@ Weak credential handling is a major source of compromise in operational systems.
 
 ---
 
-## **CRSS-6.4.11 – Token & Session Lifetime Management**
+## **CRSS-6.4.12 – Token & Session Lifetime Management**
 
-- **Category**: Security / Sessions & Tokens  
-- **Type**: Design / Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Security / Sessions & Tokens
+- **Type**: Design / Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 Access tokens, session identifiers, and refresh tokens MUST:
 
-- have explicit **expiry times**,  
-- be bounded in total lifetime,  
+- have explicit **expiry times**,
+- be bounded in total lifetime,
 - be integrity-protected (e.g., HMAC/JWT signatures),
 - be validated on **every use**, not just at login.
 
 Tokens and sessions MUST be invalidated when:
 
-- passwords/credentials change,  
-- roles/permissions change,  
-- anomalies or compromises are detected,  
+- passwords/credentials change,
+- roles/permissions change,
+- anomalies or compromises are detected,
 - a device or client is revoked.
 
 Safety-significant operations MUST require **fresh authorization** (e.g., re-auth or time-bounded session).
 
-**Rationale**  
+**Rationale**
 Long-lived or unchecked sessions create unsafe implicit trust.
 
 ---
 
-## **CRSS-6.4.12 – Authentication vs Authorization Separation**
+## **CRSS-6.4.13 – Authentication vs Authorization Separation**
 
-- **Category**: Security / Access Control  
-- **Type**: Design / Static  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Security / Access Control
+- **Type**: Design / Static
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 The system SHALL maintain strict separation between:
 
-- **Authentication** (identity verification), and  
+- **Authentication** (identity verification), and
 - **Authorization** (permission verification).
 
 Authorization MUST:
 
-- be performed on the server side,  
-- NEVER rely solely on UI/client checks,  
+- be performed on the server side,
+- NEVER rely solely on UI/client checks,
 - NOT be bypassable via debug flags, local toggles, or test hooks.
 
 Roles tied to safety MUST:
 
-- be explicitly defined,  
-- follow least-privilege principles,  
+- be explicitly defined,
+- follow least-privilege principles,
 - be auditable.
 
-**Rationale**  
+**Rationale**
 Auth bypass is one of the most common and catastrophic security failures.
 
 ---
 
-## **CRSS-6.4.13 – Safety-Significant Action Authorization**
+## **CRSS-6.4.14 – Safety-Significant Action Authorization**
 
-- **Category**: Security / Safety Interaction  
-- **Type**: Design / Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Security / Safety Interaction
+- **Type**: Design / Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 Operations affecting:
 
-- safety configurations,  
-- thresholds,  
-- supervisory logic,  
+- safety configurations,
+- thresholds,
+- supervisory logic,
 - indirect actuation parameters,
 
 MUST:
 
-- require explicit authorization based on roles/capabilities,  
-- be logged as safety events (without secrets),  
+- require explicit authorization based on roles/capabilities,
+- be logged as safety events (without secrets),
 - require fresh authorization (Strict-Level-A).
 
 Systems SHALL NOT trust:
 
-- long-lived admin sessions,  
-- generic credentials,  
+- long-lived admin sessions,
+- generic credentials,
 - debug interfaces.
 
-**Rationale**  
+**Rationale**
 Safety configuration changes must not rely on weak or stale access control.
 
 ---
-
 
 ## 7. Robustness & Portability
 
@@ -2064,6 +2283,7 @@ Safety configuration changes must not rely on weak or stale access control.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 ### CRSS-7.1.2 - Use context managers for file I/O
 
@@ -2072,7 +2292,7 @@ Safety configuration changes must not rely on weak or stale access control.
 -   **Profiles**:
     -   Core: MUST
     -   Strict: MUST
-
+-   **Scope**: `all_code (phase-aware)`
 
 ### CRSS-7.1.3 - Maximum length for external string inputs
 
@@ -2081,6 +2301,7 @@ Safety configuration changes must not rely on weak or stale access control.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 All strings originating from external sources (user input, network messages, files, third-party APIs) must have:
 - documented maximum allowed lengths (in characters and/or bytes), and
@@ -2099,6 +2320,7 @@ Unbounded string inputs can lead to memory exhaustion, performance degradation, 
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Strict code shall:
 - assume UTF-8 as the default encoding for textual data unless explicitly configured otherwise,
@@ -2118,6 +2340,7 @@ Incorrect assumptions about encoding or character length lead to truncation, mis
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Where strings are used as file names, protocol tokens, identifiers, or UI labels, Strict code shall:
 - define allowed character sets or patterns (for example via regular expressions),
@@ -2135,6 +2358,7 @@ Control characters and unexpected symbols in strings can lead to command injecti
 -   **Profiles**:
     -   Core: MAY
     -   Strict: SHOULD
+-   **Scope**: `all_code`
 
 Projects that support multiple locales or languages (for example Chinese, Japanese, right-to-left scripts) shall:
 - document supported locales in the Safety Baseline,
@@ -2152,6 +2376,7 @@ Explicitly documenting and testing supported locales avoids surprises when deplo
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: SHOULD
+-   **Scope**: `all_code`
 
 ### CRSS-7.2.2 - Third-party dependency documentation
 
@@ -2160,6 +2385,7 @@ Explicitly documenting and testing supported locales avoids surprises when deplo
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 All third-party components must be documented with:
 - Name and exact version
@@ -2175,6 +2401,7 @@ All third-party components must be documented with:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 For every external interface:
 - The data schema shall be explicitly defined
@@ -2192,6 +2419,7 @@ We assume the third party behaves within its documented contract; we defend agai
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Projects shall maintain an explicit architecture definition that documents:
 - the set of services, processes, and modules,
@@ -2209,6 +2437,7 @@ Architecture documentation shall be kept under version control and updated when 
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Significant architectural decisions (for example choice of database, message bus, microservice partitioning, key third-party dependencies) shall be recorded as Architecture Decision Records (ADRs) including:
 - context and problem statement,
@@ -2225,7 +2454,8 @@ ADRs shall live alongside source code in the same repository or a tightly linked
 -   **Type**: Design / Process
 -   **Profiles**:
     -   Core: SHOULD
-    -   Strict Level A: MUST
+    -   Strict Level A: MUST TODO VERIFY THIS
+-   **Scope**: `all_code`
 
 For safety-critical functions, the architecture shall be designed so that no single runtime instance or external dependency can cause an uncontrolled unsafe failure.
 
@@ -2240,6 +2470,7 @@ Where a single instance is unavoidable, the Safety Baseline must document:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 All network interactions (for example HTTP, gRPC, SFTP, database over TCP, message queues) shall:
 - use explicit timeouts (no infinite waits),
@@ -2256,6 +2487,7 @@ Unbounded retries or blocking calls without timeouts are forbidden in Strict cod
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict Level A: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Where network calls may be retried, side-effecting operations (writes, updates, commands) should be designed to be idempotent or to include safe deduplication mechanisms (for example operation IDs).
 
@@ -2268,6 +2500,7 @@ If idempotency is not feasible, the design and its compensating measures must be
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 For each critical architectural area (data storage, microservice topology, external dependencies, date/time policy, numeric precision), the project shall define:
 - a responsible owner (role or person),
@@ -2283,6 +2516,7 @@ These roles and processes shall be referenced in the Safety Baseline and kept up
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code (phase-aware)`
 
 Strict code shall not rely on a single, long-lived global connection (for example one database or SFTP connection) for the entire application lifecycle. Instead, it shall use connection pools or well-defined connection lifecycles per operation or transaction.
 
@@ -2293,6 +2527,7 @@ Strict code shall not rely on a single, long-lived global connection (for exampl
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Before executing operations on external connections (database, SFTP, message brokers, and similar), Strict code shall:
 - verify that the connection is open and valid, or
@@ -2308,6 +2543,7 @@ Blindly assuming a connection is valid is forbidden in Strict code.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Reconnection logic for external dependencies shall:
 - define maximum attempts,
@@ -2322,6 +2558,7 @@ Reconnection logic for external dependencies shall:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Before uploading or downloading critical data over SFTP/FTP/HTTP or similar protocols, Strict code shall:
 - validate the target endpoint (host, port, path),
@@ -2335,15 +2572,14 @@ Implicit assumptions about persistent connections and successful transfers lead 
 
 ------------------------------------------------------------------------
 
-
-
 ### CRSS-7.8.1 - Stable service contracts and versioning
 
--   **Category**: Microservices / Contracts  
--   **Type**: Design / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Microservices / Contracts
+-   **Type**: Design / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Services exposed over the network (HTTP, gRPC, message queues, etc.) shall have:
 
@@ -2353,18 +2589,19 @@ Services exposed over the network (HTTP, gRPC, message queues, etc.) shall have:
 
 Breaking changes to contracts must be documented in ADRs and must not be applied to deployed safety-critical consumers without a coordinated migration plan.
 
-**Rationale**  
+**Rationale**
 Uncontrolled API evolution leads to silent breakage between microservices and inconsistent behavior in production.
 
 ---
 
 ### CRSS-7.8.2 - Bounded payload sizes and rates
 
--   **Category**: Network Robustness  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Network Robustness
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 All externally visible endpoints and consumers shall enforce:
 
@@ -2374,18 +2611,19 @@ All externally visible endpoints and consumers shall enforce:
 
 Oversized or excessively frequent requests must be rejected or throttled in a controlled manner.
 
-**Rationale**  
+**Rationale**
 Unbounded payloads and traffic can cause memory exhaustion, timeouts, or denial-of-service.
 
 ---
 
 ### CRSS-7.8.3 - Circuit breakers and backpressure for critical dependencies
 
--   **Category**: Fault Tolerance / Microservices  
--   **Type**: Design / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: SHOULD (MUST for Level A services)  
+-   **Category**: Fault Tolerance / Microservices
+-   **Type**: Design / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: SHOULD (MUST for Level A services)
+-   **Scope**: `all_code (phase-aware)`
 
 Where a service calls external dependencies (databases, third-party services, internal microservices) in its critical path, the design should include:
 
@@ -2393,18 +2631,19 @@ Where a service calls external dependencies (databases, third-party services, in
 - backpressure mechanisms (queue limits, rejection under load),
 - clear behavior when dependencies are unavailable (degraded mode, fail-safe).
 
-**Rationale**  
+**Rationale**
 Without circuit breakers and backpressure, failure in a single dependency can cascade and destabilize the entire system.
 
 ---
 
 ### CRSS-7.8.4 - Latency budgets for critical network operations
 
--   **Category**: Performance / Timing  
--   **Type**: Design / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Performance / Timing
+-   **Type**: Design / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 For safety-relevant network interactions (for example control commands, health checks, supervisory decisions), the design shall:
 
@@ -2413,7 +2652,7 @@ For safety-relevant network interactions (for example control commands, health c
 
 [Test and measurement evidence] must confirm that typical and worst-case latencies remain within these bounds under expected load.
 
-**Rationale**  
+**Rationale**
 Unbounded latency can cause stale decisions and unsafe behavior in distributed systems.
 
 ---
@@ -2422,35 +2661,28 @@ Unbounded latency can cause stale decisions and unsafe behavior in distributed s
 
 ### CRSS-7.8.5 - Distributed cache consistency for critical data
 
-
 -   **Category**: Microservices / Caching
-
 -   **Type**: Design / Process
-
 -   **Profiles**:
-
+-   **Scope**: `all_code (phase-aware)`
     -   Core: SHOULD
-
     -   Strict Level A/B: MUST
 
 If a distributed cache (e.g. Redis, Memcached, cluster cache) is used to share state between services:
-
-the consistency model must be documented (eventual, strong, session, etc.),
-
-safety-critical decisions must be designed to tolerate that model (e.g. no assumption of instantaneous propagation),
-
-cache inconsistency MUST NOT be able to cause contradictory safety decisions in different services.
+- the consistency model must be documented (eventual, strong, session, etc.),
+- safety-critical decisions must be designed to tolerate that model (e.g. no assumption of instantaneous propagation),
+- cache inconsistency MUST NOT be able to cause contradictory safety decisions in different services.
 
 If consistent view is required, this must be enforced via design (e.g. single writer, transactional store as source of truth).
 
 ### CRSS-7.8.6 - Cache is never the source of truth
-
 
 -   **Category**: Architecture / Data Semantics
 
 -   **Type**: Design
 
 -   **Profiles**:
+-   **Scope**: `all_code (phase-aware)`
 
     -   Core: SHOULD
 
@@ -2469,12 +2701,12 @@ When cache becomes the implicit source of truth, cache failures or evictions cre
 
 ### CRSS-7.8.7 - Explicit HTTP caching directives
 
-
 -   **Category**: Web / HTTP
 
 -   **Type**: Static / Design
 
 -   **Profiles**:
+-   **Scope**: `all_code (phase-aware)`
 
     -   Core: SHOULD
 
@@ -2501,10 +2733,10 @@ Implicit caching by browsers or intermediate proxies can serve stale or cross-us
 
 This annex strengthens CRSS for:
 
-- microservices and heavy network usage,  
-- big-data and streaming scenarios,  
-- sensitive data and cryptographic key handling,  
-- robustness against malformed input, index/key errors, and partial network operations,  
+- microservices and heavy network usage,
+- big-data and streaming scenarios,
+- sensitive data and cryptographic key handling,
+- robustness against malformed input, index/key errors, and partial network operations,
 - interaction with the underlying OS and environment variables.
 
 These rules are designed to be **strict but realistic**: they constrain unsafe patterns while allowing modern DevOps, microservices, and data-heavy architectures when carefully engineered.
@@ -2513,16 +2745,17 @@ They can now be integrated into the Core and Strict specifications (chapter rang
 
 ### CRSS-7.9.1 - Strict JSON parsing and schema validation
 
--   **Category**: Data Parsing / Validation  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Data Parsing / Validation
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 When loading JSON from external sources, Strict code shall:
 
-- use robust JSON parsers that validate syntax,  
-- validate parsed data against a defined schema or contract,  
+- use robust JSON parsers that validate syntax,
+- validate parsed data against a defined schema or contract,
 - reject or quarantine payloads with unexpected types, missing required fields, or extra fields when not tolerated.
 
 Special attention must be given to unusual characters, deeply nested structures, and large payloads (depth and size limits).
@@ -2531,16 +2764,17 @@ Special attention must be given to unusual characters, deeply nested structures,
 
 ### CRSS-7.9.2 - Explicit CSV dialect and header handling
 
--   **Category**: Data Parsing / CSV  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Data Parsing / CSV
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 When parsing CSV or similar delimited formats from external sources, Strict code must:
 
-- explicitly configure the expected delimiter, quote character, and escape rules,  
-- validate header rows (names, order, presence),  
+- explicitly configure the expected delimiter, quote character, and escape rules,
+- validate header rows (names, order, presence),
 - handle inconsistent row lengths as errors or quarantined data.
 
 Relying on parser defaults without documenting expected dialect is forbidden for critical data flows.
@@ -2549,19 +2783,20 @@ Relying on parser defaults without documenting expected dialect is forbidden for
 
 ### CRSS-7.9.3 - Handling malformed or binary-like text input
 
--   **Category**: Robustness / Encoding  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Robustness / Encoding
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 When ingesting text that may contain unusual or binary characters (including from third parties):
 
-- decoding errors must be handled explicitly (for example `errors='strict'` with error reporting),  
-- control characters and non-printable sequences must be handled safely,  
+- decoding errors must be handled explicitly (for example `errors='strict'` with error reporting),
+- control characters and non-printable sequences must be handled safely,
 - inputs that fail decoding/validation must not be treated as valid text.
 
-**Rationale**  
+**Rationale**
 Malformed or hostile text input can break parsers, pollute logs, or trigger unexpected behavior.
 
 ---
@@ -2570,27 +2805,29 @@ Malformed or hostile text input can break parsers, pollute logs, or trigger unex
 
 ### CRSS-7.9.4 - Detection of partial network writes and reads
 
--   **Category**: Robustness / IO  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Robustness / IO
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 For HTTP, file uploads, SFTP transfers, and similar operations, Strict code shall:
 
-- verify completion via explicit success indicators (status codes, response bodies, completion callbacks),  
-- compare expected sizes (for example Content-Length vs bytes sent/received) where applicable,  
+- verify completion via explicit success indicators (status codes, response bodies, completion callbacks),
+- compare expected sizes (for example Content-Length vs bytes sent/received) where applicable,
 - treat truncated or partial operations as failures, not as partial success.
 
 ---
 
 ### CRSS-7.9.5 - Integrity checks for critical transfers
 
--   **Category**: Data Integrity  
--   **Type**: Design / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict Level A: MUST  
+-   **Category**: Data Integrity
+-   **Type**: Design / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict Level A: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 For safety-critical file or data transfers, the design should include integrity verification (for example checksums, hashes, signatures) and validation on the receiving side.
 
@@ -2598,16 +2835,17 @@ For safety-critical file or data transfers, the design should include integrity 
 
 ### CRSS-7.9.6 - Safe behavior on mid-operation disconnection
 
--   **Category**: Robustness / Failure Handling  
--   **Type**: Design / Static  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Robustness / Failure Handling
+-   **Type**: Design / Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 If network disconnection occurs mid-operation (for example during an HTTP PUT, a database transaction over the network, or a file transfer), Strict code must:
 
-- ensure that partially applied operations are either rolled back or clearly marked incomplete,  
-- avoid leaving ambiguous or corrupted state that could be interpreted as successful completion,  
+- ensure that partially applied operations are either rolled back or clearly marked incomplete,
+- avoid leaving ambiguous or corrupted state that could be interpreted as successful completion,
 - prefer transactional or “temp file then rename” patterns for critical writes.
 
 ---
@@ -2616,16 +2854,17 @@ If network disconnection occurs mid-operation (for example during an HTTP PUT, a
 
 ### CRSS-7.10.1 - Restricted operating system interaction
 
--   **Category**: OS Interaction / Safety  
--   **Type**: Design / Static  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: OS Interaction / Safety
+-   **Type**: Design / Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Strict code may interact with the OS only through:
 
-- well-defined file IO,  
-- time and monotonic clock APIs,  
+- well-defined file IO,
+- time and monotonic clock APIs,
 - networking primitives as needed for the architecture.
 
 Use of APIs that enumerate processes, manipulate other processes, access raw devices, modify system-wide configuration, or run shell commands is forbidden except where explicitly approved and confined to non-critical tooling.
@@ -2636,16 +2875,17 @@ Use of APIs that enumerate processes, manipulate other processes, access raw dev
 
 ### CRSS-7.10.2 - Environment variables as configuration inputs
 
--   **Category**: Configuration Management  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD  
-    -   Strict: MUST  
+-   **Category**: Configuration Management
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code (phase-aware)`
 
 Environment variables may be used as configuration inputs, but:
 
-- required variables must be validated at startup, with clear failures if missing or malformed,  
-- their values must be parsed and validated (for example enums, integers, URLs),  
+- required variables must be validated at startup, with clear failures if missing or malformed,
+- their values must be parsed and validated (for example enums, integers, URLs),
 - secrets in environment variables must be treated as sensitive data (not logged or echoed).
 
 Strict systems must not change their behavior unpredictably based on unvalidated environment variables.
@@ -2654,48 +2894,49 @@ Strict systems must not change their behavior unpredictably based on unvalidated
 
 ### CRSS-7.10.3 - No hidden behavior toggles in environment
 
--   **Category**: Configuration / Safety  
--   **Type**: Static / Process  
--   **Profiles**:  
-    -   Core: SHOULD-NOT  
-    -   Strict: MUST-NOT  
+-   **Category**: Configuration / Safety
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD-NOT
+    -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Critical safety behavior shall not be controlled by undocumented environment flags. All safety-relevant configuration:
 
-- must be documented,  
-- must be part of the Safety Baseline,  
+- must be documented,
+- must be part of the Safety Baseline,
 - must be tested across its supported configurations.
 
 ---
 
 ### CRSS-7.11.0 – Regex Usage in Critical Phases
 
-- **Category**: Robustness & External Input  
-- **Type**: Static  
-- **Profiles**:  
-  - Core: MUST-NOT (in critical regions)  
-  - Strict: MUST-NOT  
-- **Scope**: `critical`  
+- **Category**: Robustness & External Input
+- **Type**: Static
+- **Profiles**:
+  - Core: MUST-NOT (in critical regions)
+  - Strict: MUST-NOT
+- **Scope**: `critical`
 
 In any code that is part of a **critical phase** (`@critical` or otherwise
 designated as critical core logic):
 
-- The `re` module SHALL NOT be imported.  
+- The `re` module SHALL NOT be imported.
 - No regular expression operations (compile, match, search, findall, split,
-  substitute, fullmatch, etc.) SHALL appear directly or indirectly.  
+  substitute, fullmatch, etc.) SHALL appear directly or indirectly.
 - No wrapper APIs that internally use regex SHALL be called.
 
 If pattern matching is required in a critical phase, it MUST be implemented
 using:
 
-- simple bounded loops,  
-- explicit character checks, and  
+- simple bounded loops,
+- explicit character checks, and
 - deterministic finite-state parsing logic.
 
-**Rationale**  
-Regex engines typically rely on complex backtracking algorithms.  
+**Rationale**
+Regex engines typically rely on complex backtracking algorithms.
 Even “safe-looking” patterns can cause unpredictable runtime if used across
-large inputs or edge cases.  
+large inputs or edge cases.
 Strict determinism in critical phases requires that **no regex engine** is
 invoked.
 
@@ -2703,23 +2944,23 @@ invoked.
 
 ### CRSS-7.11.1 – Bounded Input for Regex Operations
 
-- **Category**: Robustness & External Input  
-- **Type**: Static + Behavioral  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
-- **Scope**: `non_critical`  
+- **Category**: Robustness & External Input
+- **Type**: Static + Behavioral
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 All strings passed to regex APIs **MUST** be explicitly bounded in length
 before use, especially when:
 
-- they originate from external sources (network, files, user input, logs), or  
+- they originate from external sources (network, files, user input, logs), or
 - they may grow over time (log aggregation, big data ingestion).
 
 Projects SHALL:
 
-- define a **maximum input length** per regex usage context,  
-- enforce it before calling any `re.*` function, and  
+- define a **maximum input length** per regex usage context,
+- enforce it before calling any `re.*` function, and
 - reject or truncate inputs that exceed the bound.
 
 For **Strict-Level-A** non-critical units, bounding is **mandatory**.
@@ -2754,30 +2995,30 @@ def find_ids(payload: str) -> list[str]:
 
 ### CRSS-7.11.2 – Prohibited High-Complexity Regex Patterns
 
-- **Category**: Robustness & External Input  
-- **Type**: Static  
-- **Profiles**:  
-  - Core: SHOULD-NOT  
-  - Strict: MUST-NOT  
-- **Scope**: `non_critical`  
+- **Category**: Robustness & External Input
+- **Type**: Static
+- **Profiles**:
+  - Core: SHOULD-NOT
+  - Strict: MUST-NOT
+- **Scope**: `non_critical`
 
 The following classes of regex patterns SHALL NOT be used in Strict profile
 and SHOULD-NOT be used in Core (and are **forbidden** in any Core-critical
 unit):
 
-- Nested quantifiers:  
-  - `(a+)+`  
-  - `(.+)+`  
-  - `(.*)+`  
-- Ambiguous “match anything” constructs with catastrophic backtracking:  
-  - `(.|\n)*` combined with additional `.*`/`.+` patterns  
-  - patterns where large overlapping alternatives cause exponential backtracking  
+- Nested quantifiers:
+  - `(a+)+`
+  - `(.+)+`
+  - `(.*)+`
+- Ambiguous “match anything” constructs with catastrophic backtracking:
+  - `(.|\n)*` combined with additional `.*`/`.+` patterns
+  - patterns where large overlapping alternatives cause exponential backtracking
 - Any pattern known or shown (via analysis or test) to exhibit **super-linear**
   or **exponential** time complexity on certain classes of input.
 
 If a project needs a complex pattern, it MUST be rewritten as:
 
-- a set of simpler, independent regexes, or  
+- a set of simpler, independent regexes, or
 - explicit parsing logic with deterministic complexity.
 
 **Non-compliant**
@@ -2793,25 +3034,25 @@ RE_BAD = re.compile(r"^(a+)+$")
 
 ### CRSS-7.11.3 – User-Supplied or Dynamic Regex Patterns
 
-- **Category**: Robustness & External Input  
-- **Type**: Static + Behavioral  
-- **Profiles**:  
-  - Core: SHOULD-NOT  
-  - Strict: MUST-NOT  
-- **Scope**: `non_critical`  
+- **Category**: Robustness & External Input
+- **Type**: Static + Behavioral
+- **Profiles**:
+  - Core: SHOULD-NOT
+  - Strict: MUST-NOT
+- **Scope**: `non_critical`
 
 Regex patterns **MUST** be **constant literals** defined in code or in
 configuration that is:
 
-- version-controlled,  
-- validated, and  
+- version-controlled,
+- validated, and
 - part of the safety baseline.
 
 The following practices are forbidden in Strict and strongly discouraged in
 Core:
 
-- constructing regex patterns from user input or external data,  
-- allowing users to submit arbitrary regex for evaluation,  
+- constructing regex patterns from user input or external data,
+- allowing users to submit arbitrary regex for evaluation,
 - building patterns dynamically using string interpolation or concatenation
   from untrusted sources.
 
@@ -2845,24 +3086,24 @@ def is_valid_email(raw: str) -> bool:
 
 ### CRSS-7.11.4 – Regex Testing & Worst-Case Behavior
 
-- **Category**: Testing, Coverage & Process  
-- **Type**: Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
-- **Scope**: `non_critical`  
+- **Category**: Testing, Coverage & Process
+- **Type**: Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 All regex usage in safety-relevant code MUST be accompanied by explicit tests
 that cover:
 
-1. **Normal inputs**  
-2. **Malformed / invalid inputs**  
-3. **Near-miss worst-case inputs** (long strings that “almost match”)  
+1. **Normal inputs**
+2. **Malformed / invalid inputs**
+3. **Near-miss worst-case inputs** (long strings that “almost match”)
 
 For **Strict**:
 
 - Tests SHALL demonstrate **bounded execution time** under worst-case inputs
-  considered within the domain.  
+  considered within the domain.
 - Regex operations SHALL NOT appear in tight loops that affect timing budgets
   for safety decisions.
 
@@ -2875,27 +3116,27 @@ For **Strict-Level-A**:
 
 ### CRSS-7.11.5 – SCEM Evidence for Regex Safety
 
-- **Category**: SCEM & Compliance  
-- **Type**: Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
-- **Scope**: `non_critical`  
+- **Category**: SCEM & Compliance
+- **Type**: Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
+- **Scope**: `non_critical`
 
 Projects using regex MUST include the following in their **SCEM**:
 
-1. **Regex Pattern Audit Table**  
-   - List of all regex patterns used (file, symbol, pattern).  
-   - Classification of each pattern as: simple / moderate / complex.  
-   - Confirmation that no forbidden constructs (CRSS-7.11.2) are present.  
+1. **Regex Pattern Audit Table**
+   - List of all regex patterns used (file, symbol, pattern).
+   - Classification of each pattern as: simple / moderate / complex.
+   - Confirmation that no forbidden constructs (CRSS-7.11.2) are present.
 
-2. **Bounded Input Strategy**  
-   - Documentation of max-length bounds for all regex inputs (see CRSS-7.11.1).  
-   - Evidence that these limits are enforced and tested.  
+2. **Bounded Input Strategy**
+   - Documentation of max-length bounds for all regex inputs (see CRSS-7.11.1).
+   - Evidence that these limits are enforced and tested.
 
-3. **Critical Path Declaration**  
+3. **Critical Path Declaration**
    - Evidence that **no regex** is used in any `@critical` function or critical
-     unit (CRSS-7.11.0).  
+     unit (CRSS-7.11.0).
 
 For **Strict-Level-A**, all three items above are **mandatory** for
 certification acceptance.
@@ -2915,10 +3156,10 @@ def validate(data: str) -> bool:
 
 Issues:
 
-- unsafe pattern  
-- unbounded input  
-- unsafe for Core B/A and Strict (all levels)  
-- strictly forbidden inside critical path  
+- unsafe pattern
+- unbounded input
+- unsafe for Core B/A and Strict (all levels)
+- strictly forbidden inside critical path
 
 ---
 
@@ -2939,19 +3180,18 @@ def is_valid_email(raw: str) -> bool:
 
 Why compliant:
 
-- bounded input  
-- simple character classes  
-- deterministic pattern  
-- non-critical code only  
-
+- bounded input
+- simple character classes
+- deterministic pattern
+- non-critical code only
 
 ## Summary
 
 The CRSS-7.11.x rules ensure that:
 
-- regex is **never** used in critical, deterministic execution;  
-- all regex usage is **bounded**, **vetted**, and **tested**;  
-- high-complexity patterns are either refactored or banned;  
+- regex is **never** used in critical, deterministic execution;
+- all regex usage is **bounded**, **vetted**, and **tested**;
+- high-complexity patterns are either refactored or banned;
 - project evidence (SCEM) explicitly documents and audits all regex behavior.
 
 These rules are designed to prevent **ReDoS (Regular Expression Denial of Service)**
@@ -2968,6 +3208,7 @@ and catastrophic backtracking from compromising safety-critical Python systems.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 ### CRSS-8.1.2 - Require docstrings on public APIs
 
@@ -2976,7 +3217,7 @@ and catastrophic backtracking from compromising safety-critical Python systems.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
-
+-   **Scope**: `all_code`
 
 ### CRSS-8.2.1 - Do not shadow Python builtins or core types
 
@@ -2985,6 +3226,7 @@ and catastrophic backtracking from compromising safety-critical Python systems.
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Identifiers for variables, functions, methods, classes, and modules must
 not reuse names of Python builtins or core container types, such as:
@@ -3016,7 +3258,6 @@ def process_items(items: Sequence[Mapping[str, int]]) -> None:
         ...
 ```
 
-
 ------------------------------------------------------------------------
 
 ## 9. Testing & Coverage Guidelines (Core)
@@ -3025,12 +3266,12 @@ def process_items(items: Sequence[Mapping[str, int]]) -> None:
 
 CRSS defines three criticality levels for modules and functions:
 
-- **Level A – Safety Critical**  
+- **Level A – Safety Critical**
   Failure may lead to loss of life, severe injury, or major system hazard.
-- **Level B – High Integrity**  
+- **Level B – High Integrity**
   Failure may lead to loss of service, significant economic damage,
   or reduction of safety margins.
-- **Level C – Standard**  
+- **Level C – Standard**
   Normal production quality; failure has limited impact.
 
 Projects may map their own safety classifications (ASIL, DAL, SIL, etc.)
@@ -3042,7 +3283,6 @@ onto these three levels. At minimum:
   configuration with strong testing and traceability.
 - **Level C** code typically uses the **Core** profile.
 
-
 ### CRSS-9.1.1 - Target high branch coverage
 
 -   **Category**: Testing & Coverage
@@ -3050,6 +3290,7 @@ onto these three levels. At minimum:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 ### CRSS-9.1.2 - Every bugfix must have a regression test
 
@@ -3058,15 +3299,15 @@ onto these three levels. At minimum:
 -   **Profiles**:
     -   Core: MUST
     -   Strict: MUST
-
+-   **Scope**: `all_code`
 
 ### CRSS-9.1.3 – Strict type checking for critical units (Strict)
 
-- **Category**: Types / Tooling  
-- **Type**: Process  
+- **Category**: Types / Tooling
+- **Type**: Process
 - **Profiles**:
   - Core: SHOULD
-  - Strict: MUST  
+  - Strict: MUST
 
 All Strict modules/functions (for example, in configured Strict zones or
 annotated `@critical`) must pass strict static type checking (e.g.
@@ -3076,65 +3317,67 @@ explicit deviations with justification and impact analysis.
 
 ## **CRSS-9.2.1 – Authentication, Token & Session Negative Testing**
 
-- **Category**: Testing & Security  
-- **Type**: Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: Testing & Security
+- **Type**: Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
 
 Projects SHALL test:
-
-- invalid credentials,  
-- brute-force attempts → rate limiting or lockout behavior,  
-- expired tokens,  
-- tampered or modified tokens,  
+- invalid credentials,
+- brute-force attempts → rate limiting or lockout behavior,
+- expired tokens,
+- tampered or modified tokens,
 - access after:
-  - role change,  
-  - password change,  
-  - revocation,  
+  - role change,
+  - password change,
+  - revocation,
 - concurrent session behavior (if applicable),
 - replay or duplicate token usage.
 
 For internet-exposed systems, additional tests SHOULD include:
-
-- CSRF or replay attempts,  
+- CSRF or replay attempts,
 - credential stuffing simulations.
 
-**Rationale**  
+**Rationale**
+
 Negative testing is essential for verifying robustness under malicious or degraded conditions.
 
 ---
 
 ## **CRSS-9.2.2 – SCEM Evidence for Authentication & Authorization**
-
-- **Category**: SCEM & Compliance  
-- **Type**: Process  
-- **Profiles**:  
-  - Core: SHOULD  
-  - Strict: MUST  
+- **Category**: SCEM & Compliance
+- **Type**: Process
+- **Profiles**:
+  - Core: SHOULD
+  - Strict: MUST
 
 SCEM SHALL include:
+- list of all authentication mechanisms (passwords, tokens, mTLS, SSO, OAuth, etc.),
 
-- list of all authentication mechanisms (passwords, tokens, mTLS, SSO, OAuth, etc.),  
 - token/session model documentation:
-  - structure,  
-  - lifetime,  
-  - scope,  
+  - structure,
+  - lifetime,
+  - scope,
   - validation logic,
+
 - mapping of roles → safety-significant operations,
+
 - test evidence for:
-  - expiry behavior,  
-  - revocation behavior,  
-  - lockout,  
+  - expiry behavior,
+  - revocation behavior,
+  - lockout,
   - privilege changes,
+
 - documentation of:
-  - how secrets are stored,  
-  - how they are rotated,  
+  - how secrets are stored,
+  - how they are rotated,
   - how compromise is detected and handled.
 
 Absence of this section SHALL be a **blocking failure** for Strict-Level-A certification.
 
-**Rationale**  
+**Rationale**
+
 Authentication/authorization control must be demonstrably safe in operation.
 
 ### CRSS-9.3.1 - MC/DC for Level A decisions
@@ -3144,6 +3387,7 @@ Authentication/authorization control must be demonstrably safe in operation.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict (Level A): MUST
+-   **Scope**: `all_code`
 
 For **Level A** functions, all safety-relevant decisions (boolean
 expressions affecting safety outcomes) should be covered according to
@@ -3171,6 +3415,7 @@ A simple table template:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 For Level A (highest criticality) Strict units, tests must include on-target execution:
 
@@ -3194,6 +3439,7 @@ Desktop-only testing is insufficient to claim timing and resource safety on real
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Projects using CRSS-Python Strict should maintain a **Guideline
 Compliance Summary (GCS)** that, for each rule:
@@ -3214,6 +3460,7 @@ kept in version control.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Projects must declare:
 - Supported operating systems
@@ -3230,6 +3477,8 @@ This declaration becomes part of the compliance baseline.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
+
 All combinations of declared platforms/flags must be covered by:
 - Functional tests
 - Safety tests
@@ -3246,6 +3495,7 @@ Where exhaustive testing is infeasible:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Any difference between Testing environment and Deployment environment must be:
 - Documented
@@ -3264,6 +3514,7 @@ Any difference between Testing environment and Deployment environment must be:
 -   **Profiles**:
     -   Core: MUST
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Each project using CRSS-Python must declare a **target Python version
 range** (for example, `>=3.10,<3.13`) in configuration, such as:
@@ -3284,6 +3535,7 @@ features, standard library behavior, and deprecations.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Static analysis tools (including `pycodereview`, linters, and type checkers)
 must parse and analyze the code using the **syntax and semantics of the
@@ -3304,6 +3556,7 @@ syntax issues, deprecations, or subtle behavioral changes.
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Code must not rely on language or standard-library features that are
 **newer** than the declared minimum Python version, unless guarded by:
@@ -3329,6 +3582,7 @@ For `requires-python = ">=3.9"`:
 -   **Profiles**:
     -   Core: SHOULD-NOT
     -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Code must not use language constructs or standard-library APIs that are:
 
@@ -3353,6 +3607,7 @@ and can make upgrades unsafe.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 The Python version used to run analysis tools (linters, `pycodereview`,
 type checkers) may differ from the production runtime, but:
@@ -3373,6 +3628,7 @@ testing across the supported versions.
 -   **Profiles**:
     -   Core: MUST
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 For each module or project:
 
@@ -3398,6 +3654,7 @@ when both are explicitly aligned.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 For safety-critical deployments:
 the exact CPython version, build configuration, OS version, and critical C library dependencies must be:
@@ -3421,6 +3678,7 @@ Models Python as a controlled COTS component, similar to a compiler or RTOS.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Projects using Strict for high-criticality must maintain a CRSS subset conformance test suite that:
 - exercises all allowed features of the CRSS-Core and CRSS-Strict profiles,
@@ -3440,6 +3698,7 @@ Provides evidence that CPython behaves as assumed within the defined usage domai
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Deployed systems shall not perform automatic updates of:
 - Application code
@@ -3464,6 +3723,7 @@ No exceptions for Level A.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 All project dependencies (including transitive dependencies, installer tools like pip, build tools, and setup utilities) must be:
 - Fully pinned to exact versions
@@ -3485,8 +3745,9 @@ ASIL/SIL standards demand repeatable, deterministic builds.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
-The Python interpreter (CPython version, build flags, distribution) shall not change during the lifecycle of a certified release. 
+The Python interpreter (CPython version, build flags, distribution) shall not change during the lifecycle of a certified release.
 Any change constitutes a new baseline requiring full re-evaluation.
 
 ### CRSS-10.5.1 - Frozen container images
@@ -3496,6 +3757,7 @@ Any change constitutes a new baseline requiring full re-evaluation.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 If containers (e.g., Docker) are used:
 - The base image, OS, Python build, libraries, and system tools must be frozen and version-pinned.
@@ -3509,6 +3771,7 @@ If containers (e.g., Docker) are used:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Strict components must run in isolated containers containing only:
 - Required runtime dependencies
@@ -3523,7 +3786,9 @@ This prevents runtime mutation.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST (non-deviable for Level A)
-All projects claiming CRSS compliance shall execute the full Compliance Process as defined in the Configuration & Deployment Integrity Specification. 
+-   **Scope**: `all_code`
+
+All projects claiming CRSS compliance shall execute the full Compliance Process as defined in the Configuration & Deployment Integrity Specification.
 A project is not compliant until all required artifacts have been produced, approved, versioned, and linked to a Safety Baseline.
 
 ### CRSS-12.0.2 - Safety Baseline Establishment
@@ -3533,6 +3798,7 @@ A project is not compliant until all required artifacts have been produced, appr
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 All Strict releases shall define a **Safety Baseline**, consisting of:
 - Source code commit hash
@@ -3554,6 +3820,7 @@ The baseline shall be immutable.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 All compliance artifacts (RCR, TEP, CBM, CC, Safety Baseline Report) shall:
 - Be versioned
@@ -3570,6 +3837,7 @@ Partial versioning is forbidden.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 A release is non-compliant unless all required artifacts are present and complete:
 - RCR
@@ -3587,6 +3855,7 @@ Missing artifacts invalidate compliance.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Each artifact must:
 - Reference the baseline identifier
@@ -3602,6 +3871,7 @@ This creates a closed, traceable chain.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Any change to any baseline element:
 - Code
@@ -3623,8 +3893,9 @@ No partial or incremental acceptance is allowed.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
-All dependencies shall be stored in a controlled, backed-up private repository. 
+All dependencies shall be stored in a controlled, backed-up private repository.
 Reliance on public registries (e.g., PyPI) at build time is prohibited.
 
 ### CRSS-12.0.8 - Reproducible Build Requirement
@@ -3634,8 +3905,9 @@ Reliance on public registries (e.g., PyPI) at build time is prohibited.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
-The Safety Baseline must enable a build that can be reproduced to produce identical functionality and behavior using only baseline artifacts. 
+The Safety Baseline must enable a build that can be reproduced to produce identical functionality and behavior using only baseline artifacts.
 Missing information invalidates compliance.
 
 ### CRSS-12.0.9 - Interpreter Version Range with Single-Baseline Freeze
@@ -3645,6 +3917,7 @@ Missing information invalidates compliance.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 The CRSS standard defines an allowed interpreter range (e.g., 3.9–3.12), BUT:
 - Each project baseline shall select exactly one interpreter version from the allowed range.
@@ -3658,6 +3931,7 @@ The CRSS standard defines an allowed interpreter range (e.g., 3.9–3.12), BUT:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 All artifacts must:
 - Share the same version number
@@ -3672,6 +3946,7 @@ All artifacts must:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 **Phase 1 — Change Proposal**
 - Document requested change
@@ -3711,6 +3986,7 @@ Any change leads automatically to a new baseline.
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 A critical defect may trigger an Emergency Release, which:
 - MUST follow the full Compliance Process
@@ -3730,6 +4006,7 @@ MUST produce:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Emergency Releases:
 - SHALL contain only the minimal change required to correct the issue
@@ -3743,6 +4020,7 @@ Emergency Releases:
 -   **Profiles**:
     -   Core: SHOULD
     -   Strict: MUST
+-   **Scope**: `all_code`
 
 Emergency fixes MUST be integrated back into:
 - Next planned release
@@ -3750,3 +4028,159 @@ Emergency fixes MUST be integrated back into:
 - Future baselines
 
 No divergence.
+
+# CRSS Phase-Aware Interpretation Notes (Extended Set)
+
+## CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3
+### Phase-Aware Interpretation Note — Collections & Allocation
+
+### **Critical Phase**
+- Collections, large objects, and object pools used by `@critical` functions **MUST NOT grow**.
+- They MUST NOT be mutated, resized, extended, or pruned during critical execution.
+- Maximum size, shape, and membership **MUST be fixed or provably bounded** prior to entering the critical phase.
+- No new entries may be added or removed during critical execution.
+
+### **Non-Critical Phase**
+- Collections and pools MAY be:
+  - populated,
+  - cleared,
+  - resized,
+  - rebuilt,
+  - or reset.
+- BUT:
+  - explicit upper bounds **must be enforced**,
+  - lifecycle management must be deterministic,
+  - any state used in critical code must be fully initialized and bounded **before** the critical call begins.
+
+---
+
+## CRSS-5.5.2 / CRSS-5.5.3
+### Phase-Aware Interpretation Note — Big Data & Queries
+
+### **Critical Phase**
+- Critical code MUST NOT:
+  - perform chunked I/O,
+  - pagination,
+  - database queries,
+  - distributed datastore access.
+- All required data MUST be:
+  - pre-filtered,
+  - pre-aggregated,
+  - pre-validated,
+  - kept in bounded in-memory structures.
+
+### **Non-Critical Phase**
+- Chunked I/O, pagination, and query-based processing MAY occur.
+- Conditions:
+  - per-operation volume MUST be explicit and bounded,
+  - failures MUST follow CRSS robustness rules,
+  - only reduced, bounded, validated results may be forwarded to critical computation.
+
+---
+
+## Cache Rules (CRSS-5.6.1 / 5.6.2 / 5.6.3 / 7.8.5 / 7.8.6)
+### Phase-Aware Interpretation Note
+
+### **Critical Phase**
+- Critical code MUST NOT:
+  - insert into caches,
+  - evict from caches,
+  - mutate cache entries.
+- It MAY read from:
+  - pre-populated,
+  - bounded,
+  - deterministic caches.
+- Behavior on missing or stale cache entries MUST be deterministic.
+
+### **Non-Critical Phase**
+- Cache population, eviction, refresh cycles MAY occur.
+- Conditions:
+  - cache size MUST be bounded,
+  - lifetimes and eviction policies MUST be documented,
+  - caches MUST NOT become a single source of truth for safety decisions,
+  - updates MUST NOT violate invariants required by critical code.
+
+---
+
+## Network & Microservices
+### (CRSS-7.6.4 / 7.6.5 / 7.7.x / 7.8.2–7.8.4 / 7.9.4–7.9.6)
+### Phase-Aware Interpretation Note
+
+### **Critical Phase**
+- Critical code SHALL NOT perform:
+  - network calls,
+  - remote API queries,
+  - microservice RPCs,
+  - retries,
+  - circuit-breaker logic.
+- All safety decisions must rely on:
+  - already-available,
+  - validated,
+  - bounded local data.
+- If data is stale or unavailable:
+  - a safe fallback path MUST be used (fail-safe).
+
+### **Non-Critical Phase**
+- Network I/O, microservice interactions, retries, and circuit-breakers MAY be used.
+- Conditions:
+  - strict latency budgets and timeout bounds,
+  - partial-failure detection,
+  - status propagation to higher layers,
+  - critical code MUST remain tolerant of “no response / stale data”.
+
+---
+
+## Parsing & Transfer Integrity
+### (CRSS-7.9.1–7.9.3 / 7.9.5)
+### Phase-Aware Interpretation Note
+
+### **Critical Phase**
+- Critical code MUST NOT:
+  - perform JSON/CSV/XML parsing,
+  - perform schema validation,
+  - run integrity checks (CRC/checksum/signature),
+  - stream or reassemble partial data.
+- Critical code may only consume:
+  - validated,
+  - normalized,
+  - bounded,
+  - pre-checked data structures.
+
+### **Non-Critical Phase**
+- Non-critical code MUST implement:
+  - strict parsing,
+  - schema validation,
+  - malformed-input defenses,
+  - checksum/hash/signature verification,
+  - ingress integrity guarantees.
+- Only validated outputs may enter critical paths.
+
+---
+
+## OS & Environment Interaction
+### (CRSS-7.10.1 / 7.10.2)
+### Phase-Aware Interpretation Note
+
+### **Critical Phase**
+- Critical code MUST NOT:
+  - read environment variables,
+  - inspect the filesystem,
+  - perform OS-level introspection,
+  - query dynamic configuration sources.
+- All required configuration MUST be:
+  - resolved,
+  - validated,
+  - normalized,
+  - frozen before entering the critical phase.
+
+### **Non-Critical Phase**
+- Non-critical code MAY:
+  - read environment variables,
+  - load configuration files,
+  - inspect limited OS info.
+- Conditions:
+  - all values MUST be validated,
+  - all critical-relevant configuration MUST be frozen before critical execution,
+  - dynamically changing configuration MUST NOT affect deterministic critical logic.
+
+---

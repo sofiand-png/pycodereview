@@ -4,9 +4,52 @@ Status: Early Public Release (Rule IDs stable; text may evolve)
 © 2025 Sofian Daghsen – All rights reserved
 Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
-
-
 # CRSS-Python Strict Profile
+
+## Table of Contents
+
+  - [0.1 Purpose and Objectives](#01-purpose-and-objectives)
+  - [0.1 What Strict Is Not](#01-what-strict-is-not)
+- [1. Relation to Core Profile & Intention](#1-relation-to-core-profile-intention)
+  - [1.1 Rule ID and Chapter Mapping](#11-rule-id-and-chapter-mapping)
+  - [1.2 Criticality Levels](#12-criticality-levels)
+  - [1.3 Companion Documents](#13-companion-documents)
+  - [1.4 Python Version Scope and Relation to Core](#14-python-version-scope-and-relation-to-core)
+- [2. Strengthened Rules (Core --> Strict)](#2-strengthened-rules-core-strict)
+- [3. Strict-Only Rules](#3-strict-only-rules)
+- [3. Core Language Usage](#3-core-language-usage)
+  - [CRSS-11.3.3 – Structural typing prohibited in Strict code (Strict-only)](#crss-1133-structural-typing-prohibited-in-strict-code-strict-only)
+- [4. Error Handling, Exceptions & Control Flow](#4-error-handling-exceptions-control-flow)
+  - [CRSS-11.4.1 – Loops must be demonstrably bounded](#crss-1141-loops-must-be-demonstrably-bounded)
+  - [CRSS-11.4.2 – No raw `while True` loops](#crss-1142-no-raw-while-true-loops)
+  - [CRSS-11.4.3 – No unbounded recursion in Strict code](#crss-1143-no-unbounded-recursion-in-strict-code)
+  - [CRSS-11.4.5 – No dependence on scheduling or GC timing](#crss-1145-no-dependence-on-scheduling-or-gc-timing)
+  - [CRSS-11.4.6 – Documented execution bounds for Strict units](#crss-1146-documented-execution-bounds-for-strict-units)
+  - [CRSS-11.4.7 – No blocking operations in Strict units](#crss-1147-no-blocking-operations-in-strict-units)
+  - [CRSS-11.4.8 – No dependence on wall-clock time for correctness](#crss-1148-no-dependence-on-wall-clock-time-for-correctness)
+- [5. Types, Data & Interfaces](#5-types-data-interfaces)
+  - [CRSS-11.5.1 – Object-oriented design restrictions](#crss-1151-object-oriented-design-restrictions)
+  - [CRSS-11.5.2 – Decorator whitelist (Strict-only)](#crss-1152-decorator-whitelist-strict-only)
+  - [CRSS-11.5.3 – No I/O in core computational logic - I/O vs Critical & Non-Critical Phases](#crss-1153-no-io-in-core-computational-logic-io-vs-critical-non-critical-phases)
+  - [CRSS-11.5.6 – No dynamic allocation in critical execution paths (Strict-only)](#crss-1156-no-dynamic-allocation-in-critical-execution-paths-strict-only)
+  - [CRSS-11.5.7 – GC disabled during Strict critical execution](#crss-1157-gc-disabled-during-strict-critical-execution)
+  - [CRSS-11.5.8 – No finalizers (__del__) in Strict object graphs](#crss-1158-no-finalizers-del-in-strict-object-graphs)
+  - [CRSS-11.5.9 – Acyclic Strict-owned object graphs](#crss-1159-acyclic-strict-owned-object-graphs)
+  - [CRSS-11.6.1 – Strict execution shall be single-threaded](#crss-1161-strict-execution-shall-be-single-threaded)
+- [7. Robustness & Portability](#7-robustness-portability)
+  - [CRSS-11.7.1 – No wildcard imports (Strict-only)](#crss-1171-no-wildcard-imports-strict-only)
+  - [CRSS-11.7.2 – No implicit relative imports (Strict-only)](#crss-1172-no-implicit-relative-imports-strict-only)
+  - [CRSS-11.7.3 – Process isolation for safety-critical Python](#crss-1173-process-isolation-for-safety-critical-python)
+  - [CRSS-11.7.4 – Safe-state watchdog for Strict processes](#crss-1174-safe-state-watchdog-for-strict-processes)
+- [8. Maintainability & Documentation](#8-maintainability-documentation)
+  - [CRSS-11.8.1 – Single responsibility per Strict module (Strict-only)](#crss-1181-single-responsibility-per-strict-module-strict-only)
+- [9. Testing & Coverage Guidelines](#9-testing-coverage-guidelines)
+  - [CRSS-11.9.1 – 100% branch coverage for Strict modules](#crss-1191-100-branch-coverage-for-strict-modules)
+  - [CRSS-11.9.2 – MC/DC for critical decisions](#crss-1192-mcdc-for-critical-decisions)
+  - [CRSS-11.9.3 – Documented test matrices for critical logic](#crss-1193-documented-test-matrices-for-critical-logic)
+  - [CRSS-11.9.4 – Requirements traceability for Strict units](#crss-1194-requirements-traceability-for-strict-units)
+  - [CRSS-11.9.5 – Guideline Compliance Summary for CRSS-Strict](#crss-1195-guideline-compliance-summary-for-crss-strict)
+  - [CRSS-11.9.7 – Fault injection for safety mechanisms](#crss-1197-fault-injection-for-safety-mechanisms)
 
 The **CRSS-Python Strict** profile is a restricted subset of Python
 intended for runtime-critical, safety-sensitive, or mission-critical
@@ -18,37 +61,36 @@ It is conceptually similar to MISRA-style subsets for C/C++.
 
 The **CRSS-Python Strict** profile defines a safety-oriented subset of Python designed for:
 
-- Runtime-critical logic  
-- Safety-sensitive behavior  
-- Mission-critical decision paths  
-- High-assurance data transformations  
+- Runtime-critical logic
+- Safety-sensitive behavior
+- Mission-critical decision paths
+- High-assurance data transformations
 
 Its primary goals are:
 
-- **Prevent classes of runtime failures**  
+- **Prevent classes of runtime failures**
   by restricting language constructs that are dynamic, ambiguous, or difficult to reason about.
 
-- **Enable predictable and analyzable control flow**  
+- **Enable predictable and analyzable control flow**
   suitable for formal review, static analysis, and high-coverage testing (e.g., MC/DC).
 
-- **Increase reliability and security**  
+- **Increase reliability and security**
   through disciplined type usage, defensive checks, and restricted state mutation.
 
-- **Support auditability and certification**  
+- **Support auditability and certification**
   by requiring traceability, deviation documentation, and repeatable compliance evidence.
 
-- **Reduce ambiguity in multi-team environments**  
+- **Reduce ambiguity in multi-team environments**
   by enforcing a consistent coding model for critical components.
 
 ### 0.1 What Strict Is Not
 
-- It is **not** a general-purpose coding style guide.  
-- It **does not** guarantee system safety on its own.  
-- It **does not** replace architectural reviews, testing, or verification.  
-- It **does not** forbid Python in non-critical layers.  
+- It is **not** a general-purpose coding style guide.
+- It **does not** guarantee system safety on its own.
+- It **does not** replace architectural reviews, testing, or verification.
+- It **does not** forbid Python in non-critical layers.
 
 **Strict** defines rules only for critical units and strengthens Core rules to achieve higher assurance.
-
 
 ------------------------------------------------------------------------
 
@@ -63,14 +105,14 @@ CRSS Strict reuses the rule catalog defined in
   - keep the same level,
   - or **strengthen** it (for example, Core: SHOULD-NOT --> Strict: MUST-NOT).
 
-In addition, Strict introduces rules that are **Strict-only**  
+In addition, Strict introduces rules that are **Strict-only**
 (Core: N/A, Strict: MUST/SHOULD).
 
 Strict code is expected to be:
 
 - a **subset of Core-compliant Python**, and
 - close in spirit to subsets used under standards like DO-178C, ISO 26262,
-  IEC 61508, and MISRA.  
+  IEC 61508, and MISRA.
 
 The **Strict** profile is not intended for all Python code in a project.
 
@@ -79,8 +121,7 @@ The **Strict** profile is not intended for all Python code in a project.
 - Strict code is expected to be **less "Pythonic" and more "safety-subset"**:
   dynamic features, lambdas, casts, and nondeterministic randomness are
   deliberately constrained or forbidden.
-- Critical code **cannot** be evaluated under a weaker profile.  
-
+- Critical code **cannot** be evaluated under a weaker profile.
 
 Strict should be applied to:
 
@@ -150,7 +191,7 @@ it only increases rule strength.
 
 version assumptions:
 
-- **Interpreter:** CPython  
+- **Interpreter:** CPython
 - **Supported Python versions (normative):** 3.9–3.12 (inclusive)
 
 All rules in this document apply only within that range. Use of
@@ -159,8 +200,7 @@ CRSS-Strict outside this range is not covered by the specification.
 Projects that adopt the Strict profile **MUST** also declare their own
 Python version target, using the same project-declared model as Core:
 
-- `target_python_version` – expected supported Python version  
-
+- `target_python_version` – expected supported Python version
 
 The following constraints apply:
 
@@ -180,14 +220,12 @@ For detailed behaviour of project-declared version ranges, rule evolution,
 and profile selection, see the Core specification chapter 10 and the
 *Versioning and Rule Stability* annex.
 
-
 ------------------------------------------------------------------------
 
 ## 2. Strengthened Rules (Core --> Strict)
 
 The following existing rules from the Core catalog are strengthened in
 the Strict profile:
-
 
 | RULE ID     | Description                                  | Core Level   | Strict Level   | Note |
 |-------------|----------------------------------------------|--------------|----------------|------|
@@ -285,7 +323,6 @@ the Strict profile:
 Strict-compliant code must therefore be a **subset** of Core-compliant
 code.
 
-
 ------------------------------------------------------------------------
 
 ## 3. Strict-Only Rules
@@ -296,13 +333,14 @@ they are described here (Core: N/A, Strict: MUST/SHOULD/MUST-NOT).
 ## 3. Core Language Usage
 
 ### CRSS-11.3.3 – Structural typing prohibited in Strict code (Strict-only)
+-   **Profiles**:
+    -   Core: ** N/A
+    -   Strict: ** MUST NOT
+-   **Scope**: `all_code`
 
-- **Category:** Type System Discipline  
-- **Type:** Static  
+- **Category:** Type System Discipline
+- **Type:** Static
 - **Profiles:**
-  - **Core:** N/A  
-  - **Strict:** MUST NOT
-- **Scope**: `all_code`
 
 In Strict code (including critical units), **structural typing SHALL NOT be
 used.** This includes, but is not limited to:
@@ -313,11 +351,9 @@ used.** This includes, but is not limited to:
 
 Strict units SHALL use **nominal types only**, such as:
 
-- explicit classes and abstract base classes (ABCs)  
-- declared inheritance hierarchies  
+- explicit classes and abstract base classes (ABCs)
+- declared inheritance hierarchies
 - simple, non-polymorphic generics (e.g. `list[int]`, `dict[str, int]`)
-
-
 
 **Rationale**:
 
@@ -334,13 +370,12 @@ Strict requires **explicit, verifiable, nominal interfaces**.
 ## 4. Error Handling, Exceptions & Control Flow
 
 ### CRSS-11.4.1 – Loops must be demonstrably bounded
-
-- **Category**: Control Flow  
-- **Type**: Static / Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `all_code`
+-   **Category**: Control Flow
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 All loops in Strict units must be demonstrably finite:
 
@@ -349,39 +384,37 @@ All loops in Strict units must be demonstrably finite:
   understandable and converge under all expected operating conditions.
 
 ### CRSS-11.4.2 – No raw `while True` loops
-
-- **Category**: Control Flow  
-- **Type**: Static  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST-NOT  
+-   **Category**: Control Flow
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Raw `while True:` loops are forbidden in Strict modules, except for a
 small set of documented infrastructure patterns explicitly reviewed at
 system level (for example, event loop wrappers).
 
 ### CRSS-11.4.3 – No unbounded recursion in Strict code
-
-- **Category**: Control Flow  
-- **Type**: Static / Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST  
+-   **Category**: Control Flow
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Recursive functions in Strict code must have statically evident depth
 bounds (e.g. recursion limited by a small constant or input bound) or
 be refactored to iterative forms with explicit bounds. Deep or
 data-dependent recursion is not allowed.
 
-
 ### CRSS-11.4.5 – No dependence on scheduling or GC timing
-
-- **Category**: Runtime Behavior  
-- **Type**: Process / Static (partial)  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `all_code`
+-   **Category**: Runtime Behavior
+-   **Type**: Process / Static (partial)
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Strict code must not rely on:
 
@@ -393,13 +426,12 @@ to maintain correctness. Any concurrency must be designed so that all
 valid schedules are safe.
 
 ### CRSS-11.4.6 – Documented execution bounds for Strict units
-
-- **Category**: Control Flow / Timing
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `critical`
+-   **Category**: Control Flow / Timing
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `critical`
 
 For each @critical function / Strict Level A unit:
 
@@ -414,12 +446,12 @@ The design shall document:
 Makes WCET approximation possible by combining structural bounds with empirical measurements.
 
 ### CRSS-11.4.7 – No blocking operations in Strict units
-
-- **Category**: Control Flow / OS Interaction
-- **Type**: Static / Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST-NOT
+-   **Category**: Control Flow / OS Interaction
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Strict units shall not perform operations that can block indefinitely or for unbounded durations, including:
 - time.sleep, threading.Event.wait, Condition.wait, blocking I/O, or network calls,
@@ -432,13 +464,12 @@ Any waits or blocking must be confined to non-critical coordination layers, with
 Blocking destroys timing guarantees and can deadlock critical loops.
 
 ### CRSS-11.4.8 – No dependence on wall-clock time for correctness
-
-- **Category**: Control Flow / Determinism
-- **Type**: Static / Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST-NOT
-- **Scope**: `all_code`
+-   **Category**: Control Flow / Determinism
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Strict units shall not use wall-clock time (e.g. time.time(), datetime.now()) to determine core safety decisions. Time-based behavior in Strict code must:
 - rely on monotonic tick counters or externally provided timing signals, and
@@ -451,12 +482,12 @@ External clock behavior is platform-dependent and vulnerable to drift, NTP jumps
 ## 5. Types, Data & Interfaces
 
 ### CRSS-11.5.1 – Object-oriented design restrictions
-
-- **Category**: Design / Types  
-- **Type**: Static / Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST  
+-   **Category**: Design / Types
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 In Strict modules:
 
@@ -468,13 +499,12 @@ In Strict modules:
   completely in Strict zones.
 
 ### CRSS-11.5.2 – Decorator whitelist (Strict-only)
-
-- **Category**: Design / Language Usage  
-- **Type**: Static  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `all_code`
+-   **Category**: Design / Language Usage
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Only a small, vetted set of decorators may be used in Strict code,
 for example:
@@ -488,14 +518,12 @@ All other decorators must either be banned or explicitly justified and
 documented as deviations.
 
 ### CRSS-11.5.3 – No I/O in core computational logic - I/O vs Critical & Non-Critical Phases
-
-- **Category**: I/O / Design  
-- **Type**: Process / Static (partial)
-- **Scope**: critical_only
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `critical`
+-   **Category**: I/O / Design
+-   **Type**: Process / Static (partial)
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: critical_only
 
 Functions implementing core algorithms (often in critical units such as
 those marked `@critical`) must not perform file or network I/O; they
@@ -503,14 +531,12 @@ should operate on data already in memory. I/O should be handled at
 boundaries.
 
 ### CRSS-11.5.6 – No dynamic allocation in critical execution paths (Strict-only)
-
-- **Category**: Memory & Resources / Determinism
-- **Type**: Static
-- **Scope**: critical_only
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `critical`
+-   **Category**: Memory & Resources / Determinism
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: critical_only
 
 Functions in Strict units that are part of a critical control cycle (e.g. @critical) shall not perform dynamic memory allocation during normal execution. In particular, within such functions:
 - Creation of new lists, dicts, sets, tuples, user objects, or large strings is forbidden.
@@ -527,14 +553,12 @@ Static analysis must flag bytecode opcodes and patterns associated with allocati
 Eliminates allocation-induced latency and GC pressure inside timing-critical paths, making execution more predictable.
 
 ### CRSS-11.5.7 – GC disabled during Strict critical execution
-
-- **Category**:Runtime Behavior / Memory
-- **Type**: Process / Static (partial)
-- **Scope**: critical_only
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `critical`
+-   **Category**: Runtime Behavior / Memory
+-   **Type**: Process / Static (partial)
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: critical_only
 
 During execution of Strict critical cycles:
 -The cyclic garbage collector (gc) shall be disabled (e.g. via gc.disable()).
@@ -550,13 +574,12 @@ The design must document when GC can run (startup, shutdown, maintenance windows
 Disables non-deterministic GC pauses during the most time-critical operations, aligning behavior with hard real-time constraints.
 
 ### CRSS-11.5.8 – No finalizers (__del__) in Strict object graphs
-
-- **Category**:Memory & Resources
-- **Type**: Static  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST-NOT
-- **Scope**: `all_code`
+-   **Category**: Memory & Resources
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Classes used by Strict units shall not define __del__ methods, nor rely on finalizer semantics for releasing resources. Strict code must use explicit cleanup methods or context managers instead.
 
@@ -564,19 +587,18 @@ Classes used by Strict units shall not define __del__ methods, nor rely on final
 Finalizers introduce unpredictable, GC-driven behavior at object destruction and can run at arbitrary times under memory pressure.
 
 ### CRSS-11.5.9 – Acyclic Strict-owned object graphs
-
-- **Category**:Memory & Resources / Determinism
-- **Type**: Process / Static (partial)
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-- **Scope**: `all_code`
+-   **Category**: Memory & Resources / Determinism
+-   **Type**: Process / Static (partial)
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Object graphs owned or manipulated by Strict units shall be designed to be acyclic (no reference cycles) except for a small set of explicitly documented internal structures with proven bounded size and lifetime.
 
 Static analysis and design review must:
 - prohibit obvious cyclic patterns (e.g. parent↔child back-references) in Strict types, or
-- document and justify them with evidence of bounded size and lifetime. 
+- document and justify them with evidence of bounded size and lifetime.
 
 **Rationale**
 
@@ -585,12 +607,12 @@ Acyclic graphs ensure refcounting alone is sufficient for reclamation and avoid 
  ## 6. Security
 
 ### CRSS-11.6.1 – Strict execution shall be single-threaded
-
-- **Category**: Concurrency / Architecture  
-- **Type**: Static / Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
+-   **Category**: Concurrency / Architecture
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Strict modules and @critical units must execute in a single OS thread:
 - No use of threading, multiprocessing, concurrent.futures, or asyncio within Strict modules.
@@ -600,38 +622,36 @@ Strict modules and @critical units must execute in a single OS thread:
 
 Single-threaded execution eliminates data races and heavily simplifies reasoning about timing.
 
-
-
 ## 7. Robustness & Portability
 
 ### CRSS-11.7.1 – No wildcard imports (Strict-only)
-
-- **Category**: Imports  
-- **Type**: Static  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST-NOT  
+-   **Category**: Imports
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 `from module import *` is forbidden in Strict code.
 
 ### CRSS-11.7.2 – No implicit relative imports (Strict-only)
-
-- **Category**: Imports  
-- **Type**: Static  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST-NOT  
+-   **Category**: Imports
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST-NOT
+-   **Scope**: `all_code`
 
 Strict code must use absolute imports or explicit relative imports
 (`from .mod import X`), not rely on implicit `sys.path` ordering.
 
 ### CRSS-11.7.3 – Process isolation for safety-critical Python
-
-- **Category**: Architecture & Robustness  
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
+-   **Category**: Architecture & Robustness
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Safety-critical Strict units shall run in a dedicated process isolated from:
 - non-critical UI
@@ -649,13 +669,13 @@ Inter-process communication must:
 Prevents failures in non-critical or experimental Python code from compromising safety-critical control logic.
 
 ### CRSS-11.7.4 – Safe-state watchdog for Strict processes
+-   **Category**: Architecture & Fault Handling
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
-- **Category**: Architecture & Fault Handling  
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
-  
 The process hosting Strict code shall be monitored by an independent watchdog (hardware, RTOS, or external supervisor). If the Strict process:
 - stops responding within a defined period
 - crashes
@@ -667,16 +687,15 @@ the watchdog must drive the system into a defined safe state.
 
 Even with strict coding rules, unexpected faults must not lead to uncontrolled behavior; a simple external monitor provides a last-resort safety net.
 
-
 ## 8. Maintainability & Documentation
 
 ### CRSS-11.8.1 – Single responsibility per Strict module (Strict-only)
-
-- **Category**: Design / Maintainability  
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: SHOULD  
+-   **Category**: Design / Maintainability
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: SHOULD
+-   **Scope**: `all_code`
 
 Each Strict module should have a single, clear purpose. Mixing unrelated
 concerns in one file is discouraged.
@@ -684,24 +703,24 @@ concerns in one file is discouraged.
 ## 9. Testing & Coverage Guidelines
 
 ### CRSS-11.9.1 – 100% branch coverage for Strict modules
-
-- **Category**: Testing & Coverage  
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST  
+-   **Category**: Testing & Coverage
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 All Strict modules must target 100% branch coverage, or a justified and
 documented exception (for example, defensive code paths that cannot be
 reached in normal operation).
 
 ### CRSS-11.9.2 – MC/DC for critical decisions
-
-- **Category**: Testing & Coverage  
-- **Type**: Process / Dynamic (future tooling)  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST
+-   **Category**: Testing & Coverage
+-   **Type**: Process / Dynamic (future tooling)
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Critical units (functions/classes in critical zones or marked
 `@critical`) should have tests designed to satisfy Modified
@@ -715,12 +734,12 @@ to:
 - generate MC/DC satisfaction reports.
 
 ### CRSS-11.9.3 – Documented test matrices for critical logic
-
-- **Category**: Testing & Coverage  
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: SHOULD  
+-   **Category**: Testing & Coverage
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: SHOULD
+-   **Scope**: `all_code`
 
 For core decision logic, maintain test matrices that list input
 conditions and expected outcomes, referencing MC/DC where applicable.
@@ -728,12 +747,12 @@ conditions and expected outcomes, referencing MC/DC where applicable.
 ---
 
 ### CRSS-11.9.4 – Requirements traceability for Strict units
-
-- **Category**: Process / Traceability  
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST  
+-   **Category**: Process / Traceability
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Each Strict module and each `@critical` function must be traceable to
 one or more requirements. Each such requirement must be traceable
@@ -742,12 +761,12 @@ forward to design, implementation, and tests.
 ---
 
 ### CRSS-11.9.5 – Guideline Compliance Summary for CRSS-Strict
-
-- **Category**: Process / Compliance  
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: MUST  
+-   **Category**: Process / Compliance
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: MUST
+-   **Scope**: `all_code`
 
 Projects using CRSS-Strict must maintain a “Guideline Compliance
 Summary” (GCS-style report) that:
@@ -760,13 +779,12 @@ Summary” (GCS-style report) that:
 This mirrors MISRA-Compliance-style reporting.
 
 ### CRSS-11.9.7 – Fault injection for safety mechanisms
-
-- **Category**: Testing & Fault Tolerance
-- **Type**: Process  
-- **Profiles**:
-  - Core: N/A
-  - Strict: SHOULD (MUST for level A) 
-- **Scope**: `critical`
+-   **Category**: Testing & Fault Tolerance
+-   **Type**: Process
+-   **Profiles**:
+    -   Core: N/A
+    -   Strict: SHOULD (MUST for level A)
+-   **Scope**: `critical`
 
 Safety mechanisms implemented in Strict code (range checks, error paths, safe-state transitions) must be validated with fault injection tests, e.g.:
 
