@@ -1,7 +1,36 @@
 # CRSS-Python Standard Levels & Applicability
-Version: v1.0.0  
-Status: Official Release  
-© 2025 Sofian Daghsen – All rights reserved  
+
+## Table of Contents
+
+- [CRSS-Python Standard Levels & Applicability](#crss-python-standard-levels-applicability)
+  - [0. Purpose](#0-purpose)
+  - [1. Profiles & Safety Levels](#1-profiles-safety-levels)
+  - [2. Safety Level Mapping (Updated & Evidence-Based)](#2-safety-level-mapping-updated-evidence-based)
+    - [2.1 ISO 26262 Automotive (ASIL A–D)](#21-iso-26262-automotive-asil-a-d)
+    - [CRSS-ASIL Boundary Statement](#crss-asil-boundary-statement)
+    - [2.2 IEC 61508 (SIL 1–4)](#22-iec-61508-sil-1-4)
+    - [2.3 DO-178C / DO-278A (Avionics)](#23-do-178c-do-278a-avionics)
+    - [2.4 IEC 62304 (Medical)](#24-iec-62304-medical)
+  - [3. Strict Level A Mandatory Constraints (Expanded)](#3-strict-level-a-mandatory-constraints-expanded)
+    - [3.1 Execution Constraints](#31-execution-constraints)
+    - [3.2 Timing & Performance](#32-timing-performance)
+    - [3.3 Architecture & Deployment](#33-architecture-deployment)
+    - [3.4 Data Integrity](#34-data-integrity)
+    - [3.5 Evidence & Certification](#35-evidence-certification)
+  - [4. Architectural Preconditions (Updated)](#4-architectural-preconditions-updated)
+  - [5. Explicit Non-Supported Use Cases](#5-explicit-non-supported-use-cases)
+  - [6. What CRSS Enables (Objective Assessment)](#6-what-crss-enables-objective-assessment)
+  - [7. Certification Realism & Completeness](#7-certification-realism-completeness)
+    - [✅ Technically Realistic](#✅-technically-realistic)
+    - [✅ Certifiable in Real Industries](#✅-certifiable-in-real-industries)
+    - [✅ Complete Framework](#✅-complete-framework)
+    - [⚠ Remaining Boundaries](#⚠-remaining-boundaries)
+  - [8. Governance](#8-governance)
+  - [9. Final Summary](#9-final-summary)
+
+Version: v1.0.0
+Status: Official Release
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -20,11 +49,11 @@ This document defines the **applicability, safety level coverage, system constra
 
 It clarifies, objectively:
 
-✅ Where CRSS **can** be used  
-✅ Under what **conditions**  
-✅ What **levels** it supports  
-✅ What CRSS **cannot** certify  
-✅ The **system architecture requirements** for each level  
+✅ Where CRSS **can** be used
+✅ Under what **conditions**
+✅ What **levels** it supports
+✅ What CRSS **cannot** certify
+✅ The **system architecture requirements** for each level
 
 This document supersedes v0.1.0.
 
@@ -149,17 +178,17 @@ No deviation is permitted at Level A.
 
 CRSS assumes:
 
-✅ CPython 3.9–3.12  
-✅ General-purpose OS (Linux/RT-POSIX recommended)  
-✅ Python is **not** the sole safety mechanism  
-✅ Safety relies on **multi-layer system design**  
-✅ Timing guarantees are **tested, not formal**  
-✅ Isolation from primary actuation loops  
+✅ CPython 3.9–3.12
+✅ General-purpose OS (Linux/RT-POSIX recommended)
+✅ Python is **not** the sole safety mechanism
+✅ Safety relies on **multi-layer system design**
+✅ Timing guarantees are **tested, not formal**
+✅ Isolation from primary actuation loops
 
 Additionally:
 
-✅ For ASIL D/SIL 3: dual-channel or multi-channel safety architecture is required  
-✅ For Strict Level A: watchdogs and safe-state triggers are mandatory  
+✅ For ASIL D/SIL 3: dual-channel or multi-channel safety architecture is required
+✅ For Strict Level A: watchdogs and safe-state triggers are mandatory
 
 ---
 
@@ -167,12 +196,12 @@ Additionally:
 
 CRSS **cannot** certify:
 
-❌ Hard real-time primary control loops  
-❌ SIL 4 or DAL A/B primary systems  
-❌ Single-channel ASIL D primary actuators  
-❌ Systems requiring formal WCET proof at microsecond scale  
-❌ Systems without hardware redundancy  
-❌ Systems requiring certified toolchains at compiler/interpreter level  
+❌ Hard real-time primary control loops
+❌ SIL 4 or DAL A/B primary systems
+❌ Single-channel ASIL D primary actuators
+❌ Systems requiring formal WCET proof at microsecond scale
+❌ Systems without hardware redundancy
+❌ Systems requiring certified toolchains at compiler/interpreter level
 
 ---
 
@@ -180,12 +209,12 @@ CRSS **cannot** certify:
 
 CRSS now achieves:
 
-✅ Python in **ASIL D / SIL 3 supervisory roles**  
-✅ Certifiable safety cases (SCEM + EAP)  
-✅ Independent third-party verification  
-✅ Immutable and reproducible deployments  
-✅ Toolchain and timing confidence models  
-✅ Full lifecycle traceability and governance  
+✅ Python in **ASIL D / SIL 3 supervisory roles**
+✅ Certifiable safety cases (SCEM + EAP)
+✅ Independent third-party verification
+✅ Immutable and reproducible deployments
+✅ Toolchain and timing confidence models
+✅ Full lifecycle traceability and governance
 
 This is **unprecedented** in the Python ecosystem.
 
@@ -256,4 +285,3 @@ However:
 > **CRSS reaches the maximum theoretically achievable safety level for CPython-based systems: ASIL D / SIL 3 in supervisory roles, under strict architectural conditions.**
 
 This is a landmark achievement for Python in safety-critical engineering.
-

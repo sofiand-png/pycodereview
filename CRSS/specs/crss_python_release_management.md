@@ -1,8 +1,41 @@
-
 # CRSS-Python Release Management Specification
-Version: v1.0.0  
-Status: Official Release  
-© 2025 Sofian Daghsen – All rights reserved  
+
+## Table of Contents
+
+- [CRSS-Python Release Management Specification](#crss-python-release-management-specification)
+  - [0. Purpose](#0-purpose)
+  - [1. Definition of a Release](#1-definition-of-a-release)
+    - [**CRSS Definition**](#crss-definition)
+  - [2. Required Properties of a Release](#2-required-properties-of-a-release)
+    - [2.1 Uniquely Identifiable](#21-uniquely-identifiable)
+    - [2.2 Immutable](#22-immutable)
+    - [2.3 Reproducible](#23-reproducible)
+    - [2.4 Tested](#24-tested)
+    - [2.5 Approved](#25-approved)
+    - [2.6 Deployable](#26-deployable)
+  - [3. Release Contents](#3-release-contents)
+  - [4. Distinction Between Build, Baseline, and Release](#4-distinction-between-build-baseline-and-release)
+  - [5. Release Versioning Rules](#5-release-versioning-rules)
+    - [**CRSS-13.1 – Unique Versioning**](#crss-131-unique-versioning)
+    - [**CRSS-13.2 – Single Unit Principle**](#crss-132-single-unit-principle)
+    - [**CRSS-13.3 – Supersession**](#crss-133-supersession)
+  - [6. Release Lifecycle](#6-release-lifecycle)
+    - [6.1 Stages](#61-stages)
+    - [6.2 State Transitions](#62-state-transitions)
+  - [7. Release Registry Policy](#7-release-registry-policy)
+  - [8. Release Deployment Rules](#8-release-deployment-rules)
+    - [8.1 Deployment Eligibility](#81-deployment-eligibility)
+    - [8.2 Deployment Prohibition](#82-deployment-prohibition)
+    - [8.3 Production Environment Rule](#83-production-environment-rule)
+  - [9. Release Modification](#9-release-modification)
+    - [9.1 Zero Modification](#91-zero-modification)
+    - [9.2 Change Requires New Release](#92-change-requires-new-release)
+  - [10. Release Approval Authority](#10-release-approval-authority)
+  - [11. Summary](#11-summary)
+
+Version: v1.0.0
+Status: Official Release
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -248,13 +281,12 @@ Developers and CI/CD systems **cannot self-approve** Releases.
 ## 11. Summary
 
 A Release is:
-✅ Immutable  
-✅ Traceable  
-✅ Reproducible  
-✅ Fully Tested  
-✅ Independently Approved  
-✅ The ONLY deployable unit  
+✅ Immutable
+✅ Traceable
+✅ Reproducible
+✅ Fully Tested
+✅ Independently Approved
+✅ The ONLY deployable unit
 
-This specification ensures Releases are safe, auditable, and certifiable for  
+This specification ensures Releases are safe, auditable, and certifiable for
 **ASIL D / SIL 3 supervisory environments**.
-

@@ -1,8 +1,42 @@
+# CRSS-Python Safety Case & Maturity Master Specification
 
-# CRSS-Python Safety Case & Maturity Master Specification  
- Version: v3.0.0  
-Status: Normative  
-© 2025 Sofian Daghsen – All rights reserved  
+## Table of Contents
+
+- [CRSS-Python Safety Case & Maturity Master Specification](#crss-python-safety-case-maturity-master-specification)
+- [0. Purpose](#0-purpose)
+- [1. SCEM — Safety Case Evidence Model](#1-scem-safety-case-evidence-model)
+  - [1.1 Objective](#11-objective)
+  - [1.2 SCEM Evidence Categories](#12-scem-evidence-categories)
+  - [1.3 Mandatory SCEM Artifacts](#13-mandatory-scem-artifacts)
+    - [D1 — Requirements & Classification](#d1-requirements-classification)
+    - [D2 — Design & Architecture](#d2-design-architecture)
+    - [D3 — Compliance Artifacts](#d3-compliance-artifacts)
+    - [D4 — Testing & Behavior](#d4-testing-behavior)
+    - [D5 — Configuration Integrity](#d5-configuration-integrity)
+    - [D6 — Operational Readiness](#d6-operational-readiness)
+  - [1.4 SCEM Completion Rules](#14-scem-completion-rules)
+  - [1.5 SCEM & Modes](#15-scem-modes)
+- [2. SCEM Annexes (Consolidated)](#2-scem-annexes-consolidated)
+  - [Annex A — Mode Assignment Register (MAR)](#annex-a-mode-assignment-register-mar)
+  - [Annex B — Critical Boundary Declaration (CBD)](#annex-b-critical-boundary-declaration-cbd)
+  - [Annex C — Mode Propagation Record](#annex-c-mode-propagation-record)
+  - [Annex D — Deviation Register](#annex-d-deviation-register)
+  - [Annex E — Determinism Validation Checklist (Strict-A Only)](#annex-e-determinism-validation-checklist-strict-a-only)
+  - [Annex F — One-Version Python Confirmation](#annex-f-one-version-python-confirmation)
+- [3. Safety Maturity Model (SMM)](#3-safety-maturity-model-smm)
+  - [3.1 Purpose](#31-purpose)
+  - [3.2 Levels](#32-levels)
+  - [3.3 Maturity Requirements](#33-maturity-requirements)
+    - [S1 — Controlled](#s1-controlled)
+    - [S2 — Managed](#s2-managed)
+    - [S3 — Verified](#s3-verified)
+    - [S4 — Certified](#s4-certified)
+  - [3.4 Maturity Assessment Output](#34-maturity-assessment-output)
+- [4. Summary](#4-summary)
+
+ Version: v3.0.0
+Status: Normative
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -16,12 +50,12 @@ This master document consolidates and replaces three prior specifications:
 
 It fully aligns with:
 
-✅ CRSS Unified Safety Specification v3.0.0  
-✅ Compliance Master v3.0.1  
-✅ Mode Model (Core/Strict/Strict-A)  
-✅ Critical / Non-Critical execution  
-✅ Strict-A deviation policy (Option 2)  
-✅ One-version-per-project policy  
+✅ CRSS Unified Safety Specification v3.0.0
+✅ Compliance Master v3.0.1
+✅ Mode Model (Core/Strict/Strict-A)
+✅ Critical / Non-Critical execution
+✅ Strict-A deviation policy (Option 2)
+✅ One-version-per-project policy
 
 This is the **single authoritative reference** for building, maintaining, and evaluating a safety case under CRSS-Python.
 
@@ -37,7 +71,7 @@ The SCEM defines **what evidence** must exist to:
 - Substantiate Mode (Profile × Level),
 - Justify certification readiness.
 
-It answers:  
+It answers:
 > “Do we have the proof that this system is safe under CRSS-Python?”
 
 It is formal, auditable, and mandatory for **Strict** and **Strict-A** projects.
@@ -102,11 +136,11 @@ Each domain contains required artifacts.
 
 A SCEM is considered **complete** only if:
 
-✅ All artifacts exist  
-✅ All artifacts are versioned  
-✅ All artifacts trace to a single CBM  
-✅ No unresolved deviations exist  
-✅ Strict-A evidence is present (if applicable)  
+✅ All artifacts exist
+✅ All artifacts are versioned
+✅ All artifacts trace to a single CBM
+✅ No unresolved deviations exist
+✅ Strict-A evidence is present (if applicable)
 
 If any artifact is missing → SCEM **INCOMPLETE** → project cannot certify.
 
@@ -203,11 +237,11 @@ Strict-A `@critical` deviations are **not permitted**.
 
 Confirms:
 
-✅ No dynamic allocation  
-✅ No I/O  
-✅ No blocking waits  
-✅ GC disabled or proven safe  
-✅ Bounded execution  
+✅ No dynamic allocation
+✅ No I/O
+✅ No blocking waits
+✅ GC disabled or proven safe
+✅ Bounded execution
 
 Failure → Strict-A **BLOCKER**.
 
@@ -217,9 +251,9 @@ Failure → Strict-A **BLOCKER**.
 
 Confirms:
 
-✅ Exactly one Python version used  
-✅ Version frozen in CBM  
-✅ No drift across build/deploy  
+✅ Exactly one Python version used
+✅ Version frozen in CBM
+✅ No drift across build/deploy
 
 Multiple versions → **Automatic FAIL**.
 
@@ -231,7 +265,7 @@ Multiple versions → **Automatic FAIL**.
 
 The SMM defines organizational readiness to develop CRSS-compliant systems.
 
-It answers:  
+It answers:
 > “Is the organization capable of producing safe Python software?”
 
 The SMM assesses **process maturity**, not code correctness.
@@ -288,11 +322,11 @@ Organizations below **S2** may not attempt Strict-A projects.
 
 This master document:
 
-✅ Centralizes SCEM, Annexes, and Maturity Model  
-✅ Updates terminology to v3.0.0  
-✅ Enforces one-version-per-project  
-✅ Defines mandatory evidence for certification  
-✅ Establishes organizational readiness levels  
+✅ Centralizes SCEM, Annexes, and Maturity Model
+✅ Updates terminology to v3.0.0
+✅ Enforces one-version-per-project
+✅ Defines mandatory evidence for certification
+✅ Establishes organizational readiness levels
 
 This is the **foundation of the CRSS safety case** and must be referenced in all certification programs.
 

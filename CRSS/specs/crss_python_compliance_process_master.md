@@ -1,13 +1,35 @@
-
 # CRSS-Python Compliance Process Specification
-Version: v1.0.0  
-Status: Official Release  
-© 2025 Sofian Daghsen – All rights reserved  
+
+## Table of Contents
+
+- [CRSS-Python Compliance Process Specification](#crss-python-compliance-process-specification)
+  - [0. Purpose](#0-purpose)
+  - [1. Scope](#1-scope)
+  - [2. Compliance Phases](#2-compliance-phases)
+    - [2.1 Phase 1 — Requirements & Traceability Setup](#21-phase-1-requirements-traceability-setup)
+    - [2.2 Phase 2 — Static Rule Compliance](#22-phase-2-static-rule-compliance)
+    - [2.3 Phase 3 — Test & Coverage Compliance](#23-phase-3-test-coverage-compliance)
+    - [2.4 Phase 4 — Baseline Establishment](#24-phase-4-baseline-establishment)
+    - [2.5 Phase 5 — Independent Approval & Release](#25-phase-5-independent-approval-release)
+  - [3. Compliance Completion Criteria](#3-compliance-completion-criteria)
+  - [4. Roles & Responsibilities](#4-roles-responsibilities)
+    - [4.1 Development Team](#41-development-team)
+    - [4.2 Independent Assessor](#42-independent-assessor)
+    - [4.3 Configuration Authority](#43-configuration-authority)
+  - [5. Artifact Summary Table](#5-artifact-summary-table)
+  - [6. Re-Approval Rules](#6-re-approval-rules)
+  - [8. Mandatory Artifacts Definition](#8-mandatory-artifacts-definition)
+  - [8. Archival Rules](#8-archival-rules)
+  - [9. Summary](#9-summary)
+
+Version: v1.0.0
+Status: Official Release
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
 ## 0. Purpose
-This document defines the **mandatory Compliance Process** required for any project claiming CRSS-Python compliance.  
+This document defines the **mandatory Compliance Process** required for any project claiming CRSS-Python compliance.
 Compliance is **not achieved** by rule adoption alone — only by completion of this process and generation of required artifacts.
 
 ---
@@ -228,7 +250,6 @@ Must reference: ALL artifacts
            │   CC    │
            └─────────┘
 
-
 All five share the same:
 - Release ID
 - Baseline ID
@@ -248,5 +269,5 @@ All artifacts must be:
 ---
 
 ## 9. Summary
-Compliance is not a declaration — it is a **process**.  
+Compliance is not a declaration — it is a **process**.
 Only by executing this process and producing all required artifacts can a project claim CRSS compliance.

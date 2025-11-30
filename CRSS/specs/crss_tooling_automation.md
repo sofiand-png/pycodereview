@@ -1,8 +1,36 @@
+# CRSS-Python Tooling & Automation Master Specification
 
-# CRSS-Python Tooling & Automation Master Specification  
-Version: v3.0.0  
-Status: Normative  
-© 2025 Sofian Daghsen – All rights reserved  
+## Table of Contents
+
+- [CRSS-Python Tooling & Automation Master Specification](#crss-python-tooling-automation-master-specification)
+- [0. Purpose](#0-purpose)
+- [1. Tooling Governance Model](#1-tooling-governance-model)
+  - [1.1 Role of Tools in CRSS](#11-role-of-tools-in-crss)
+  - [1.2 Tool Categories](#12-tool-categories)
+- [2. Automation Requirements](#2-automation-requirements)
+  - [2.1 Mandatory Automation Targets](#21-mandatory-automation-targets)
+  - [2.2 Non-Automatable Components](#22-non-automatable-components)
+- [3. Tool Capability Levels](#3-tool-capability-levels)
+  - [3.1 Tool Confidence Levels (TCL)](#31-tool-confidence-levels-tcl)
+  - [3.2 Tool Confidence Assessment (TCA)](#32-tool-confidence-assessment-tca)
+- [4. Automated Evidence Requirements](#4-automated-evidence-requirements)
+  - [4.1 Mandatory Artifacts](#41-mandatory-artifacts)
+  - [4.2 File Format Requirements](#42-file-format-requirements)
+- [5. Toolchain Version Control](#5-toolchain-version-control)
+  - [5.1 One-Version Rule](#51-one-version-rule)
+  - [5.2 Toolchain Drift = Automatic FAIL](#52-toolchain-drift-automatic-fail)
+- [6. SCEM Tool-Assisted Templates](#6-scem-tool-assisted-templates)
+  - [6.1 MAR Template](#61-mar-template)
+  - [6.2 Propagation Report Template](#62-propagation-report-template)
+  - [6.3 Coverage Template](#63-coverage-template)
+- [7. Tool Acceptance Criteria](#7-tool-acceptance-criteria)
+  - [7.1 Automated Evidence Acceptance](#71-automated-evidence-acceptance)
+  - [7.2 Automatic Rejection Conditions](#72-automatic-rejection-conditions)
+- [8. Summary](#8-summary)
+
+Version: v3.0.0
+Status: Normative
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -15,9 +43,9 @@ This master specification consolidates and replaces three prior documents:
 3. **Toolchain Confidence Assessment (TCA) Requirements**
 
 It is fully aligned with:
-✅ CRSS Unified Safety Specification v3.0.0  
-✅ Compliance Master v3.0.1  
-✅ SCEM Master v3.0.0  
+✅ CRSS Unified Safety Specification v3.0.0
+✅ Compliance Master v3.0.1
+✅ SCEM Master v3.0.0
 
 This document defines:
 - Tooling requirements
@@ -128,15 +156,15 @@ Automation MUST generate:
 ## 4.2 File Format Requirements
 
 All automated outputs must be:
-✅ Deterministic  
-✅ Machine-parsable  
-✅ Immutable after baseline  
-✅ Version-tagged  
+✅ Deterministic
+✅ Machine-parsable
+✅ Immutable after baseline
+✅ Version-tagged
 
-Recommended formats:  
-- YAML  
-- JSON  
-- CSV (tabular)  
+Recommended formats:
+- YAML
+- JSON
+- CSV (tabular)
 
 ---
 
@@ -145,15 +173,15 @@ Recommended formats:
 ## 5.1 One-Version Rule
 
 All tools used in certification:
-✅ Must be version-fixed  
-✅ Must be captured in CBM  
-✅ Must not auto-update  
+✅ Must be version-fixed
+✅ Must be captured in CBM
+✅ Must not auto-update
 
 ## 5.2 Toolchain Drift = Automatic FAIL
 
 If any tool changes version after CBM:
-❌ All automated evidence is invalid  
-❌ Certification must restart  
+❌ All automated evidence is invalid
+❌ Certification must restart
 
 ---
 
@@ -200,17 +228,17 @@ coverage:
 ## 7.1 Automated Evidence Acceptance
 
 Accepted only if:
-✅ TCL level is sufficient  
-✅ Output matches CBM tool version  
-✅ Data is complete and valid  
-✅ No missing artifacts  
+✅ TCL level is sufficient
+✅ Output matches CBM tool version
+✅ Data is complete and valid
+✅ No missing artifacts
 
 ## 7.2 Automatic Rejection Conditions
 
-❌ Output generated after tool version drift  
-❌ Missing data fields  
-❌ Non-deterministic results  
-❌ Unsupported output formats  
+❌ Output generated after tool version drift
+❌ Missing data fields
+❌ Non-deterministic results
+❌ Unsupported output formats
 
 ---
 
@@ -218,11 +246,11 @@ Accepted only if:
 
 This master specification:
 
-✅ Centralizes all tooling and automation policy  
-✅ Defines confidence and acceptance levels  
-✅ Supports Strict-A certification workflows  
-✅ Ensures deterministic, auditable evidence  
-✅ Enforces one-version-per-toolchain policy  
+✅ Centralizes all tooling and automation policy
+✅ Defines confidence and acceptance levels
+✅ Supports Strict-A certification workflows
+✅ Ensures deterministic, auditable evidence
+✅ Enforces one-version-per-toolchain policy
 
 This is the mandatory reference for all CRSS-Python automation systems.
 

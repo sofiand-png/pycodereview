@@ -1,9 +1,39 @@
 # ✅ CRSS-Python Mode, Safety Levels & Critical Phase Model
 
-**Version:** v1.0.0  
-**Status:** Official Release #TODO: check if can use this as a release ?  
+## Table of Contents
+
+- [✅ CRSS-Python Mode, Safety Levels & Critical Phase Model](#✅-crss-python-mode-safety-levels-critical-phase-model)
+  - [0. Purpose](#0-purpose)
+  - [✅ 1. Core Concepts](#✅-1-core-concepts)
+    - [1.1 Profiles](#11-profiles)
+    - [1.2 Safety Levels](#12-safety-levels)
+    - [1.3 Mode (The Unifying Concept)](#13-mode-the-unifying-concept)
+  - [✅ 2. Safety Level Assignment](#✅-2-safety-level-assignment)
+  - [✅ 3. Safety Level Propagation](#✅-3-safety-level-propagation)
+  - [✅ 4. Critical vs Non-Critical Phases](#✅-4-critical-vs-non-critical-phases)
+    - [4.1 Definitions](#41-definitions)
+    - [4.2 Critical Requirements](#42-critical-requirements)
+    - [4.3 Non-Critical Rules](#43-non-critical-rules)
+    - [4.4 GC Requirements](#44-gc-requirements)
+  - [✅ 5. Import Rules](#✅-5-import-rules)
+  - [✅ 6. Inheritance Rules](#✅-6-inheritance-rules)
+  - [✅ 7. Exception Policies](#✅-7-exception-policies)
+  - [✅ 8. Compliance Model](#✅-8-compliance-model)
+  - [✅ 9. Profile Selection Criteria](#✅-9-profile-selection-criteria)
+  - [✅ 10. Real Use Case Example](#✅-10-real-use-case-example)
+    - [10.1 Scenario](#101-scenario)
+    - [10.2 Code Example](#102-code-example)
+- [logger.py (Core-C)](#loggerpy-core-c)
+- [config.py (Strict-B, Non-critical)](#configpy-strict-b-non-critical)
+- [sensor.py (Strict-B)](#sensorpy-strict-b)
+- [controller.py (Strict-A)](#controllerpy-strict-a)
+  - [✅ 11. Architecture Pattern](#✅-11-architecture-pattern)
+  - [✅ 12. Summary](#✅-12-summary)
+
+**Version:** v1.0.0
+**Status:** Official Release #TODO: check if can use this as a release ?
 © 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS. 
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
@@ -78,18 +108,18 @@ Examples:
 
 #### Mode Controls:
 
-✅ Which rules apply  
-✅ Enforcement severity (warning/error/blocker)  
-✅ Required evidence (tests, coverage, timing, SCEM)  
-✅ Allowed dependencies  
-✅ Allowed operations in critical code  
-✅ Zero-tolerance policy for Strict-A  
+✅ Which rules apply
+✅ Enforcement severity (warning/error/blocker)
+✅ Required evidence (tests, coverage, timing, SCEM)
+✅ Allowed dependencies
+✅ Allowed operations in critical code
+✅ Zero-tolerance policy for Strict-A
 
 #### Mode Does NOT:
 
-❌ Change at runtime  
-❌ Toggle dynamically  
-❌ Allow demotion (A → B → C)  
+❌ Change at runtime
+❌ Toggle dynamically
+❌ Allow demotion (A → B → C)
 
 ✅ **Mode defines a permanent safety contract.**
 
@@ -97,16 +127,16 @@ Examples:
 
 ## ✅ 2. Safety Level Assignment
 
-**SL-1 — Per Function/Method**  
+**SL-1 — Per Function/Method**
 Safety Level assigned individually.
 
-**SL-2 — Maximum Requirement Wins**  
+**SL-2 — Maximum Requirement Wins**
 Highest linked requirement determines level.
 
-**SL-3 — Class Initial Level**  
+**SL-3 — Class Initial Level**
 Class inherits the maximum level of its methods.
 
-**SL-4 — No Demotion**  
+**SL-4 — No Demotion**
 Once certified, a unit’s Safety Level cannot be reduced without **full re-certification**.
 
 ---
@@ -144,16 +174,16 @@ Class → Strict-A
 
 No promotion if ALL are true:
 
-✅ Only logging/metrics/tracing  
-✅ No side effects  
-✅ No timing influence  
-✅ No decision influence  
+✅ Only logging/metrics/tracing
+✅ No side effects
+✅ No timing influence
+✅ No decision influence
 
 **SL-9 — Module Recommendation**
 
 Mixing A/B/C levels is allowed but:
 
-⚠ Strongly discouraged for Strict-A  
+⚠ Strongly discouraged for Strict-A
 ⚠ Tools SHOULD warn
 
 ---
@@ -171,18 +201,18 @@ Mixing A/B/C levels is allowed but:
 
 In `@critical`:
 
-❌ No heap allocation  
-❌ No I/O  
-❌ No dynamic imports  
-❌ No subprocess  
-❌ No blocking locks  
-❌ No calling unverified lower-level code  
+❌ No heap allocation
+❌ No I/O
+❌ No dynamic imports
+❌ No subprocess
+❌ No blocking locks
+❌ No calling unverified lower-level code
 
 ### 4.3 Non-Critical Rules
 
-✅ Object creation  
-✅ Configuration loading  
-✅ Network/database access  
+✅ Object creation
+✅ Configuration loading
+✅ Network/database access
 
 ❌ MUST NOT be called by critical code
 
@@ -213,13 +243,13 @@ Either:
 
 ## ✅ 6. Inheritance Rules
 
-**INH-1** — Strict SHOULD NOT inherit from Core  
-**INH-2** — Strict-A MUST NOT inherit from lower-level code  
+**INH-1** — Strict SHOULD NOT inherit from Core
+**INH-2** — Strict-A MUST NOT inherit from lower-level code
 **INH-3** — Depth Limit:
 - Strict: depth ≤ 1
-- Strict-A: sealing recommended  
+- Strict-A: sealing recommended
 
-**INH-4** — Promotion Applies  
+**INH-4** — Promotion Applies
 If parent participates in A-level behavior → Parent becomes Strict-A.
 
 ---
@@ -228,20 +258,20 @@ If parent participates in A-level behavior → Parent becomes Strict-A.
 
 Logging Allowed Only If:
 
-✅ Non-blocking  
-✅ No heavy formatting  
-✅ No network logging in critical  
-✅ No exceptions propagated  
+✅ Non-blocking
+✅ No heavy formatting
+✅ No network logging in critical
+✅ No exceptions propagated
 
 Monitoring Allowed Only If:
 
-✅ Asynchronous  
-✅ Non-blocking  
-✅ No timing impact  
+✅ Asynchronous
+✅ Non-blocking
+✅ No timing impact
 
 Debugging:
 
-❌ Disabled in production  
+❌ Disabled in production
 
 ---
 
@@ -249,23 +279,23 @@ Debugging:
 
 **8.1 Core-Only Project**
 
-✅ Mode = Core-XXX  
-✅ Core rules enforced  
-❌ No Strict evidence needed  
+✅ Mode = Core-XXX
+✅ Core rules enforced
+❌ No Strict evidence needed
 
 **8.2 Strict-Only Project**
 
-✅ All rules Strict  
-✅ Level A = zero-tolerance  
-✅ SCEM + EAP required  
+✅ All rules Strict
+✅ Level A = zero-tolerance
+✅ SCEM + EAP required
 
 **8.3 Mixed Project**
 
 Each component independent, system compliant only if:
 
-✅ All Level A meet Strict-A  
-✅ Lower levels cannot compromise Level A  
-✅ Promotion enforced  
+✅ All Level A meet Strict-A
+✅ Lower levels cannot compromise Level A
+✅ Promotion enforced
 
 ---
 
@@ -379,17 +409,17 @@ SafetyController.control_cycle()
 
 Consumes only:
 
-✅ Pre-existing objects  
-✅ Local computation  
+✅ Pre-existing objects
+✅ Local computation
 
 ---
 
 ## ✅ 12. Summary
 
-✅ Deterministic critical behavior  
-✅ No hidden unsafe dependencies  
-✅ Fully analyzable call graph  
-✅ Certification aligned  
-✅ Practical for real systems  
+✅ Deterministic critical behavior
+✅ No hidden unsafe dependencies
+✅ Fully analyzable call graph
+✅ Certification aligned
+✅ Practical for real systems
 
 **This is a publish-ready, certifier-ready, industry-first Python safety model.**

@@ -1,7 +1,25 @@
 # CRSS-Python Standard Levels, Modes & Enforcement Model
-Version: v2.0.0  
-Status: Normative Replacement  
-© 2025 Sofian Daghsen – All rights reserved  
+
+## Table of Contents
+
+- [CRSS-Python Standard Levels, Modes & Enforcement Model](#crss-python-standard-levels-modes-enforcement-model)
+  - [0. Purpose](#0-purpose)
+  - [1. Profiles](#1-profiles)
+  - [2. Safety Levels](#2-safety-levels)
+  - [3. Modes (Unified Mechanism)](#3-modes-unified-mechanism)
+  - [4. How Critical Marking Affects Mode](#4-how-critical-marking-affects-mode)
+  - [5. Enforcement Matrix (Mandatory)](#5-enforcement-matrix-mandatory)
+  - [6. Propagation Rules](#6-propagation-rules)
+    - [6.1 Call-Chain Promotion](#61-call-chain-promotion)
+    - [6.2 Class Promotion](#62-class-promotion)
+    - [6.3 No Demotion](#63-no-demotion)
+  - [7. Applicability Mapping (Corrected)](#7-applicability-mapping-corrected)
+  - [8. Mixed System Acceptance](#8-mixed-system-acceptance)
+  - [9. Summary](#9-summary)
+
+Version: v2.0.0
+Status: Normative Replacement
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -14,13 +32,13 @@ This document unifies and replaces:
 
 It defines, with zero ambiguity:
 
-1. What CRSS can certify  
-2. What configurations exist (Core, Strict, Strict-A)  
-3. What a Mode is and how it is used  
-4. How rule violations are treated per Mode  
-5. How critical code affects Mode  
-6. How propagation works across dependencies  
-7. How mixed systems are evaluated  
+1. What CRSS can certify
+2. What configurations exist (Core, Strict, Strict-A)
+3. What a Mode is and how it is used
+4. How rule violations are treated per Mode
+5. How critical code affects Mode
+6. How propagation works across dependencies
+7. How mixed systems are evaluated
 
 This document supersedes **Standard Levels v1.0.0**.
 
@@ -123,9 +141,9 @@ All supervisory ASIL D / SIL 3 claims remain valid.
 
 A system passes only if:
 
-✅ All Strict-A components have 0 violations  
-✅ Strict components meet Strict thresholds  
-✅ Core components cannot compromise Strict-A  
+✅ All Strict-A components have 0 violations
+✅ Strict components meet Strict thresholds
+✅ Core components cannot compromise Strict-A
 
 ---
 
@@ -133,13 +151,12 @@ A system passes only if:
 
 This model guarantees:
 
-✅ Deterministic critical behavior  
-✅ No hidden unsafe dependencies  
-✅ Fully analyzable Mode structure  
-✅ Complete certification alignment  
-✅ Practical, real-world feasibility  
+✅ Deterministic critical behavior
+✅ No hidden unsafe dependencies
+✅ Fully analyzable Mode structure
+✅ Complete certification alignment
+✅ Practical, real-world feasibility
 
 This v2.0.0 document is now the authoritative standard for Modes, Enforcement, Propagation, and Applicability in CRSS-Python.
 
 ---
-

@@ -1,5 +1,22 @@
-
 # CRSS-Python Standard Levels & Applicability
+
+## Table of Contents
+
+- [CRSS-Python Standard Levels & Applicability](#crss-python-standard-levels-applicability)
+  - [0. Purpose](#0-purpose)
+  - [1. Relationship to Core & Strict](#1-relationship-to-core-strict)
+  - [2. Safety Levels & Mapping](#2-safety-levels-mapping)
+    - [2.1 ISO 26262 Automotive (ASIL A–D)](#21-iso-26262-automotive-asil-a-d)
+    - [2.2 IEC 61508 (SIL 1–4)](#22-iec-61508-sil-1-4)
+    - [2.3 DO-178C / DO-278A (Avionics)](#23-do-178c-do-278a-avionics)
+    - [2.4 IEC 62304 (Medical Class A/B/C)](#24-iec-62304-medical-class-abc)
+  - [3. Strict Level A Mandatory Constraints](#3-strict-level-a-mandatory-constraints)
+  - [4. Architectural Assumptions](#4-architectural-assumptions)
+  - [5. What CRSS Cannot Support](#5-what-crss-cannot-support)
+  - [6. What CRSS Achieves](#6-what-crss-achieves)
+  - [7. Versioning & Governance](#7-versioning-governance)
+  - [8. Summary](#8-summary)
+
 Version: v0.1.0
 Status: Early Public Release
 © 2025 Sofian Daghsen – All rights reserved
