@@ -1,5 +1,13 @@
 # CRSS-Python Compliance & Acceptance Master Specification
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Compliance & Acceptance Master Specification](#crss-python-compliance-acceptance-master-specification)
@@ -42,10 +50,6 @@
   - [4.2 Automatic Failure Conditions](#42-automatic-failure-conditions)
 - [5. Python Version Policy](#5-python-version-policy)
 - [6. Summary](#6-summary)
-
-Version: v3.0.1
-Status: Normative
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

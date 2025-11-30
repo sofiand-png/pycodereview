@@ -1,10 +1,12 @@
-CRSS-Python Strict Specification
-Version: v1.0.0
-Status: Early Public Release (Rule IDs stable; text may evolve)
+# CRSS-Python Strict Profile
+
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
 © 2025 Sofian Daghsen – All rights reserved
 Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
-# CRSS-Python Strict Profile
+---
 
 ## Table of Contents
 

@@ -1,5 +1,13 @@
 # CRSS-Python External Assessment Protocol (EAP)
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python External Assessment Protocol (EAP)](#crss-python-external-assessment-protocol-eap)
@@ -24,10 +32,6 @@
   - [4. Non-Conformance Handling](#4-non-conformance-handling)
   - [5. Revocation & Reassessment](#5-revocation-reassessment)
   - [6. Summary of v1.1 Enhancements](#6-summary-of-v11-enhancements)
-
-Version: v1.1.0
-Status: Official Release
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

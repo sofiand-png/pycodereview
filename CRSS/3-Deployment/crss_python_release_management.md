@@ -1,5 +1,13 @@
 # CRSS-Python Release Management Specification
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Release Management Specification](#crss-python-release-management-specification)
@@ -32,10 +40,6 @@
     - [9.2 Change Requires New Release](#92-change-requires-new-release)
   - [10. Release Approval Authority](#10-release-approval-authority)
   - [11. Summary](#11-summary)
-
-Version: v1.0.0
-Status: Official Release
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

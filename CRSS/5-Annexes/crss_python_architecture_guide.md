@@ -1,5 +1,13 @@
 # CRSS-Python Architecture Guide
 
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Architecture Guide](#crss-python-architecture-guide)
@@ -26,10 +34,6 @@
     - [Step 5 — Pre-compute everything possible](#step-5-pre-compute-everything-possible)
     - [Step 6 — Freeze toolchain and CBM](#step-6-freeze-toolchain-and-cbm)
 - [✅ 10. Summary](#✅-10-summary)
-
-Version: v3.0.0
-Status: Informative
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

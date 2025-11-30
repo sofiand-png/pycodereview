@@ -1,5 +1,13 @@
 # CRSS Phase-Aware Rule Interpretation Model
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS Phase-Aware Rule Interpretation Model](#crss-phase-aware-rule-interpretation-model)
@@ -13,10 +21,6 @@
   - [4. Meaning for Human Review](#4-meaning-for-human-review)
   - [5. Meaning for Runtime / Architecture](#5-meaning-for-runtime-architecture)
   - [Summary](#summary)
-
-Version: 1.0
-Status: Normative
-© 2025 Sofian Daghsen — All rights reserved
 
 ---
 

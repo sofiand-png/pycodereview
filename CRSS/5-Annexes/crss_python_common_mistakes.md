@@ -1,5 +1,13 @@
 # CRSS-Python Common Mistakes & How to Avoid Them
 
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Common Mistakes & How to Avoid Them](#crss-python-common-mistakes-how-to-avoid-them)
@@ -19,10 +27,6 @@
 - [✅ 14. Assuming Compliance = Safety](#✅-14-assuming-compliance-safety)
 - [✅ 15. Trying to Jump Directly to Strict-A](#✅-15-trying-to-jump-directly-to-strict-a)
 - [✅ Summary](#✅-summary)
-
-Version: v3.0.0
-Status: Informative
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

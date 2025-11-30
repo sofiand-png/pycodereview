@@ -1,3 +1,14 @@
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+**Note:** The structure in this template is Informative. 
+The normative CBM content requirements are defined in the Deployment Master and Release Management specifications.
+
+---
+
 cbm_version: "1.0.0"
 baseline_id: "BASELINE-XXXX"
 release_id: "RELEASE-XXXX"

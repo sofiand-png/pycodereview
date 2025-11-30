@@ -1,5 +1,13 @@
 # CRSS-Python Certification Readiness Master Kit
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Certification Readiness Master Kit](#crss-python-certification-readiness-master-kit)
@@ -22,10 +30,6 @@
 - [5. Certification Readiness Workflow](#5-certification-readiness-workflow)
 - [6. Output: Certification Readiness Statement (CRS)](#6-output-certification-readiness-statement-crs)
 - [7. Summary](#7-summary)
-
-Version: v3.0.0
-Status: Normative # TODO: check if this ok and inline with other status Early publich release
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

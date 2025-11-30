@@ -1,5 +1,13 @@
 # CRSS-Python Deployment, Release & Baseline Master Specification
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Deployment, Release & Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
@@ -20,11 +28,6 @@
   - [2. Relationship to Code-Level 12.x Rules](#2-relationship-to-code-level-12x-rules)
   - [3. Versioning & Governance](#3-versioning-governance)
   - [4. Summary](#4-summary)
-
-Version: v1.0.0
-Status: Normative  # TODo: check if ok to have early release status vs this status per file
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 

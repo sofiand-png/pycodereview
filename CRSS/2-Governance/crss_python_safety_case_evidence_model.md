@@ -1,5 +1,13 @@
 # CRSS-Python Safety Case & Maturity Master Specification
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Safety Case & Maturity Master Specification](#crss-python-safety-case-maturity-master-specification)
@@ -33,10 +41,6 @@
     - [S4 — Certified](#s4-certified)
   - [3.4 Maturity Assessment Output](#34-maturity-assessment-output)
 - [4. Summary](#4-summary)
-
- Version: v3.0.0
-Status: Normative
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

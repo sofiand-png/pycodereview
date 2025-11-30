@@ -1,5 +1,14 @@
 # CRSS-Python v1.0.0 Release Notes
 
+**Version:** v1.0.0
+**Status:** Release/Informative
+**Release Date**: 30-11-2025
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python v1.0.0 Release Notes](#crss-python-v100-release-notes)
@@ -9,7 +18,7 @@
   - [Breaking Changes](#breaking-changes)
   - [Compatibility Notes](#compatibility-notes)
 
-Release Date: 2025-03-02
+---
 
 ## Summary
 This is the first official, public, and immutable release of the CRSS-Python Safety Standard. It introduces a complete, certification-grade framework enabling Python to be used in high-integrity and supervisory safety roles across ASIL D, SIL 3, and comparable domains.

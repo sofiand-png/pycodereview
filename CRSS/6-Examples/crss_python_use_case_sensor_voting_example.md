@@ -1,5 +1,13 @@
 # CRSS-Python Reference Use Case
 
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Reference Use Case](#crss-python-reference-use-case)
@@ -22,14 +30,9 @@
 - [🧪 Why This Is an Ideal CRSS Demonstrator](#🧪-why-this-is-an-ideal-crss-demonstrator)
 - [🧷 Optional Short Name](#🧷-optional-short-name)
 
-## Redundant Sensor Voting + Safe Actuator Limiting
-Version: 1.0
-Status: Informative Example
-© 2025 Sofian Daghsen — All rights reserved
-
 ---
 
-# 🎯 Overview
+# 🎯 Overview Redundant Sensor Voting + Safe Actuator Limiting
 
 This reference use case demonstrates how to design a **CRSS-Core + CRSS-Strict–compliant** safety subsystem using a small but realistic scenario: **redundant sensor voting** combined with a **safe actuator command limiter**.
 

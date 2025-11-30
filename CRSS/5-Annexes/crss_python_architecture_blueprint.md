@@ -1,5 +1,13 @@
 # CRSS-Python Architecture Blueprint (Reference Example)
 
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Architecture Blueprint (Reference Example)](#crss-python-architecture-blueprint-reference-example)
@@ -32,10 +40,6 @@
     - [7.2 What Makes This Certifiable?](#72-what-makes-this-certifiable)
   - [8. How to Adapt This Blueprint](#8-how-to-adapt-this-blueprint)
   - [9. Summary](#9-summary)
-
-Version: v3.0.0
-Status: Informative – Reference Model
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

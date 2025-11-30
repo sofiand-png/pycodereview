@@ -1,5 +1,13 @@
 # CRSS-Python Standard Levels & Applicability
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Standard Levels & Applicability](#crss-python-standard-levels-applicability)
@@ -16,10 +24,6 @@
   - [6. What CRSS Achieves](#6-what-crss-achieves)
   - [7. Versioning & Governance](#7-versioning-governance)
   - [8. Summary](#8-summary)
-
-Version: v0.1.0
-Status: Early Public Release
-© 2025 Sofian Daghsen – All rights reserved
 
 ## 0. Purpose
 

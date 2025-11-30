@@ -1,5 +1,13 @@
 # CRSS-Python Certification FAQ for Auditors & Regulators
 
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Certification FAQ for Auditors & Regulators](#crss-python-certification-faq-for-auditors-regulators)
@@ -19,10 +27,6 @@
   - [✅ 11. What Is the Role of Organizational Maturity?](#✅-11-what-is-the-role-of-organizational-maturity)
   - [✅ 12. What Is the Auditor’s Checklist?](#✅-12-what-is-the-auditor’s-checklist)
   - [✅ 13. Final Summary](#✅-13-final-summary)
-
-Version: v3.0.0
-Status: Informative (Auditor-Focused)
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

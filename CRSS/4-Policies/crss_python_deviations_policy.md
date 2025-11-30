@@ -1,4 +1,12 @@
-# CRSS-Python Deviation Policy — Full Expanded Specification (v3.0)
+# CRSS-Python Deviation Policy — Full Expanded Specification
+
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
 
 ## Table of Contents
 
@@ -27,10 +35,6 @@
   - [9. Integration With Mode Model](#9-integration-with-mode-model)
   - [10. Final Policy Statement (Normative)](#10-final-policy-statement-normative)
   - [11. Summary](#11-summary)
-
-Version: 3.0.0
-Status: Normative
-© 2025 Sofian Daghsen — All rights reserved
 
 ---
 

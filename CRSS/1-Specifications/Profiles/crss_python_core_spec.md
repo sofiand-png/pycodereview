@@ -1,10 +1,12 @@
-CRSS-Python Core Specification
-Version: v0.1.0
-Status: Early Public Release (Rule IDs stable; text may evolve)
+# CRSS-Python Core Profile
+
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
 © 2025 Sofian Daghsen – All rights reserved
 Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
-# CRSS-Python Core Profile
+---
 
 ## Table of Contents
 

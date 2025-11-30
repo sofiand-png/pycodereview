@@ -1,5 +1,13 @@
 # CRSS-Python SCEM Annexes
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python SCEM Annexes](#crss-python-scem-annexes)
@@ -12,10 +20,6 @@
   - [4. Annex D — Auditor Checklist](#4-annex-d-auditor-checklist)
   - [5. Annex E — Timing Evidence Protocol](#5-annex-e-timing-evidence-protocol)
   - [6. Summary](#6-summary)
-
-Version: v1.0.0
-Status: Official Release
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

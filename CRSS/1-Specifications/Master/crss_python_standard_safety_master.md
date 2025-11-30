@@ -1,5 +1,13 @@
 # CRSS-Python Unified Safety Specification
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Unified Safety Specification](#crss-python-unified-safety-specification)
@@ -72,11 +80,6 @@
     - [14.5 Compliance Interpretation](#145-compliance-interpretation)
   - [15. Machine-Readable Metadata (Optional Annex)](#15-machine-readable-metadata-optional-annex)
   - [16. Summary](#16-summary)
-
-Version: v1.0.0
-Status: Normative Master Specification
-© 2025 Sofian Daghsen – All rights reserved
-TODO check if due to this document mode_and_safety level should be removed
 
 ---
 

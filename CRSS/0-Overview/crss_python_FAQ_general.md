@@ -1,5 +1,13 @@
 # CRSS-Python Frequently Asked Questions (FAQ)
 
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Frequently Asked Questions (FAQ)](#crss-python-frequently-asked-questions-faq)
@@ -24,10 +32,6 @@
   - [19. How do I contribute?](#19-how-do-i-contribute)
   - [20. Is CRSS-Python unique?](#20-is-crss-python-unique)
   - [21. Which components define what in the overall CRSS ?](#21-which-components-define-what-in-the-overall-crss)
-
-Version: v3.0.0
-Status: Informative
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

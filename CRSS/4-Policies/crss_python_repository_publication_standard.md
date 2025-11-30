@@ -1,5 +1,13 @@
 # CRSS-Python Repository & Publication Standard
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Repository & Publication Standard](#crss-python-repository-publication-standard)
@@ -32,10 +40,6 @@
   - [8. Example Folder Guidance](#8-example-folder-guidance)
   - [9. Alignment With Design Decisions](#9-alignment-with-design-decisions)
   - [10. Summary](#10-summary)
-
-Version: v3.0.0
-Status: Normative – Governance Layer
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

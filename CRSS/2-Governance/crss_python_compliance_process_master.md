@@ -1,5 +1,13 @@
 # CRSS-Python Compliance Process Specification
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Compliance Process Specification](#crss-python-compliance-process-specification)
@@ -21,10 +29,6 @@
   - [8. Mandatory Artifacts Definition](#8-mandatory-artifacts-definition)
   - [8. Archival Rules](#8-archival-rules)
   - [9. Summary](#9-summary)
-
-Version: v1.0.0
-Status: Official Release
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

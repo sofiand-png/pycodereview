@@ -1,5 +1,13 @@
 # CRSS-Python Study Path & Learning Curriculum
 
+**Version:** v1.0.0
+**Status:** Informative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Study Path & Learning Curriculum](#crss-python-study-path-learning-curriculum)
@@ -25,10 +33,6 @@
     - [📚 Required Reading](#📚-required-reading)
     - [🧩 Hands-On Tasks](#🧩-hands-on-tasks)
 - [✅ Summary](#✅-summary)
-
-Version: v3.0.0
-Status: Informative
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 

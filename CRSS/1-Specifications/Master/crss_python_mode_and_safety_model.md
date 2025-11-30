@@ -1,4 +1,12 @@
-# ✅ CRSS-Python Mode, Safety Levels & Critical Phase Model
+# CRSS-Python Mode, Safety Levels & Critical Phase Model
+
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
 
 ## Table of Contents
 
@@ -29,11 +37,6 @@
 - [controller.py (Strict-A)](#controllerpy-strict-a)
   - [✅ 11. Architecture Pattern](#✅-11-architecture-pattern)
   - [✅ 12. Summary](#✅-12-summary)
-
-**Version:** v1.0.0
-**Status:** Official Release #TODO: check if can use this as a release ?
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 

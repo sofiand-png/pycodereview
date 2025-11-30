@@ -1,5 +1,13 @@
 # CRSS-Python Tooling & Automation Master Specification
 
+**Version:** v1.0.0
+**Status:** Normative
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 ## Table of Contents
 
 - [CRSS-Python Tooling & Automation Master Specification](#crss-python-tooling-automation-master-specification)
@@ -27,10 +35,6 @@
   - [7.1 Automated Evidence Acceptance](#71-automated-evidence-acceptance)
   - [7.2 Automatic Rejection Conditions](#72-automatic-rejection-conditions)
 - [8. Summary](#8-summary)
-
-Version: v3.0.0
-Status: Normative
-© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
