@@ -176,10 +176,9 @@ Strict-A requires single-threaded critical execution to guarantee determinism.
 ## 13. How are violations handled?
 Severity levels:
 - WARN – Should violation
-- ERROR – Must violation (Core/Strict) TODO: check if this is correct
-- BLOCKER – Must violation in Strict-A `@critical`
+- ERROR – Violation of a MUST requirement (Core), or a MUST/SHOULD requirement (Strict)
+- BLOCKER – Any such violation inside Strict-A `@critical` code (certification failure)
 
-BLOCKER = certification failure.
 
 ---
 
