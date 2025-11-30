@@ -1,239 +1,262 @@
-# CRSS-Python Compliance Process Specification
+# CRSS-Python Compliance Master Specification
 
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen — All Rights Reserved
+Distributed under CC BY-NC-ND 4.0
 
 ---
 
-## Table of Contents
+# Purpose
+This unified specification consolidates:
+- crss_compliance_process_version_to_verify.md
+- crss_python_compliance_process_master.md
+- CRSS_Python_Compliance_Master_Spec.md
 
-- [CRSS-Python Compliance Process Specification](#crss-python-compliance-process-specification)
-  - [0. Purpose](#0-purpose)
-  - [1. Scope](#1-scope)
-  - [2. Compliance Phases](#2-compliance-phases)
-    - [2.1 Phase 1 — Requirements & Traceability Setup](#21-phase-1-requirements-traceability-setup)
-    - [2.2 Phase 2 — Static Rule Compliance](#22-phase-2-static-rule-compliance)
-    - [2.3 Phase 3 — Test & Coverage Compliance](#23-phase-3-test-coverage-compliance)
-    - [2.4 Phase 4 — Baseline Establishment](#24-phase-4-baseline-establishment)
-    - [2.5 Phase 5 — Independent Approval & Release](#25-phase-5-independent-approval-release)
-  - [3. Compliance Completion Criteria](#3-compliance-completion-criteria)
-  - [4. Roles & Responsibilities](#4-roles-responsibilities)
-    - [4.1 Development Team](#41-development-team)
-    - [4.2 Independent Assessor](#42-independent-assessor)
-    - [4.3 Configuration Authority](#43-configuration-authority)
-  - [5. Artifact Summary Table](#5-artifact-summary-table)
-  - [6. Re-Approval Rules](#6-re-approval-rules)
-  - [8. Mandatory Artifacts Definition](#8-mandatory-artifacts-definition)
-  - [8. Archival Rules](#8-archival-rules)
-  - [9. Summary](#9-summary)
+It defines the complete compliance lifecycle, enforcement model, artifacts, acceptance criteria, and certification rules for CRSS-Python.
 
 ---
 
-## 0. Purpose
-This document defines the **mandatory Compliance Process** required for any project claiming CRSS-Python compliance.
-Compliance is **not achieved** by rule adoption alone — only by completion of this process and generation of required artifacts.
+# Scope
+Covers the full lifecycle:
+- design
+- implementation
+- review
+- testing
+- baseline creation
+- release certification
+- deployment
+- re-approval
+- archival
 
 ---
 
-## 1. Scope
-This specification applies to:
-- All CRSS-Strict projects
-- All Level A, B, and C components
-- All software releases intended for deployment
-
-It is **non-deviable** for Strict Level A components.
+# Normative References
+All requirements with status: Normative are relevant.
 
 ---
 
-## 2. Compliance Phases
-
-### 2.1 Phase 1 — Requirements & Traceability Setup
-**Objectives**
-- Define functional & safety requirements
-- Assign criticality levels (A/B/C)
-- Map requirements to code modules
-
-**Mandatory Outputs**
-- Requirements Traceability Matrix (RTM)
-- Criticality Classification Record (CCR)
+# Definitions
+**Rule Compliance:** conformity to CRSS rules.
+**Baseline:** fully frozen snapshot w/ CBM, dependencies, interpreter, config.
+**Release:** certified output bound to one baseline.
+**Artifact:** formal evidence used for certification.
+**Level:** A/B/C safety category.
+**Profile:** Core or Strict.
+**Phase Model:** @critical or non-critical execution.
 
 ---
 
-### 2.2 Phase 2 — Static Rule Compliance
-**Objectives**
-- Verify conformance to CRSS-Core/Strict
-- Identify deviations
-
-**Mandatory Outputs**
-- Rule Compliance Report (RCR)
-- Deviations Log (DL)
-
----
-
-### 2.3 Phase 3 — Test & Coverage Compliance
-**Objectives**
-- Validate correctness, safety, and robustness
-- Achieve:
-  - 100% branch coverage (Strict)
-  - MC/DC (Level A only)
-
-**Mandatory Outputs**
-- Test Evidence Package (TEP)
-- Coverage Reports
-- Fault Injection Results
-
----
-
-### 2.4 Phase 4 — Baseline Establishment
-**Objectives**
-- Freeze all configuration elements
-- Create an immutable Safety Baseline
-
-**Mandatory Outputs**
-- Configuration Baseline Manifest (CBM)
-- Safety Baseline Report (SBR)
-
----
-
-### 2.5 Phase 5 — Independent Approval & Release
-**Objectives**
-- Obtain independent sign-off
-- Archive all artifacts
-
-**Mandatory Outputs**
-- Compliance Certificate (CC)
-
----
-
-## 3. Compliance Completion Criteria
-A project is considered **COMPLIANT** only when:
-1. All phases are completed
-2. All artifacts are present
-3. All artifacts share the same Baseline ID
-4. The CC is issued and signed
-
-Partial compliance is invalid.
-
----
-
-## 4. Roles & Responsibilities
-
-### 4.1 Development Team
-- Executes Phases 1–4
-- Produces all artifacts
-
-### 4.2 Independent Assessor
-- Executes Phase 5
-- Reviews evidence
-- Signs Compliance Certificate
-
-### 4.3 Configuration Authority
-- Maintains baseline archive
-- Controls changes and access
-
----
-
-## 5. Artifact Summary Table
-
-| Artifact | Producer | Phase | Mandatory Level |
-|---------|----------|-------|------------------|
-| RTM | Dev Team | 1 | A/B/C |
-| CCR | Dev Team | 1 | A/B/C |
-| RCR | Dev Team | 2 | A/B/C |
-| DL | Dev Team | 2 | A/B/C |
-| TEP | Dev Team | 3 | A/B/C |
-| CBM | Dev Team | 4 | A/B/C |
-| SBR | Dev Team | 4 | A/B/C |
-| CC | Assessor | 5 | A/B/C |
-
----
-
-## 6. Re-Approval Rules
-Any change to:
-- Code
-- Dependencies
-- Interpreter
-- OS
-- Hardware
-- Test suite
-
-**Invalidates compliance.**
-
-Full process restart is required.
-
----
-## 8. Mandatory Artifacts Definition
-Mandatory Artifact Definitions
-A. Rule Compliance Report (RCR)
-
-Required Fields:
+# Identifier Model
+Every artifact and release includes:
 - Release ID
 - Baseline ID
-- Commit hash
-- List of applicable rules
-- Pass/Fail status per rule
-- Deviations list with approvals
-- Reviewer identity & timestamp
+- Commit Hash
+- Safety Level
+- Profile
 
-Must reference: RTM, CBM
+---
 
-B. Test Evidence Package (TEP)
+# Compliance Overview
+Compliance requires:
+- All rules applicable to Profile and Level satisfied
+- MAR validated
+- Complete and consistent artifacts (RCR, TEP, CBM, SBR, CC, SCEM)
+- Reproducibility from baseline
+- Change management controls applied
 
-Required Contents:
-- Test suite version
-- Platform matrix results
-- Coverage reports (including MC/DC when Level A)
-- Fault injection results
-- Reliability test results
-- Performance benchmarks
-- Test artifacts (logs, traces)
+**Compliance outcome:** PASS or FAIL.
 
-Must reference: RCR, CBM
+---
 
-C. Configuration Baseline Manifest (CBM)
+# Profiles
+**Core** — general-purpose safety.
+**Strict** — high-integrity, critical subset with highest constraints.
 
-Required Contents:
-- Interpreter version
-- OS version & kernel
-- Container/VM images
-- Dependency manifest (exact versions)
-- Hardware specs
-- Build flags & configs
-- Environment variables
-- Hashes/checksums
+---
 
-Must reference: RCR, TEP
+# Safety Levels
+- **A** – highest assurance
+- **B** – medium assurance
+- **C** – lowest assurance
 
-D. Compliance Certificate (CC)
+Levels apply per unit/function, not module.
 
-Required Elements:
-- Statement of compliance
-- Release ID
-- Baseline ID
-- List of artifacts included
-- Approval signature by independent authority
-- Expiry/validity conditions
+---
 
-Must reference: RCR, TEP, CBM, SBR
+# MAR & Phase Model
+The Mode Assignment Register specifies:
+- Level
+- Profile
+- Phase: @critical or non-critical
 
-E. Safety Baseline Report (SBR)
+All rules, tests, and evidence map through MAR.
 
-Required Elements:
+---
 
-Full baseline definition
-- Safety level (ASIL/SIL/Class)
-- Criticality mapping
-- Hazard impact summary
-- Residual risk assessment
-- Configuration matrix
--Deployment context
+# Entry Criteria
+A project enters compliance when:
+- rule catalog is selected
+- MAR is established
+- architecture is stable
+- interpreter version chosen
 
-Must reference: ALL artifacts
+---
 
-3. Artifact Relationship Model
+# Compliance Actor Roles
+| Role | Responsibilities |
+|------|------------------|
+| Developer | Implements code, tests, prepares RCR inputs |
+| Reviewer | Rule verification |
+| Safety Manager | Safety mapping, SBR |
+| Independent Assessor | Independent evaluation |
+| Release Authority | Signs CC |
+| Audit Authority | External compliance |
+| Toolchain Validator | Toolchain correctness |
+
+---
+
+# Compliance Lifecycle (Five-Phase Model)
+
+## Phase 1 — Design Compliance
+Activities:
+- hazard mapping
+- level assignment
+- rule set selection
+Artifacts:
+- MAR
+- initial SBR
+
+## Phase 2 — Rule Compliance
+Activities:
+- static analysis
+- manual review
+Artifact:
+- RCR
+
+## Phase 3 — Test Compliance
+Activities:
+- unit tests
+- MC/DC (for Level A)
+- negative tests
+- performance & determinism tests
+- security tests
+Artifact:
+- TEP
+
+## Phase 4 — Baseline Compliance
+Activities:
+- freeze environment
+- produce CBM
+Artifact:
+- CBM
+
+## Phase 5 — Certification Readiness
+Artifacts:
+- final SBR
+- SCEM
+
+## Release Approval
+- independent assessment
+- CC issued
+
+## Post-Release Monitoring
+- anomaly tracking
+- dependency CVE monitoring
+- safety event logging
+
+---
+
+# Enforcement & Acceptance Model
+
+## Rule Severity
+- **INFO** — informational
+- **WARN** — counts toward threshold
+- **ERROR** — blocking unless justified
+- **BLOCKER** — unconditional failure
+
+## Strict-A Requirements
+- **0 WARN**
+- **0 ERROR**
+- **0 BLOCKER**
+
+## Deviations
+Allowed only if:
+- no Level A @critical rule affected
+- documented risk assessment
+- approved by Safety Manager
+
+Forbidden for:
+- Strict-Level-A MUST rules
+- deterministic behavior
+- baseline integrity
+- interpreter freeze rules
+
+## No Silent Downgrade
+Reviewers cannot reduce severity to pass compliance.
+
+---
+
+# One-Version Rule (Interpreter Freeze)
+A project MUST select one Python interpreter version for its certified baseline.
+
+Any change triggers:
+- new CBM
+- new TEP
+- new CC
+
+No partial acceptance.
+
+---
+
+# Mandatory Artifacts
+
+## RCR — Rule Compliance Report
+Includes:
+- Release/Baseline IDs
+- mapping of rules
+- deviations
+- signatures
+
+## TEP — Test Evidence Package
+Includes:
+- test suite version
+- platform matrix
+- coverage
+- MC/DC
+- fault injection
+- negative & security tests
+
+## CBM — Configuration Baseline Manifest
+Includes:
+- Python version
+- OS version
+- dependencies
+- container image
+- build flags
+- hardware details
+- hashes
+
+## SBR — Safety Baseline Report
+Includes hazard mappings, risks, platform, deployment context.
+
+## CC — Compliance Certificate
+Includes official release certification.
+
+## DL — Deviations Log
+Contains rule ID, justification, approver, evidence.
+
+## MAR — Mode Assignment Register
+Defines unit → level → profile → phase.
+
+## SCEM — Evidence Matrix
+Maps Requirements → Rules → Tests → Evidence.
+
+---
+
+# Artifact Chain
+Artifact Relationship Model
            ┌─────────┐
            │  RCR    │
            └────┬────┘
@@ -254,24 +277,135 @@ Must reference: ALL artifacts
            │   CC    │
            └─────────┘
 
-All five share the same:
+All artifacts share the same:
 - Release ID
 - Baseline ID
-- Commit hash TODO: check if this is possible ?
 
 They form a single versioned unit.
 
 ---
 
-## 8. Archival Rules
-All artifacts must be:
-- Versioned
-- Stored together
-- Cryptographically hashed
-- Retained for 15+ years (Level A recommended)
+# Re-Approval Rules
+Re-approval required for:
+- interpreter version change
+- OS/kernel change
+- dependency version change
+- hardware change
+- MAR change
+- safety goal change
+- new features
+- behavior change affecting safety
+
+Severity:
+- **Minor** → TEP only
+- **Major** → full cycle
 
 ---
 
-## 9. Summary
-Compliance is not a declaration — it is a **process**.
-Only by executing this process and producing all required artifacts can a project claim CRSS compliance.
+# Deviations & Exceptions
+
+## Allowed Deviations
+Only if:
+- not Level A critical
+- risk documented
+- Safety Manager approval
+
+## Forbidden Deviations
+For:
+- Strict-Level-A MUST rules
+- deterministic behavior
+- baseline integrity
+
+---
+
+# Testing Compliance
+Includes:
+- unit tests
+- interface/boundary tests
+- negative testing
+- MC/DC for Level A
+- determinism testing
+- stress/reliability tests
+- security tests
+
+---
+
+# Deployment Compliance
+Requires:
+- immutable deployment
+- reproducible builds
+- attestation
+- rollback strategy
+- production gating
+
+---
+
+# Toolchain Confidence Assessment
+Includes:
+- qualification
+- classification
+- error analysis
+- validation
+- regression testing
+
+---
+
+# Certificate Issuance
+Contains:
+- certification statement
+- IDs
+- hash list
+- signature
+- expiry
+
+---
+
+# Archival Rules
+- 15-year retention
+- offsite backup
+- cryptographic hashing
+- tamper protection
+- disaster recovery protocol
+
+---
+
+# Auditor Guidance
+Auditors verify:
+- traceability
+- independence
+- MAR correctness
+- coverage results
+- reproducibility
+- absence of forbidden deviations
+- alignment between SBR/RCR/TEP/CBM/CC
+
+---
+
+# Checklists
+
+## Developer Checklist
+- no rule violations
+- tests complete
+- MAR correct
+- coverage adequate
+
+## Reviewer Checklist
+- rule-by-rule analysis
+- static review
+- deviation validation
+
+## Safety Manager Checklist
+- SBR correctness
+- SCEM completeness
+- risk soundness
+
+## Release Authority Checklist
+- ID consistency
+- artifact integrity
+- signature and attestation
+
+---
+
+# Compliance Flow
+**Design → Rule → Test → Baseline → SBR → CC → Release**
+
