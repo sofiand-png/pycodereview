@@ -12,6 +12,13 @@ I will ensure:
 
 # for document title
 
+## Table of Contents
+
+- [for document title](#for-document-title)
+  - [for major chapters](#for-major-chapters)
+    - [for rule sections](#for-rule-sections)
+  - [CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3 — Phase-Aware Interpretation](#crss-541-crss-542-crss-543-phase-aware-interpretation)
+
 ## for major chapters
 
 ### for rule sections
@@ -32,11 +39,11 @@ Consistent blank-line spacing between sections
 
 Example:
 
-**Category**: Collections  
-**Type**: Safety  
+**Category**: Collections
+**Type**: Safety
 **Profiles**:
-  - Core: MUST  
-  - Strict: MUST-NOT  
+  - Core: MUST
+  - Strict: MUST-NOT
 **Scope**: all_code
 
 ✔ All Markdown emphasized sections are consistent
@@ -79,7 +86,6 @@ I will:
 For every rule missing a scope:
 
 **Scope**: all_code
-
 
 Will be inserted in the correct place inside the metadata block.
 

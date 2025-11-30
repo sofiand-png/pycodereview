@@ -1,8 +1,24 @@
-
 # CRSS-Python Repository & Publishing Package
-Version: v3.1.0  
-Status: Release-Ready  
-© 2025 Sofian Daghsen – All rights reserved  
+
+## Table of Contents
+
+- [CRSS-Python Repository & Publishing Package](#crss-python-repository-publishing-package)
+- [0. Purpose](#0-purpose)
+- [1. Repository Structure (Canonical)](#1-repository-structure-canonical)
+- [2. Release Deliverables](#2-release-deliverables)
+- [3. Distribution Formats](#3-distribution-formats)
+- [4. Navigation Flow (Beginner → Expert)](#4-navigation-flow-beginner-→-expert)
+- [5. Public Website Structure](#5-public-website-structure)
+- [6. Versioning & Release Policy](#6-versioning-release-policy)
+- [7. Launch Strategy](#7-launch-strategy)
+    - [Phase 1 — Technical Pre-release](#phase-1-technical-pre-release)
+    - [Phase 2 — Public Release](#phase-2-public-release)
+    - [Phase 3 — Ecosystem Growth](#phase-3-ecosystem-growth)
+- [8. Summary](#8-summary)
+
+Version: v3.1.0
+Status: Release-Ready
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -76,13 +92,13 @@ crss-python-standard/
 
 Each public release MUST contain:
 
-✅ Full document set (all markdown files)  
-✅ Machine-readable rule catalog  
-✅ Release notes  
-✅ Version number (semantic)  
-✅ Change log  
-✅ License file  
-✅ Checksums / signatures  
+✅ Full document set (all markdown files)
+✅ Machine-readable rule catalog
+✅ Release notes
+✅ Version number (semantic)
+✅ Change log
+✅ License file
+✅ Checksums / signatures
 
 ---
 
@@ -160,9 +176,9 @@ Section tabs:
 
 This package provides:
 
-✅ A clean, professional, scalable structure  
-✅ Auditor-ready navigation  
-✅ Tool-friendly rule catalogs  
-✅ A polished path to public launch  
+✅ A clean, professional, scalable structure
+✅ Auditor-ready navigation
+✅ Tool-friendly rule catalogs
+✅ A polished path to public launch
 
 It is the final layer required to operationalize the CRSS-Python Standard.

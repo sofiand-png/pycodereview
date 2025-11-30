@@ -1,5 +1,14 @@
-
 # CRSS-Python v1.0.0 Release Notes
+
+## Table of Contents
+
+- [CRSS-Python v1.0.0 Release Notes](#crss-python-v100-release-notes)
+  - [Summary](#summary)
+  - [Major Features](#major-features)
+  - [Added](#added)
+  - [Breaking Changes](#breaking-changes)
+  - [Compatibility Notes](#compatibility-notes)
+
 Release Date: 2025-03-02
 
 ## Summary
@@ -28,4 +37,3 @@ None — this is the first official version.
 
 ## Compatibility Notes
 Python projects must target a single interpreter version per project. The standard does not provide primary control certification for hard real-time actuation loops.
-

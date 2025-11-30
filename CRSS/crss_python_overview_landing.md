@@ -1,8 +1,32 @@
+# CRSS-Python Overview & Navigation Guide
 
-# CRSS-Python Overview & Navigation Guide  
-Version: v3.0.0  
-Status: Informative  
-© 2025 Sofian Daghsen – All rights reserved  
+## Table of Contents
+
+- [CRSS-Python Overview & Navigation Guide](#crss-python-overview-navigation-guide)
+- [✅ 1. What Is CRSS-Python?](#✅-1-what-is-crss-python)
+- [✅ 2. Why Does This Matter?](#✅-2-why-does-this-matter)
+- [✅ 3. High-Level Concept Map](#✅-3-high-level-concept-map)
+- [✅ 4. Profiles: How Strict Are the Rules?](#✅-4-profiles-how-strict-are-the-rules)
+- [✅ 5. Safety Levels: How Dangerous Is Failure?](#✅-5-safety-levels-how-dangerous-is-failure)
+- [✅ 6. Modes: The Enforcement Engine](#✅-6-modes-the-enforcement-engine)
+- [✅ 7. Phases: Critical vs Non-Critical](#✅-7-phases-critical-vs-non-critical)
+    - [🔴 `@critical`](#🔴-critical)
+    - [🟢 `@non_critical_phase`](#🟢-noncriticalphase)
+- [✅ 8. The Compliance Journey](#✅-8-the-compliance-journey)
+- [✅ 9. Recommended Strategy by Project Type](#✅-9-recommended-strategy-by-project-type)
+  - [✅ 9.1 New Projects (Greenfield)](#✅-91-new-projects-greenfield)
+  - [✅ 9.2 Mid-Development Projects](#✅-92-mid-development-projects)
+  - [✅ 9.3 Production Systems Scaling Up](#✅-93-production-systems-scaling-up)
+- [✅ 10. Architecture Recommendations](#✅-10-architecture-recommendations)
+- [✅ 11. How to Navigate the Framework](#✅-11-how-to-navigate-the-framework)
+- [✅ 12. Two Worlds: Readers vs Auditors](#✅-12-two-worlds-readers-vs-auditors)
+    - [👤 For Readers / Developers](#👤-for-readers-developers)
+    - [🧑‍⚖️ For Auditors / Regulators](#🧑‍⚖️-for-auditors-regulators)
+- [✅ 13. Final Message](#✅-13-final-message)
+
+Version: v3.0.0
+Status: Informative
+© 2025 Sofian Daghsen – All rights reserved
 
 ---
 
@@ -19,10 +43,10 @@ CRSS-Python is a **safety and compliance framework** that makes Python suitable 
 
 It provides:
 
-✅ Strict rules  
-✅ Structured processes  
-✅ Deterministic execution models  
-✅ Certification-ready evidence  
+✅ Strict rules
+✅ Structured processes
+✅ Deterministic execution models
+✅ Certification-ready evidence
 
 CRSS-Python does **not** turn Python into a real-time actuator controller. Instead, it allows Python to be used **safely and confidently** in supervisory and decision-support components.
 
@@ -41,11 +65,11 @@ Python is popular—but normally considered too dynamic and unpredictable.
 
 CRSS-Python changes that by:
 
-✅ Removing unsafe behaviors  
-✅ Enforcing strict development rules  
-✅ Requiring full traceability  
-✅ Making deployments reproducible  
-✅ Enabling certification paths  
+✅ Removing unsafe behaviors
+✅ Enforcing strict development rules
+✅ Requiring full traceability
+✅ Making deployments reproducible
+✅ Enabling certification paths
 
 ---
 
@@ -72,7 +96,7 @@ The entire framework is built around these ideas.
 | **Core** | General safety, best practice, low risk |
 | **Strict** | High-integrity and mission-critical use |
 
-Strict is tougher than Core.  
+Strict is tougher than Core.
 It has more rules, stronger testing, and tighter deployment requirements.
 
 ---
@@ -102,10 +126,10 @@ Examples:
 
 The Mode determines:
 
-✅ Rule requirements  
-✅ Violation severity  
-✅ Testing obligations  
-✅ Deployment eligibility  
+✅ Rule requirements
+✅ Violation severity
+✅ Testing obligations
+✅ Deployment eligibility
 
 Strict-A = **zero tolerance** in critical code.
 
@@ -143,16 +167,16 @@ Still must follow rules — but less restrictive.
 
 Compliance follows a **5-phase process**:
 
-1️⃣ Requirements & Traceability  
-2️⃣ Rule Compliance  
-3️⃣ Testing & Coverage  
-4️⃣ Baseline (CBM) Freeze  
-5️⃣ Approval & Certification  
+1️⃣ Requirements & Traceability
+2️⃣ Rule Compliance
+3️⃣ Testing & Coverage
+4️⃣ Baseline (CBM) Freeze
+5️⃣ Approval & Certification
 
 Compliance is **binary**:
 
-✅ PASS  
-❌ FAIL  
+✅ PASS
+❌ FAIL
 
 There is no “partial compliance.”
 
@@ -219,11 +243,11 @@ Core-B → Strict-B → Strict-A (selected modules)
 
 Required actions:
 
-✅ Convert deployments to immutable  
-✅ Create CBM  
-✅ Enforce zero-drift policy  
-✅ Establish SCEM  
-✅ Begin compliance cycle  
+✅ Convert deployments to immutable
+✅ Create CBM
+✅ Enforce zero-drift policy
+✅ Establish SCEM
+✅ Begin compliance cycle
 
 **Refactoring priority:**
 1. Isolate safety-critical components
@@ -240,12 +264,12 @@ Strict-B → Strict-A
 
 Regardless of project stage:
 
-✅ Use process isolation  
-✅ Avoid shared state  
-✅ Keep critical logic small and simple  
-✅ Use message-based communication  
-✅ Pre-allocate resources before critical execution  
-✅ Avoid circular dependencies  
+✅ Use process isolation
+✅ Avoid shared state
+✅ Keep critical logic small and simple
+✅ Use message-based communication
+✅ Pre-allocate resources before critical execution
+✅ Avoid circular dependencies
 ✅ One layer in → one layer out (clear boundaries)
 
 ---
@@ -260,7 +284,7 @@ Regardless of project stage:
 | Deployment & release | **Deployment Master** |
 | Tooling automation | **Tooling Master** |
 
-The Overview Page is your **map**.  
+The Overview Page is your **map**.
 The specs are the **manuals**.
 
 ---
@@ -293,14 +317,13 @@ You do **not** need to understand everything at once.
 
 Start small:
 
-✅ Choose a Mode  
-✅ Mark critical code  
-✅ Follow rules  
-✅ Build evidence  
+✅ Choose a Mode
+✅ Mark critical code
+✅ Follow rules
+✅ Build evidence
 
 You can grow into Strict-A maturity step by step.
 
 CRSS-Python gives you a **path**, not just rules.
 
 ---
-
