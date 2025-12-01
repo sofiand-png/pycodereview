@@ -245,9 +245,13 @@ the Strict profile:
 | CRSS-4.2.4  | Preserve exception context when re-raising     | SHOULD       | MUST           |      |
 | CRSS-4.3.1  | Avoid multiple evaluations of function call... | SHOULD-NOT   | MUST-NOT       |      |
 | CRSS-4.3.2  | Loop conditions should be free of hidden si... | SHOULD       | MUST           |      |
+| CRSS-4.3.4  | Avoid late-bound closures over loop variables  | SHOULD       | MUST           |      |
+| CRSS-4.3.5  | Handle async task failures and cancellation explicitly | SHOULD       | MUST           |      |
 | CRSS-5.1.1  | Type hints on public APIs                      | SHOULD       | MUST           |      |
 | CRSS-5.1.2  | Constrain use of Any                           | SHOULD-NOT   | MUST-NOT       |      |
 | CRSS-5.1.5  | Restrict use of `typing.cast`                  | SHOULD-NOT   | MUST-NOT       |      |
+| CRSS-5.1.7  | Ban mutable default arguments                  | SHOULD-NOT   | MUST-NOT       |      |
+| CRSS-5.1.8  |  Use is only for None and singletons                  | SHOULD-NOT   | MUST-NOT       |      |
 | CRSS-5.2.1  | Avoid hidden mutable global state              | SHOULD-NOT   | MUST-NOT       |      |
 | CRSS-5.2.2  | No implicit side effects on import             | SHOULD-NOT   | MUST-NOT       |      |
 | CRSS-5.3.1  | Constrain nondeterministic random number ge... | SHOULD-NOT   | MUST-NOT       |      |
