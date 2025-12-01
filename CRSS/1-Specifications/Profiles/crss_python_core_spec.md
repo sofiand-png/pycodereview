@@ -42,6 +42,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [CRSS-4.3.1 - Avoid multiple evaluations of function calls in one condition](#crss-431-avoid-multiple-evaluations-of-function-calls-in-one-condition)
   - [CRSS-4.3.2 - Loop conditions should be free of hidden side effects](#crss-432-loop-conditions-should-be-free-of-hidden-side-effects)
   - [CRSS-4.3.3 – Async only for non-hard-real-time paths](#crss-433-async-only-for-non-hard-real-time-paths)
+  - [CRSS-4.3.4 - Late-bound loop variables](#crss434-late-bound-loop-variables)
+  - [CRSS-4.3.5 - Async task failures and cancellation](#crss-435-handle-async-task-failures-and-cancellation-explicitly)
   - [CRSS-4.4.1 - Index bounds validation on externally derived indices](#crss-441-index-bounds-validation-on-externally-derived-indices)
   - [CRSS-4.4.2 - Safe dictionary access for external keys](#crss-442-safe-dictionary-access-for-external-keys)
   - [CRSS-4.4.3 - Safe unpacking and length assumptions](#crss-443-safe-unpacking-and-length-assumptions)
@@ -53,6 +55,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [CRSS-5.1.4 – Control polymorphism and ban duck typing in Strict](#crss-514-control-polymorphism-and-ban-duck-typing-in-strict)
   - [CRSS-5.1.5 - Restrict use of `typing.cast`](#crss-515-restrict-use-of-typingcast)
   - [CRSS-5.1.6 – Explicit module exports via `__all__` in Strict](#crss-516-explicit-module-exports-via-all-in-strict)
+  - [CRSS-5.1.7 - Mutable default arguments](#crss-517-mutable-default-arguments)
+  - [CRSS-5.1.8 - Identity vs equality](#crss-518-identity-vs-equality)
   - [CRSS-5.2.1 - Avoid hidden mutable global state](#crss-521-avoid-hidden-mutable-global-state)
   - [CRSS-5.2.2 - No implicit side effects on import](#crss-522-no-implicit-side-effects-on-import)
   - [CRSS-5.3.1 - Constrain nondeterministic random number generation](#crss-531-constrain-nondeterministic-random-number-generation)
@@ -87,6 +91,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [CRSS-6.1.1 - Dangerous functions and APIs](#crss-611-dangerous-functions-and-apis)
   - [CRSS-6.1.2 - Hardcoded secrets](#crss-612-hardcoded-secrets)
   - [CRSS-6.1.3 – Concurrency only via approved patterns](#crss-613-concurrency-only-via-approved-patterns)
+  - [CRSS-6.1.4 - Native extensions & FFI](#crss-614-native-extensions--and-ffi-only-via-approved-adapters)
   - [CRSS-6.2.1 - Insecure HTTP and disabled TLS verification](#crss-621-insecure-http-and-disabled-tls-verification)
   - [CRSS-6.2.3 – Prohibition of subprocess execution in Strict units](#crss-623-prohibition-of-subprocess-execution-in-strict-units)
   - [CRSS-6.2.4 – Shell invocation forbidden](#crss-624-shell-invocation-forbidden)
@@ -922,6 +927,68 @@ Time-critical logic must be synchronous and deterministic.
 `async`/`await` may be used for coordination layers or non-critical
 paths, not for core safety decisions.
 
+### CRSS-4.3.4 - Avoid late-bound closures over loop variables
+-	**Category**
+-	**Category**: Control Flow / Loops & Closures
+-	**Type**: Static
+-	**Profiles**:
+	- 	Core: SHOULD-NOT
+	- 	Strict: MUST-NOT
+-   **Scope**: `all_code`
+
+**Rule**
+
+Closures inside loops MUST NOT capture loop variables using late
+binding. Capture via default argument or explicitly.
+
+**Rationale**
+
+Python closures capture names, not values. All closures see final value.
+
+**Non-compliant**
+
+``` python
+callbacks = []
+for i in range(3):
+    callbacks.append(lambda: print(f"slot={i}"))
+```
+
+**Compliant**
+
+``` python
+callbacks.append(lambda i=i: print(f"slot={i}"))
+```
+
+
+### CRSS-4.3.5 - Handle async task failures and cancellation explicitly
+
+-	**Category**: Async / Concurrency
+-	**Type**: Static / Process
+-	**Profiles**:
+	- 	Core: SHOULD
+	- 	Strict: MUST
+-   **Scope**: `all_code`
+
+**Rule**
+
+All async tasks MUST be awaited or supervised.\
+Unhandled exceptions must be logged and escalated.\
+Cleanup must be deterministic under cancellation.
+
+**Non-compliant**
+
+``` python
+asyncio.create_task(process_event(ev))
+```
+
+**Compliant**
+
+``` python
+tasks = [asyncio.create_task(process_event(ev)) for ev in events]
+for t in tasks:
+    await t
+```
+
 ------------------------------------------------------------------------
 
 ### CRSS-4.4.1 - Index bounds validation on externally derived indices
@@ -1154,7 +1221,72 @@ from .controller import SafetyController
 __all__ = ["SafetyController"]
 ```
 
+### CRSS-5.1.7 - Ban mutable default arguments
+
+-	**Category**: Types & Interfaces / Functions
+-	**Type**: Static
+-	**Profiles**:
+	- 	Core: SHOULD-NOT
+	- 	Strict: MUST-NOT
+-	**Scope**: `all_code`
+
+**Rule**
+Functions and methods MUST NOT declare mutable default argument values
+such as `[]`, `{}`, `set()`, or other mutable containers.\
+Defaults MUST be immutables (`None`, numbers, strings, tuples, enums...)
+and any mutable structure MUST be created inside the function body.
+
+**Rationale**
+
+Python evaluates default arguments once at function definition time.\
+Mutable defaults lead to shared unexpected state.
+
+**Non-compliant**
+
+``` python
+def add_sensor_reading(reading, buffer=[]):
+    buffer.append(reading)
+    return buffer
+```
+
+**Compliant**
+
+``` python
+def add_sensor_reading(reading: float, buffer: Optional[List[float]] = None) -> List[float]:
+    if buffer is None:
+        buffer = []
+    buffer.append(reading)
+    return buffer
+```
+
 ---
+
+### CRSS-5.1.8 - Use is only for None and singletons
+
+-	**Category**: Types & Interfaces / Semantics
+-	**Type**: Static
+-	**Profiles**:
+	- 	Core: SHOULD
+	- 	Strict: MUST
+-	**Scope**: `all_code`
+
+**Rule**
+
+`is` / `is not` allowed only for None or documented singletons.
+
+**Non-compliant**
+
+``` python
+return x is 0
+return flag is "OK"
+```
+
+**Compliant**
+
+``` python
+return x == 0
+return flag == "OK"
+```
 
 ### CRSS-5.2.1 - Avoid hidden mutable global state
 
@@ -1886,6 +2018,32 @@ primitives in Strict modules must be:
 - centralized in a small set of wrappers (for example, `SafeThread`,
   `SafeProcess`), and
 - subject to explicit review and documentation.
+
+### CRSS-6.1.4 - Native extensions and FFI only via approved adapters
+
+-	**Category**: Concurrency / Platform / Interop
+-	**Type**: Static / Process
+-	**Profiles**:
+	- 	Core: SHOULD
+	- 	Strict: MUST
+-	**Scope**:`all_code`
+
+**Rule**
+
+Strict units MUST NOT call native interfaces directly except via
+approved adapter modules.
+
+**Non-compliant**
+
+``` python
+lib = ctypes.CDLL("libcontrol.so")
+lib.set_thruster_power(level)
+```
+
+**Compliant**
+
+Centralized adapter with validation and error handling.
+
 
 ### CRSS-6.2.1 - Insecure HTTP and disabled TLS verification
 
