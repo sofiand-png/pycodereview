@@ -1,0 +1,9 @@
+critical_boundary:
+  - safety_logic.controller
+  - safety_logic.voting
+  - safety_logic.envelope
+  - actuator.interface
+rules:
+  - only_pure_data_crosses_boundary: true
+  - no_io_in_critical: true
+  - no_exceptions_cross_boundary: true

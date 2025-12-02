@@ -1,0 +1,21 @@
+modules:
+  - name: safety_logic.controller
+    mode: Strict-A
+  - name: safety_logic.voting
+    mode: Strict-A
+  - name: safety_logic.envelope
+    mode: Strict-A
+  - name: actuator.interface
+    mode: Strict-A
+  - name: config.model
+    mode: Strict-B
+  - name: config.loader
+    mode: Core-B
+  - name: sensors.interfaces
+    mode: Strict-B
+  - name: sensors.simulation
+    mode: Core-C
+  - name: logging_utils.logger
+    mode: Core-C
+  - name: app.main_loop
+    mode: Core-B

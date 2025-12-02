@@ -1,0 +1,10 @@
+dependencies:
+  safety_logic.controller:
+    - safety_logic.voting
+    - safety_logic.envelope
+    - actuator.interface
+  app.main_loop:
+    - sensors.simulation
+    - config.loader
+    - safety_logic.controller
+    - logging_utils.logger

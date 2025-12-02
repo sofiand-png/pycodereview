@@ -1,0 +1,6 @@
+status: draft
+checks:
+  - name: strict_a_rules_satisfied
+    result: pending
+  - name: coverage_targets_met
+    result: pending

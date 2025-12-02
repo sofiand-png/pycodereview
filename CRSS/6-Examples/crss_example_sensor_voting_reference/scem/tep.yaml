@@ -1,0 +1,11 @@
+tests:
+  unit:
+    framework: pytest
+  mcdc:
+    description: custom MC/DC tests for Strict-A modules
+  integration:
+    description: single-step integration tests
+coverage:
+  statement: TBD
+  branch: TBD
+  mcdc: TBD
