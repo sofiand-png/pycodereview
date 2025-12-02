@@ -37,6 +37,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - [11. Sensor Simulation Strategy](#11-sensor-simulation-strategy)
 - [12. Execution Model](#12-execution-model)
 - [13. CRSS Rule Constraints (Relevant Subset)](#13-crss-rule-constraints-relevant-subset)
+- [14. Summary](#14-summary)
 
 ---
 
@@ -92,7 +93,7 @@ Target supported OS: Windows, Linux
 
 - **SG-3 – Fail-safe on severe disagreement:**
   If available sensors disagree beyond a configured plausibility threshold, the Safety Controller must fail safe
-  (e.g. hold last safe command or use a known-safe default command).
+  (e.g. use SAFE_DEFAULT; last safe command may be used only when explicitly configured).
 
 - **SG-4 – Deterministic @critical path:**
   The Safety Controller must be deterministic in its `@critical` path:
@@ -152,6 +153,11 @@ Target supported OS: Windows, Linux
 - Sensors are abstracted as data sources providing scalar values (`float` or `Decimal`).
 - We assume no hard real-time guarantees, but we require **bounded execution time** of the Strict-A loop.
 - In the demonstrator, sensors are simulated **in-process**; in a real system they would be sourced from hardware or a separate service.
+
+Note: The reference implementation included with this specification executes a single control-step
+(`python -m app.main_loop`) for demonstration and testing purposes. The logical model remains compatible
+with a periodic control loop in real deployments.
+
 
 ---
 
@@ -304,9 +310,6 @@ crss_example_sensor_voting/
     - 2-out-of-3 (or equivalent) voting,
     - detection of major sensor disagreement,
     - safe fallback strategy when disagreement or insufficient valid sensors occur.
-	- Fallback Priority Clarification:
-	If both LAST_SAFE_VALUE and SAFE_DEFAULT are viable fallback options, the controller MUST
-	prefer SAFE_DEFAULT. This ensures deterministic and conservative safety behavior.
 
   - Must be:
     - pure (no I/O, no logging),
@@ -314,28 +317,35 @@ crss_example_sensor_voting/
     - exception-free at the interface (no exceptions cross the critical boundary),
     - free of dynamic allocation beyond trivial bounded temporaries.
 
-Fallback conditions MUST be handled deterministically in the following order:
+- **Fallback Priority Clarification:**  
+  If both LAST_SAFE_VALUE and SAFE_DEFAULT are viable fallback options, the controller MUST
+  prefer SAFE_DEFAULT. This ensures deterministic and conservative safety behavior.
 
-1. **Two or more sensors fail plausibility → FAILSAFE**
-   - Output: SAFE_DEFAULT
+  Fallback conditions MUST be handled deterministically in the following order:
 
-2. **Exactly one sensor fails but two remain plausible**
-   - Output: average of the two plausible sensors
+  1. **Two or more sensors fail plausibility → FAILSAFE**
+     - Output: SAFE_DEFAULT
 
-3. **All three sensors are plausible**
-   - Output: average of all three
+  2. **Exactly one sensor fails but two remain plausible**
+     - Output: average of the two plausible sensors
 
-4. **Envelope or rate limiter detects unsafe condition**
-   - Output: clamped or rate-limited value
+  3. **All three sensors are plausible**
+     - Output: average of all three
 
-5. **Any internal error, inconsistency, or undefined state**
-   - Output: SAFE_DEFAULT
+  4. **Envelope or rate-limiter constraint triggered**
+     - Output: deterministically corrected value obtained by first applying the
+       hard clamp (min_safe/max_safe), then applying the rate limiter based on
+       previous_value, exactly as defined in the Safety Envelope Algorithm.
+
+  5. **Any internal error, inconsistency, or undefined state**
+     - Output: SAFE_DEFAULT
+
 
 - **`safety_logic.envelope`** (Strict-A, `@critical`)
   - Applies safety envelope and rate limiting:
     - clamp output between `MIN_SAFE` and `MAX_SAFE`,
     - enforce per-step rate-of-change limits (`max_delta_per_step`),
-    - choose a safe fallback (e.g. last safe command or defined safe default) on violations.
+    - choose a safe fallback according to the deterministic fallback strategy (SAFE_DEFAULT by default).
   - Same determinism and boundedness constraints as `voting`.
   - Formula: Let V be the voted sensor value and P be the previous actuator value.
 
@@ -399,11 +409,6 @@ Fallback conditions MUST be handled deterministically in the following order:
     - log or expose outputs in a non-critical way.
   - May implement a single-step `run_control_step()` or a demonstration loop.
 
-Note: The `timestamp` field of `SensorReading` is permitted for diagnostics in non-critical
-code but MUST NOT be used by any Strict-A logic. Strict-A modules SHALL treat sensor values
-as pure numeric inputs. Timestamps MUST NOT influence any voting, envelope, fallback, or
-safety-critical decision.
-
 ---
 
 ## 6. Interfaces & Data Flows
@@ -447,6 +452,11 @@ These types are conceptual; concrete representation can be dataclasses, `NamedTu
 - **`ActuatorCommand`**
   - `value: float` (bounded by `min_safe`/`max_safe`)
   - `status: enum {NORMAL, DEGRADED, FAILSAFE}`
+
+Note: The `timestamp` field of `SensorReading` is permitted for diagnostics in non-critical
+code but MUST NOT be used by any Strict-A logic. Strict-A modules SHALL treat sensor values
+as pure numeric inputs. Timestamps MUST NOT influence any voting, envelope, fallback, or
+safety-critical decision.
 
 ---
 
@@ -570,7 +580,7 @@ MC/DC test coverage: 95%
 Condition and decision mapping coverage (truth-table verification): 100%
 Integration test coverage: 100%
 
-**Coverage.py configruation:**
+**Coverage.py configuration:**
 
 The reference program uses coverage.py ONLY for:
 - statement coverage
@@ -757,6 +767,8 @@ and cannot vary at runtime.
 
 ---
 
-This specification defines the **intended behavior, architecture, and safety model** of the
-“CRSS-Python Sensor Voting & Actuator Safety Controller” reference program and is the normative basis
-for its implementation and verification against the CRSS-Python standard.
+## 14 Summary
+
+This reference specification is complete and normative for implementing the CRSS-Python
+Sensor Voting & Actuator Safety Controller in a fully Strict-A compliant manner.
+
