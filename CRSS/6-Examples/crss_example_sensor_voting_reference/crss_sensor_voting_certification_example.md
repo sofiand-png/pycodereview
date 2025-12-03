@@ -1,0 +1,57 @@
+# CRSS-Python Certification Example — Sensor Voting Reference
+
+> **Important:** This document is an example of the evidence structure for
+> a CRSS-compliant component. It is not an official certificate from
+> any authority.
+
+## 1. Component Identification
+
+- **Name**: CRSS Python Sensor Voting Reference Example
+- **Version**: 1.0.0
+- **Language**: Python 3.11.x
+- **Function**: Cooling temperature supervision (3-channel sensor voting + safety envelope)
+- **Domain**: Safety-critical software example (architecture compatible with automotive/avionics-style safety thinking)
+
+## 2. Applicable Standard
+
+- **Standard**: CRSS-Python (Core + Strict profiles)
+- **Profiles used**:
+  - Strict-A: safety kernel (controller, voting, envelope, actuator interface)
+  - Strict-B: configuration model, sensor interfaces
+  - Core-B/C: orchestration, simulation, I/O, logging
+
+## 3. Evidence
+
+The following artefacts are available:
+
+- **Specifications & design**:
+  - Sensor voting use case specification (cooling temperature)
+  - Safety baseline: `docs/crss_sensor_voting_safety_baseline.md`
+- **Rule compliance**:
+  - CRSS compliance report: `docs/crss_sensor_voting_compliance_report.md`
+- **Testing & coverage**:
+  - Test suite: unit, MC/DC-style, and integration tests in `tests/`
+  - Coverage report: `reports/coverage_report.md` (statement and branch coverage)
+- **Fault injection**:
+  - Fault injection report: `reports/fault_injection_report.md`
+  - Fault model implemented in simulation + status inconsistencies.
+- **SCEM artefacts**:
+  - Modes and allocation: `scem/mar.yaml`
+  - Test & evidence plan: `scem/tep.yaml`
+  - Build & environment metadata: `scem/cbm.json` (if present)
+  - Rule compliance summary: this document + compliance report.
+
+## 4. Summary Assessment (Example)
+
+Based on the artefacts listed above:
+
+- Strict-A safety logic (`safety_logic.*`, `actuator.interface`) adheres to:
+  - deterministic, bounded control flow,
+  - explicit safe defaults,
+  - clear separation from non-critical I/O,
+  - high coverage unit and MC/DC-style testing.
+- Non-critical harness modules are clearly identified and excluded from
+  the certified safety kernel scope.
+
+This structure is suitable as a template for an actual certification dossier
+for real-world projects that extend this example.

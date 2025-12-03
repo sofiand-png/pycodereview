@@ -1,12 +1,22 @@
-
 tests:
   unit:
     framework: pytest
+    paths:
+      - tests/unit
   mcdc:
-    description: custom MC/DC tests for Strict-A modules
+    description: MC/DC-style tests for Strict-A logic
+    paths:
+      - tests/mcdc
   integration:
-    description: single-step integration tests
-coverage:
-  statement: TBD
-  branch: TBD
-  mcdc: TBD
+    description: sensor voting single-step integration tests
+    paths:
+      - tests/integration
+
+coverage_targets:
+  statement: 100   # for Strict-A + Strict-B + Core-B in scope
+  branch: 95
+  mcdc: 95
+
+tools:
+  test_runner: pytest
+  coverage_tool: coverage.py
