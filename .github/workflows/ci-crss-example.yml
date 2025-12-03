@@ -47,21 +47,21 @@ jobs:
       - name: Install package
         run: |
           cd CRSS/6-Examples/crss_example_sensor_voting_reference/
-          python3 -m pip3 install -U pip
-          pip install -e .
+          python3 -m pip install -U pip
+          pip3 install -e .
 
       - name: Run TCP server/client smoke test
         run: |
           cd CRSS/6-Examples/crss_example_sensor_voting_reference/
           # Start server in background
-          python -m crss_example_sensor_voting.app.tcp_sensor_server &
+          python3 -m crss_example_sensor_voting.app.tcp_sensor_server &
           SERVER_PID=$!
 
           # Give it a moment to start
           sleep 1
 
           # Run client for a few seconds
-          timeout 5 python -m crss_example_sensor_voting.app.tcp_controller_client || true
+          timeout 5 python3 -m crss_example_sensor_voting.app.tcp_controller_client || true
 
           # Stop server
           kill $SERVER_PID || true
