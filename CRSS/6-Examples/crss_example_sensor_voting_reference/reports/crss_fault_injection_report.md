@@ -59,26 +59,34 @@ Decisions covered:
 - **D2**: voting returns DEGRADED → DEGRADED command
 - **D3**: voting returns NORMAL → NORMAL command
 ---
-# Fault Injection Report — Sensor Voting Reference Example
-## 1. Fault Model
-Faults modeled:
+# Fault Model
+
+The following faults are modelled at the sensor/input level:
+
 1. **Single-sensor high fault**
+   - One sensor is driven significantly above the plausible range
+     (e.g. base + 2.5) while others remain near nominal.
 2. **Single-sensor low fault**
+   - One sensor is driven significantly below plausible range (e.g. base - 2.5).
 3. **Severe disagreement**
+   - All three sensors differ strongly (e.g. base - 2.0, base, base + 2.0),
+     so no plausible pair exists.
 4. **Inconsistent metadata**
-Faults injected via:
-- `sensors.simulation.SimulatedSensors`
+   - Per-sensor status vs value range mismatches:
+     - status `OK` but value out of safety range
+     - status `ERROR` but value inside safety range
+   - Aggregated `source_status` vs sensor_statuses mismatches:
+     - `source_status = OK` but some sensors not `OK`
+     - `source_status = ERROR` but all sensors `OK`
+5. **Frozen sensors**
+   - All three sensors stop changing and keep returning the same triplet.
+6. **Stuck-at-safe with slow drift**
+   - Sensors remain near a mid-range safe value and only drift very slowly
+     within the safe band over time.
+
+Faults are injected via:
+
+- `sensors.simulation.SimulatedSensors` (modes: normal, high_fault, low_fault,
+  severe_disagreement, frozen, stuck_drift)
 - `_derive_sensor_statuses` in `app.tcp_sensor_server`
-- low-probability random status flipping
-## 2. Expected Behaviour under Faults
-- No plausible pair → FAILSAFE
-- Single faulty sensor → DEGRADED
-- All sensors plausible → NORMAL
-- Metadata inconsistencies → warnings logged (non-critical)
-## 3. Injected Faults vs Tests
-- Functional MC/DC tests cover extreme scenarios.
-- Demo TCP server/client triggers stochastic faults.
-## 4. Residual Risks
-Not yet simulated:
-- frozen sensors
-- stuck-at-safe values drifting slowly
+- random status flipping (low probability) to simulate diagnostic metadata bugs.

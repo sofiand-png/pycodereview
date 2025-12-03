@@ -1,3 +1,2 @@
-
-pytest
-coverage
+# requirements.txt
+# No runtime dependencies for the safety kernel example.
