@@ -1,0 +1,67 @@
+name: CRSS Example CI
+
+on:
+  pull_request:
+
+jobs:
+  crss-example-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package + dev deps
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python3 -m pip install -U pip
+          pip3 install -e .
+          pip3 install -r requirements.txt
+
+      - name: Run tests with coverage
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          coverage run --branch -m pytest
+          coverage xml
+          coverage report -m
+
+      # Optional: upload coverage artifact
+      - name: Upload coverage artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: crss-example-coverage
+          path: CRSS/6-Examples/crss_example_sensor_voting_reference/coverage.xml
+
+  # Optional: smoke-test TCP server/client for a few seconds
+  crss-example-tcp-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python3 -m pip3 install -U pip
+          pip install -e .
+
+      - name: Run TCP server/client smoke test
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          # Start server in background
+          python -m crss_example_sensor_voting.app.tcp_sensor_server &
+          SERVER_PID=$!
+
+          # Give it a moment to start
+          sleep 1
+
+          # Run client for a few seconds
+          timeout 5 python -m crss_example_sensor_voting.app.tcp_controller_client || true
+
+          # Stop server
+          kill $SERVER_PID || true
