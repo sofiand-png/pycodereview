@@ -78,8 +78,10 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - [safety_controller.py (Strict-A)](#safetycontrollerpy-strict-a)
 - [main.py (Strict-B or Strict-A non-critical orchestrator)](#mainpy-strict-b-or-strict-a-non-critical-orchestrator)
     - [14.5 Compliance Interpretation](#145-compliance-interpretation)
-  - [15. Machine-Readable Metadata (Optional Annex)](#15-machine-readable-metadata-optional-annex)
-  - [16. Summary](#16-summary)
+  - [15. Third-Party Library and Framework Containment](#15-third-party-library-and-framework-containment)	
+  - [16. Machine-Readable Metadata (Optional Annex)](#16-machine-readable-metadata-optional-annex)
+  - [17. Summary](#17-summary)
+  
 
 ---
 
@@ -883,7 +885,73 @@ Mode = **Strict-A**, Phase = `@critical`
 
 ---
 
-## 15. Machine-Readable Metadata (Optional Annex)
+## 15. Third-Party Library and Framework Containment
+
+### 15.1 Scope
+
+This section defines how third-party Python packages, frameworks, and native extensions MAY be used in a CRSS-Python system without compromising Strict-A guarantees.
+
+It applies to:
+
+- PyPI and internal package indexes  
+- Native extensions (C/C++/Rust)  
+- Large frameworks (web, ORM, ML, etc.)
+
+### 15.2 Version and Source Control
+
+TPL-1 — **Pinned Versions Only**  
+All third-party dependencies MUST be:
+
+- Version-pinned in the dependency manifest, and  
+- Recorded in the Configuration Baseline Manifest (CBM).   
+
+TPL-2 — **No Implicit Online Resolution**  
+Production builds and certification builds MUST NOT fetch packages from the public internet at build or deploy time. All dependencies MUST come from:
+
+- an internal mirror, or  
+- a pre-frozen local repository.
+
+### 15.3 Critical vs Non-Critical Usage
+
+TPL-3 — **No Direct Third-Party Calls in Strict-A @critical**
+
+`@critical` Strict-A code MUST NOT call third-party libraries directly (including pure Python or native extensions).
+
+Third-party usage MAY occur in:
+
+- Core-C / Strict-B **non-critical** code paths, or  
+- Strict/Strict-A **non-critical** initialization, configuration loading, or preprocessing steps, provided that the results are validated and converted into CRSS-controlled data structures before entering `@critical` code.
+
+TPL-4 — **Adapter Pattern for Safety Boundaries**
+
+If third-party functionality is required for safety-relevant behavior, it MUST be wrapped in a **Strict-compliant adapter**:
+
+- Adapter defines a narrow, typed interface.  
+- All inputs are validated before calling the third-party library.  
+- All outputs are range-checked and converted into CRSS-controlled types.  
+- Only the adapter’s stable, deterministic result is passed into `@critical` code.
+
+TPL-5 — **Core Profile Isolation**
+
+Third-party libraries that are not amenable to static analysis (heavy reflection, dynamic imports, metaprogramming) MUST be confined to **Core-C** utilities and MUST NOT influence Strict-A control decisions except through:
+
+- offline tooling, or  
+- explicit, validated inputs at non-critical boundaries.
+
+### 15.4 SCEM Impact
+
+Use of third-party libraries in any safety-relevant path MUST be:
+
+- Documented in the Mode Assignment Register and dependency map (SCEM-D1/D2), and  
+- Supported by robustness tests and fault injection in the Test Evidence Package (SCEM-D4).
+
+For Strict-A systems, auditors SHOULD be able to see a clear **“third-party dependency map”** that proves:
+
+- No third-party calls occur in `@critical` code, and  
+- Any third-party influence is bounded and validated before it affects safety decisions.
+
+
+## 16. Machine-Readable Metadata (Optional Annex)
 
 Tools may represent each code unit as:
 
@@ -922,7 +990,7 @@ This schema enables:
 
 ---
 
-## 16. Summary
+## 17. Summary
 
 This Unified Safety Specification v3.0.0:
 

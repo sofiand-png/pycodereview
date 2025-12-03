@@ -24,6 +24,10 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [D6 — Operational Readiness](#d6-operational-readiness)
   - [1.4 SCEM Completion Rules](#14-scem-completion-rules)
   - [1.5 SCEM & Modes](#15-scem-modes)
+  - [1.6 Quantitative Verification Targets per Mode](#15-quantitative-verification-targets-per-mode)
+	- [1.6.1 Coverage Targets](#161-coverage-targets)
+	- [1.6.2 Robustness & Fault Injection](#162-robustness-fault-injection)
+	- [1.6.3 Independence](#1163-independency)
 - [2. SCEM Annexes (Consolidated)](#2-scem-annexes-consolidated)
   - [Annex A — Mode Assignment Register (MAR)](#annex-a-mode-assignment-register-mar)
   - [Annex B — Critical Boundary Declaration (CBD)](#annex-b-critical-boundary-declaration-cbd)
@@ -165,6 +169,62 @@ Strict-A MUST include:
 - Approved deviations for non-critical
 
 ---
+
+## 1.6 Quantitative Verification Targets per Mode
+
+This section defines **minimum quantitative verification targets** per Mode. Projects MAY exceed these targets; falling below them is only allowed if justified by an approved deviation in SCEM-D4 (Testing & Behavior).
+
+### 1.6.1 Coverage Targets
+
+**Strict-A (Level A):**
+
+- Statement coverage: **≥ 100%** on all `@critical` code paths  
+- Branch/decision coverage: **≥ 100%** on all `@critical` code paths  
+- MC/DC coverage: **MANDATORY** on all Boolean decisions in `@critical` Strict-A code  
+- For non-critical Strict-A code:  
+  - Statement coverage ≥ 95%  
+  - Branch coverage ≥ 90%  
+
+**Strict (Level B/C):**
+
+- Statement coverage: **≥ 95%** on safety-relevant modules  
+- Branch/decision coverage: **≥ 90%** on safety-relevant modules  
+- MC/DC coverage: strongly RECOMMENDED for Level B, not required for Level C  
+
+**Core (all Levels):**
+
+- Coverage targets defined by the project, but:  
+  - Level A/B Core code SHOULD target ≥ 90% statement coverage.  
+
+All coverage evidence is recorded in **TEP** and referenced from SCEM-D4.   
+
+### 1.6.2 Robustness & Fault Injection
+
+**Strict-A @critical:**
+
+- Fault injection MUST be performed for:  
+  - input boundary conditions,  
+  - sensor / data loss scenarios,  
+  - configuration corruption,  
+  - out-of-range values.  
+- Results MUST be recorded in TEP and referenced from SCEM-D4.  
+
+**Strict (non-A):**
+
+- Fault injection is REQUIRED for Level B safety-relevant modules.  
+- At minimum, abnormal inputs and configuration errors MUST be exercised.  
+
+**Core:**
+
+- Fault injection is RECOMMENDED for Level A/B components, optional for Level C.  
+
+### 1.6.3 Independence
+
+For **Strict-A**:
+
+- Verification of `@critical` code MUST be performed by an engineer or team **independent** from the original author.  
+- Independence MUST be documented in SCEM-D3 (Compliance Artifacts) and in the Compliance Certificate (CC).   
+
 
 # 2. SCEM Annexes (Consolidated)
 

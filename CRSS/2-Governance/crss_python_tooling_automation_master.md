@@ -34,6 +34,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - [7. Tool Acceptance Criteria](#7-tool-acceptance-criteria)
   - [7.1 Automated Evidence Acceptance](#71-automated-evidence-acceptance)
   - [7.2 Automatic Rejection Conditions](#72-automatic-rejection-conditions)
+  - [7.3 Tool Confidence Categories](#73-tool-confidence-categories)
+  - [7.4 Minimum Expectations per Category](#74-minimum-expectations-per-category)
 - [8. Summary](#8-summary)
 
 ---
@@ -229,6 +231,9 @@ coverage:
 
 # 7. Tool Acceptance Criteria
 
+This section defines how **Tool Capability Levels (TCL)** and **Tool Compliance Attributes (TCA)** map to a tool confidence story suitable for safety assessments.
+CRSS does not define a full ISO 26262 Tool Confidence Level (TCL) process, but provides a structured approach that can be mapped onto it.
+
 ## 7.1 Automated Evidence Acceptance
 
 Accepted only if:
@@ -243,6 +248,41 @@ Accepted only if:
 ❌ Missing data fields
 ❌ Non-deterministic results
 ❌ Unsupported output formats
+
+### 7.3 Tool Confidence Categories
+
+Tools are grouped into three confidence categories:
+
+- **Q0 — Advisory Tools**  
+  - Linting, style checkers, non-safety-critical analyzers.  
+  - Findings are advisory; no certification reliance.  
+
+- **Q1 — Supporting Safety Evidence**  
+  - Static analyzers, type checkers, coverage tools used to build SCEM evidence, but with cross-checks and manual review.  
+
+- **Q2 — Safety-Critical Decision Tools**  
+  - Tools whose output is directly used as *primary evidence* that safety requirements are met (e.g., the main CRSS compliance analyzer for Strict-A).  
+
+### 7.4 Minimum Expectations per Category
+
+**Q1 – Supporting Safety Evidence:**
+
+- Fixed-version in CBM  
+- No auto-update  
+- Results cross-checked with at least one other tool or manual sampling  
+- Failures cannot directly hide a violation; human review present  
+
+**Q2 – Safety-Critical Decision Tools:**
+
+- All Q1 expectations, plus:  
+  - Documented failure modes and mitigations  
+  - Validation on representative benchmark projects  
+  - Periodic sanity checks (e.g., seeding synthetic violations and verifying detection)  
+  - Transparent versioning and changelog  
+  - Toolchain Version Registry entry in SCEM-D5  
+
+Projects using a tool as Q2 MUST describe the tool confidence argument in SCEM (D3/D5) and optionally reference ISO 26262-8 / DO-330 style tool qualification documents.
+
 
 ---
 
