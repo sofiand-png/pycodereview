@@ -1,5 +1,13 @@
 
-"""JSON protocol definitions for sensor frames and actuator requests (Core-C)."""
+"""JSON protocol definitions for sensor frames and actuator requests (Core-C).
+
+Requirements:
+SV-INT-01 — SensorFrame JSON format
+
+SV-INT-02 — ActuatorRequest JSON format
+
+SV-INT-03 — Strict-A isolation (only normalized values go past this)
+"""
 
 
 from __future__ import annotations

@@ -22,6 +22,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - [3.1 Safety Goals Overview](#31-safety-goals)
 - [3.2 Hazards](#32-hazards)
 - [3.3 Design Model](#33-design-model)
+- [3.4 Functional Requirements](#34-functional-requirements)
 - [4. High-Level Architecture](#4-high-level-architecture)
 - [5. Key CRSS Compliance Principles Used](#5-key-crss-compliance-principles-used)
 - [6. Actors and Data Flow](#6-actors-and-data-flow)
@@ -189,6 +190,80 @@ Loop:
 `[SENSOR GATEWAY] → SensorFrame JSON → [CLIENT] → Strict-A logic → ActuatorRequest JSON → [GATEWAY]`
 
 The system runs indefinitely (until Ctrl+C) at ~60 ms cycle time.
+
+
+### 3.4 Functional Requirements
+
+**SV-FUNC-01 — Triple sensor input**  
+The system shall process exactly three sensor channels per cycle and reject any SensorFrame that does not contain exactly three values.
+
+**SV-FUNC-02 — TMR voting**  
+The system shall compute a single voted value from the three sensor inputs using a deterministic TMR-style voting algorithm (median-based).
+
+**SV-FUNC-03 — Stateless per-cycle computation**  
+Each control cycle shall compute the actuator command using only the current SensorFrame and the previous actuator output; no additional hidden internal state is permitted.
+
+---
+
+#### 3.4.1 Safety / Envelope Requirements
+
+**SV-SAF-01 — Envelope clamp**  
+The system shall ensure that every actuator command satisfies:  
+`min_safe ≤ command_value ≤ max_safe`.
+
+**SV-SAF-02 — Rate limiting**  
+The system shall ensure that the difference between successive actuator commands does not exceed `max_delta` in magnitude, except when transitioning to SAFE_DEFAULT.
+
+**SV-SAF-03 — SAFE_DEFAULT application**  
+When the system enters FAILSAFE state, it shall set the actuator command to `SAFE_DEFAULT = min_safe` and may bypass rate limiting for that transition.
+
+**SV-SAF-04 — Deterministic Strict-A**  
+For any given configuration, previous output, and set of validated sensor values, the Strict-A logic shall always return the same actuator command and status.
+
+---
+
+#### 3.4.2 Fault-Handling Requirements
+
+**SV-FLT-01 — Single-sensor fault tolerance**  
+If at most one sensor is faulty and a plausible pair exists, the system shall produce a bounded actuator command with status `DEGRADED` or `NORMAL`, never `FAILSAFE`.
+
+**SV-FLT-02 — Severe disagreement to FAILSAFE**  
+If no plausible sensor pair exists due to severe disagreement, the system shall enter FAILSAFE and output SAFE_DEFAULT.
+
+**SV-FLT-03 — Frozen behavior**  
+If sensor readings are detected as frozen over multiple cycles, the system shall hold or slowly adjust the actuator command within the configured envelope and mark the status as at most `DEGRADED`.
+
+**SV-FLT-04 — Stuck-drift behavior**  
+Slow sensor drift within the safe band shall not cause oscillatory or unsafe actuator commands; the envelope shall keep the command bounded and rate-limited.
+
+---
+
+#### 3.4.3 Interface / JSON / TCP Requirements
+
+**SV-INT-01 — SensorFrame format**  
+The gateway shall send SensorFrame messages conforming to the specified JSON schema (IDs, values, statuses, timestamp, unit).
+
+**SV-INT-02 — ActuatorRequest format**  
+The client shall send ActuatorRequest messages conforming to the specified JSON schema (command_value, status, safe_default_used, reason).
+
+**SV-INT-03 — Strict-A isolation**  
+Strict-A logic shall not directly handle JSON strings, sockets, or timestamps; it shall operate exclusively on normalized numeric values and configuration.
+
+---
+
+#### 3.4.5 Test & Coverage Requirements
+
+**SV-TEST-01 — Unit coverage**  
+All Strict-A modules shall achieve **100% statement coverage** and **≥ 95% branch coverage**.
+
+**SV-TEST-02 — MC/DC**  
+All decision points in Strict-A logic (envelope, fallback, status classification) shall be covered by MC/DC-style tests.
+
+**SV-TEST-03 — Fault injection coverage**  
+The test suite shall exercise all six fault modes:  
+`normal`, `high_fault`, `low_fault`, `severe_disagreement`, `frozen`, `stuck_drift`,  
+and verify the resulting statuses and outputs.
+
 
 ## 4. High-Level Architecture
 ```text

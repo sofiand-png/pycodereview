@@ -1,5 +1,12 @@
 
-"""Configuration model for the safety controller (Strict-B)."""
+"""Configuration model for the Sensor Voting reference (Strict-B).
+
+Requirements:
+SG-1, SG-2, SG-3 (safety goals)
+
+SV-SAF-01..03 (envelope & SAFE_DEFAULT parameters)
+"""
+
 
 
 from dataclasses import dataclass

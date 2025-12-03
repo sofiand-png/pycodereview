@@ -1,5 +1,16 @@
 """Deterministic and stochastic sensor simulation (Core-C).
 
+Requirements:
+SV-FLT-01 — Single-fault cases (high/low)
+
+SV-FLT-02 — Severe disagreement scenario
+
+SV-FLT-03 — Frozen sensors
+
+SV-FLT-04 — Stuck-drift sensors
+
+SV-TEST-03 — Fault injection coverage
+
 Simulates three cooling temperature sensors in degrees Celsius
 with several fault scenarios:
 

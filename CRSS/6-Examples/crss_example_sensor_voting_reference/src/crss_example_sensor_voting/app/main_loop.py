@@ -1,5 +1,15 @@
 
-"""Single-step orchestrator (non-critical) for offline runs and tests."""
+"""Single-step orchestrator (non-critical) for offline runs and tests.
+
+Requirements:
+SV-FUNC-01 — Single frame per cycle
+
+SV-FUNC-03 — previous_output used per cycle
+
+SV-INT-03 — Strict-A is not doing I/O
+
+SV-TEST-01 — runtime behavior implicitly covered by integration tests
+"""
 
 
 from typing import Optional, List
