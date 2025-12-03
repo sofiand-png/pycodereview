@@ -1,0 +1,85 @@
+name: CRSS Example CI
+
+on:
+  workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  crss-example-tests-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package + dev deps (Linux)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python3 -m pip install -U pip
+          pip3 install -e .
+          pip3 install -r requirements-dev-linux.txt
+
+      - name: Run tests with coverage (Linux)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          coverage run --branch -m pytest
+          coverage xml
+          coverage report -m
+
+      - name: Run TCP server/client smoke test (Linux)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python3 -m crss_example_sensor_voting.app.tcp_sensor_server &
+          SERVER_PID=$!
+          sleep 1
+          timeout 5 python3 -m crss_example_sensor_voting.app.tcp_controller_client || true
+          kill $SERVER_PID || true
+
+      - name: Upload coverage artifact (Linux)
+        uses: actions/upload-artifact@v4
+        with:
+          name: crss-example-coverage-linux
+          path: CRSS/6-Examples/crss_example_sensor_voting_reference/coverage.xml
+
+  crss-example-tests-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install package + dev deps (Windows)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python -m pip install -U pip
+          pip install -e .
+          pip install -r requirements-dev-windows.txt
+
+      - name: Run tests with coverage (Windows)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          coverage run --branch -m pytest
+          coverage xml
+          coverage report -m
+
+      - name: Run TCP server/client smoke test (Windows)
+        shell: bash
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python -m crss_example_sensor_voting.app.tcp_sensor_server &
+          SERVER_PID=$!
+          sleep 1
+          timeout 5 python -m crss_example_sensor_voting.app.tcp_controller_client || true
+          kill $SERVER_PID || true
+
+      - name: Upload coverage artifact (Windows)
+        uses: actions/upload-artifact@v4
+        with:
+          name: crss-example-coverage-windows
+          path: CRSS/6-Examples/crss_example_sensor_voting_reference/coverage.xml
