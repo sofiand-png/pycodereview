@@ -1,7 +1,10 @@
 name: CRSS Example CI
 
 on:
+  workflow_dispatch:
   pull_request:
+    branches:
+      - main
 
 jobs:
   crss-example-tests:
