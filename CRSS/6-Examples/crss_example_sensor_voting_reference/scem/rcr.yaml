@@ -1,0 +1,6 @@
+
+ruleset: CRSS-Python
+summary:
+  strict_a_violations: 0
+  strict_b_violations: 0
+  core_violations: 0

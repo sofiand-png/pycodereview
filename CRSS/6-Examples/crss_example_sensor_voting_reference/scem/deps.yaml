@@ -1,0 +1,21 @@
+
+dependencies:
+  crss_example_sensor_voting.safety_logic.controller:
+    - crss_example_sensor_voting.safety_logic.voting
+    - crss_example_sensor_voting.safety_logic.envelope
+    - crss_example_sensor_voting.actuator.interface
+  crss_example_sensor_voting.app.main_loop:
+    - crss_example_sensor_voting.sensors.simulation
+    - crss_example_sensor_voting.config.loader
+    - crss_example_sensor_voting.safety_logic.controller
+    - crss_example_sensor_voting.logging_utils.logger
+  crss_example_sensor_voting.app.tcp_sensor_server:
+    - crss_example_sensor_voting.sensors.simulation
+    - crss_example_sensor_voting.config.loader
+    - crss_example_sensor_voting.io.json_protocol
+    - crss_example_sensor_voting.logging_utils.logger
+  crss_example_sensor_voting.app.tcp_controller_client:
+    - crss_example_sensor_voting.config.loader
+    - crss_example_sensor_voting.safety_logic.controller
+    - crss_example_sensor_voting.io.json_protocol
+    - crss_example_sensor_voting.logging_utils.logger

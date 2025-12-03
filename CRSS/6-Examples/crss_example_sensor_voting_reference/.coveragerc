@@ -1,0 +1,11 @@
+[run]
+branch = True
+source = crss_example_sensor_voting
+omit =
+    */app/tcp_sensor_server.py
+    */app/tcp_controller_client.py
+    */logging_utils/*
+    */sensors/simulation.py
+
+[report]
+show_missing = True

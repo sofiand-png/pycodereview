@@ -1,0 +1,10 @@
+
+critical_boundary:
+  - crss_example_sensor_voting.safety_logic.controller
+  - crss_example_sensor_voting.safety_logic.voting
+  - crss_example_sensor_voting.safety_logic.envelope
+  - crss_example_sensor_voting.actuator.interface
+rules:
+  - only_pure_data_crosses_boundary: true
+  - no_io_in_critical: true
+  - no_exceptions_cross_boundary: true
