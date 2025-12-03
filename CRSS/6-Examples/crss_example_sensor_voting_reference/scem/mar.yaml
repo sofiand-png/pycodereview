@@ -1,21 +1,26 @@
+
 modules:
-  - name: safety_logic.controller
+  - name: crss_example_sensor_voting.safety_logic.controller
     mode: Strict-A
-  - name: safety_logic.voting
+  - name: crss_example_sensor_voting.safety_logic.voting
     mode: Strict-A
-  - name: safety_logic.envelope
+  - name: crss_example_sensor_voting.safety_logic.envelope
     mode: Strict-A
-  - name: actuator.interface
+  - name: crss_example_sensor_voting.actuator.interface
     mode: Strict-A
-  - name: config.model
+  - name: crss_example_sensor_voting.config.model
     mode: Strict-B
-  - name: config.loader
+  - name: crss_example_sensor_voting.config.loader
     mode: Core-B
-  - name: sensors.interfaces
+  - name: crss_example_sensor_voting.sensors.interfaces
     mode: Strict-B
-  - name: sensors.simulation
+  - name: crss_example_sensor_voting.sensors.simulation
     mode: Core-C
-  - name: logging_utils.logger
+  - name: crss_example_sensor_voting.logging_utils.logger
     mode: Core-C
-  - name: app.main_loop
+  - name: crss_example_sensor_voting.app.main_loop
+    mode: Core-B
+  - name: crss_example_sensor_voting.app.tcp_sensor_server
+    mode: Core-C
+  - name: crss_example_sensor_voting.app.tcp_controller_client
     mode: Core-B
