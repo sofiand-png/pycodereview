@@ -1298,6 +1298,226 @@ class ExceptionChainingRule(Rule):
                         )
         self.generic_visit(node)
 
+# -------------------- Security: weak hashes --------------------
+class WeakHashRule(Rule):
+    CATEGORY = "Security"
+    PRIORITY = "MEDIUM"
+    IMPACT = "MD5/SHA1 are weak; prefer SHA256 or better."
+
+    def visit_Call(self, node: ast.Call) -> None:
+        # hashlib.md5(...), hashlib.sha1(...)
+        if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name) and node.func.value.id == "hashlib":
+            if node.func.attr in {"md5", "sha1"}:
+                self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                            f"{self.filename}: Use of hashlib.{node.func.attr}(). Prefer SHA256 or better.")
+        self.generic_visit(node)
+
+
+# -------------------- Security: hardcoded secrets --------------------
+class HardcodedSecretRule(Rule):
+    CATEGORY = "Security"
+    PRIORITY = "HIGH"
+    IMPACT = "Hardcoded credentials can leak and are hard to rotate."
+
+    SUSPECT_NAMES = {
+        "password", "passwd", "pwd", "secret", "token", "apikey", "api_key",
+        "access_key", "secret_key", "client_secret", "auth", "credential"
+    }
+
+    def visit_Assign(self, node: ast.Assign) -> None:
+        # foo = "secret123"
+        if isinstance(node.value, ast.Constant) and isinstance(node.value.value, str):
+            for tgt in node.targets:
+                name = getattr(tgt, "id", None) or getattr(tgt, "attr", None)
+                if name and name.lower() in self.SUSPECT_NAMES:
+                    self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                                f"{self.filename}: Possible hardcoded secret in '{name}'.")
+        self.generic_visit(node)
+
+
+# -------------------- Security: insecure HTTP / SSL verify --------------------
+class InsecureHTTPRule(Rule):
+    CATEGORY = "Security"
+    PRIORITY = "MEDIUM"
+    IMPACT = "Plain HTTP or disabled certificate verification risks MITM."
+
+    def visit_Call(self, node: ast.Call) -> None:
+        # requests.get("http://...") or verify=False
+        func_name = getattr(node.func, "attr", None)
+        mod_name = getattr(getattr(node.func, "value", None), "id", None)
+        if mod_name == "requests" and func_name in {"get", "post", "put", "delete", "head", "patch"}:
+            # URL literal starts with http://
+            if node.args and isinstance(node.args[0], ast.Constant) and isinstance(node.args[0].value, str):
+                if node.args[0].value.strip().lower().startswith("http://"):
+                    self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                                f"{self.filename}: Using HTTP URL with requests.{func_name}(). Prefer HTTPS.")
+            # verify=False
+            for kw in node.keywords or []:
+                if kw.arg == "verify" and isinstance(kw.value, ast.Constant) and kw.value.value is False:
+                    self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                                f"{self.filename}: SSL verification disabled (verify=False).")
+        self.generic_visit(node)
+
+
+# -------------------- Security: tempfile.mktemp --------------------
+class TempFileSecurityRule(Rule):
+    CATEGORY = "Security"
+    PRIORITY = "MEDIUM"
+    IMPACT = "tempfile.mktemp is race-prone; use NamedTemporaryFile or mkstemp."
+
+    def visit_Call(self, node: ast.Call) -> None:
+        if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
+            if node.func.value.id == "tempfile" and node.func.attr == "mktemp":
+                self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                            f"{self.filename}: tempfile.mktemp() is unsafe; use NamedTemporaryFile/mkstemp.")
+        self.generic_visit(node)
+
+
+# -------------------- Security: random used for secrets --------------------
+class RandomForCryptoRule(Rule):
+    CATEGORY = "Security"
+    PRIORITY = "MEDIUM"
+    IMPACT = "random module is not cryptographically secure; use secrets module."
+
+    RANDOM_FUNCS = {"random", "randint", "randrange", "getrandbits", "choice", "choices"}
+
+    def visit_Call(self, node: ast.Call) -> None:
+        if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
+            if node.func.value.id == "random" and node.func.attr in self.RANDOM_FUNCS:
+                self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                            f"{self.filename}: random.{node.func.attr} used; prefer secrets module for tokens/keys.")
+        self.generic_visit(node)
+
+
+# -------------------- Correctness/Robustness: JSON string compare without sort --------------------
+class JSONOrderRelianceRule(Rule):
+    CATEGORY = "Robustness"
+    PRIORITY = "LOW"
+    IMPACT = "Comparing JSON strings without sort_keys can be order-sensitive."
+
+    def _is_json_dumps(self, call: ast.Call) -> bool:
+        if isinstance(call.func, ast.Attribute) and isinstance(call.func.value, ast.Name):
+            return call.func.value.id == "json" and call.func.attr == "dumps"
+        return False
+
+    def visit_Compare(self, node: ast.Compare) -> None:
+        # json.dumps(a) == json.dumps(b) but no sort_keys=True
+        parts = [node.left] + node.comparators
+        dumps_calls = [n for n in parts if isinstance(n, ast.Call) and self._is_json_dumps(n)]
+        if len(dumps_calls) >= 1:
+            for c in dumps_calls:
+                has_sort = any((kw.arg == "sort_keys" and isinstance(kw.value, ast.Constant) and kw.value.value is True)
+                               for kw in (c.keywords or []))
+                if not has_sort:
+                    self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                                f"{self.filename}: json.dumps compared without sort_keys=True; comparison can be order-sensitive.")
+        self.generic_visit(node)
+
+
+# -------------------- Correctness/Robustness: dict order reliance --------------------
+class DictOrderRelianceRule(Rule):
+    CATEGORY = "Robustness"
+    PRIORITY = "LOW"
+    IMPACT = "Indexing dict views or relying on first/next key is fragile."
+
+    def visit_Subscript(self, node: ast.Subscript) -> None:
+        # list(d.keys())[0], list(d.items())[1][0], d.keys()[0], next(iter(d))
+        def is_dict_view(call: ast.Call) -> bool:
+            if isinstance(call.func, ast.Attribute) and call.args == []:
+                if call.func.attr in {"keys", "values", "items"}:
+                    return True
+            return False
+
+        value = node.value
+        if isinstance(value, ast.Call) and is_dict_view(value):
+            self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                        f"{self.filename}: Indexing a dict view; dict order reliance detected.")
+        self.generic_visit(node)
+
+    def visit_Call(self, node: ast.Call) -> None:
+        # next(iter(d))
+        if isinstance(node.func, ast.Name) and node.func.id == "next" and node.args:
+            arg = node.args[0]
+            if isinstance(arg, ast.Call) and isinstance(arg.func, ast.Name) and arg.func.id == "iter":
+                self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                            f"{self.filename}: Using next(iter(dict)) relies on insertion order; avoid.")
+        self.generic_visit(node)
+
+
+# -------------------- Concurrency/Async: blocking calls in async --------------------
+class BlockingCallInAsyncRule(Rule):
+    CATEGORY = "Concurrency"
+    PRIORITY = "MEDIUM"
+    IMPACT = "Blocking calls inside async functions block the event loop."
+
+    BLOCKING = {("time", "sleep"), ("subprocess", "run"), ("subprocess", "call"), ("requests", "get"),
+                ("requests", "post"), ("requests", "put"), ("requests", "delete")}
+
+    def visit_AsyncFunctionDef(self, node: ast.AsyncFunctionDef) -> None:
+        for inner in ast.walk(node):
+            if isinstance(inner, ast.Call):
+                # time.sleep, subprocess.run/call, requests.*
+                if isinstance(inner.func, ast.Attribute) and isinstance(inner.func.value, ast.Name):
+                    pair = (inner.func.value.id, inner.func.attr)
+                    if pair in self.BLOCKING or (pair[0] == "requests"):
+                        self.report(self.CATEGORY, self.PRIORITY, inner.lineno, self.IMPACT,
+                                    f"{self.filename}: Blocking '{pair[0]}.{pair[1]}' inside async function '{node.name}'.")
+        self.generic_visit(node)
+
+
+# -------------------- Performance/Maintainability: string += in loop --------------------
+class InefficientStringConcatInLoopRule(Rule):
+    CATEGORY = "Style/Maintainability"
+    PRIORITY = "LOW"
+    IMPACT = "String '+=' in loops is quadratic; use join() or io.StringIO."
+
+    def visit_For(self, node: ast.For) -> None:
+        for inner in ast.walk(node):
+            if isinstance(inner, ast.AugAssign) and isinstance(inner.op, ast.Add):
+                if isinstance(inner.target, ast.Name) and isinstance(inner.value, (ast.Name, ast.Constant, ast.JoinedStr)):
+                    self.report(self.CATEGORY, self.PRIORITY, inner.lineno, self.IMPACT,
+                                f"{self.filename}: String '+=' detected in loop; prefer ''.join() or io.StringIO.")
+        self.generic_visit(node)
+
+
+# -------------------- Error handling: losing traceback with 'raise e' --------------------
+class ReraiseLosesTracebackRule(Rule):
+    CATEGORY = "Error Handling"
+    PRIORITY = "MEDIUM"
+    IMPACT = "Re-raising with variable loses original traceback; use bare 'raise'."
+
+    def visit_Raise(self, node: ast.Raise) -> None:
+        # inside except: 'raise e' instead of bare 'raise'
+        if node.exc and isinstance(node.exc, ast.Name):
+            # find if we are syntactically under an ExceptHandler
+            parent = self.parent_map.get(node) if hasattr(self, "parent_map") else None
+            # Some implementations track parent_map; if you don't have one,
+            # a simple flag pushed in visit_ExceptHandler can be used.
+            self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                        f"{self.filename}: Re-raise with variable loses traceback; use 'raise' inside except.")
+        self.generic_visit(node)
+
+
+# -------------------- Robustness: subprocess return code ignored --------------------
+class SubprocessReturnCodeRule(Rule):
+    CATEGORY = "Robustness"
+    PRIORITY = "LOW"
+    IMPACT = "Ignoring subprocess result can hide failures; use check=True or inspect returncode."
+
+    TARGETS = {("subprocess", "run"), ("subprocess", "call"), ("subprocess", "Popen")}
+
+    def visit_Call(self, node: ast.Call) -> None:
+        if isinstance(node.func, ast.Attribute) and isinstance(node.func.value, ast.Name):
+            pair = (node.func.value.id, node.func.attr)
+            if pair in self.TARGETS:
+                # If run(..., check=True) is present -> OK
+                if any(kw.arg == "check" and isinstance(kw.value, ast.Constant) and kw.value.value is True
+                       for kw in (node.keywords or [])):
+                    return
+                # Otherwise, warn (heuristic)
+                self.report(self.CATEGORY, self.PRIORITY, node.lineno, self.IMPACT,
+                            f"{self.filename}: subprocess.{pair[1]}(...) without check=True; ensure failures are handled.")
+        self.generic_visit(node)
 
 ALL_RULES: List[Rule] = [
     BareOrBroadExcept(),
@@ -1338,6 +1558,17 @@ ALL_RULES: List[Rule] = [
     CircularImportRule(),
     OpenEncodingRule(),
     ThreadSafetyRule(),
+    WeakHashRule(),
+    HardcodedSecretRule(),
+    InsecureHTTPRule(),
+    TempFileSecurityRule(),
+    RandomForCryptoRule(),
+    JSONOrderRelianceRule(),
+    DictOrderRelianceRule(),
+    SubprocessReturnCodeRule(),
+    BlockingCallInAsyncRule(),
+    InefficientStringConcatInLoopRule(),
+    ReraiseLosesTracebackRule(),
 
 ]
 
