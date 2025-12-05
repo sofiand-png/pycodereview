@@ -54,15 +54,15 @@ CRSS-Python introduces architecture, rules, and governance to control risks and 
 
 ## 3. Does CRSS-Python certify Python applications for ASIL-D / SIL3?
 CRSS-Python enables Python to be used in:
-✅ ASIL-D supervisory roles
-✅ SIL3 supervisory/control roles
-✅ IEC 62304 Class C (multi-layer systems)
-✅ DO-278 ground systems
+- ASIL-D supervisory roles
+- SIL3 supervisory/control roles
+- IEC 62304 Class C (multi-layer systems)
+- DO-278 ground systems
 
 However, it **does not certify** Python for:
-❌ Primary actuation loops (e.g., braking, flight control)
-❌ Single-channel safety enforcement
-❌ Hard real-time DAL A avionics
+- [NOT ALLOWED] Primary actuation loops (e.g., braking, flight control)
+- [NOT ALLOWED] Single-channel safety enforcement
+- [NOT ALLOWED] Hard real-time DAL A avionics
 
 Python must operate as part of a **multilayer safety architecture**.
 
@@ -96,49 +96,49 @@ Critical code **may not call non-critical code**.
 
 ## 6. What is `@non_critical_phase`?
 It marks pre/post-critical functions where:
-✅ Initialization
-✅ Object creation
-✅ File I/O
-✅ Configuration
+- Initialization
+- Object creation
+- File I/O
+- Configuration
 
 are allowed **before** critical execution begins.
 
 However:
-❌ Strict-A rules still apply
-❌ MUST violations remain blocking
-❌ Critical code cannot call non-critical code
+- [NOT ALLOWED] Strict-A rules still apply
+- [NOT ALLOWED] MUST violations remain blocking
+- [NOT ALLOWED] Critical code cannot call non-critical code
 
 ---
 
 ## 7. Can we use multiple Python versions in a project?
-❌ No.
+- [NOT ALLOWED] No.
 
 The standard covers Python **3.9–3.12**, but each project MUST:
-✅ Select exactly one version
-✅ Freeze it in the CBM
-✅ Never change it after approval
+- Select exactly one version
+- Freeze it in the CBM
+- Never change it after approval
 
 Switching versions = new baseline + new certification.
 
 ---
 
 ## 8. Does CRSS-Python allow hotfixes?
-❌ No hotfixes.
-❌ No patch-in-production.
-❌ No runtime edits.
+- [NOT ALLOWED] No hotfixes.
+- [NOT ALLOWED] No patch-in-production.
+- [NOT ALLOWED] No runtime edits.
 
-Any change → new:
-✅ CBM
-✅ Release
-✅ Compliance cycle
+Any change -> new:
+- CBM
+- Release
+- Compliance cycle
 
 This ensures reproducibility and safety traceability.
 
 ---
 
 ## 9. Is automated deployment allowed?
-✅ In TEST environment
-❌ Never in PROD
+- In TEST environment
+- [NOT ALLOWED] Never in PROD
 
 Prod deployments must be:
 - Manual approval
@@ -148,27 +148,27 @@ Prod deployments must be:
 ---
 
 ## 10. Can Python install dependencies at runtime?
-❌ Absolutely not.
+- [NOT ALLOWED] Absolutely not.
 Runtime installation (pip, apt, conda, etc.) is prohibited.
 
 Dependencies must be:
-✅ Frozen
-✅ Private repository
-✅ Version-locked
+- Frozen
+- Private repository
+- Version-locked
 
 ---
 
 ## 11. Can CRSS-Python software use threads?
-In Strict-A `@critical`: ❌ No
+In Strict-A `@critical`: [NOT ALLOWED] No
 In Strict: ⚠ Allowed with restrictions
-In Core: ✅ Allowed
+In Core: [OK] Allowed
 
 Strict-A requires single-threaded critical execution to guarantee determinism.
 
 ---
 
 ## 12. Can we build microservices under CRSS-Python?
-✅ Yes, with:
+- Yes, with:
 - Process isolation
 - Stable APIs
 - Network timeout rules
@@ -188,14 +188,14 @@ Severity levels:
 
 ## 14. How do we know if a project is compliant?
 A project is compliant only if:
-✅ Compliance phases completed
-✅ SCEM complete
-✅ CRC approved
-✅ CBM frozen
-✅ Toolchain fixed
+- Compliance phases completed
+- SCEM complete
+- CRC approved
+- CBM frozen
+- Toolchain fixed
 
 Compliance is **binary**:
-✅ PASS or ❌ FAIL
+- PASS or [NOT ALLOWED] FAIL
 
 ---
 
@@ -209,13 +209,13 @@ Yes, but extensions must:
 ---
 
 ## 16. Can CRSS-Python be used for Machine Learning systems?
-✅ Yes for:
+- Yes for:
 - Supervisory logic
 - Safety wrappers
 - Monitoring pipelines
 - Data validation
 
-❌ Not for:
+- [NOT ALLOWED] Not for:
 - Real-time inference controlling primary actuators
 
 ML models must be treated as untrusted components.
@@ -223,7 +223,7 @@ ML models must be treated as untrusted components.
 ---
 
 ## 17. Does CRSS-Python replace ISO 26262 / IEC 61508?
-❌ No.
+- [NOT ALLOWED] No.
 
 It is a **coding and software governance standard**, not a full system-level safety standard. It must operate **under** the applicable domain standard.
 

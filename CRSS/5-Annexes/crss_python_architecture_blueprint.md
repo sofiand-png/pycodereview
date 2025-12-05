@@ -418,10 +418,10 @@ You can adapt this architecture for:
 
 Guiding rules:
 
-✅ Keep the critical core small & isolated
-✅ Push all I/O and complexity to non-critical layers
-✅ Enforce immutable deploys with CBM
-✅ Use Modes rigorously in MAR
+- Keep the critical core small & isolated
+- Push all I/O and complexity to non-critical layers
+- Enforce immutable deploys with CBM
+- Use Modes rigorously in MAR
 
 ---
 
@@ -435,10 +435,10 @@ This blueprint shows:
 
 It is an example — not a limit. You can extend it, but you should always preserve:
 
-✅ Simplicity
-✅ Determinism
-✅ Isolation
-✅ Traceability
+- Simplicity
+- Determinism
+- Isolation
+- Traceability
 
 Those four pillars are the heart of CRSS-Python.
 

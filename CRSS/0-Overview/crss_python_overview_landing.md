@@ -55,10 +55,10 @@ CRSS-Python is a **safety and compliance framework** that makes Python suitable 
 
 It provides:
 
-✅ Strict rules  
-✅ Structured processes  
-✅ Deterministic execution models  
-✅ Certification-ready evidence  
+- Strict rules  
+- Structured processes  
+- Deterministic execution models  
+- Certification-ready evidence  
 
 CRSS-Python does **not** turn Python into a real-time actuator controller. Instead, it allows Python to be used **safely and confidently** in supervisory and decision-support components.
 
@@ -77,11 +77,11 @@ Python is popular—but normally considered too dynamic and unpredictable.
 
 CRSS-Python changes that by:
 
-✅ Removing unsafe behaviors  
-✅ Enforcing strict development rules  
-✅ Requiring full traceability  
-✅ Making deployments reproducible  
-✅ Enabling certification paths  
+- Removing unsafe behaviors  
+- Enforcing strict development rules  
+- Requiring full traceability  
+- Making deployments reproducible  
+- Enabling certification paths  
 
 ---
 
@@ -138,10 +138,10 @@ Examples:
 
 The Mode determines:
 
-✅ Rule requirements  
-✅ Violation severity  
-✅ Testing obligations  
-✅ Deployment eligibility  
+- Rule requirements  
+- Violation severity  
+- Testing obligations  
+- Deployment eligibility  
 
 Strict-A = **zero tolerance** in critical code.
 
@@ -151,7 +151,7 @@ Strict-A = **zero tolerance** in critical code.
 
 CRSS-Python distinguishes:
 
-#### 🔴 `@critical`
+#### [FAIL] `@critical`
 
 Where safety decisions happen — must be:
 
@@ -161,7 +161,7 @@ Where safety decisions happen — must be:
 - Fully tested
 - Zero violation in Strict-A
 
-#### 🟢 `@non_critical_phase`
+#### [PASS] `@non_critical_phase`
 
 Used for:
 
@@ -189,8 +189,8 @@ Compliance follows a **5-phase process**:
 
 Compliance is **binary**:
 
-✅ PASS  
-❌ FAIL  
+- PASS  
+- [NOT ALLOWED] FAIL  
 
 There is no “partial compliance.”
 
@@ -226,7 +226,7 @@ Recommended steps:
 4. Move to Strict profile  
 
 **Target maturity path:**  
-Core → Strict → Strict-B → Strict-A (if needed)
+Core -> Strict -> Strict-B -> Strict-A (if needed)
 
 ---
 
@@ -250,7 +250,7 @@ Recommended steps:
 4. Add deterministic interfaces  
 
 **Target maturity path:**  
-Core-B → Strict-B → Strict-A (selected modules)
+Core-B -> Strict-B -> Strict-A (selected modules)
 
 ---
 
@@ -260,11 +260,11 @@ Core-B → Strict-B → Strict-A (selected modules)
 
 Required actions:
 
-✅ Convert deployments to immutable  
-✅ Create CBM  
-✅ Enforce zero-drift policy  
-✅ Establish SCEM  
-✅ Begin compliance cycle  
+- Convert deployments to immutable  
+- Create CBM  
+- Enforce zero-drift policy  
+- Establish SCEM  
+- Begin compliance cycle  
 
 **Refactoring priority:**
 
@@ -274,7 +274,7 @@ Required actions:
 4. Strengthen monitoring and watchdogs  
 
 **Target maturity path:**  
-Strict-B → Strict-A
+Strict-B -> Strict-A
 
 ---
 
@@ -282,13 +282,13 @@ Strict-B → Strict-A
 
 Regardless of project stage:
 
-✅ Use process isolation  
-✅ Avoid shared state  
-✅ Keep critical logic small and simple  
-✅ Use message-based communication  
-✅ Pre-allocate resources before critical execution  
-✅ Avoid circular dependencies  
-✅ One layer in → one layer out (clear boundaries)
+- Use process isolation  
+- Avoid shared state  
+- Keep critical logic small and simple  
+- Use message-based communication  
+- Pre-allocate resources before critical execution  
+- Avoid circular dependencies  
+- One layer in -> one layer out (clear boundaries)
 
 ---
 
@@ -339,10 +339,10 @@ You do **not** need to understand everything at once.
 
 Start small:
 
-✅ Choose a Mode  
-✅ Mark critical code  
-✅ Follow rules  
-✅ Build evidence  
+- Choose a Mode  
+- Mark critical code  
+- Follow rules  
+- Build evidence  
 
 You can grow into Strict-A maturity step by step.
 

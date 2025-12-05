@@ -48,9 +48,9 @@ The **CRSS-Python External Assessment Protocol (EAP)** defines how independent a
 
 This version (v1.1.0) introduces:
 
-✅ Explicit inclusion of the **Rule Compliance Report (RCR)** as a mandatory input
-✅ Definitions for all referenced terms not previously defined
-✅ Formal linkage: **RCR → Compliance Certificate → Release Certificate → EAP decision**
+- Explicit inclusion of the **Rule Compliance Report (RCR)** as a mandatory input
+- Definitions for all referenced terms not previously defined
+- Formal linkage: **RCR -> Compliance Certificate -> Release Certificate -> EAP decision**
 
 EAP is mandatory for all projects claiming **CRSS-Strict Level A** and recommended for all CRSS-Strict deployments.
 
@@ -312,8 +312,8 @@ NC rules are unchanged:
 
 For Strict Level A:
 
-- Any NC affecting MUST rules → BLOCKER
-- Any NC-1 or higher → BLOCKER
+- Any NC affecting MUST rules -> BLOCKER
+- Any NC-1 or higher -> BLOCKER
 
 ---
 
@@ -330,13 +330,13 @@ Certification SHALL be revoked if:
 
 ## 6. Summary of v1.1 Enhancements
 
-✅ RCR added as a mandatory input
-✅ RCR verification added to Stage 2 & Stage 3
-✅ All undefined terms formally defined
-✅ End-to-end traceability clarified
+- RCR added as a mandatory input
+- RCR verification added to Stage 2 & Stage 3
+- All undefined terms formally defined
+- End-to-end traceability clarified
 
 This closes the compliance loop:
 
-**RCR → CC → RC → EAP → AR**
+**RCR -> CC -> RC -> EAP -> AR**
 
 CRSS-Python is now a fully self-contained, auditable certification framework.

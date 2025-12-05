@@ -192,8 +192,8 @@ These annotations are Phase labels within a Mode.
 
 Once a Mode is established for a baseline:
 
-- It cannot be downgraded (e.g. Strict-A → Strict-B).
-- It can be promoted (e.g. Strict-B → Strict-A) if safety analysis changes.
+- It cannot be downgraded (e.g. Strict-A -> Strict-B).
+- It can be promoted (e.g. Strict-B -> Strict-A) if safety analysis changes.
 
 Any change in Mode requires:
 
@@ -330,7 +330,7 @@ Non-critical does **not** mean “non-regulated”; it means “not subject to t
 
 ### 4.2 Golden Interaction Rule
 
-🚫 **Critical code may never call non-critical code.**
+ **Critical code may never call non-critical code.**
 
 Once execution has entered a `@critical` function/region:
 
@@ -368,12 +368,12 @@ Non-critical code may perform operations that are forbidden in critical code:
 - Blocking operations (within limits)
 
 **Rule relaxation:**
-❌ Does **not** occur. Global profile rules still apply everywhere.
+- [NOT ALLOWED] Does **not** occur. Global profile rules still apply everywhere.
 
 In other words:
 
-✅ Non-critical code has more operational freedom
-❌ But no lower enforcement for MUST/MUST-NOT rules.
+- Non-critical code has more operational freedom
+- [NOT ALLOWED] But no lower enforcement for MUST/MUST-NOT rules.
 
 ---
 
@@ -495,7 +495,7 @@ Within `@critical`:
 
 In `@non_critical_phase` (Strict & Strict-A):
 
-✅ Allowed:
+- Allowed:
 
 - Object creation & memory allocation
 - Configuration loading (e.g., JSON, YAML)
@@ -532,10 +532,10 @@ Any data used in `@critical` must:
 
 | Importer Profile | Imported Profile | Allowed?                  |
 |------------------|------------------|---------------------------|
-| Core             | Core             | ✅                         |
-| Core             | Strict           | ❌                         |
-| Strict           | Core             | ✅ (subject to Mode)      |
-| Strict           | Strict           | ✅                         |
+| Core             | Core             | [OK]                         |
+| Core             | Strict           | [NOT ALLOWED]                         |
+| Strict           | Core             | [OK] (subject to Mode)      |
+| Strict           | Strict           | [OK]                         |
 
 ### 9.2 Mode-Specific Restrictions
 
@@ -741,11 +741,11 @@ A safety-supervisory component:
 
 ### 14.3 Modes
 
-- `ConfigLoader.load` → Mode: Strict-B, non-critical
-- `Sensor.read_raw` → Mode: Strict-B, non-critical
-- `SafetyController.initialize` → Mode: Strict-A, `@non_critical_phase`
-- `SafetyController.control_loop` → Mode: Strict-A, `@critical`
-- `Logger.log` → Mode: Core-C, non-critical utility
+- `ConfigLoader.load` -> Mode: Strict-B, non-critical
+- `Sensor.read_raw` -> Mode: Strict-B, non-critical
+- `SafetyController.initialize` -> Mode: Strict-A, `@non_critical_phase`
+- `SafetyController.control_loop` -> Mode: Strict-A, `@critical`
+- `Logger.log` -> Mode: Core-C, non-critical utility
 
 ### 14.4 Python Example
 
@@ -871,7 +871,7 @@ Mode = **Strict-A**, Phase = `@critical`
 
 - Mode = **Strict-A**, Phase = `@non_critical_phase`
 - May allocate & perform I/O
-- Any MUST violation → **BLOCKER** unless deviation with isolation is fully justified.
+- Any MUST violation -> **BLOCKER** unless deviation with isolation is fully justified.
 
 **read_sensor_raw** and **load_config**:
 

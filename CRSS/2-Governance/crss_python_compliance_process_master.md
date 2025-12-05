@@ -248,10 +248,10 @@ Includes official release certification.
 Contains rule ID, justification, approver, evidence.
 
 ## MAR — Mode Assignment Register
-Defines unit → level → profile → phase.
+Defines unit -> level -> profile -> phase.
 
 ## SCEM — Evidence Matrix
-Maps Requirements → Rules → Tests → Evidence.
+Maps Requirements -> Rules -> Tests -> Evidence.
 
 ---
 
@@ -297,8 +297,8 @@ Re-approval required for:
 - behavior change affecting safety
 
 Severity:
-- **Minor** → TEP only
-- **Major** → full cycle
+- **Minor** -> TEP only
+- **Major** -> full cycle
 
 ---
 
@@ -407,4 +407,4 @@ Auditors verify:
 ---
 
 # Compliance Flow
-**Design → Rule → Test → Baseline → SBR → CC → Release**
+**Design -> Rule -> Test -> Baseline -> SBR -> CC -> Release**

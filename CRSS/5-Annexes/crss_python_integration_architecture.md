@@ -81,14 +81,14 @@ As JSON to Python.
 ## 5. Allowed/Forbidden Operations
 | Operation | Strict-A | Core-B | Core-C |
 |-----------|----------|--------|--------|
-| TCP I/O | ❌ | ❌ | ✔ |
-| File I/O | ❌ | ❌ | ✔ |
-| Logging | ❌ | ❌ | ✔ |
-| Dynamic memory | ❌ | Partial | ✔ |
-| Floating-point math | ✔ | ✔ | ✔ |
-| External libraries | ❌ | Conditional | ✔ |
-| Threads | ❌ | ❌ | ✔ |
-| GC | ❌ | ❌ | ✔ |
+| TCP I/O | NO | NO | YES |
+| File I/O | NO | NO | YES |
+| Logging | NO | NO | YES |
+| Dynamic memory | NO | Partial | YES |
+| Floating-point math | YES | YES | YES |
+| External libraries | NO | Conditional | YES |
+| Threads | NO | NO | YES |
+| GC | NO | NO | YES |
 
 ## 6. Safety Timing Model
 A CRSS module must publish:

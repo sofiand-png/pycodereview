@@ -66,9 +66,9 @@ A CRSS rule of type:
 
 is *non-deviable*, meaning:
 
-- ❌ No waiver
-- ❌ No justification
-- ❌ No conditional allowance
+- No waiver
+- No justification
+- No conditional allowance
 
 A violation of a MUST/MUST-NOT rule is **always non-compliant**.
 
@@ -78,9 +78,9 @@ A violation of a MUST/MUST-NOT rule is **always non-compliant**.
 
 Inside **Strict-Level-A + @critical phase**:
 
-- ❌ No deviations permitted
-- ❌ No exceptions
-- ❌ No compensating measures
+- No deviations permitted
+- No exceptions
+- No compensating measures
 
 Strict-A critical code is a **zero-tolerance** zone.
 
@@ -242,9 +242,9 @@ Example rows:
 
 | Rule ID | Core A/B/C | Strict-A | Strict B/C | Phase | Allowed? | Deviation Type | Approval |
 |---------|-------------|----------|------------|--------|----------|----------------|----------|
-| CRSS-7.8.3 | YES | NO | CD | Critical | ❌ | — | — |
-| CRSS-5.4.9 | YES | NO | YES | Non-Critical | ✔️ | CD | TL + SA |
-| CRSS-6.4.4 | YES | ED | ED | Any | ✔️ | ED | ISA |
+| CRSS-7.8.3 | YES | NO | CD | Critical | | — | — |
+| CRSS-5.4.9 | YES | NO | YES | Non-Critical | Yes | CD | TL + SA |
+| CRSS-6.4.4 | YES | ED | ED | Any | Yes | ED | ISA |
 
 ---
 
@@ -266,10 +266,10 @@ Deviations MUST specify:
 
 | Mode | Deviation Allowed? |
 |-------|---------------------|
-| Core (A/B/C) | ✔️ SHOULD rules only |
-| Strict B/C | ✔️ SHOULD rules only |
-| Strict-A Non-Critical | ✔️ SHOULD rules only (CD/ED required) |
-| Strict-A Critical | ❌ NEVER |
+| Core (A/B/C) | SHOULD rules only |
+| Strict B/C | SHOULD rules only |
+| Strict-A Non-Critical | SHOULD rules only (CD/ED required) |
+| Strict-A Critical | NEVER |
 
 ---
 

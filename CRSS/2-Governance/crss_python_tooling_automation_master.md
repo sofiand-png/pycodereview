@@ -49,9 +49,9 @@ This master specification consolidates and replaces three prior documents:
 3. **Toolchain Confidence Assessment (TCA) Requirements**
 
 It is fully aligned with:
-✅ CRSS Unified Safety Specification v3.0.0
-✅ Compliance Master v3.0.1
-✅ SCEM Master v3.0.0
+- CRSS Unified Safety Specification v3.0.0
+- Compliance Master v3.0.1
+- SCEM Master v3.0.0
 
 This document defines:
 - Tooling requirements
@@ -162,10 +162,10 @@ Automation MUST generate:
 ## 4.2 File Format Requirements
 
 All automated outputs must be:
-✅ Deterministic
-✅ Machine-parsable
-✅ Immutable after baseline
-✅ Version-tagged
+- Deterministic
+- Machine-parsable
+- Immutable after baseline
+- Version-tagged
 
 Recommended formats:
 - YAML
@@ -179,15 +179,15 @@ Recommended formats:
 ## 5.1 One-Version Rule
 
 All tools used in certification:
-✅ Must be version-fixed
-✅ Must be captured in CBM
-✅ Must not auto-update
+- Must be version-fixed
+- Must be captured in CBM
+- Must not auto-update
 
 ## 5.2 Toolchain Drift = Automatic FAIL
 
 If any tool changes version after CBM:
-❌ All automated evidence is invalid
-❌ Certification must restart
+- [NOT ALLOWED] All automated evidence is invalid
+- [NOT ALLOWED] Certification must restart
 
 ---
 
@@ -237,17 +237,17 @@ CRSS does not define a full ISO 26262 Tool Confidence Level (TCL) process, but p
 ## 7.1 Automated Evidence Acceptance
 
 Accepted only if:
-✅ TCL level is sufficient
-✅ Output matches CBM tool version
-✅ Data is complete and valid
-✅ No missing artifacts
+- TCL level is sufficient
+- Output matches CBM tool version
+- Data is complete and valid
+- No missing artifacts
 
 ## 7.2 Automatic Rejection Conditions
 
-❌ Output generated after tool version drift
-❌ Missing data fields
-❌ Non-deterministic results
-❌ Unsupported output formats
+- [NOT ALLOWED] Output generated after tool version drift
+- [NOT ALLOWED] Missing data fields
+- [NOT ALLOWED] Non-deterministic results
+- [NOT ALLOWED] Unsupported output formats
 
 ### 7.3 Tool Confidence Categories
 
@@ -290,11 +290,11 @@ Projects using a tool as Q2 MUST describe the tool confidence argument in SCEM (
 
 This master specification:
 
-✅ Centralizes all tooling and automation policy
-✅ Defines confidence and acceptance levels
-✅ Supports Strict-A certification workflows
-✅ Ensures deterministic, auditable evidence
-✅ Enforces one-version-per-toolchain policy
+- Centralizes all tooling and automation policy
+- Defines confidence and acceptance levels
+- Supports Strict-A certification workflows
+- Ensures deterministic, auditable evidence
+- Enforces one-version-per-toolchain policy
 
 This is the mandatory reference for all CRSS-Python automation systems.
 
