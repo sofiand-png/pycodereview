@@ -1,5 +1,19 @@
 
-"""Strict-A SafetyController (@critical)."""
+"""Strict-A SafetyController (@critical).
+
+Requirements:
+SV-FUNC-01 — Three-sensor input per cycle
+
+SV-FUNC-02 — TMR voting (via voting)
+
+SV-FUNC-03 — Stateless per-cycle + previous output only
+
+SV-SAF-01..03 — via envelope
+
+SV-FLT-01..04 — combined behavior
+
+SV-TEST-03 — Fault injection coverage target
+"""
 
 
 from typing import List

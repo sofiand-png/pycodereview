@@ -1,5 +1,16 @@
+"""Strict-A safety envelope (@critical)
 
-"""Strict-A safety envelope (@critical)."""
+Requirements:
+SV-SAF-01 — Envelope clamp
+
+SV-SAF-02 — Rate limiting
+
+SV-SAF-03 — SAFE_DEFAULT application
+
+SV-SAF-04 — Deterministic Strict-A
+
+SV-FLT-02 — Severe disagreement - FAILSAFE
+"""
 
 
 from crss_example_sensor_voting.crss_phase.markers import critical_phase
@@ -9,6 +20,8 @@ from crss_example_sensor_voting.config.model import SafetyConfig
 @critical_phase
 def apply_safety_envelope(voted_value: float, previous_value: float, cfg: SafetyConfig) -> float:
     """Apply the safety envelope to the voted value.
+    Requirements:
+        SV-SAF-01, SV-SAF-02, SV-SAF-03, SV-FLT-02
 
     Steps (deterministic):
 

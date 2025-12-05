@@ -1,5 +1,13 @@
 
-"""Strict-A voting logic (@critical)."""
+"""Strict-A voting logic (@critical).
+
+Requirements:
+SV-FUNC-02 — TMR voting
+
+SV-FLT-01 — Single-sensor fault tolerance
+
+SV-FLT-02 — Severe disagreement detection
+"""
 
 
 from typing import List, Tuple

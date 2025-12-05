@@ -1,5 +1,13 @@
 
-"""TCP JSON server that simulates cooling temperature sensors."""
+"""TCP JSON server that simulates cooling temperature sensors.
+
+Requirements:
+SV-INT-01 — SensorFrame producer
+
+SV-FLT-01..04 — via injected fault scenarios
+
+SV-TEST-03 — basis for FI tests
+"""
 
 
 from __future__ import annotations

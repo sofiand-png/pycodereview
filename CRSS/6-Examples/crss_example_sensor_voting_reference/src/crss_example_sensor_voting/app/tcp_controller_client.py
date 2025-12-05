@@ -1,5 +1,9 @@
 
-"""TCP JSON client that runs the Strict-A controller."""
+"""TCP JSON client that runs the Strict-A controller.
+
+Requirements: 
+SV-INT-01..03
+"""
 
 
 from __future__ import annotations
