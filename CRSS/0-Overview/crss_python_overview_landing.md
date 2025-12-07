@@ -125,25 +125,42 @@ Level A demands the strongest safety controls.
 
 ---
 
-### 1.6 Modes: The Enforcement Engine
+# 16. Modes: The Enforcement Engine
 
 A **Mode** = Profile × Safety Level.
 
-Examples:
+Valid examples:
 
 - Core-C
-- Core-A
+- Core-B
+- Strict-C
 - Strict-B
 - **Strict-A** (maximum rigor)
 
+> **Important Note:** “Core-A” is **not permitted**.  
+> Any Safety Level A element must use the **Strict** profile (Mode = Strict-A).
+
 The Mode determines:
 
-- Rule requirements  
-- Violation severity  
-- Testing obligations  
-- Deployment eligibility  
+- Which rule catalog applies (Core vs Strict)  
+- How violations are treated (warning, error, or blocker)  
+- How much evidence is required (coverage, MC/DC, SCEM, CBM, CRC)  
+- Deployment and certification eligibility
 
-Strict-A = **zero tolerance** in critical code.
+In particular:
+
+- **Strict-A** uses the **Strict** profile at **Level A**, with:
+  - zero-tolerance for rule violations in critical code,
+  - mandatory SCEM/CBM/CRC evidence,
+  - full coverage and MC/DC on safety-critical logic.
+
+- **Strict-B / Strict-C** use the **same Strict rules**, but:
+  - may allow a very small number of justified SHOULD violations,
+  - can have lower coverage targets than Strict-A,
+  - require proportionally lighter evidence packages.
+
+Strict-A = **maximum assurance**, not a different programming language.
+
 
 ---
 
@@ -151,7 +168,7 @@ Strict-A = **zero tolerance** in critical code.
 
 CRSS-Python distinguishes:
 
-#### [FAIL] `@critical`
+#### Properties `@critical`
 
 Where safety decisions happen — must be:
 
@@ -161,7 +178,7 @@ Where safety decisions happen — must be:
 - Fully tested
 - Zero violation in Strict-A
 
-#### [PASS] `@non_critical_phase`
+#### Properties `@non_critical_phase`
 
 Used for:
 

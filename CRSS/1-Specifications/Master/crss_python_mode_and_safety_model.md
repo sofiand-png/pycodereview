@@ -54,6 +54,11 @@ This document defines the complete enforcement model of the **CRSS-Python Standa
 - Compliance Logic for Mixed Systems
 - Real-use architecture & example implementation
 
+CRSS distinguishes between:
+
+- a **Profile** — what language / coding / runtime rules apply (Core vs Strict)  
+- a **Safety Level** — how dangerous a failure would be (A/B/C)
+
 The goal is to provide **zero-ambiguity**, **machine-enforceable**, and **certifier-ready** rules for designing, connecting, and verifying Python components in safety-critical systems.
 
 ---
@@ -188,6 +193,8 @@ Mixing A/B/C levels is allowed but:
 
 ⚠ Strongly discouraged for Strict-A
 ⚠ Tools SHOULD warn
+⚠ Splitted into separate modules (.py files)
+
 
 ---
 

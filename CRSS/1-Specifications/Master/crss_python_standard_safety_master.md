@@ -18,6 +18,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [1.3 Mode = Profile × Safety Level](#13-mode-profile-×-safety-level)
     - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
     - [1.5 Immutability of Mode](#15-immutability-of-mode)
+	- [1.6 Granularity of Safety Levels and Modes] (#16-granularity-of-safety-levels-and-modes)
   - [2. Code Units and Boundaries](#2-code-units-and-boundaries)
     - [2.1 Canonical Code Unit](#21-canonical-code-unit)
     - [2.2 Class Promotion](#22-class-promotion)
@@ -137,6 +138,18 @@ A **Profile** defines which rule catalog applies to a codebase or component.
   `Strict: MUST/SHOULD/MUST-NOT/SHOULD-NOT/N/A`
 - A code unit (module/class/function) is analyzed under either **Core** or **Strict**.
 
+- **Strict profile**  
+  - Most restrictive rules  
+  - No dynamic features on critical path  
+  - Bounded loops and memory  
+  - GC and non-deterministic behavior excluded from critical execution  
+  - Intended for **safety-critical core logic**
+
+- **Core profile**  
+  - Still disciplined and deterministic where needed  
+  - Allows more Python features (e.g., more dynamic constructs)  
+  - Intended for **supporting or lower-safety elements**
+
 ### 1.2 Safety Levels
 
 **Safety Level** is a system-level classification for requirements and code units:
@@ -201,6 +214,129 @@ Any change in Mode requires:
 - Re-testing
 - Re-baselining
 - Re-certification
+
+### 1.6 TODO ADD SECTION HERE
+
+### 1.6 Granularity of Safety Levels and Modes
+
+CRSS distinguishes between:
+
+- **Documentation granularity**  
+  used for safety cases, traceability (SCEM, MAR, CBM, CRC)
+- **Enforcement granularity**  
+  used for applying coding rules and tool checks (Profiles & Modes)
+
+#### 1.6.1 Enforcement Granularity (Normative)
+
+**CRSS-Gran-1 (Normative)**  
+The primary enforcement unit for Profiles and Modes (Strict-A, Strict-B, Core-B, Core-C, …) is the **Python module** (`.py` file).  
+Each module SHALL be assigned exactly one Mode.
+
+**CRSS-Gran-2 (Normative)**  
+All classes and functions defined in a module SHALL be treated as having the module’s Mode unless explicitly factored into a different module.
+
+**CRSS-Gran-3 (Normative)**  
+If a class or module is used by multiple call sites with different Safety Levels, it SHALL be assigned the **highest** Safety Level among its callers and a compatible Mode.  
+If this is not acceptable, the functionality MUST be refactored into separate modules/classes.
+
+#### 1.6.2 Class-Level Mixing of Safety Levels
+
+**CRSS-Gran-4 (Normative)**  
+A single class SHALL NOT mix methods that are treated as different safety levels in a way that affects shared state or safety-relevant behavior.  
+If part of a class must behave as Safety Level A and another part as Level B/C, these responsibilities SHALL be split into separate classes and, if needed, separate modules.
+
+In practice:
+
+- A class involved in Level A logic is treated as **Level A / Strict-A** as a whole.  
+- Support code for Level B/C behavior SHOULD live in separate classes/modules assigned to lower Modes.
+
+#### 1.6.3 Documentation Granularity (Informative)
+
+For traceability purposes, teams MAY document Safety Levels and requirement links at finer granularity, e.g.:
+
+- per requirement ID
+- per function or method
+- per class
+
+This does not change the enforcement granularity: coding rules are always applied at least at **module** level according to the module’s Mode.
+
+#### 1.6.4 Mixed Systems and Flexibility
+
+CRSS explicitly supports **mixed systems** where:
+
+- some modules are **Strict-A** (e.g., safety envelope, controller)
+- some are **Strict-B** or **Core-B** (supporting safety-related logic)
+- some are **Core-C** (gateways, logging, UIs, simulation, analytics)
+
+The rule is:
+
+> Components MUST NOT downplay their safety level by using a more relaxed Mode.  
+> When in doubt, treat a shared module/class according to the **highest safety level** of its usages, or refactor it into separate components with clear boundaries.
+
+This allows flexible designs (multiple safety levels in one project) while keeping the enforcement model simple and auditable.
+
+#### 1.6.5 Assigning a Mode to a Component (How to Do It)
+
+To assign a mode to each component, CRSS recommends the following steps:
+
+1. **Determine Safety Level (A/B/C)**  
+   - Use system-level hazard analysis and risk assessment.  
+   - Ask: “If this component fails in the worst credible way, what is the safety impact?”
+
+2. **Check if the component is on the critical control path**  
+   - Does its failure directly influence a hazardous actuator command or safety decision?  
+   - If **yes** and level is **A** → it **must** be **Strict-A**.  
+   - If **yes** and level is **B** → **Strict-B** strongly recommended.  
+   - If **no** (supporting, monitoring), lower modes may be acceptable (Core-B/Core-C).
+
+3. **Choose the Profile**  
+   - If Safety Level == A → **Profile must be Strict** → Mode = **Strict-A**.  
+   - If Safety Level == B:  
+     - For logic that participates in safety decisions → **Strict-B**.  
+     - For support functions (logging, conversions, non-critical parts) → **Core-B** allowed.  
+   - If Safety Level == C:  
+     - Use **Core-C** by default.  
+     - Use **Strict-C** if you want extra discipline without changing safety classification.
+
+4. **Check for forbidden combinations**  
+   - If a design decision would create a **Core-A** element (Core profile + Safety Level A), that is **not allowed**.  
+   - Either:
+     - upgrade it to **Strict-A**, or  
+     - reclassify its safety impact to B/C and justify why it no longer has Level A consequences.
+
+5. **Document the Mode**  
+   - For each significant component, document:  
+     - Safety Level (A/B/C)  
+     - Profile (Core/Strict)  
+     - Resulting Mode (e.g., Strict-A, Core-B)  
+   - Reference this in the SCEM / MAR tables and in the architecture annex.
+
+6. **Apply a simple “max level wins” rule**
+	- If a module or class is used by multiple paths with different safety levels, it inherits the highest:
+     - Used in Level A and Level B → treat it as Level A, Strict-A.
+     - Used in Level B and Level C → treat it as Level B (Strict-B/Core-B).
+	If you don’t want that, split the functionality into two modules/classes.
+
+---
+
+#### 1.6.4 Example: Applying Modes to the Sensor Voting Reference (Informative)
+
+For the Sensor Voting & Safe Actuation reference example:
+
+- **Safety envelope & core controller logic**  
+  - Hazard impact: Level A  
+  - Mode: **Strict-A**
+
+- **Voting and deterministic preprocessing**  
+  - Safety impact: typically Level B (supports Level A decisions)  
+  - Mode: **Strict-B** (recommended) in the example
+
+- **JSON/TCP gateways, simulators, logging, monitoring**  
+  - Safety impact: Level C (or B if misbehavior could mislead operators)  
+  - Mode: **Core-C** (as implemented in the reference example)
+
+This mapping satisfies all CRSS-Mode rules above and **avoids the invalid “Core-A” combination**.
+
 
 ---
 
