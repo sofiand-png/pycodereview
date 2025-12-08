@@ -19,6 +19,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
     - [1.5 Immutability of Mode](#15-immutability-of-mode)
 	- [1.6 Granularity of Safety Levels and Modes] (#16-granularity-of-safety-levels-and-modes)
+	- [1.7 Profile Granularity Model] (#17-profile-granularity-model-core-vs-strict)
   - [2. Code Units and Boundaries](#2-code-units-and-boundaries)
     - [2.1 Canonical Code Unit](#21-canonical-code-unit)
     - [2.2 Class Promotion](#22-class-promotion)
@@ -40,7 +41,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [5.2 Type and Severity (MUST/SHOULD)](#52-type-and-severity-mustshould)
   - [6. Error and Violation Categorization](#6-error-and-violation-categorization)
     - [6.1 Severity Levels](#61-severity-levels)
-    - [6.2 Enforcement by Mode and Phase](#62-enforcement-by-mode-and-phase)
+    - [6.2 Enforcement Matrix](#62-enforcement-matrix)
   - [7. Critical-Phase Rules (CP)](#7-critical-phase-rules-cp)
     - [CP-1 — No Allocation in Critical](#cp-1-no-allocation-in-critical)
     - [CP-2 — No Blocking or External I/O](#cp-2-no-blocking-or-external-io)
@@ -80,8 +81,9 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - [main.py (Strict-B or Strict-A non-critical orchestrator)](#mainpy-strict-b-or-strict-a-non-critical-orchestrator)
     - [14.5 Compliance Interpretation](#145-compliance-interpretation)
   - [15. Third-Party Library and Framework Containment](#15-third-party-library-and-framework-containment)	
-  - [16. Machine-Readable Metadata (Optional Annex)](#16-machine-readable-metadata-optional-annex)
-  - [17. Summary](#17-summary)
+  - [16 Call Graph, Orchestrators, and Level-A Data Validation )](#16-call-graph-Orchestrators-and-level-A-data-validation)
+  - [17. Machine-Readable Metadata (Optional Annex)](#17-machine-readable-metadata-optional-annex)
+  - [18. Summary](#18-summary)
   
 
 ---
@@ -337,6 +339,103 @@ For the Sensor Voting & Safe Actuation reference example:
 
 This mapping satisfies all CRSS-Mode rules above and **avoids the invalid “Core-A” combination**.
 
+### 1.7 Profile Granularity Model (Core vs Strict)
+
+Profiles define the **enforcement strength of coding rules**.  
+Safety Levels define **how dangerous a failure would be**.
+
+This section defines **permitted granularity**, **mixing rules**, and **propagation constraints**
+for mixing Core and Strict code *inside modules, classes, and packages*.
+
+---
+
+#### 1.7.1 Granularity Levels Where Profiles May Be Applied
+
+Profiles MAY be applied at the following granularity:
+
+| Granularity Level | Core Allowed | Strict Allowed | Notes |
+|-------------------|--------------|----------------|-------|
+| **Package**       | YES            | YES              | Sets defaults for all modules unless overridden |
+| **Module**        | YES            | YES              | Most common boundary for profile assignment |
+| **Class**         | YES            | YES              | Allowed, but must respect mixing limits below |
+| **Function**      | YES            | YES              | Fine-grained control permitted with constraints |
+
+Profiles **MUST NOT** be mixed at the basic-block or statement level.
+
+---
+
+#### 1.7.2 Mixing Core and Strict Inside the Same Module
+
+Allowed **ONLY** if:
+
+- Each function is explicitly annotated with its profile (`# @profile: strict` or `# @profile: core`)
+- No function marked **Strict** may call:
+  - a **Core** function inside the same module, or  
+  - any transitive call path that reaches Core code.
+
+**CRSS-Profile-1 (Normative)**  
+If a module contains both Core and Strict functions, the following MUST hold:
+
+1. Cross-calls Strict → Core are **forbidden**.  
+2. Cross-calls Core → Strict are **allowed** (upgrading rules is always safe).  
+3. Strict functions must be proven **closed over Core influence** (imports, global state, exceptions, etc.).  
+4. Linting must report **BLOCKER** if a Strict function depends on Core code.
+
+This ensures downward safety migration cannot occur.
+
+---
+
+#### 1.7.3 Mixing Core and Strict Inside the Same Class
+
+**Allowed**, but with stricter constraints:
+
+- A Strict method MUST NOT:
+  - call a Core method of the same class  
+  - access attributes written by Core methods  
+  - access shared mutable state manipulated by Core code
+
+**CRSS-Profile-2 (Normative)**  
+Strict methods inside a mixed-profile class MUST operate on:
+
+- **immutable fields**, OR  
+- fields initialized solely by Strict code, OR  
+- validated inputs from Strict-B or Strict-A providers.
+
+If this cannot be guaranteed, the class MUST be split.
+
+---
+
+#### 1.7.4 Function-Level Granularity
+
+This is the **finest allowed level of granularity**.
+
+Function-level assignment is allowed when:
+
+- Violations, imports, and side effects are cleanly separated.
+- Strict functions do not use class-level or module-level mutable state written by Core.
+- Strict functions do not share global state with Core functions.
+
+If boundaries are unclear → escalate to class-level or module-level.
+
+---
+
+#### 1.7.5 How Profiles and Safety Levels Interact
+
+Profiles = enforcement intensity  
+Safety Levels = hazard severity
+
+They combine as:
+
+| Safety Level | Allowed Profiles | Notes |
+|--------------|------------------|-------|
+| **Level A**  | Strict only       | No Core logic in Level-A data path |
+| **Level B**  | Core or Strict    | Strict preferred for boundaries or safety checks |
+| **Level C**  | Core or Strict    | Minimal restrictions |
+
+**CRSS-Profile-3 (Normative)**  
+A function at Safety Level A **MUST** be Strict profile.  
+A function at Safety Level B or C **MAY** be Core.
+
 
 ---
 
@@ -556,34 +655,47 @@ Apply only within `@critical`:
 
 ## 6. Error and Violation Categorization
 
-### 6.1 Severity Levels
+This section aligns analyzer severities with the updated Profile and Safety-Level model.
 
-We define the following analyzer-level severities:
+---
 
-- **INFO** – informational, non-actionable
-- **WARN** – recommendation violated (SHOULD/SHOULD-NOT)
-- **ERROR** – MUST/MUST-NOT violation under Core/Strict
-- **BLOCKER** – MUST/MUST-NOT violation under Strict-A in critical context
+## 6.1 Severity Levels
 
-### 6.2 Enforcement by Mode and Phase
+- **INFO**  
+  Non-actionable, stylistic, or informational messages.
 
-| Mode / Phase             | MUST/MUST-NOT Violation        | SHOULD/SHOULD-NOT Violation                       |
-|--------------------------|---------------------------------|---------------------------------------------------|
-| Core (any phase)         | ERROR                           | WARN (no fixed threshold, but monitored)          |
-| Strict (any phase)       | ERROR                           | WARN (cumulative ≤ 10% allowed, with justification) |
-| Strict-A — Critical      | BLOCKER                         | BLOCKER (treated as MUST)                         |
-| Strict-A — Non-Critical  | BLOCKER (with deviation process) | WARN/ERROR per Strict rules                      |
+- **WARN**  
+  SHOULD/SHOULD-NOT violations.  
+  Indicates reduced robustness but not unsafe behavior.
+
+- **ERROR**  
+  MUST/MUST-NOT violation for Core or Strict in **non-critical phase**.
+
+- **BLOCKER**  
+  MUST/MUST-NOT violation in:
+  - **Strict-A critical phase**, OR
+  - any context where a violation directly impacts Safety Level A.
+
+---
+
+## 6.2 Enforcement Matrix
+
+| Mode / Phase             | MUST/MUST-NOT Violation        | SHOULD/SHOULD-NOT Violation          |
+|--------------------------|---------------------------------|--------------------------------------|
+| **Core (any phase)**     | ERROR                           | WARN                                 |
+| **Strict (any phase)**   | ERROR                           | WARN (≤10% cumulative, explainable)  |
+| **Strict-A — Critical**  | **BLOCKER**                     | **BLOCKER** (treated as MUST)        |
+| **Strict-A — Non-Crit.** | BLOCKER (with deviation process) | WARN/ERROR per Strict rules          |
 
 **Interpretation for Strict-A non-critical:**
 
-MUST violation:
+A violation is **BLOCKER** by default, but may be accepted *only if*:
 
-- Default = **BLOCKER**
-- May be accepted only if:
-  - Recorded as deviation
-  - Risk-assessed
-  - Proven isolated from critical
-  - Approved by independent authority
+- The violation is documented as a deviation,
+- Risk analysis demonstrates non-interference with critical path,
+- It is isolated and justified,
+- It is approved independently (e.g., by safety reviewer).
+
 
 ---
 
@@ -689,17 +801,6 @@ May import and call:
 - Core or Strict code, provided:
   - Outputs are validated and frozen before entering any critical phase
   - They do not break profile rules
-
-### 9.3 Utility Exemption
-
-Strict-A non-critical code may call Core utilities (logging, metrics, simple math) if:
-
-They have **NO**:
-
-- Side effects affecting safety decisions
-- Timing impact on critical scheduling
-
-Failure of the utility results at most in loss of observability, not unsafe behavior.
 
 ---
 
@@ -1087,7 +1188,372 @@ For Strict-A systems, auditors SHOULD be able to see a clear **“third-party de
 - Any third-party influence is bounded and validated before it affects safety decisions.
 
 
-## 16. Machine-Readable Metadata (Optional Annex)
+## 16 Call Graph, Orchestrators, and Level-A Data Validation
+
+### 16.1 Purpose and Scope
+
+This section defines how components may call each other across:
+
+- **Safety Levels:** A / B / C
+- **Profiles:** Strict / Core
+- **Phases:** @critical / @non_critical_phase
+
+It refines:
+
+- the **call-chain promotion** and **no demotion** rules (Section 3),
+- the **import policy** (Section 9),
+- the **logging/utility exemption** (Section 11),
+
+and fixes the canonical pattern:
+
+```
+Core-C/B  →  Strict-B Config/Data Provider  →  Strict-A Level-A Validator  →  Strict-A Critical Kernel
+(gateway)    (structural/semantic checks)       (domain invariants)           (safety decision + envelope)
+```
+
+### 16.2 Definitions
+
+**Outer Orchestrator (Core Orchestrator)**  
+A Core-profile entrypoint that interacts with the external world:
+
+
+OS, network, files, CLI, JSON, simulators, UI, etc.
+
+Examples: TCP sensor server main, HTTP service main, process supervisor.
+
+The outer orchestrator is Level C or B and is not part of the Level-A critical call graph. Its failure modes must be covered in the safety case, but it does not implement Level-A safety decisions.
+
+**Strict-B Config/Data Provider**  
+A Strict-B (or Core-B+Strict-B combination) component that:
+
+- runs in non-critical phase,
+- reads raw configuration and data from Core-C/B sources (files, JSON, env, gateways),
+- performs structural and semantic validation (types, ranges, enums, completeness),
+- normalizes into typed, bounded data structures passed into Strict-A.
+
+Typical example: config.model + config.loader in the sensor-voting reference.
+
+**Strict-A Level-A Validator (Mandatory)**  
+A Strict-A component (often @non_critical_phase) that:
+
+- receives only data already validated and typed by Strict-B Config/Data Providers,
+- checks Level-A domain invariants, e.g.:
+  - envelope parameters (min_safe, max_safe, SAFE_DEFAULT) are consistent,
+  - thresholds and timeouts make physical and system sense,
+  - initial values are within the safe operating region.
+- runs under Strict-A determinism constraints: no I/O, no GC, no dynamic behavior.
+
+The Level-A validator is the last gate before data enters the @critical path.
+
+**Strict-A Critical Kernel**  
+The minimal Strict-A @critical code implementing:
+
+- voting, plausibility, and safety envelope,
+- bounded state evolution (e.g. last safe actuator command),
+- fail-safe behavior and SAFE_DEFAULT handling.
+
+This is the only place where Level-A safety decisions are made.
+
+**Inner Safety Orchestrator (Strict-B)**  
+An optional Strict-B module/function that:
+
+- sequences calls to the Level-A validator and the Level-A kernel,
+- runs partly in non-critical phase (prep) and partly in @critical sections,
+- never performs Core-level I/O or calls Core-C/B on the critical path.
+
+### 16.3 Safety-Level Call Constraints (Call Graph Semantics)
+
+This section defines which components are allowed to call which others,
+based on **Safety Level** (A/B/C) and **Profile** (Core/Strict).
+
+We use:
+
+- "higher safety" = A > B > C  
+- "Stricter profile" = Strict > Core  
+
+#### 16.3.1 Absolute Rules for Level-A Code
+
+Level-A code is the most sensitive. We enforce a **hard separation**:
+
+**CRSS-Call-1 (Normative — Level-A Isolation)**  
+
+1. A Level-A function (critical or non-critical):
+
+   - MUST use the Strict profile (Strict-A).
+   - MUST NOT call any Level-B or Level-C code.
+   - MUST NOT call any Core code (Core-B/Core-C), including logging, metrics,
+     monitoring, or helpers.
+
+2. Level-A functions MAY only call:
+
+   - other Level-A Strict functions, or
+   - local pure helpers that are explicitly classified as Level-A Strict.
+
+3. If a Level-A function currently calls a Level-B/C function and **uses its
+   result for safety decisions, thresholds, or configuration**, then that
+   callee must be **reclassified and refactored as Level-A Strict** or removed
+   from the Level-A call path.
+
+This guarantees that:
+
+- Level-A behavior does not depend on lower-safety or Core behavior.
+- A failure in a Core logging or utility function cannot break Level-A logic.
+
+> **Practical effect:**  
+> If you want Level-A behavior + logging, you do **not** log from inside the
+> Level-A function. Instead, a lower-level component observes inputs/outputs
+> (e.g. at Strict-B or Core-C) and logs them externally.
+
+---16
+#### Y.3.2 Rules for Level-B and Level-C
+
+Level-B and Level-C are less strict but still controlled.
+
+**CRSS-Call-2 (Normative — Level-B)**  
+
+1. Level-B functions:
+
+   - MAY call Level-B or Level-A functions.
+   - SHOULD avoid calling Level-C on the critical path.
+   - MAY call Core-C/B functions on the non-critical path if their behavior
+     doesn't influence safety decisions.
+
+2. If a Level-B function calls Level-C for anything safety-relevant
+   (e.g. thresholds, state updates), that Level-C function must be:
+   - reclassified to Level-B or higher, or
+   - removed from the safety-relevant call chain.
+
+**CRSS-Call-3 (Normative — Level-C)**  
+
+1. Level-C functions:
+
+   - MAY call Level-C, Level-B, or Level-A functions.
+   - MUST NOT be considered part of the Level-A critical path.
+   - MUST be covered by the safety case as “environment / outer logic”.
+
+Level-C is typically where the **Outer Orchestrator** lives (TCP servers, CLI
+tools, UI adapters, etc.).
+
+---
+
+#### 16.3.3 Concrete Call Graph Examples
+
+**Example 1 — Correct (Level-A isolated)**
+
+```python
+# strict_a_controller.py  (Level A, Strict-A)
+def level_a_step(cfg: SafetyConfig, sensors: list[float]) -> ActuatorCommand:
+    voted = level_a_voting(cfg, sensors)         # Level-A Strict
+    clamped = level_a_envelope(cfg, voted)       # Level-A Strict
+    return ActuatorCommand(clamped, "NORMAL")
+```
+
+All callees (level_a_voting, level_a_envelope) are Level-A Strict.
+
+No logging, no Core utilities → fully compliant with CRSS-Call-1.
+
+---
+
+**Example 2 — Wrong (Level-A calling lower level)**
+
+```python
+# bad_example.py
+def level_a_step(cfg, sensors):
+    log_debug("entering level_a_step")           # Core-C logging ❌
+    voted = level_b_voting(cfg, sensors)        # Level-B logic ❌
+    return apply_level_a_envelope(cfg, voted)
+```
+
+Violations:
+
+- `log_debug` is Core-C → forbidden for Level-A.
+- `level_b_voting` is Level-B → forbidden; must be Level-A Strict or removed.
+
+---
+
+**Example 3 — Correct (B calling A)**
+
+```python
+# strict_b_step.py  (Level B, Strict-B)
+def level_b_safety_step(cfg_b, cfg_a, sensors):
+    voted = purely_level_b_monitoring_logic(cfg_b, sensors)   # Level-B
+    cmd   = level_a_step(cfg_a, sensors)                      # Level-A Strict
+    return cmd
+```
+
+Level-B may call Level-A.  
+Level-B failure does not change Level-A logic, only whether we reach it.
+
+---
+
+### 16.4 Level-A Non-Critical Calls, Utilities, and Logging
+
+We now adopt a stronger rule:
+
+**CRSS-Call-4 (Normative — No Downward Calls from Level-A)**  
+
+Level-A functions MUST NOT call:
+
+- Level-B or Level-C functions, or  
+- Core functions (logging, metrics, OS utilities, etc.).  
+
+Any logging/metrics must occur in a wrapper at Strict-B or Core-C.
+
+---
+
+#### 16.4.1 Example — Logging Correctly Around Level-A
+
+Bad:
+
+```python
+def level_a_step(cfg, sensors):
+    log_debug("Start level A step")   # ❌ Core logging
+    ...
+```
+
+Good:
+
+```python
+def run_step_with_logging(cfg, sensors):
+    log_debug("Start")
+    cmd = level_a_step(cfg, sensors)        # Level-A stays pure
+    log_debug(f"Output = {cmd}")
+    return cmd
+```
+
+---
+
+### 16.4.2 Summary — Level-A Separation
+
+Level-A code:
+
+- makes no downward calls (B/C/Core)
+- performs no logging
+- sends no metrics
+- uses no Core utilities
+
+Result:
+
+- Level-A kernel becomes small, deterministic, and isolated
+- drastically simpler to justify in a safety case
+
+
+### 16.5 Canonical Flow for Level-A Configuration & Data
+
+```
+Core-C/B Gateway
+    ↓  non-critical
+Strict-B Config/Data Provider
+    ↓  non-critical
+Strict-A Level-A Validator
+    ↓  critical-ready, immutable data
+Strict-A Critical Kernel
+```
+
+**Core-C/B Gateway**
+
+- handles I/O, parsing, retries, logging, timeouts.
+
+**Strict-B Config/Data Provider**
+
+- converts raw payloads into typed structures,
+- enforces structural validation,
+- normalizes into bounded shapes.
+
+**Strict-A Level-A Validator**
+
+- enforces domain invariants,
+- ensures envelope consistency,
+- ensures physical plausibility.
+
+**Strict-A Critical Kernel**
+
+- performs voting and safety envelope enforcement.
+
+**CRSS-Call-5 — No Direct Core→Level-A Flow**  
+Strict-A MUST NOT consume raw Core-C/B data.  
+It MUST pass through:
+
+1. Strict-B Config/Data Provider  
+2. Strict-A Level-A Validator
+
+before any @critical use.
+
+### 16.6 Outer vs Inner Orchestrators
+
+**Outer Orchestrator (Core)**  
+Profile: Core-C/B  
+Level: C or B (never A)
+
+Responsibilities:
+
+- I/O, filesystem, network, scheduling,
+- initiating safety cycles,
+- calling Strict-B/Strict-A modules.
+
+**CRSS-Call-6 — Outer Orchestrator Rules**
+
+The Outer Orchestrator:
+
+- MUST NOT bypass Strict-B and Strict-A stages,
+- MUST NOT implement Level-A decisions,
+- MAY fail-stop or restart safely.
+
+**Inner Safety Orchestrator (Strict-B)**  
+Profile: Strict  
+Level: ≥ B
+
+Responsibilities:
+
+- Receive validated data,
+- Trigger validator + kernel in correct order,
+- Maintain timing-relevant but non-critical state.
+
+**CRSS-Call-7 — Inner Orchestrator Mode**
+
+If invoking Strict-A:
+
+- MUST be Strict-B or stronger,
+- MUST NOT call Core-C/B on the critical path,
+- MUST appear in the SCEM/MAR critical graph.
+
+### 16.7 Interaction with Configuration Integrity
+
+**CRSS-Call-8 — Config/Data Integrity**
+
+Level-A configuration/data MUST:
+
+- originate from Core-C/B in non-critical phase,
+- be validated/normalized by Strict-B,
+- be re-validated by Strict-A before @critical use,
+- be read-only during @critical.
+
+Forbidden on the critical path:
+
+- parsing raw JSON,
+- reinterpreting env variables,
+- mutating configuration.
+
+### 16.8 Summary
+
+- Safety-relevant calls always promote callees. No Level-A → Level-B dependency.  
+- On the critical path, Level-A calls only Strict-A.  
+- Non-critical Level-A code cannot depend on lower levels for safety semantics.  
+- Canonical pattern:
+
+```
+Core-C/B gateway
+    → Strict-B Config/Data Provider
+    → Strict-A Level-A Validator
+    → Strict-A Critical Kernel
+```
+
+Strict-B provider + Strict-A validator are mandatory gates.  
+This unifies call-graph rules, orchestrator roles, and configuration integrity into one consistent model.
+
+
+
+## 17. Machine-Readable Metadata (Optional Annex)
 
 Tools may represent each code unit as:
 
@@ -1126,7 +1592,7 @@ This schema enables:
 
 ---
 
-## 17. Summary
+## 18. Summary
 
 This Unified Safety Specification v3.0.0:
 
