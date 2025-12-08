@@ -511,7 +511,8 @@ The output of G influences:
 Then:
 
 ```
-Level(G) := max(Level(G), Level(F))
+SafetyLevel(Y) := higher_of(SafetyLevel(X), SafetyLevel(Y))
+
 Profile(G) := max(Profile(G), Profile(F))   # Where Strict > Core
 ```
 
