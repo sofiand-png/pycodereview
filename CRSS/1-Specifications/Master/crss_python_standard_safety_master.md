@@ -20,11 +20,21 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [1.5 Immutability of Mode](#15-immutability-of-mode)
 	- [1.6 Granularity of Safety Levels and Modes] (#16-granularity-of-safety-levels-and-modes)
 	- [1.7 Profile Granularity Model] (#17-profile-granularity-model)
-  - [2. Code Units and Boundaries](#2-code-units-and-boundaries)
-    - [2.1 Canonical Code Unit](#21-canonical-code-unit)
-    - [2.2 Class Promotion](#22-class-promotion)
-    - [2.3 Module Context](#23-module-context)
-    - [2.4 Architectural Boundaries](#24-architectural-boundaries)
+	- [2. Environment and Boundaries ](#2-environment-and-boundaries-rewritten--expanded)
+	  - [2.1 Definition of Boundaries](#21-definition-of-boundaries)
+		- [2.1.1 OS Process Boundary](#211-os-process-boundary)
+		- [2.1.2 Service / Network Boundary](#212-service--network-boundary)
+		- [2.1.3 Hardware Integration Boundary](#213-hardware-integration-boundary)
+	  - [2.2 No Promotion Across Boundaries](#22-no-promotion-across-boundaries)
+	  - [2.3 No Safety Leakage Beyond Boundaries](#23-no-safety-leakage-beyond-boundaries)
+	  - [2.4 Boundary Interaction Contracts](#24-boundary-interaction-contracts)
+		- [2.4.1 OS Process Boundary Contract](#241-os-process-boundary-contract)
+		- [2.4.2 Service / Network Boundary Contract](#242-service--network-boundary-contract)
+		- [2.4.3 Hardware Integration Boundary Contract](#243-hardware-integration-boundary-contract)
+	  - [2.5 Call Graph Interaction with Boundaries](#25-call-graph-interaction-with-boundaries)
+	  - [2.6 Boundary Failures Must Not Break Level-A Logic](#26-boundary-failures-must-not-break-level-a-logic)
+	  - [2.7 Summary of Boundary Rules](#27-summary-of-boundary-rules)
+	  - [2.8 Final Statement](#28-final-statement)
   - [3. Safety Level Assignment and Propagation](#3-safety-level-assignment-and-propagation)
     - [3.1 Assignment from Requirements](#31-assignment-from-requirements)
     - [3.2 Propagation Along Calls (Call-Chain Promotion)](#32-propagation-along-calls-call-chain-promotion)
@@ -393,13 +403,275 @@ A function at Safety Level B or C **MAY** be Core.
 
 ## 2. Environment and Boundaries
 
-Promotion and safety responsibilities DO NOT cross:
+Safety Levels and Profile responsibilities exist inside a well-defined software safety domain.
+Not all components of a deployed system share that domain, and not all boundaries permit safety-level propagation.
 
-- OS process boundaries
-- Service boundaries
-- Hardware integration boundaries
+This section defines:
 
-Unless there is explicit safety-relevant data coupling.
+- what counts as an environment boundary,
+- whether Safety Levels can cross that boundary,
+- how CRSS components must interact with external or lower-assurance elements,
+- how to avoid accidental safety responsibility leakage,
+- how call-graph promotion interacts with boundaries.
+
+---
+
+## 2.1 Definition of Boundaries
+
+A boundary is any architectural separation across which CRSS cannot enforce Python-level guarantees.
+
+Hard boundaries include:
+
+### 2.1.1 OS Process Boundary
+
+Examples:
+
+- subprocesses
+- independent microservices
+- external hardware drivers
+- sandboxed runtimes
+
+Crossing the process boundary means:
+
+- no shared memory safety,
+- no call-graph continuity,
+- no Profile enforcement,
+- no CRSS guarantees.
+
+---
+
+### 2.1.2 Service / Network Boundary
+
+Examples:
+
+- REST endpoints
+- TCP/UDP sensors
+- message queues
+- cloud services
+
+Network boundaries introduce nondeterminism, latency, loss, malicious inputs, and break call-graph semantics.
+
+---
+
+### 2.1.3 Hardware Integration Boundary
+
+Examples:
+
+- microcontrollers
+- FPGAs
+- PLCs
+- motor drivers
+- sensor ASICs
+
+Hardware/firmware is outside the CRSS domain and cannot be treated as Level-A/B.
+
+---
+
+## 2.2 No Promotion Across Boundaries
+
+**CRSS-Boundary-1 (Normative)**  
+Safety Level promotion does **not** cross boundaries.
+
+If a Level-A function receives data from:
+
+- other processes,
+- network services,
+- devices,
+- or any environment,
+
+the external source is **not** promoted to Level-A.
+
+Python code must:
+
+1. treat external data as untrusted  
+2. validate through Strict-B  
+3. enforce domain invariants through Strict-A  
+
+---
+
+## 2.3 No Safety Leakage Beyond Boundaries
+
+**CRSS-Boundary-2 (Normative)**  
+Strict-A/B components MUST assume:
+
+- all external inputs may be malformed or adversarial.
+
+- External → Core-C Gateway → Strict-B Validation → Strict-A Validation
+
+- Only after this chain does data become eligible for Level-A use.
+
+---
+
+## 2.4 Boundary Interaction Contracts
+
+### 2.4.1 OS Process Boundary Contract
+
+**Allowed:**
+
+- gateway processes providing data
+- non-critical subprocesses
+- isolated pipelines
+- IPC treated as untrusted
+
+**Required:**
+
+- treat IPC input as Core-C raw data
+- Strict-B structural validation
+- Strict-A domain validation
+- subprocess failure must not break deterministic Level-A logic
+
+**Forbidden:**
+
+- placing Level-A logic in external processes
+- making external processes part of Level-A path
+- depending on external timing inside @critical
+
+---
+
+### 2.4.2 Service / Network Boundary Contract
+
+**Allowed:**
+
+- TCP/UDP sensor data
+- REST sources
+- cloud diagnostics
+- telemetry
+
+**Required:**
+
+- network I/O only in Core-C
+- Strict-B and Strict-A validation before Level-A use
+- timeouts, malformed-frame handling
+
+**Forbidden:**
+
+- trusting remote ordering or uptime
+- using network data directly in Level-A
+- letting remote services participate in safety decisions
+
+---
+
+### 2.4.3 Hardware Integration Boundary Contract
+
+**Allowed:**
+
+- raw sensor data from drivers
+- MCU/FPGA/PLC outputs
+
+**Required:**
+
+- Strict-B structural validation (range, saturation)
+- Strict-A physical plausibility
+- SAFE_DEFAULT fallback on device failure
+
+**Forbidden:**
+
+- any hardware access inside Strict-A critical sections
+- assuming deterministic hardware timing
+- treating firmware as Level-A
+
+---
+
+## 2.5 Call Graph Interaction with Boundaries
+
+Boundaries **break** call-graph promotion.
+
+### Example 1 — Correct
+
+```
+MCU → TCP → Core-C Gateway
+      → Strict-B Validator
+          → Strict-A Validator
+              → Strict-A Critical Kernel
+```
+
+Promotion applies **after** validators.
+
+---
+
+### Example 2 — Incorrect
+
+```
+Strict-A Critical Kernel → driver SPI read
+```
+
+Violations:
+
+- Strict → Core
+- nondeterministic behavior
+- I/O in @critical
+- hardware cannot be promoted
+
+---
+
+### Example 3 — Incorrect
+
+```
+Strict-A @critical → REST API → cloud
+```
+
+Violations:
+
+- I/O in @critical
+- Strict→Core
+- nondeterministic external service
+- cannot promote remote service
+
+---
+
+### Example 4 — Allowed (Constrained)
+
+```
+Core Orchestrator → Strict-B Validator → Strict-A Validator → Strict-A @critical
+```
+
+Valid because:
+
+- Core handles I/O  
+- Strict-B validates  
+- Strict-A enforces invariants  
+- Strict-A @critical uses only internal immutable data  
+
+---
+
+## 2.6 Boundary Failures Must Not Break Level-A Logic
+
+**CRSS-Boundary-3 (Normative)**  
+External failure — timeout, corruption, crash, stall — MUST NOT break:
+
+- Level-A determinism  
+- Level-A safe outputs  
+- Level-A timing guarantees  
+
+Required responses:
+
+- SAFE_DEFAULT fallback  
+- inhibited/degenerate behaviors  
+- fixed-rate continuation  
+- bounded internal recovery  
+
+---
+
+## 2.7 Summary of Boundary Rules
+
+| Boundary | Promotion Allowed? | Strict-A Assumption | Required Path | Forbidden |
+|----------|---------------------|----------------------|----------------|-----------|
+| OS process | No | external untrusted | Gateway → Strict-B → Strict-A | critical dependence |
+| Service/network | No | data may be corrupt | Gateway → Strict-B → Strict-A | I/O in Strict layers |
+| Hardware | No | hardware may misbehave | Driver → Gateway → Validators | hardware inside @critical |
+| In-process Python | Yes | CRSS rules enforceable | Strict-only chain | Strict→Core |
+
+---
+
+## 2.8 Final Statement
+
+Boundaries define non-trustable edges.  
+CRSS safety responsibilities begin only once:
+
+- data enters Strict-B validation, and  
+- control enters Strict-A execution.
+
+
 
 ---
 
