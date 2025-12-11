@@ -90,7 +90,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## 0. Purpose
 
-The **CRSS-Python Unified Safety Specification v3.0.0** is the **single, authoritative** standard for:
+The **CRSS-Python Unified Safety Specification** is the **single, authoritative** standard for:
 
 - Profiles (**Core**, **Strict**)
 - Safety Levels (**A**, **B**, **C**)
@@ -106,8 +106,8 @@ The **CRSS-Python Unified Safety Specification v3.0.0** is the **single, authori
 
 This document **consolidates and supersedes**:
 
-- CRSS-Python Standard Levels v1.0.0 / v2.0.0
-- CRSS Profile/Safety/Critical Interaction v1.0.0
+- CRSS-Python Standard Levels
+- CRSS Profile/Safety/Critical Interaction
 - CRSS Non-Critical Phase Model
 - CRSS Critical Annotation Policy
 - CRSS Import Policy
@@ -391,41 +391,7 @@ A function at Safety Level B or C **MAY** be Core.
 
 ---
 
-## 2. Code Units and Boundaries
-
-### 2.1 Canonical Code Unit
-
-The canonical unit for Mode assignment is the function/method.
-
-```
-Mode(Function) = (Profile, Level)
-```
-
-A function may have internal phases (@critical regions) but one Mode.
-
-### 2.2 Class Promotion
-
-If any method of a class is Level A:
-
-- The entire class is promoted to Mode Strict-A.
-- All methods in that class:
-  - Are analyzed under Strict profile.
-  - Inherit Strict-A Mode for enforcement.
-  - Respect critical vs non-critical rules as per their annotations.
-
-### 2.3 Module Context
-
-Modules are not primary Mode units, but:
-
-- If a module contains one or more Strict-A classes:
-  - The module is treated as a Strict-A context for tools and review.
-
-Mixed-level classes in a module are allowed but discouraged.
-
-A project MAY adopt a stricter rule:
-“Any module with Strict-A must only contain Strict-A classes + trivial utilities (logging, tracing).”
-
-### 2.4 Architectural Boundaries
+## 2. Environment and Boundaries
 
 Promotion and safety responsibilities DO NOT cross:
 
@@ -727,35 +693,6 @@ Any data used in `@critical` must:
 
 ---
 
-## 9. Import Policy
-
-### 9.1 Core vs Strict
-
-| Importer Profile | Imported Profile | Allowed?                  |
-|------------------|------------------|---------------------------|
-| Core             | Core             | [OK]                         |
-| Core             | Strict           | [NOT ALLOWED]                         |
-| Strict           | Core             | [OK] (subject to Mode)      |
-| Strict           | Strict           | [OK]                         |
-
-### 9.2 Mode-Specific Restrictions
-
-For Strict-A critical code:
-
-May only call functions that are:
-
-- Mode = **Strict-A**
-- And satisfy CP rules
-
-For Strict-A non-critical:
-
-May import and call:
-
-- Core or Strict code, provided:
-  - Outputs are validated and frozen before entering any critical phase
-  - They do not break profile rules
-
----
 
 ## 10. Inheritance Policy
 
@@ -770,6 +707,11 @@ Strict-A class **MUST NOT** inherit from:
 
 - Core classes
 - Lower-level Strict classes (Strict-B/C)
+
+Strict-B class **MUST NOT** inherit from:
+
+- Core classes
+- Lower-level Strict classes (Strict-C)
 
 Strict-A may:
 
@@ -1260,15 +1202,9 @@ Level-B and Level-C are less strict but still controlled.
 
 1. Level-B functions:
 
-   - MAY call Level-B or Level-A functions.
-   - SHOULD avoid calling Level-C on the critical path.
-   - MAY call Core-C/B functions on the non-critical path if their behavior
-     doesn't influence safety decisions.
+   - Are not allowed to call level-C functions
+   - Strict-B functions are not allowed to call Core-B functions (both direct and indirect calls are forbidden)
 
-2. If a Level-B function calls Level-C for anything safety-relevant
-   (e.g. thresholds, state updates), that Level-C function must be:
-   - reclassified to Level-B or higher, or
-   - removed from the safety-relevant call chain.
 
 **CRSS-Call-3 (Normative — Level-C)**  
 
