@@ -19,7 +19,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
     - [1.5 Immutability of Mode](#15-immutability-of-mode)
 	- [1.6 Granularity of Safety Levels and Modes] (#16-granularity-of-safety-levels-and-modes)
-	- [1.7 Profile Granularity Model] (#17-profile-granularity-model-core-vs-strict)
+	- [1.7 Profile Granularity Model] (#17-profile-granularity-model)
   - [2. Code Units and Boundaries](#2-code-units-and-boundaries)
     - [2.1 Canonical Code Unit](#21-canonical-code-unit)
     - [2.2 Class Promotion](#22-class-promotion)
@@ -217,31 +217,68 @@ Any change in Mode requires:
 - Re-baselining
 - Re-certification
 
-### 1.6 TODO ADD SECTION HERE
-
-### 1.6 Granularity of Safety Levels and Modes
+## 1.6 Granularity of Safety Levels, Profiles, and Modes
 
 CRSS distinguishes between:
 
-- **Documentation granularity**  
-  used for safety cases, traceability (SCEM, MAR, CBM, CRC)
-- **Enforcement granularity**  
-  used for applying coding rules and tool checks (Profiles & Modes)
+- **Profiles**: Core / Strict  
+- **Safety Levels**: A / B / C  
+- **Modes**: combinations such as Strict-A, Strict-B, Core-C
 
-#### 1.6.1 Enforcement Granularity (Normative)
+This section defines:
+
+- where Modes are applied,  
+- how Safety Levels and Profiles interact,  
+- how promotion and “no demotion” work.
+
+---
+
+### 1.6.1 Enforcement Granularity — One Mode per Module
 
 **CRSS-Gran-1 (Normative)**  
-The primary enforcement unit for Profiles and Modes (Strict-A, Strict-B, Core-B, Core-C, …) is the **Python module** (`.py` file).  
-Each module SHALL be assigned exactly one Mode.
+A **module** (`.py` file) is the enforcement unit.
+
+Each module SHALL declare exactly:
+
+- one Profile (`core` or `strict`),  
+- one Safety Level (`A`, `B`, or `C`),
+
+→ forming one Mode such as `Strict-A`, `Core-C`, etc.
+
+There is **no Core-A** (Level A always implies Strict).
+
+Example:
+
+```python
+# CRSS_PROFILE: strict
+# CRSS_SAFETY_LEVEL: A
+# CRSS_MODE: Strict-A
+```
+
+---
+
+### 1.6.2 Promotion by Highest Safety Level
 
 **CRSS-Gran-2 (Normative)**  
-All classes and functions defined in a module SHALL be treated as having the module’s Mode unless explicitly factored into a different module.
+
+If any function or class inside a module is Level A → the module becomes Level A.  
+If any is Level B (and none A) → module becomes Level B.
+
+```
+module_level = max(safety_levels of functions/classes)
+```
+
+Thus no module can declare “Level B” while containing Level-A code.
+
+Refactor Level-A responsibilities into their own module if needed.
 
 **CRSS-Gran-3 (Normative)**  
 If a class or module is used by multiple call sites with different Safety Levels, it SHALL be assigned the **highest** Safety Level among its callers and a compatible Mode.  
 If this is not acceptable, the functionality MUST be refactored into separate modules/classes.
 
-#### 1.6.2 Class-Level Mixing of Safety Levels
+---
+
+#### 1.6.3 Class-Level Mixing of Safety Levels
 
 **CRSS-Gran-4 (Normative)**  
 A single class SHALL NOT mix methods that are treated as different safety levels in a way that affects shared state or safety-relevant behavior.  
@@ -252,170 +289,85 @@ In practice:
 - A class involved in Level A logic is treated as **Level A / Strict-A** as a whole.  
 - Support code for Level B/C behavior SHOULD live in separate classes/modules assigned to lower Modes.
 
-#### 1.6.3 Documentation Granularity (Informative)
 
-For traceability purposes, teams MAY document Safety Levels and requirement links at finer granularity, e.g.:
+### 1.6.3 Allowed Module Modes
 
-- per requirement ID
-- per function or method
-- per class
+**CRSS-Gran-5 (Normative)**
 
-This does not change the enforcement granularity: coding rules are always applied at least at **module** level according to the module’s Mode.
+| Mode      | Profile | Level | Common Use |
+|-----------|---------|-------|------------|
+| Strict-A  | Strict  | A     | Critical kernel, validators |
+| Strict-B  | Strict  | B     | Safety-related logic |
+| Strict-C  | Strict  | C     | Disciplined low-level logic |
+| Core-B    | Core    | B     | Support logic |
+| Core-C    | Core    | C     | Gateways, logging, UI |
 
-#### 1.6.4 Mixed Systems and Flexibility
-
-CRSS explicitly supports **mixed systems** where:
-
-- some modules are **Strict-A** (e.g., safety envelope, controller)
-- some are **Strict-B** or **Core-B** (supporting safety-related logic)
-- some are **Core-C** (gateways, logging, UIs, simulation, analytics)
-
-The rule is:
-
-> Components MUST NOT downplay their safety level by using a more relaxed Mode.  
-> When in doubt, treat a shared module/class according to the **highest safety level** of its usages, or refactor it into separate components with clear boundaries.
-
-This allows flexible designs (multiple safety levels in one project) while keeping the enforcement model simple and auditable.
-
-#### 1.6.5 Assigning a Mode to a Component (How to Do It)
-
-To assign a mode to each component, CRSS recommends the following steps:
-
-1. **Determine Safety Level (A/B/C)**  
-   - Use system-level hazard analysis and risk assessment.  
-   - Ask: “If this component fails in the worst credible way, what is the safety impact?”
-
-2. **Check if the component is on the critical control path**  
-   - Does its failure directly influence a hazardous actuator command or safety decision?  
-   - If **yes** and level is **A** → it **must** be **Strict-A**.  
-   - If **yes** and level is **B** → **Strict-B** strongly recommended.  
-   - If **no** (supporting, monitoring), lower modes may be acceptable (Core-B/Core-C).
-
-3. **Choose the Profile**  
-   - If Safety Level == A → **Profile must be Strict** → Mode = **Strict-A**.  
-   - If Safety Level == B:  
-     - For logic that participates in safety decisions → **Strict-B**.  
-     - For support functions (logging, conversions, non-critical parts) → **Core-B** allowed.  
-   - If Safety Level == C:  
-     - Use **Core-C** by default.  
-     - Use **Strict-C** if you want extra discipline without changing safety classification.
-
-4. **Check for forbidden combinations**  
-   - If a design decision would create a **Core-A** element (Core profile + Safety Level A), that is **not allowed**.  
-   - Either:
-     - upgrade it to **Strict-A**, or  
-     - reclassify its safety impact to B/C and justify why it no longer has Level A consequences.
-
-5. **Document the Mode**  
-   - For each significant component, document:  
-     - Safety Level (A/B/C)  
-     - Profile (Core/Strict)  
-     - Resulting Mode (e.g., Strict-A, Core-B)  
-   - Reference this in the SCEM / MAR tables and in the architecture annex.
-
-6. **Apply a simple “max level wins” rule**
-	- If a module or class is used by multiple paths with different safety levels, it inherits the highest:
-     - Used in Level A and Level B → treat it as Level A, Strict-A.
-     - Used in Level B and Level C → treat it as Level B (Strict-B/Core-B).
-	If you don’t want that, split the functionality into two modules/classes.
+There is no Core-A.
 
 ---
 
-#### 1.6.4 Example: Applying Modes to the Sensor Voting Reference (Informative)
+### 1.6.4 Propagation of Safety Levels
 
-For the Sensor Voting & Safe Actuation reference example:
+**CRSS-Gran-6 (Normative)**  
 
-- **Safety envelope & core controller logic**  
-  - Hazard impact: Level A  
-  - Mode: **Strict-A**
+If caller at Level L₁ calls a function whose result affects safety decisions:
 
-- **Voting and deterministic preprocessing**  
-  - Safety impact: typically Level B (supports Level A decisions)  
-  - Mode: **Strict-B** (recommended) in the example
+```
+SafetyLevel(callee) := max(SafetyLevel(callee), SafetyLevel(caller))
+```
 
-- **JSON/TCP gateways, simulators, logging, monitoring**  
-  - Safety impact: Level C (or B if misbehavior could mislead operators)  
-  - Mode: **Core-C** (as implemented in the reference example)
-
-This mapping satisfies all CRSS-Mode rules above and **avoids the invalid “Core-A” combination**.
-
-### 1.7 Profile Granularity Model (Core vs Strict)
-
-Profiles define the **enforcement strength of coding rules**.  
-Safety Levels define **how dangerous a failure would be**.
-
-This section defines **permitted granularity**, **mixing rules**, and **propagation constraints**
-for mixing Core and Strict code *inside modules, classes, and packages*.
+For Level A:  
+Anything used by Level-A safety logic must itself be Level A.
 
 ---
 
-#### 1.7.1 Granularity Levels Where Profiles May Be Applied
+### 1.6.5 Documentation vs Enforcement
 
-Profiles MAY be applied at the following granularity:
+Documentation may record function-level Safety Levels, but:
 
-| Granularity Level | Core Allowed | Strict Allowed | Notes |
-|-------------------|--------------|----------------|-------|
-| **Package**       | YES            | YES              | Sets defaults for all modules unless overridden |
-| **Module**        | YES            | YES              | Most common boundary for profile assignment |
-| **Class**         | YES            | YES              | Allowed, but must respect mixing limits below |
-| **Function**      | YES            | YES              | Fine-grained control permitted with constraints |
-
-Profiles **MUST NOT** be mixed at the basic-block or statement level.
+**CRSS-Gran-7 (Normative)**  
+Module-level enforcement always wins.  
+If metadata and module declaration disagree → stricter interpretation applies or code must be refactored.
 
 ---
 
-#### 1.7.2 Mixing Core and Strict Inside the Same Module
+## 1.7 Profile Granularity Model (Core vs Strict)
 
-Allowed **ONLY** if:
+Profiles describe rule strictness; Safety Levels describe hazard severity.
 
-- Each function is explicitly annotated with its profile (`# @profile: strict` or `# @profile: core`)
-- No function marked **Strict** may call:
-  - a **Core** function inside the same module, or  
-  - any transitive call path that reaches Core code.
+---
+
+### 1.7.1 Where Profiles Apply
+
+Profiles may be conceptually attached at package, module, class, or function level, but:
 
 **CRSS-Profile-1 (Normative)**  
-If a module contains both Core and Strict functions, the following MUST hold:
 
-1. Cross-calls Strict → Core are **forbidden**.  
-2. Cross-calls Core → Strict are **allowed** (upgrading rules is always safe).  
-3. Strict functions must be proven **closed over Core influence** (imports, global state, exceptions, etc.).  
-4. Linting must report **BLOCKER** if a Strict function depends on Core code.
-
-This ensures downward safety migration cannot occur.
+- Modules declare one Profile (Core or Strict).  
+- Profile mixing inside a module is forbidden.  
+- Function/class metadata cannot weaken the module’s Profile.
 
 ---
 
-#### 1.7.3 Mixing Core and Strict Inside the Same Class
+### 1.7.2 Safety Level vs Profile
 
-**Allowed**, but with stricter constraints:
+**CRSS-Profile-2 (Normative)**
 
-- A Strict method MUST NOT:
-  - call a Core method of the same class  
-  - access attributes written by Core methods  
-  - access shared mutable state manipulated by Core code
-
-**CRSS-Profile-2 (Normative)**  
-Strict methods inside a mixed-profile class MUST operate on:
-
-- **immutable fields**, OR  
-- fields initialized solely by Strict code, OR  
-- validated inputs from Strict-B or Strict-A providers.
-
-If this cannot be guaranteed, the class MUST be split.
+| Safety Level | Allowed Profiles | Notes |
+|--------------|------------------|-------|
+| A            | Strict only      | Mode Strict-A |
+| B            | Core or Strict   | Strict preferred |
+| C            | Core or Strict   | Core default |
 
 ---
 
-#### 1.7.4 Function-Level Granularity
+### 1.7.3 Core vs Strict Imports
 
-This is the **finest allowed level of granularity**.
+**CRSS-Profile-3 (Normative)**  
 
-Function-level assignment is allowed when:
-
-- Violations, imports, and side effects are cleanly separated.
-- Strict functions do not use class-level or module-level mutable state written by Core.
-- Strict functions do not share global state with Core functions.
-
-If boundaries are unclear → escalate to class-level or module-level.
+- Core modules MAY import Core or Strict.  
+- Strict modules MUST NOT import Core (baseline).  
+- Strict→Core allowed only for tests/tools, not deployed code.
 
 ---
 
@@ -1191,26 +1143,18 @@ For Strict-A systems, auditors SHOULD be able to see a clear **“third-party de
 
 ## 16 Call Graph, Orchestrators, and Level-A Data Validation
 
-### 16.1 Purpose and Scope
+### 16.1 Purpose
 
-This section defines how components may call each other across:
-
-- **Safety Levels:** A / B / C
-- **Profiles:** Strict / Core
-- **Phases:** @critical / @non_critical_phase
-
-It refines:
-
-- the **call-chain promotion** and **no demotion** rules (Section 3),
-- the **import policy** (Section 9),
-- the **logging/utility exemption** (Section 11),
-
-and fixes the canonical pattern:
+Defines cross-safety call rules, orchestrator structure, and the mandatory Level-A data flow:
 
 ```
-Core-C/B  →  Strict-B Config/Data Provider  →  Strict-A Level-A Validator  →  Strict-A Critical Kernel
-(gateway)    (structural/semantic checks)       (domain invariants)           (safety decision + envelope)
+Core-C/B Gateway
+    → Strict-B Config/Data Provider
+    → Strict-A Level-A Validator
+    → Strict-A Critical Kernel
 ```
+
+---
 
 ### 16.2 Definitions
 
@@ -1255,22 +1199,23 @@ The minimal Strict-A @critical code implementing:
 
 This is the only place where Level-A safety decisions are made.
 
-**Inner Safety Orchestrator (Strict-B)**  
-An optional Strict-B module/function that:
+---
 
-- sequences calls to the Level-A validator and the Level-A kernel,
-- runs partly in non-critical phase (prep) and partly in @critical sections,
-- never performs Core-level I/O or calls Core-C/B on the critical path.
+### 16.3 Safety-Level Call Constraints (A/B/C)
 
-### 16.3 Safety-Level Call Constraints (Call Graph Semantics)
 
-This section defines which components are allowed to call which others,
-based on **Safety Level** (A/B/C) and **Profile** (Core/Strict).
+| Caller ↓ / Callee → | C | B | A |
+|----------------------|-----|-----|-----|
+| C | Allowed | Allowed | Allowed |
+| B | Not Allowed | Allowed | Allowed |
+| A | Not Allowed | Not Allowed | Allowed |
 
-We use:
+Interpretation:
 
-- "higher safety" = A > B > C  
-- "Stricter profile" = Strict > Core  
+- Level-A MUST NOT depend on B or C.  
+- Level-B MUST NOT depend on C.  
+- Level-C may call A/B but is never in critical path.
+
 
 #### 16.3.1 Absolute Rules for Level-A Code
 
@@ -1305,8 +1250,9 @@ This guarantees that:
 > Level-A function. Instead, a lower-level component observes inputs/outputs
 > (e.g. at Strict-B or Core-C) and logs them externally.
 
----16
-#### Y.3.2 Rules for Level-B and Level-C
+---
+
+#### 16.3.2 Rules for Level-B and Level-C
 
 Level-B and Level-C are less strict but still controlled.
 
@@ -1337,7 +1283,85 @@ tools, UI adapters, etc.).
 
 ---
 
-#### 16.3.3 Concrete Call Graph Examples
+## 16.4 Profile Call Constraints (Strict vs Core)
+
+Core ↔ Core: Allowed  
+Core → Strict: Allowed  
+Strict → Strict: Allowed  
+Strict → Core: **Not Allowed** (baseline)
+
+**CRSS-Call-Profile-1**  
+Strict modules must not import/call Core in baseline.
+
+**CRSS-Call-Profile-2**  
+Strict→Core allowed only in tests/tools.
+
+---
+
+## 16.5 Phase Interaction
+
+**CRSS-Call-Phase-1 (Normative)**  
+
+- @critical MUST NOT call @non_critical_phase.  
+- Level-A @critical may call only Strict-A that respects critical-phase rules.  
+- Non-critical may enter critical, but control must not bounce between phases.
+
+---
+
+## 16.6 Level-A Separation
+
+**CRSS-Call-A-1 (Normative)**  
+
+Level-A MUST NOT call:
+
+- Level-B or Level-C,  
+- Core-B or Core-C,  
+- logging/metrics/utilities in Core.
+
+Logging must occur in wrappers (Strict-B/Core-C), not within Level-A.
+
+---
+
+## 16.7 Canonical Data Flow
+
+```
+Core-C/B Gateway
+    ↓ non-critical
+Strict-B Config/Data Provider
+    ↓ validated, typed
+Strict-A Level-A Validator
+    ↓ domain-validated, immutable
+Strict-A Critical Kernel
+```
+
+**CRSS-Call-A-2 — No Direct Core→Level-A Flow**  
+Strict-A MUST NOT consume raw Core-C/B data.  
+It MUST pass through:
+
+1. Strict-B Config/Data Provider  
+2. Strict-A Level-A Validator
+
+before any @critical use.
+
+---
+
+## 16.8 Orchestrators
+
+**Outer Orchestrator (Core)**  
+Handles I/O, frames, invokes Strict-B/A.
+
+**CRSS-Orch-1**  
+May not implement Level-A logic; may not bypass Strict-B/A.
+
+**Inner Orchestrator (Strict-B)**  
+Sequences validator + kernel.
+
+**CRSS-Orch-2**  
+Must be Strict-B or higher; must appear in SCEM; must not call Core on critical path.
+
+---
+
+### 16.9 Concrete Call Graph Examples
 
 **Example 1 — Correct (Level-A isolated)**
 
@@ -1360,8 +1384,8 @@ No logging, no Core utilities → fully compliant with CRSS-Call-1.
 ```python
 # bad_example.py
 def level_a_step(cfg, sensors):
-    log_debug("entering level_a_step")           # Core-C logging ❌
-    voted = level_b_voting(cfg, sensors)        # Level-B logic ❌
+    log_debug("entering level_a_step")           # Core-C logging
+    voted = level_b_voting(cfg, sensors)        # Level-B logic
     return apply_level_a_envelope(cfg, voted)
 ```
 
@@ -1387,44 +1411,7 @@ Level-B failure does not change Level-A logic, only whether we reach it.
 
 ---
 
-### 16.4 Level-A Non-Critical Calls, Utilities, and Logging
-
-We now adopt a stronger rule:
-
-**CRSS-Call-4 (Normative — No Downward Calls from Level-A)**  
-
-Level-A functions MUST NOT call:
-
-- Level-B or Level-C functions, or  
-- Core functions (logging, metrics, OS utilities, etc.).  
-
-Any logging/metrics must occur in a wrapper at Strict-B or Core-C.
-
----
-
-#### 16.4.1 Example — Logging Correctly Around Level-A
-
-Bad:
-
-```python
-def level_a_step(cfg, sensors):
-    log_debug("Start level A step")   # ❌ Core logging
-    ...
-```
-
-Good:
-
-```python
-def run_step_with_logging(cfg, sensors):
-    log_debug("Start")
-    cmd = level_a_step(cfg, sensors)        # Level-A stays pure
-    log_debug(f"Output = {cmd}")
-    return cmd
-```
-
----
-
-### 16.4.2 Summary — Level-A Separation
+### 16.10 Summary — Level-A Separation
 
 Level-A code:
 
@@ -1438,121 +1425,7 @@ Result:
 - Level-A kernel becomes small, deterministic, and isolated
 - drastically simpler to justify in a safety case
 
-
-### 16.5 Canonical Flow for Level-A Configuration & Data
-
-```
-Core-C/B Gateway
-    ↓  non-critical
-Strict-B Config/Data Provider
-    ↓  non-critical
-Strict-A Level-A Validator
-    ↓  critical-ready, immutable data
-Strict-A Critical Kernel
-```
-
-**Core-C/B Gateway**
-
-- handles I/O, parsing, retries, logging, timeouts.
-
-**Strict-B Config/Data Provider**
-
-- converts raw payloads into typed structures,
-- enforces structural validation,
-- normalizes into bounded shapes.
-
-**Strict-A Level-A Validator**
-
-- enforces domain invariants,
-- ensures envelope consistency,
-- ensures physical plausibility.
-
-**Strict-A Critical Kernel**
-
-- performs voting and safety envelope enforcement.
-
-**CRSS-Call-5 — No Direct Core→Level-A Flow**  
-Strict-A MUST NOT consume raw Core-C/B data.  
-It MUST pass through:
-
-1. Strict-B Config/Data Provider  
-2. Strict-A Level-A Validator
-
-before any @critical use.
-
-### 16.6 Outer vs Inner Orchestrators
-
-**Outer Orchestrator (Core)**  
-Profile: Core-C/B  
-Level: C or B (never A)
-
-Responsibilities:
-
-- I/O, filesystem, network, scheduling,
-- initiating safety cycles,
-- calling Strict-B/Strict-A modules.
-
-**CRSS-Call-6 — Outer Orchestrator Rules**
-
-The Outer Orchestrator:
-
-- MUST NOT bypass Strict-B and Strict-A stages,
-- MUST NOT implement Level-A decisions,
-- MAY fail-stop or restart safely.
-
-**Inner Safety Orchestrator (Strict-B)**  
-Profile: Strict  
-Level: ≥ B
-
-Responsibilities:
-
-- Receive validated data,
-- Trigger validator + kernel in correct order,
-- Maintain timing-relevant but non-critical state.
-
-**CRSS-Call-7 — Inner Orchestrator Mode**
-
-If invoking Strict-A:
-
-- MUST be Strict-B or stronger,
-- MUST NOT call Core-C/B on the critical path,
-- MUST appear in the SCEM/MAR critical graph.
-
-### 16.7 Interaction with Configuration Integrity
-
-**CRSS-Call-8 — Config/Data Integrity**
-
-Level-A configuration/data MUST:
-
-- originate from Core-C/B in non-critical phase,
-- be validated/normalized by Strict-B,
-- be re-validated by Strict-A before @critical use,
-- be read-only during @critical.
-
-Forbidden on the critical path:
-
-- parsing raw JSON,
-- reinterpreting env variables,
-- mutating configuration.
-
-### 16.8 Summary
-
-- Safety-relevant calls always promote callees. No Level-A → Level-B dependency.  
-- On the critical path, Level-A calls only Strict-A.  
-- Non-critical Level-A code cannot depend on lower levels for safety semantics.  
-- Canonical pattern:
-
-```
-Core-C/B gateway
-    → Strict-B Config/Data Provider
-    → Strict-A Level-A Validator
-    → Strict-A Critical Kernel
-```
-
-Strict-B provider + Strict-A validator are mandatory gates.  
-This unifies call-graph rules, orchestrator roles, and configuration integrity into one consistent model.
-
-
+---
 
 ## 17. Machine-Readable Metadata (Optional Annex)
 
@@ -1593,9 +1466,62 @@ This schema enables:
 
 ---
 
-## 18. Summary
+## 18 Allowed / Forbidden Matrix
 
-This Unified Safety Specification v3.0.0:
+### 18.1 Modes
+
+SA = Strict-A  
+SB = Strict-B  
+SC = Strict-C  
+CB = Core-B  
+CC = Core-C  
+
+### 18.2 Safety-Level Matrix
+
+| Caller ↓ / Callee → | C | B | A |
+|----------------------|-----|-----|-----|
+| C | Allowed | Allowed | Allowed |
+| B | Not Allowed | Allowed | Allowed |
+| A | Not Allowed | Not Allowed | Allowed |
+
+---
+
+### 18.3 Mode→Mode Matrix (Baseline)
+
+| Caller ↓ / Callee → | SA | SB | SC | CB | CC |
+|----------------------|------|------|------|------|------|
+| SA | Allowed | Not Allowed | Not Allowed | Not Allowed | Not Allowed |
+| SB | Allowed | Allowed | Not Allowed | Not Allowed | Not Allowed |
+| SC | Allowed | Allowed | Allowed | Not Allowed | Not Allowed |
+| CB | Allowed | Allowed | Not Allowed | Allowed | Not Allowed |
+| CC | Allowed | Allowed | Allowed | Allowed | Allowed |
+
+Strict→Core is always **Not Allowed** in baseline.
+
+---
+
+### 18.4 Utility & Logging Rules
+
+- Level-A never calls logging/metrics/utilities.  
+- Strict→Core allowed only in tools/tests.  
+
+---
+
+### 18.5 Canonical Safe Pattern
+
+```
+Core-C/B Gateway
+    → Strict-B Config/Data Provider
+    → Strict-A Level-A Validator
+    → Strict-A Critical Kernel (@critical)
+    → Actuation layer (outside CRSS scope)
+```
+
+---
+
+## 19. Summary
+
+This Unified Safety Specification
 
 - Centralizes all semantics for Profiles, Levels, Modes, and Phases
 - Clearly distinguishes:
@@ -1603,7 +1529,6 @@ This Unified Safety Specification v3.0.0:
   - Strict vs Strict-A enforcement
   - Operational vs rule relaxation
 - Defines:
-  - How violations are categorized and handled
   - How Modes propagate and never demote
   - How imports and inheritance are constrained
   - How non-critical phases are allowed, but never allowed to pollute critical execution
