@@ -98,7 +98,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
-## 0. Purpose
+## 0. Purpose and Conflict Resolution
 
 The **CRSS-Python Unified Safety Specification** is the **single, authoritative** standard for:
 
@@ -114,15 +114,21 @@ The **CRSS-Python Unified Safety Specification** is the **single, authoritative*
 - Compliance & acceptance criteria (Core-only, Strict-only, mixed)
 - A realistic, minimal reference use case
 
-This document **consolidates and supersedes**:
 
-- CRSS-Python Standard Levels
-- CRSS Profile/Safety/Critical Interaction
-- CRSS Non-Critical Phase Model
-- CRSS Critical Annotation Policy
-- CRSS Import Policy
-- CRSS Inheritance Policy
-- CRSS Python Mode and Safety Model
+In case of any ambiguity, conflict, inconsistency, or contradiction between
+this document and any other CRSS-related document (including models, rules,
+interpretation guides, profiles, examples, or tooling documentation),
+**this Master specification SHALL take precedence**.
+
+Other CRSS documents may provide:
+- interpretation,
+- rationale,
+- explanatory models,
+- examples,
+- or implementation guidance,
+
+but MUST NOT override, weaken, or contradict the requirements defined herein.
+
 
 It is designed to:
 
