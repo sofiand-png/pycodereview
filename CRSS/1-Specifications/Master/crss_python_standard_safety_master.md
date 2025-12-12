@@ -1620,156 +1620,105 @@ Level-B failure does not change Level-A logic, only whether we reach it.
 ---
 
 ### 16.10 Data Handling
+
 **CRSS-Call-Data-1 (Normative — Level-A Data Entry Chain)**
-Any data (inputs, configuration, thresholds, state) that influences a Level-A
-`@critical` decision MUST traverse the following chain:
+Any data (inputs, configuration, thresholds, state) that influences a Level-A `@critical` decision MUST traverse the following chain:
 
 1. **Ingestion at Core-C/B or Strict-B** (gateway, I/O, files, JSON, env, bus).
-2. **Structural + semantic validation at Strict-B Config/Data Provider**
-   (types, ranges, enums, completeness, shape).
-3. **Level-A domain validation at Strict-A Level-A Validator**
-   (envelope consistency, physical plausibility, SAFE_DEFAULT consistency).
+2. **Structural + semantic validation at Strict-B Config/Data Provider** (types, ranges, enums, completeness, shape).
+3. **Level-A domain validation at Strict-A Level-A Validator** (envelope consistency, physical plausibility, SAFE_DEFAULT consistency).
 4. **Consumption by Strict-A Critical Kernel** using **immutable, bounded structures**.
 
-Direct feeding of raw or partially validated data into Strict-A validators or
-kernels (e.g. `Core → Strict-A kernel`, `Strict-B → Strict-A kernel` without
-steps 2 and 3) is **NOT ALLOWED** and constitutes a violation of CRSS-Call-Data-1.
-
-**CRSS-Call-Data-2 (Normative — No Direct Core/Strict-B → Strict-A Kernel Shortcuts)**  
-
-Core-C/B or Strict-B entrypoints MUST NOT call Strict-A kernels directly except
-via the full Level-A data entry chain defined in CRSS-Call-Data-1. Any direct
-convenience path that bypasses:
-
-- Strict-B Config/Data Provider, or
-- Strict-A Level-A Validator
-
-is non-compliant.
+Direct feeding of raw or partially validated data into Strict-A validators or kernels (e.g. `Core → Strict-A kernel`, `Strict-B → Strict-A kernel` without steps 2 and 3) is **NOT ALLOWED** and constitutes a violation of **CRSS-Call-Data-1**.
 
 **CRSS-Data-Ownership-1 (Normative — Level-A Data Ownership & Immutability)**
 
-1. Any data structure owned by Level-A (validators or kernel) MUST NOT be
-   mutated by Level-B or Level-C or Core code after it has been passed
-   into Level-A.
-
+1. Any data structure owned by Level-A (validators or kernel) MUST NOT be mutated by Level-B, Level-C, or Core code after it has been passed into Level-A.
 2. Data shared between Level-A and lower levels MUST be:
-   - immutable (e.g. tuples, frozen dataclasses, enums), or  
+   - immutable (e.g. tuples, frozen dataclasses, closed Enums), or
    - copied on handoff (Level-A receives its own private copy).
+3. Lower-level code (B/C/Core) MUST NOT hold mutable references to Level-A internal state or configuration.
+4. SCEM/MAR MUST capture these ownership assumptions for all Level-A-relevant configuration and state structures.
 
-3. Lower-level code (B/C/Core) MUST NOT hold mutable references to Level-A
-   internal state or configuration.
+**CRSS-Config-1 (Normative — Configuration Boundary for Level-A)**
 
-SCEM/MAR MUST capture these ownership assumptions for all Level-A-relevant
-configuration and state structures.
-
-**CRSS-Config-1 (Normative — Configuration Boundary for Level-A)**  
-
-1. All configuration ingestion, parsing, and initial decoding (JSON, YAML,
-   TOML, env vars, CLI, raw bytes, bus payloads) MUST be implemented at
-   Safety Level B or C (Core or Strict).
-
-2. Level-A code (validators and kernel) MUST operate only on:
-   - already validated,
-   - normalized,
-   - bounded configuration structures  
-   provided by Strict-B Config/Data Providers.
-
+1. All configuration ingestion, parsing, and initial decoding (JSON, YAML, TOML, env vars, CLI, raw bytes, bus payloads) MUST be implemented at Safety Level B or C (Core or Strict).
+2. Level-A code (validators and kernel) MUST operate only on already validated, normalized, bounded configuration structures provided by Strict-B Config/Data Providers.
 3. Level-A MUST NOT:
    - open files or sockets to read configuration,
    - parse JSON/YAML/etc.,
    - reinterpret raw strings, bytes, or untyped dictionaries as configuration.
 
-**CRSS-Profile-Call-2 (Normative — Strict→Core Only in Non-Baseline Artifacts)**  
+**CRSS-Call-Profile-2 (Normative — Strict→Core Only in Non-Baseline Artifacts)**
 
-1. In the certified safety baseline (code included in CBM/SCEM and production
-   artifacts), Strict code (Strict-A/B/C) MUST NOT:
+1. In the certified safety baseline (code included in CBM/SCEM and production artifacts), Strict code (Strict-A/B/C) MUST NOT:
    - import Core modules, or
    - call Core functions.
-
 2. Strict→Core calls are allowed only in:
    - test modules (e.g. under `tests/`),
    - offline tools and scripts (e.g. under `tools/`),
-
    provided that:
-
    - they are clearly separated by namespace/path, and
-   - they are **excluded** from certified/production builds and from
-     SCEM/CBM.
+   - they are **excluded** from certified/production builds and from SCEM/CBM.
+3. Any Strict→Core call discovered in production artifacts SHALL be treated as a **hard non-compliance**.
 
-3. Any Strict→Core call discovered in production artifacts SHALL be treated
-   as a **hard non-compliance**.
+---
 
-**CRSS-Output-1 (Normative — Level-A Output Semantics)**  
+### 16.11 Level-A Output & Actuation Boundary
 
-1. Strict-A Critical Kernels MUST produce **abstract, immutable outputs** that
-   fully represent the safety-relevant decision, e.g.:
+**CRSS-Output-1 (Normative — Level-A Output Semantics)**
 
-   - `ActuatorCommand` with:
-     - bounded numeric value,
-     - status (NORMAL/DEGRADED/FAILSAFE),
-     - safe_default_used flag.
+1. Strict-A Critical Kernels MUST produce **abstract, immutable outputs** that fully represent the safety-relevant decision, e.g. `ActuatorCommand` with:
+   - bounded numeric value,
+   - status (NORMAL/DEGRADED/FAILSAFE),
+   - `safe_default_used` flag.
+2. Strict-A kernels MUST NOT perform I/O, network, bus operations, or hardware access to apply these commands directly to external systems.
 
-2. Strict-A kernels MUST NOT perform I/O, network, or bus operations to apply
-   these commands directly to hardware or external systems.
+**CRSS-Output-2 (Normative — Actuation Adapter Role)**
 
-
-**CRSS-Output-2 (Normative — Actuation Adapter Role)**  
-
-1. Application of Level-A outputs to the outside world (e.g. actuator buses,
-   RTOS hooks, hardware drivers) MUST be implemented by an **Actuation Adapter**
-   at:
+1. Application of Level-A outputs to the outside world (actuator buses, RTOS hooks, hardware drivers, external protocols) MUST be implemented by an **Actuation Adapter** at:
    - Strict-B, or
-   - Core-C/B, **outside** the Level-A critical path.
-
+   - Core-C/B,
+   **outside** the Level-A critical path.
 2. The Actuation Adapter:
-- MAY encode Level-A commands into wire formats (CAN/LIN/TCP/JSON/etc.),
-- MAY perform best-effort logging/telemetry,
-- MAY further **tighten** safety (e.g. additional clamping, dropping commands).
-but MUST NOT:
-- generate a command that is more dangerous than the Strict-A output,
-- relax any Level-A safety constraint or envelope,
-- silently substitute a different command without being treated as a safety-relevant component itself.
+   - MAY encode Level-A commands into wire formats (CAN/LIN/TCP/JSON/etc.),
+   - MAY perform best-effort logging/telemetry,
+   - MAY further **tighten** safety (e.g. additional clamping, dropping commands),
+   but MUST NOT:
+   - generate a command that is more dangerous than the Strict-A output,
+   - relax any Level-A safety constraint or envelope,
+   - silently substitute a different command without being treated as a safety-relevant component itself.
 
-**CRSS-Output-3 (Normative — One-Way Semantic Dependence)**  
+**CRSS-Output-3 (Normative — One-Way Semantic Dependence)**
 
-1. Level-A decision logic MUST NOT depend on the behavior of the Actuation
-   Adapter: the adapter is downstream only.
-
+1. Level-A decision logic MUST NOT depend on the behavior of the Actuation Adapter: the adapter is downstream only.
 2. Failures in the Actuation Adapter MUST be treated in the safety case as:
    - fail-stop (no command sent), or
    - safe degradation (e.g. holding last safe command or using SAFE_DEFAULT),
-
    but MUST NOT cause unsafe actuation *relative to the Level-A command*.
-
 3. SCEM/MAR MUST document:
-
    - where Level-A outputs are generated,
    - where they are adapted to external interfaces,
-   - what guarantees exist that adaptation cannot violate Level-A decisions.3. Rules for Level-A function signatures & default values
+   - what guarantees exist that adaptation cannot violate Level-A decisions.
 
-**CRSS-Output-4 (Normative — Level-A Safety Closure)**  
-Any Level-A Strict-A kernel function MUST guarantee that for all inputs within
-its representable domain:
+**CRSS-Output-4 (Normative — Level-A Safety Closure)**
+Any Level-A Strict-A kernel function MUST guarantee that for all inputs within its representable domain:
 
 - The produced actuator command is either:
   - within the configured safe envelope, OR
   - an explicitly defined SAFE_DEFAULT or failsafe command,
 
-and MUST NEVER produce an actuator output that violates the declared safe envelope.**CRSS-Output-2 (Normative — Total Safe Behavior)**   
-Level-A Strict-A kernel functions SHALL be designed and verified as total safe
-functions over their representable input domain:
+and MUST NEVER produce an actuator output that violates the declared safe envelope.
 
-- For any combination of input data and internal state reachable in the system,
-  the kernel MUST NOT produce an actuator command that violates the configured
-  safe envelope or the declared safety goals.
-- In the presence of invalid, inconsistent, or implausible inputs, the kernel
-  MUST transition to a defined safe behavior (e.g. SAFE_DEFAULT + failsafe status).
+**CRSS-Kernel-Total-1 (Normative — Total Safe Behavior)**
+Level-A Strict-A kernel functions SHALL be designed and verified as total safe functions over their representable input domain:
 
-Level-A safety arguments MUST NOT rely solely on upstream validators behaving
-perfectly; Level-A kernels must be intrinsically safe by construction.
-**How Level-A should react to bad or garbage inputs**
+- For any combination of input data and internal state reachable in the system, the kernel MUST NOT produce an actuator command that violates the configured safe envelope or the declared safety goals.
+- In the presence of invalid, inconsistent, implausible, or missing inputs, the kernel MUST transition to a defined safe behavior (e.g. SAFE_DEFAULT + failsafe status).
 
-Even if everything upstream is perfect, we still design Level-A defensively:
+Level-A safety arguments MUST NOT rely solely on upstream validators behaving perfectly; Level-A kernels must be intrinsically safe by construction.
+
+**How Level-A should react to bad or garbage inputs (Guidance)**
 
 Examples of bad inputs:
 - All sensors NaN or inf.
@@ -1777,91 +1726,88 @@ Examples of bad inputs:
 - Empty arrays / wrong lengths.
 - Flags inconsistent with values.
 
-Level-A kernel behavior in those cases:
+Expected Level-A kernel behavior in those cases:
 - Treat the situation as no valid safe measurement.
-- Produce:
-	- SAFE_DEFAULT (e.g. minimal torque, inhibit, neutral position), and
-	- a status like FAILSAFE, DEGRADED, or NO_VALID_SENSORS.
+- Produce SAFE_DEFAULT (e.g. minimal torque, inhibit, neutral position) and a status like FAILSAFE, DEGRADED, or NO_VALID_SENSORS.
 
-In the sensor-voting example, that maps to:
-- Voting finds 0 or 1 valid sensors → fallback path.
-- Envelope sees input outside sanity range → clamps or uses SAFE_DEFAULT.
-- Final command has: command_value = SAFE_DEFAULT, status = FAILSAFE.
+The validator chain exists for assurance and clarity, not as a fragile precondition that lets Level-A misbehave if someone upstream forgot a check.
 
-The validator chain is there for assurance and clarity, not as a fragile precondition that lets Level-A misbehave if someone upstream forgot a check.
+---
 
-
-### 16.11 Level-A API & Signature Rules
+### 16.12 Level-A API & Signature Rules
 
 **CRSS-API-1 (Normative — Closed Signatures for Level-A)**
 Level-A Strict-A kernel functions SHALL use fixed, explicit signatures:
-- No *args
-- No **kwargs
+
+- No `*args`
+- No `**kwargs`
 - No dynamic argument unpacking from dictionaries
 - No runtime signature changes or decorators that alter call semantics
 
 Level-A functions MAY only accept:
-- primitive types (e.g. float, int, bool, small Enums todo fix this), and/or
-- immutable, typed data structures (e.g. dataclasses, frozen objects) with well-defined fields.
+- primitive types (e.g. `float`, `int`, `bool`), and/or
+- closed Enums defined at import time (no dynamic extension), and/or
+- immutable, typed data structures (e.g. frozen dataclasses) with well-defined fields.
 
 **Rationale:**
 Signatures must be statically inspectable and analyzable. No dynamic or flexible API shape on the critical kernel.
 
-
 **CRSS-API-2 (Normative — No Arity Flexibility)**
 Level-A kernel functions SHALL NOT rely on optional positional parameters whose presence/absence changes behavior:
+
 - Either the parameter is always required (and enforced by the caller), or
-- the “optional” nature is represented as an explicit field in a typed input object (e.g. Optional[float]), with defined semantics in the kernel.
+- the “optional” nature is represented as an explicit field in a typed input object (e.g. `Optional[float]`), with defined semantics in the kernel.
 
 Example (Allowed):
-```
+```python
+from dataclasses import dataclass
+
 @dataclass(frozen=True)
 class VotedInputs:
     sensors: tuple[float, float, float]
     has_valid_vote: bool
 ```
 
-Kernel always receives VotedInputs and handles has_valid_vote explicitly — no missing argument concept at runtime.
+Kernel always receives `VotedInputs` and handles `has_valid_vote` explicitly — no “missing argument” concept at runtime.
 
-#### 16.11.1 Defaults in Level-A Signatures
+#### 16.12.1 Defaults in Level-A Signatures
 
 **CRSS-API-3 (Normative — Default Values in Level-A)**
 
 - No mutable defaults.
-- Level-A functions MUST NOT use mutable default arguments (list, dict, custom objects).
+- Level-A functions MUST NOT use mutable default arguments (`list`, `dict`, custom objects).
 
-Defaults MUST represent safe, conservative behavior.
-If a Level-A parameter has a default value, that default MUST:
+Defaults MUST represent safe, conservative behavior. If a Level-A parameter has a default value, that default MUST:
 - be within the safe envelope, and
-- correspond to a “non-dangerous” behavior (e.g., SAFE_DEFAULT, inhibit).
+- correspond to a non-dangerous behavior (e.g. SAFE_DEFAULT, inhibit).
 
-Defaults MUST NOT hide missing validation.
-Defaults SHALL NOT be used to silently compensate for missing Level-B or Level-A validation. If a parameter is conceptually mandatory from a safety perspective, it MUST either:
+Defaults MUST NOT hide missing validation. Defaults SHALL NOT be used to silently compensate for missing Level-B or Level-A validation. If a parameter is conceptually mandatory from a safety perspective, it MUST either:
 - be supplied explicitly by the caller, or
 - be part of a validated config object that is guaranteed to exist.
 
 **Recommended practice:**
 For Level-A kernels, prefer no defaults at all and require fully constructed input objects. Use defaults in the config/data layer (Strict-B) instead.
 
-#### 16.11.2 Handling “Non-Provided” or Unknown Data
+#### 16.12.2 Handling “Non-Provided” or Unknown Data
 
 **CRSS-API-4 (Normative — Explicit Representation of Missing Data)**
 
-Level-A kernels MUST NOT infer “missingness” of data from call-shape (e.g. checking argument count or presence in **kwargs).
+Level-A kernels MUST NOT infer “missingness” of data from call-shape (e.g. checking argument count or presence in `**kwargs`).
 
-If the safety semantics depend on data being present or absent, this MUST be represented explicitly in the input model, for example:
-
-- a present: bool flag,
-- an Optional[...] field,
-- an explicit status enum: OK / MISSING / INVALID.
+If safety semantics depend on data being present or absent, this MUST be represented explicitly in the input model, for example:
+- a `present: bool` flag,
+- an `Optional[...]` field,
+- an explicit status enum: `OK / MISSING / INVALID`.
 
 Level-A kernel MUST handle all allowed combinations of these states by:
-- either producing a safe command, or
+- producing a safe command, or
 - falling back to SAFE_DEFAULT / failsafe.
 
-#### 16.12 Upstream Responsibility for Uncallable Cases
+---
 
-**CRSS-API-5 (Normative — No “half-baked” calls into Level-A)**
+### 16.13 Upstream Responsibility for Uncallable Cases
+
+**CRSS-API-5 (Normative — No “Half-Baked” Calls into Level-A)**
 
 Gateways and Strict-B providers MUST ensure that Level-A kernel functions are never called with:
 - wrong arity,
@@ -1870,31 +1816,21 @@ Gateways and Strict-B providers MUST ensure that Level-A kernel functions are ne
 
 If raw inputs cannot be parsed or mapped into the Level-A input model:
 - Level-A MUST NOT be called, OR
-- the call MUST be made with a well-defined “no data / degraded” representation that the kernel can handle safely (e.g. has_valid_vote=False, all sensors flagged invalid).
+- the call MUST be made with a well-defined “no data / degraded” representation that the kernel can handle safely (e.g. `has_valid_vote=False`, all sensors flagged invalid).
 
-### 16.13 Testing Implications
+---
 
-Given these rules, testing Level-A becomes very concrete:
+### 16.14 Level-A Composition and Call Graph
 
-The input domain that must be covered is:
-
-- all combinations of fields / flags that the typed input model allows, not arbitrary byte garbage.
-- For each such combination, you assert:
-	- output is within envelope, OR
-	- SAFE_DEFAULT/failsafe.
-
-
-### 16.14 Level A composition/chain
-**CRSS-Call-Graph-1 (Level-A Call Graph Structure)**  
-For Level-A code, the call graph SHOULD form a Directed Acyclic Graph (DAG) at
-the module or service boundary.
+**CRSS-Call-Graph-1 (Normative — Level-A Call Graph Structure)**
+For Level-A code, the call graph SHOULD form a Directed Acyclic Graph (DAG) at the module or service boundary.
 
 Where Level-A cycles are unavoidable (e.g. small mutual recursion):
 
 - They MUST NOT cross phase boundaries (`@critical` ↔ `@non_critical_phase`),
 - They MUST NOT involve profile changes (Strict-A only),
-- They MUST be **documented** in SCEM/MAR, and
-- They MUST be **justified** in the safety case with respect to:
+- They MUST be documented in SCEM/MAR, and
+- They MUST be justified in the safety case with respect to:
   - bounded recursion or loop depth,
   - timing analysis,
   - state convergence and stability.
@@ -1902,19 +1838,19 @@ Where Level-A cycles are unavoidable (e.g. small mutual recursion):
 **CRSS-LA-Chain-1 (Normative — Composition of Level-A Kernels)**
 When a Level-A function A-2 consumes a value produced by another Level-A function A-1:
 
-The preferred pattern is a pure Level-A pipeline: the orchestration (A1 → A2) is itself implemented as Level-A Strict.
+- The preferred pattern is a pure Level-A pipeline: the orchestration (A1 → A2) is itself implemented as Level-A Strict.
+- If orchestration is implemented outside Level-A (e.g. in Strict-B), that layer MUST remain a pass-through and MUST NOT introduce safety-relevant branching.
 
 If a Strict-B orchestrator wires A-1 and A-2, it MUST NOT:
 - mutate the intermediate Level-A result,
 - perform safety-relevant branching on that result,
 - derive new safety decisions from that result.
+
 Any such behavior MUST be moved into Level-A code.
 
-**Pattern 1 – Recommended: Level-A orchestrates Level-A**
-
-You treat the whole composition as one Level-A kernel, with helpers:
-```
-#strict_a_controller.py   (Mode: Strict-A)
+**Pattern 1 — Recommended: Level-A orchestrates Level-A**
+```python
+# strict_a_controller.py   (Mode: Strict-A)
 
 def A1_voting(inputs: VotedInputs) -> VotingResult:
     ...
@@ -1923,27 +1859,15 @@ def A2_envelope(cfg: SafetyConfig, v: VotingResult) -> ActuatorCommand:
     ...
 
 def A_step(cfg: SafetyConfig, inputs: VotedInputs) -> ActuatorCommand:
-    # Level-A orchestrator
+    # Level-A orchestrator (still Level-A Strict code)
     v = A1_voting(inputs)
     cmd = A2_envelope(cfg, v)
     return cmd
 ```
 
-Here:
-- A_step is Level-A Strict,
-- A1_voting and A2_envelope are also Level-A Strict,
-- the composition is entirely within Level-A,
-- no lower level touches the intermediate VotingResult.
-
-This is the cleanest for safety case and for tools: the Level-A call graph is self-contained.
-
-
-**Pattern 2 – Acceptable: Strict-B wires A₁ and A₂ only as a pass-through**
-
-If you really want a Strict-B inner orchestrator:
-
-```
-#strict_b_orchestrator.py  (Mode: Strict-B)
+**Pattern 2 — Acceptable: Strict-B wires A₁ and A₂ only as a pass-through**
+```python
+# strict_b_orchestrator.py  (Mode: Strict-B)
 
 def safety_step(cfg_a: SafetyConfig, inputs: VotedInputs) -> ActuatorCommand:
     v = level_a_voting(cfg_a, inputs)        # A1 (Level-A)
@@ -1951,35 +1875,25 @@ def safety_step(cfg_a: SafetyConfig, inputs: VotedInputs) -> ActuatorCommand:
     return cmd
 ```
 
-This is only acceptable if:
-- Strict-B does no safety logic on v or cmd,
-- Strict-B does not:
-	- change v,
-	- branch on v in a safety-relevant way,
-	- derive new thresholds or decisions from v.
-	- It is just cabling: A₁ → A₂.
-
-If Strict-B starts doing:
-```
+If Strict-B starts doing safety-relevant logic (example NOT ALLOWED):
+```python
 if v.confidence < 0.8:
     # different safety behavior here
+    ...
 ```
-then that logic is effectively Level-A, and must be moved into a Level-A function (either into A₂ or into a new A₃). Strict-B must stay “dumb” with respect to Level-A semantics.
-
+then that logic is effectively Level-A and MUST be moved into Level-A (into A₂ or a new A₃).
 
 **CRSS-LA-Result-1 (Normative — Single Source of Truth for Level-A Results)**
 Safety-relevant derived quantities at Level-A (e.g. voted value, final actuator command, safety envelope status) SHOULD have a single authoritative implementation.
 
-It is NOT ALLOWED to:
-- have multiple ad-hoc implementations of the same safety concept in different Level-A functions, whose outputs are treated as equally authoritative, unless:
-	- the pattern is a deliberate redundant/diverse safety mechanism, and
-	- the arbitration logic is itself Level-A, safe-biased, and documented in SCEM.
-- Reusing the same Level-A helper function in multiple places is encouraged; duplicating its logic in different modules/classes is discouraged and may be treated as a finding in review.
+It is NOT ALLOWED to have multiple ad-hoc implementations of the same safety concept in different Level-A functions, whose outputs are treated as equally authoritative, unless:
+- the pattern is a deliberate redundant/diverse safety mechanism, and
+- the arbitration logic is itself Level-A, safe-biased, and documented in SCEM/MAR.
 
-And to explicitly close the lower-level recomputation loophole:
+Reusing the same Level-A helper function in multiple places is encouraged; duplicating its logic in different modules/classes is discouraged and may be treated as a finding in review.
 
 **CRSS-LA-Result-2 (Normative — No Downward Re-Derivation)**
-Lower-level components (Level-B/C, Core) MUST NOT re-compute or reinterpret Level-A kernel results for safety decisions.
+Lower-level components (Level-B/C, Core) MUST NOT re-compute or reinterpret Level-A kernel results for **safety decisions**.
 
 They may:
 - log them,
@@ -1988,8 +1902,8 @@ They may:
 
 but any further safety decision or transformation based on these results MUST be implemented in Level-A Strict code.
 
+A “safety decision” here means any logic that can change actuation behavior relative to the Level-A command based on reinterpretation or recomputation of Level-A derived quantities. Adapters may still **tighten** safety (drop/clamp), but MUST NOT compute an alternative actuation target from Level-A results.
 
----
 
 ## 17. Machine-Readable Metadata (Optional Annex)
 
