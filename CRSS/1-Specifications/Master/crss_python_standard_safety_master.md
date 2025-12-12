@@ -1910,6 +1910,26 @@ but any further safety decision or transformation based on these results MUST be
 
 A “safety decision” here means any logic that can change actuation behavior relative to the Level-A command based on reinterpretation or recomputation of Level-A derived quantities. Adapters may still **tighten** safety (drop/clamp), but MUST NOT compute an alternative actuation target from Level-A results.
 
+**CRSS-LA-Decision-Model-1 (Normative — Single Logical Level-A Decision)**
+
+Even when implemented as multiple Level-A Strict-A functions, a safety decision
+SHALL be considered a single logical Level-A decision if:
+
+- the functions are composed deterministically,
+- no external state or lower-level logic intervenes in the composition,
+- intermediate results are not independently acted upon outside the composition.
+
+In such cases, the composed pipeline SHALL be treated as a single Level-A
+kernel for the purposes of:
+
+- safety argumentation,
+- SCEM/MAR documentation,
+- call-graph analysis,
+- and compliance assessment.
+
+Intermediate Level-A functions in such a pipeline are considered internal
+computational stages, not independent safety decisions.
+
 
 ## 17. Machine-Readable Metadata (Optional Annex)
 
