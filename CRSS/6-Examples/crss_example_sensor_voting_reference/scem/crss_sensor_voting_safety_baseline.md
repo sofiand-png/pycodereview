@@ -16,21 +16,22 @@
   - `SafetyController.step` is called with GC disabled in offline tests
     (`app.main_loop.run_single_step`), reflecting Strict-A GC discipline.
 
-## 3. Safety Modes and Profiles
+## 3. CRSS Modes in Scope (Profile + Safety Level)
 
-- **Strict-A**:
+- **Strict-A (Strict, Level A)**:
   - `safety_logic.voting`
   - `safety_logic.envelope`
   - `safety_logic.controller`
   - `actuator.interface`
-- **Strict-B**:
+- **Strict-B (Strict, Level B)**:
   - `config.model`
   - `sensors.interfaces`
-- **Core-B**:
+  - `orchestrator.inner_orchestrator`
+- **Core-B (Core, Level B)**:
   - `app.main_loop`
   - `app.tcp_controller_client`
   - `config.loader`
-- **Core-C**:
+- **Core-C (Core, Level C)**:
   - `sensors.simulation`
   - `app.tcp_sensor_server`
   - `logging_utils.logger`

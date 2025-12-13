@@ -3,10 +3,10 @@
 - **Project**: CRSS Python Sensor Voting Reference Example
 - **Version**: 1.0.0
 - **Language**: Python 3.11.x
-- **CRSS Profiles Used**:
+- **CRSS Modes Used (Profile + Safety Level)**:
   - Strict-A: safety controller (voting + envelope)
-  - Strict-B: config model, sensor interfaces
-  - Core-B: orchestrators (offline step, TCP client)
+  - Strict-B: config model, sensor interfaces, inner orchestrator (framing + sequencing)
+  - Core-B: outer orchestrators (offline step, TCP client harness)
   - Core-C: simulation, TCP server, logging, JSON I/O
 
 ## 1. Scope
@@ -25,7 +25,6 @@ Non-critical I/O helpers (TCP server/client, simulation, logging) are excluded f
 Strict-A compliance and coverage metrics; they are treated as **Core-C test harness**.
 
 ## 2. Rule Mapping Summary
-
 
 ### 2.1 Strict-A Deterministic Control Logic
 
