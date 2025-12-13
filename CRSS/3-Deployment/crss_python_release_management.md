@@ -67,17 +67,17 @@ A **Release** is:
 > **The uniquely identified, immutable, approved, and deployable software unit consisting of a build artifact and its complete Safety Baseline, created through the CRSS Compliance Process and authorized for Production deployment.**
 
 A Release is:
-- ✅ A certified software package
-- ✅ A frozen configuration state
-- ✅ A deployable unit
-- ✅ A traceable artifact set
-- ✅ A compliance boundary
+- A certified software package
+- A frozen configuration state
+- A deployable unit
+- A traceable artifact set
+- A compliance boundary
 
 A Release is **not**:
-- ❌ A build artifact alone
-- ❌ A Git tag or branch alone
-- ❌ A CI pipeline output
-- ❌ A mutable test version
+- A build artifact alone
+- A Git tag or branch alone
+- A CI pipeline output
+- A mutable test version
 
 A Release exists **only after** Compliance Certification.
 
@@ -149,9 +149,9 @@ If **any** required component is missing:
 
 | Concept | Defines | Mutable? | Deployable? | Certified? |
 |--------|---------|----------|-------------|------------|
-| **Build** | Compiled artifact | ✅ Yes | ❌ No | ❌ No |
-| **Baseline** | Frozen configuration state | ✅ Changes create new baseline | ❌ No | ❌ No |
-| **Release** | Certified deployment unit | ❌ No | ✅ Yes | ✅ Yes |
+| **Build** | Compiled artifact | Yes |  No |  No |
+| **Baseline** | Frozen configuration state |  Changes create new baseline |  No |  No |
+| **Release** | Certified deployment unit |  No |  Yes |  Yes |
 
 Therefore:
 - Builds → many
@@ -285,12 +285,12 @@ Developers and CI/CD systems **cannot self-approve** Releases.
 ## 11. Summary
 
 A Release is:
-✅ Immutable
-✅ Traceable
-✅ Reproducible
-✅ Fully Tested
-✅ Independently Approved
-✅ The ONLY deployable unit
+- Immutable
+- Traceable
+- Reproducible
+- Fully Tested
+- Independently Approved
+- The ONLY deployable unit
 
 This specification ensures Releases are safe, auditable, and certifiable for
 **ASIL D / SIL 3 supervisory environments**.

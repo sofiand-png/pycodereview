@@ -206,7 +206,7 @@ All belong to the **3.0 baseline**.
 The standard itself may declare a supported Python version range (e.g., 3.9–3.12).
 HOWEVER:
 
-> 🧷 Every **project** and every **CBM** MUST specify exactly **one concrete Python version**.
+> Every **project** and every **CBM** MUST specify exactly **one concrete Python version**.
 > Supporting another Python version requires a new project baseline.
 
 This rule is normative and MUST appear consistently in all relevant specs.
@@ -390,13 +390,11 @@ Any new or updated document **MUST NOT contradict** these principles.
 
 This specification:
 
-✅ Defines how CRSS-Python itself is structured, versioned, and published.
-✅ Separates normative vs informative content.
-✅ Provides a clear, extensible repo layout.
-✅ Stabilizes rule IDs and schemas for long-term use.
-✅ Ensures users always know **which version** of the standard they are using.
-✅ Makes it possible to build tools and certification processes on top of CRSS-Python with confidence.
-
-It is strongly recommended that this Repository & Publication Standard be treated as **normative** for the CRSS-Python project itself and closely followed by any organizations maintaining their own internal CRSS-based standards.
+- Defines how CRSS-Python itself is structured, versioned, and published.
+- Separates normative vs informative content.
+- Provides a clear, extensible repo layout.
+- Stabilizes rule IDs and schemas for long-term use.
+- Ensures users always know **which version** of the standard they are using.
+- Makes it possible to build tools and certification processes on top of CRSS-Python with confidence.
 
 ---

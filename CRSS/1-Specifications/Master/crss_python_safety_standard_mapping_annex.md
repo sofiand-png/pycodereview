@@ -40,7 +40,7 @@ They conceptually correspond to:
 
 **Note:** This is a *conceptual alignment* only. Final mapping remains a system-level responsibility.
 
-### 1.2 Safety Goals → CRSS Safety Levels
+### 1.2 Safety Goals -> CRSS Safety Levels
 
 System-level **safety goals / hazards / safety requirements** are NOT defined by CRSS.  
 Instead:
@@ -74,10 +74,10 @@ These artifacts are already defined normatively in the SCEM and Compliance Maste
 
 CRSS compliance phases map onto a V-model / ASPICE-style lifecycle as follows:
 
-- CRSS Phase 0–1 → Concept, system & software requirements, planning (ASPICE SYS.x / SWE.1)  
-- CRSS Phase 2 → Design and implementation constraints + static compliance (SWE.2–SWE.3)  
-- CRSS Phase 3 → Verification & validation (SWE.4, SWE.5)  
-- CRSS Phase 4 → Integration of evidence into a single SCEM package (SUP.x, SYS.4)  
-- CRSS Phase 5 → Independent assessment and release decision (SUP.1, safety management roles) :contentReference[oaicite:7]{index=7}  
+- CRSS Phase 0–1 -> Concept, system & software requirements, planning (ASPICE SYS.x / SWE.1)  
+- CRSS Phase 2 -> Design and implementation constraints + static compliance (SWE.2–SWE.3)  
+- CRSS Phase 3 -> Verification & validation (SWE.4, SWE.5)  
+- CRSS Phase 4 -> Integration of evidence into a single SCEM package (SUP.x, SYS.4)  
+- CRSS Phase 5 -> Independent assessment and release decision (SUP.1, safety management roles) :contentReference[oaicite:7]{index=7}  
 
 Organizations can attach their own ASPICE mapping tables to this annex, referencing the same CRSS artifacts.

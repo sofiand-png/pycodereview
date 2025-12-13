@@ -37,10 +37,10 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 This master document consolidates and replaces the former **Certification Readiness Kit** into a **single authoritative specification**, fully aligned with:
 
-✅ CRSS Unified Safety Specification v3.0.0
-✅ Compliance Master v3.0.1
-✅ SCEM Master v3.0.0
-✅ Tooling & Automation Master v3.0.0
+- CRSS Unified Safety Specification v3.0.0
+- Compliance Master v3.0.1
+- SCEM Master v3.0.0
+- Tooling & Automation Master v3.0.0
 
 It defines:
 
@@ -57,17 +57,17 @@ This document represents the **final gateway** before external certification (EA
 
 A project is **Certification-Ready** only when:
 
-✅ All compliance phases (1–4) are complete
-✅ SCEM is complete, versioned, and validated
-✅ Toolchain is frozen and recorded in CBM
-✅ One fixed Python version is used
-✅ All Mode assignments are final
-✅ All `@critical` boundaries are declared
-✅ Strict-A deviations (if any) are approved
-✅ Build is reproducible
-✅ No tool or dependency drift exists
+- All compliance phases (1–4) are complete
+- SCEM is complete, versioned, and validated
+- Toolchain is frozen and recorded in CBM
+- One fixed Python version is used
+- All Mode assignments are final
+- All `@critical` boundaries are declared
+- Strict-A deviations (if any) are approved
+- Build is reproducible
+- No tool or dependency drift exists
 
-If ANY of these is not met → The project is **NOT certification-ready**.
+If ANY of these is not met -> The project is **NOT certification-ready**.
 
 ---
 
@@ -92,53 +92,53 @@ The CRC is a mandatory artifact confirming readiness.
 ## 2.2 CRC Requirements
 
 ### CRC-1 — Compliance Completion
-✅ Phases 1–4 completed
-✅ All mandatory artifacts exist
-❌ Missing artifacts → NOT READY
+- Phases 1–4 completed
+- All mandatory artifacts exist
+- [NOT ALLOWED] Missing artifacts -> NOT READY
 
 ### CRC-2 — SCEM Completion
-✅ All SCEM domains complete
-✅ All annex artifacts complete
-❌ Missing items → NOT READY
+- All SCEM domains complete
+- All annex artifacts complete
+- [NOT ALLOWED] Missing items -> NOT READY
 
 ### CRC-3 — Toolchain Integrity
-✅ All tools fixed-version
-✅ TCL levels documented
-✅ No auto-update
-❌ Tool drift → NOT READY
+- All tools fixed-version
+- TCL levels documented
+- No auto-update
+- [NOT ALLOWED] Tool drift -> NOT READY
 
 ### CRC-4 — Configuration Immutability
-✅ CBM finalized
-✅ No config changes pending
-❌ Unfrozen configuration → NOT READY
+- CBM finalized
+- No config changes pending
+- [NOT ALLOWED] Unfrozen configuration -> NOT READY
 
 ### CRC-5 — Mode Enforcement Confirmation
-✅ MAR finalized
-✅ Propagation resolved
-✅ Critical never calls non-critical
-❌ Unresolved promotions → NOT READY
+- MAR finalized
+- Propagation resolved
+- Critical never calls non-critical
+- [NOT ALLOWED] Unresolved promotions -> NOT READY
 
 ### CRC-6 — Critical Phase Integrity
-✅ Critical boundaries defined
-✅ Determinism validated
-✅ Strict-A: zero violations in `@critical`
-❌ Any `@critical` violation → NOT READY
+- Critical boundaries defined
+- Determinism validated
+- Strict-A: zero violations in `@critical`
+- [NOT ALLOWED] Any `@critical` violation -> NOT READY
 
 ### CRC-7 — Deviation Resolution
-✅ Strict-A deviations documented
-✅ Strict-A deviations approved
-✅ Strict-A deviations isolated
-❌ Unapproved deviation → NOT READY
+- Strict-A deviations documented
+- Strict-A deviations approved
+- Strict-A deviations isolated
+- [NOT ALLOWED] Unapproved deviation -> NOT READY
 
 ### CRC-8 — Build Reproducibility
-✅ Rebuild = identical result
-✅ Reproducibility demonstrated
-❌ Non-reproducible builds → NOT READY
+- Rebuild = identical result
+- Reproducibility demonstrated
+- [NOT ALLOWED] Non-reproducible builds -> NOT READY
 
 ### CRC-9 — Organizational Readiness
-✅ SMM Level ≥ **S2** for Strict
-✅ SMM Level ≥ **S4** for Strict-A
-❌ Organizational gaps → NOT READY
+- SMM Level ≥ **S2** for Strict
+- SMM Level ≥ **S4** for Strict-A
+- [NOT ALLOWED] Organizational gaps -> NOT READY
 
 ---
 
@@ -146,14 +146,14 @@ The CRC is a mandatory artifact confirming readiness.
 
 Certification CANNOT begin if:
 
-❌ Multiple Python versions exist
-❌ Mode downgrades occurred
-❌ Critical calls non-critical
-❌ Incomplete SCEM
-❌ Tool or dependency drift
-❌ Missing CBM
-❌ Auto-updating systems in place
-❌ Strict-A deviation unapproved
+- [NOT ALLOWED] Multiple Python versions exist
+- [NOT ALLOWED] Mode downgrades occurred
+- [NOT ALLOWED] Critical calls non-critical
+- [NOT ALLOWED] Incomplete SCEM
+- [NOT ALLOWED] Tool or dependency drift
+- [NOT ALLOWED] Missing CBM
+- [NOT ALLOWED] Auto-updating systems in place
+- [NOT ALLOWED] Strict-A deviation unapproved
 
 These are **absolute blockers** that cannot be waived.
 
@@ -176,22 +176,22 @@ Before certification begins, the following MUST exist:
 
 All artifacts must:
 
-✅ Be versioned
-✅ Match the CBM
-✅ Use the same Python version
-✅ Reference the same Mode assignments
+- Be versioned
+- Match the CBM
+- Use the same Python version
+- Reference the same Mode assignments
 
 ---
 
 # 5. Certification Readiness Workflow
 
-1️⃣ Internal Review
-2️⃣ CRC Completion
-3️⃣ CRC Approval
-4️⃣ Lock Baseline
-5️⃣ Submit to External Assessment (EAP Stage 1)
+1. Internal Review
+. CRC Completion
+3. CRC Approval
+4. Lock Baseline
+5. Submit to External Assessment (EAP Stage 1)
 
-If CRC is rejected → Repeat steps until passing.
+If CRC is rejected -> Repeat steps until passing.
 
 ---
 
@@ -199,9 +199,9 @@ If CRC is rejected → Repeat steps until passing.
 
 The CRS is a signed declaration that:
 
-✅ The system meets all readiness conditions
-✅ Evidence is complete and immutable
-✅ No outstanding risks or unresolved deviations exist
+- The system meets all readiness conditions
+- Evidence is complete and immutable
+- No outstanding risks or unresolved deviations exist
 
 It is required to enter certification.
 
@@ -211,16 +211,16 @@ It is required to enter certification.
 
 This document:
 
-✅ Defines the final gate before certification
-✅ Consolidates readiness requirements
-✅ Enforces one-version-per-project
-✅ Ensures zero ambiguity in Strict-A readiness
-✅ Eliminates hidden risk before EAP begins
+- Defines the final gate before certification
+- Consolidates readiness requirements
+- Enforces one-version-per-project
+- Ensures zero ambiguity in Strict-A readiness
+- Eliminates hidden risk before EAP begins
 
 Certification readiness is **binary**:
 
-> ✅ READY
-> ❌ NOT READY
+> [OK] READY
+> [NOT ALLOWED] NOT READY
 
 There is no partial readiness under CRSS-Python.
 

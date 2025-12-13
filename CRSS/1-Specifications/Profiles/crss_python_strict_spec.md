@@ -155,7 +155,7 @@ the Core profile (see `crss_python_core.md`, section 0.2):
 All rule IDs in the 3.x–10.x ranges are owned by the **Core** catalog.
 Strict:
 
-- reuses those IDs with stronger profile levels (for example, SHOULD → MUST), and
+- reuses those IDs with stronger profile levels (for example, SHOULD -> MUST), and
 - introduces additional **Strict-only** rules in the dedicated
   `CRSS-11.x.x` namespace (Core: N/A, Strict: MUST/SHOULD/MUST-NOT).
 

@@ -41,7 +41,7 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
 **Notes:**
 
 - `compute_voted_value` uses a fixed algorithm:
-  - length check (`len(values) != 3` → fail-safe default)
+  - length check (`len(values) != 3` -> fail-safe default)
   - deterministic pairwise plausibility
   - deterministic fallback (`SAFE_DEFAULT`) when no valid pair.
 - No randomness, no I/O, no mutable global state in Strict-A modules.

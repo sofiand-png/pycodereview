@@ -355,13 +355,12 @@ A Mode is simply:
 
 > Mode = Profile × Safety Level
 
-This creates six possible Modes:
+This creates 5 possible Modes:
 
 | Profile | Level | Mode Name |
 |--------|-------|-----------|
 | Core   | C     | Core-C    |
 | Core   | B     | Core-B    |
-| Core   | A     | Core-A    |
 | Strict | C     | Strict-C  |
 | Strict | B     | Strict-B  |
 | Strict | A     | Strict-A  |
@@ -900,7 +899,6 @@ Evidence requirements depend on Mode:
 
 - Strict-A → requires full static + dynamic + process evidence
 - Strict-B → requires static + process evidence
-- Core-A → requires static + partial dynamic evidence
 - Core-B/C → require lighter evidence sets
 
 SCEM guarantees that Mode selection is not simply configuration—it influences required assurance depth.

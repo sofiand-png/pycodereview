@@ -58,12 +58,12 @@ This master document consolidates and replaces three prior specifications:
 
 It fully aligns with:
 
-✅ CRSS Unified Safety Specification v3.0.0
-✅ Compliance Master v3.0.1
-✅ Mode Model (Core/Strict/Strict-A)
-✅ Critical / Non-Critical execution
-✅ Strict-A deviation policy (Option 2)
-✅ One-version-per-project policy
+- CRSS Unified Safety Specification v3.0.0
+- Compliance Master v3.0.1
+- Mode Model (Core/Strict/Strict-A)
+- Critical / Non-Critical execution
+- Strict-A deviation policy (Option 2)
+- One-version-per-project policy
 
 This is the **single authoritative reference** for building, maintaining, and evaluating a safety case under CRSS-Python.
 
@@ -144,13 +144,13 @@ Each domain contains required artifacts.
 
 A SCEM is considered **complete** only if:
 
-✅ All artifacts exist
-✅ All artifacts are versioned
-✅ All artifacts trace to a single CBM
-✅ No unresolved deviations exist
-✅ Strict-A evidence is present (if applicable)
+- All artifacts exist
+- All artifacts are versioned
+- All artifacts trace to a single CBM
+- No unresolved deviations exist
+- Strict-A evidence is present (if applicable)
 
-If any artifact is missing → SCEM **INCOMPLETE** → project cannot certify.
+If any artifact is missing -> SCEM **INCOMPLETE** -> project cannot certify.
 
 ---
 
@@ -158,9 +158,9 @@ If any artifact is missing → SCEM **INCOMPLETE** → project cannot certify.
 
 | Mode | SCEM Required? | MC/DC? | Determinism Proof? |
 |------|----------------|-------|---------------------|
-| Core | Recommended | ❌ | ❌ |
-| Strict | Mandatory | ❌ | ⚠ Only if safety-relevant |
-| Strict-A | Mandatory | ✅ | ✅ Required |
+| Core | Recommended | [NOT ALLOWED] | [NOT ALLOWED] |
+| Strict | Mandatory | [NOT ALLOWED] | ⚠ Only if safety-relevant |
+| Strict-A | Mandatory | [OK] | [OK] Required |
 
 Strict-A MUST include:
 
@@ -301,13 +301,13 @@ Strict-A `@critical` deviations are **not permitted**.
 
 Confirms:
 
-✅ No dynamic allocation
-✅ No I/O
-✅ No blocking waits
-✅ GC disabled or proven safe
-✅ Bounded execution
+- No dynamic allocation
+- No I/O
+- No blocking waits
+- GC disabled or proven safe
+- Bounded execution
 
-Failure → Strict-A **BLOCKER**.
+Failure -> Strict-A **BLOCKER**.
 
 ---
 
@@ -315,11 +315,11 @@ Failure → Strict-A **BLOCKER**.
 
 Confirms:
 
-✅ Exactly one Python version used
-✅ Version frozen in CBM
-✅ No drift across build/deploy
+- Exactly one Python version used
+- Version frozen in CBM
+- No drift across build/deploy
 
-Multiple versions → **Automatic FAIL**.
+Multiple versions -> **Automatic FAIL**.
 
 ---
 
@@ -386,11 +386,11 @@ Organizations below **S2** may not attempt Strict-A projects.
 
 This master document:
 
-✅ Centralizes SCEM, Annexes, and Maturity Model
-✅ Updates terminology to v3.0.0
-✅ Enforces one-version-per-project
-✅ Defines mandatory evidence for certification
-✅ Establishes organizational readiness levels
+- Centralizes SCEM, Annexes, and Maturity Model
+- Updates terminology to v3.0.0
+- Enforces one-version-per-project
+- Defines mandatory evidence for certification
+- Establishes organizational readiness levels
 
 This is the **foundation of the CRSS safety case** and must be referenced in all certification programs.
 

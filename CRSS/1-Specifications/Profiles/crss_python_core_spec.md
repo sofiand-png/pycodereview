@@ -766,7 +766,7 @@ For Strict code:
 Inheritance governs behavioural extension and substitutability. If a Strict
 (safety-critical) class inherits from Core (non-critical) code, the parent class
 may introduce nondeterminism, unchecked side effects, or unsafe behaviour into
-the critical unit. Core → Strict is safer because Strict provides stronger guarantees.
+the critical unit. Core -> Strict is safer because Strict provides stronger guarantees.
 
 See also: *CRSS Inheritance Policy* (`docs/annexes/crss_inheritance_policy.md`) for policy modes and examples.
 
@@ -3133,7 +3133,7 @@ import re
 RE_ID = re.compile(r"[A-Z0-9]+")
 
 def find_ids(payload: str) -> list[str]:
-    # ❌ payload comes from network, no length bound
+    # [NOT ALLOWED] payload comes from network, no length bound
     return RE_ID.findall(payload)
 ```
 
@@ -3186,7 +3186,7 @@ If a project needs a complex pattern, it MUST be rewritten as:
 ```python
 import re
 
-# ❌ Catastrophic pattern – exponential backtracking
+# [NOT ALLOWED] Catastrophic pattern – exponential backtracking
 RE_BAD = re.compile(r"^(a+)+$")
 ```
 
@@ -3222,7 +3222,7 @@ Core:
 import re
 
 def filter_lines(pattern_from_user: str, text: str) -> list[str]:
-    # ❌ arbitrary user-supplied regex
+    # [NOT ALLOWED] arbitrary user-supplied regex
     reg = re.compile(pattern_from_user)
     return [line for line in text.splitlines() if reg.search(line)]
 ```
@@ -3306,7 +3306,7 @@ certification acceptance.
 ```python
 import re
 
-# ❌ Catastrophic pattern – exponential backtracking
+# [NOT ALLOWED] Catastrophic pattern – exponential backtracking
 RE_BAD = re.compile(r"^(a+)+$")
 
 def validate(data: str) -> bool:
@@ -3485,7 +3485,7 @@ explicit deviations with justification and impact analysis.
 
 Projects SHALL test:
 - invalid credentials,
-- brute-force attempts → rate limiting or lockout behavior,
+- brute-force attempts -> rate limiting or lockout behavior,
 - expired tokens,
 - tampered or modified tokens,
 - access after:
@@ -3521,7 +3521,7 @@ SCEM SHALL include:
   - scope,
   - validation logic,
 
-- mapping of roles → safety-significant operations,
+- mapping of roles -> safety-significant operations,
 
 - test evidence for:
   - expiry behavior,
