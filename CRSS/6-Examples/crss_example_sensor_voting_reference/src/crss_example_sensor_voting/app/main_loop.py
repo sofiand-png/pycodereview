@@ -50,3 +50,7 @@ def run_single_step(seed: Optional[int] = None) -> dict:
     LOGGER.info("[OFFLINE] Actuator command: %s", command)
 
     return {"value": command.value, "status": command.status, "safe_default_used": safe_default_used}
+
+if __name__ == "__main__":
+    result = run_single_step(seed=None)
+    print(result)
