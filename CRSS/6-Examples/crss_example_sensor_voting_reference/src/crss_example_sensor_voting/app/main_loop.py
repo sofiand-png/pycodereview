@@ -18,7 +18,7 @@ import gc
 from crss_example_sensor_voting.crss_phase.markers import non_critical_phase
 from crss_example_sensor_voting.sensors.simulation import SimulatedSensors
 from crss_example_sensor_voting.config.loader import load_config
-from crss_example_sensor_voting.safety_logic.controller import SafetyController
+from crss_example_sensor_voting.orchestrator.inner_orchestrator import InnerOrchestrator, frame_inputs
 from crss_example_sensor_voting.logging_utils.logger import get_logger
 from crss_example_sensor_voting.config.model import SAFE_DEFAULT
 
@@ -39,8 +39,9 @@ def run_single_step(seed: Optional[int] = None) -> dict:
     values: List[float] = simulator.read_all()
 
     gc.disable()
-    controller = SafetyController(cfg)
-    command = controller.step(values)
+    inner = InnerOrchestrator(cfg)
+    framed = frame_inputs(values)
+    command = inner.step(framed)
     gc.enable()
 
     safe_default_used = command.value == SAFE_DEFAULT
