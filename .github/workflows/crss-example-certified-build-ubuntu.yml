@@ -1,4 +1,4 @@
-name: CRSS Example Certified Build Windows (Wheelhouse)
+name: CRSS Example Certified Build Linux (Wheelhouse)
 
 on:
   workflow_dispatch:
@@ -30,10 +30,9 @@ jobs:
           python -m pip install -U pip
 
           # Install everything from wheelhouse only
-          python -m pip install --no-index --find-links third_party/wheelhouse -r third_party/requirements.lock.txt
+          pip3 install --no-index --find-links third_party/wheelhouse/linux -r third_party/requirements.lock.txt
+          pip3 install --no-index certified/wheels/crss_example_sensor_voting-1.0.0-py3-none-any.whl
 
-          # Install project without dependency resolution
-          python -m pip install -e . --no-deps
 
       - name: Run tests with coverage
         run: |
