@@ -101,10 +101,11 @@ jobs:
 
           cp coverage.xml certified/evidence/
 
-      - name: Upload certified evidence (14 days)
+      - name: Upload certified software + evidence (14 days)
         uses: actions/upload-artifact@v4
         with:
-          name: crss-example-certified-evidence-linux
+          name: crss-example-certified-linux
           path: |
+            CRSS/6-Examples/crss_example_sensor_voting_reference/certified/wheels
             CRSS/6-Examples/crss_example_sensor_voting_reference/certified/evidence
           retention-days: 14
