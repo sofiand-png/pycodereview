@@ -1,0 +1,63 @@
+name: CRSS Example – Freeze Wheelhouse (Windows)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  freeze-wheelhouse-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Prepare third_party structure
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          mkdir -p third_party/wheelhouse/windows
+
+      - name: Generate requirements.lock.txt (pinned inputs)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          cat requirements.txt requirements-ci.txt \
+            | sed '/^\s*#/d' \
+            | sed '/^\s*$/d' \
+            | sort -u \
+            > third_party/requirements.lock.txt
+
+      - name: Download Windows wheels (binary only)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python -m pip install -U pip
+
+          python -m pip download \
+            --only-binary=:all: \
+            --dest third_party/wheelhouse/windows \
+            -r third_party/requirements.lock.txt
+
+      - name: Generate wheelhouse manifest (sha256)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse/windows
+
+          # PowerShell is available, but sha256sum also exists in bash shell on windows-latest.
+          # Use sha256sum for consistency.
+          sha256sum *.whl > ../../wheelhouse_manifest_windows.sha256.txt
+
+      - name: Upload wheelhouse bundle (14 days)
+        uses: actions/upload-artifact@v4
+        with:
+          name: crss-example-wheelhouse-windows
+          path: |
+            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/requirements.lock.txt
+            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse/windows
+            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse_manifest_windows.sha256.txt
+          retention-days: 14
