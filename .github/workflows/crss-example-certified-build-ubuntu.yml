@@ -27,7 +27,7 @@ jobs:
         run: |
           cd CRSS/6-Examples/crss_example_sensor_voting_reference/
 
-          python -m pip install -U pip
+          python3 -m pip install -U pip
 
           # Install everything from wheelhouse only
           pip3 install --no-index --find-links third_party/wheelhouse/linux -r third_party/requirements.lock.txt
