@@ -1,0 +1,70 @@
+name: CRSS Example – Freeze Linux Wheelhouse
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed only if you want to commit results back
+  actions: write
+
+jobs:
+  freeze-wheelhouse-linux:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Prepare wheelhouse directories
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          mkdir -p third_party/wheelhouse/linux
+
+      - name: Generate requirements.lock.txt (pinned)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          cat requirements-ci.txt \
+            | sed '/^\s*#/d' \
+            | sed '/^\s*$/d' \
+            | sort -u \
+            > third_party/requirements.lock.txt
+
+      - name: Download Linux wheels (binary only)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+
+          python -m pip install -U pip
+
+          python -m pip download \
+            --only-binary=:all: \
+            --dest third_party/wheelhouse/linux \
+            -r third_party/requirements.lock.txt
+
+      - name: Build project wheel (Linux)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+
+          python -m pip install wheel
+          python -m pip wheel . --no-deps -w third_party/wheelhouse/linux
+
+      - name: Generate wheelhouse SHA256 manifest (CBM input)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse/linux
+
+          sha256sum *.whl > ../wheelhouse_manifest_linux.sha256.txt
+
+      - name: Upload wheelhouse artifact (for review or commit)
+        uses: actions/upload-artifact@v4
+        with:
+          name: crss-example-wheelhouse-linux
+          path: |
+            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse/linux
+            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/requirements.lock.txt
+            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse_manifest_linux.sha256.txt
+          retention-days: 14
