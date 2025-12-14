@@ -1665,7 +1665,10 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
    - immutable (e.g. tuples, frozen dataclasses, closed Enums), or
    - copied on handoff (Level-A receives its own private copy).
 3. Lower-level code (B/C/Core) MUST NOT hold mutable references to Level-A internal state or configuration.
-4. SCEM/MAR MUST capture these ownership assumptions for all Level-A-relevant configuration and state structures.
+5. SCEM / MAR documentation SHALL explicitly record:
+   - ownership boundaries for Level-A data,
+   - whether immutability or copying is used at each handoff,
+   - and the justification that no downward mutation is possible.
 
 **CRSS-Config-1 (Normative — Configuration Boundary for Level-A)**
 
