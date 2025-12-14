@@ -1,0 +1,108 @@
+name: CRSS Example – Certified Build (Windows, Offline)
+
+on:
+  workflow_dispatch:
+  push:
+    tags:
+      - "crss-example-v*"
+
+permissions:
+  contents: read
+
+jobs:
+  certified-windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Certified install (no public internet)
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+
+          test -f third_party/requirements.lock.txt
+          test -d third_party/wheelhouse/windows
+
+          python -m pip install -U pip
+
+          # 1) Install pinned deps strictly from frozen wheelhouse (Windows)
+          python -m pip install --no-index \
+            --find-links third_party/wheelhouse/windows \
+            -r third_party/requirements.lock.txt
+
+          # 2) Build project wheel as a certified OUTPUT (no deps)
+          mkdir -p certified/wheels
+          python -m pip wheel . --no-deps -w certified/wheels
+
+          # 3) Install project strictly from that wheel (still no index)
+          python -m pip install --no-index certified/wheels/crss_example_sensor_voting-*.whl
+
+      - name: Run tests with branch coverage
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          coverage run --branch -m pytest
+          coverage xml
+          coverage report -m
+
+      - name: Offline smoke test
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python -m crss_example_sensor_voting.app.main_loop
+
+      - name: TCP server/client smoke test
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python -m crss_example_sensor_voting.app.tcp_sensor_server &
+          SERVER_PID=$!
+          sleep 2
+          timeout 5 python -m crss_example_sensor_voting.app.tcp_controller_client || true
+          kill $SERVER_PID || true
+
+      - name: Create certified evidence bundle
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          mkdir -p certified/evidence
+
+          python - <<'PY'
+          import glob, hashlib, pathlib
+          out = pathlib.Path("certified/evidence/wheel_manifest.sha256.txt")
+          wheels = sorted(glob.glob("certified/wheels/*.whl"))
+          lines = []
+          for w in wheels:
+            data = pathlib.Path(w).read_bytes()
+            h = hashlib.sha256(data).hexdigest()
+            lines.append(f"{h}  {pathlib.Path(w).name}")
+          out.write_text("\n".join(lines) + ("\n" if lines else ""))
+          PY
+
+          python - <<'PY'
+          import importlib, pathlib
+          pkgs = ["pip", "pytest", "coverage"]
+          lines = []
+          for p in pkgs:
+            try:
+              m = importlib.import_module(p)
+              ver = getattr(m, "__version__", "unknown")
+            except Exception:
+              ver = "not-installed"
+            lines.append(f"{p}={ver}")
+          pathlib.Path("certified/evidence/tool_versions.txt").write_text("\n".join(lines) + "\n")
+          PY
+
+          cp coverage.xml certified/evidence/
+
+      - name: Upload certified software + evidence (14 days)
+        uses: actions/upload-artifact@v4
+        with:
+          name: crss-example-certified-windows
+          path: |
+            CRSS/6-Examples/crss_example_sensor_voting_reference/certified/wheels
+            CRSS/6-Examples/crss_example_sensor_voting_reference/certified/evidence
+          retention-days: 14
