@@ -9,7 +9,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 ---
 
 **Python Target:** 3.11
-**Profiles Used:** Strict-A, Core-B, Core-C
+**CRSS Modes Used:** Strict-A, Strict-B, Core-B, Core-C
+*(Modes follow Mode = (Profile, Safety Level); e.g. “Strict-A” = Strict, Level A.)*
 **System Type:** Safety-related sensor-voting control loop with gateway interaction
 **Domain Fit:** Automotive, Clinical, Railway, Industrial Control, Embedded Simulation
 
@@ -191,79 +192,77 @@ Loop:
 
 The system runs indefinitely (until Ctrl+C) at ~60 ms cycle time.
 
-
 ### 3.4 Functional Requirements
 
-**SV-FUNC-01 — Triple sensor input**  
+**SV-FUNC-01 — Triple sensor input**
 The system shall process exactly three sensor channels per cycle and reject any SensorFrame that does not contain exactly three values.
 
-**SV-FUNC-02 — TMR voting**  
+**SV-FUNC-02 — TMR voting**
 The system shall compute a single voted value from the three sensor inputs using a deterministic TMR-style voting algorithm (median-based).
 
-**SV-FUNC-03 — Stateless per-cycle computation**  
+**SV-FUNC-03 — Stateless per-cycle computation**
 Each control cycle shall compute the actuator command using only the current SensorFrame and the previous actuator output; no additional hidden internal state is permitted.
 
 ---
 
 #### 3.4.1 Safety / Envelope Requirements
 
-**SV-SAF-01 — Envelope clamp**  
-The system shall ensure that every actuator command satisfies:  
+**SV-SAF-01 — Envelope clamp**
+The system shall ensure that every actuator command satisfies:
 `min_safe ≤ command_value ≤ max_safe`.
 
-**SV-SAF-02 — Rate limiting**  
+**SV-SAF-02 — Rate limiting**
 The system shall ensure that the difference between successive actuator commands does not exceed `max_delta` in magnitude, except when transitioning to SAFE_DEFAULT.
 
-**SV-SAF-03 — SAFE_DEFAULT application**  
+**SV-SAF-03 — SAFE_DEFAULT application**
 When the system enters FAILSAFE state, it shall set the actuator command to `SAFE_DEFAULT = min_safe` and may bypass rate limiting for that transition.
 
-**SV-SAF-04 — Deterministic Strict-A**  
+**SV-SAF-04 — Deterministic Strict-A**
 For any given configuration, previous output, and set of validated sensor values, the Strict-A logic shall always return the same actuator command and status.
 
 ---
 
 #### 3.4.2 Fault-Handling Requirements
 
-**SV-FLT-01 — Single-sensor fault tolerance**  
+**SV-FLT-01 — Single-sensor fault tolerance**
 If at most one sensor is faulty and a plausible pair exists, the system shall produce a bounded actuator command with status `DEGRADED` or `NORMAL`, never `FAILSAFE`.
 
-**SV-FLT-02 — Severe disagreement to FAILSAFE**  
+**SV-FLT-02 — Severe disagreement to FAILSAFE**
 If no plausible sensor pair exists due to severe disagreement, the system shall enter FAILSAFE and output SAFE_DEFAULT.
 
-**SV-FLT-03 — Frozen behavior**  
+**SV-FLT-03 — Frozen behavior**
 If sensor readings are detected as frozen over multiple cycles, the system shall hold or slowly adjust the actuator command within the configured envelope and mark the status as at most `DEGRADED`.
 
-**SV-FLT-04 — Stuck-drift behavior**  
+**SV-FLT-04 — Stuck-drift behavior**
 Slow sensor drift within the safe band shall not cause oscillatory or unsafe actuator commands; the envelope shall keep the command bounded and rate-limited.
 
 ---
 
 #### 3.4.3 Interface / JSON / TCP Requirements
 
-**SV-INT-01 — SensorFrame format**  
+**SV-INT-01 — SensorFrame format**
 The gateway shall send SensorFrame messages conforming to the specified JSON schema (IDs, values, statuses, timestamp, unit).
 
-**SV-INT-02 — ActuatorRequest format**  
+**SV-INT-02 — ActuatorRequest format**
 The client shall send ActuatorRequest messages conforming to the specified JSON schema (command_value, status, safe_default_used, reason).
 
-**SV-INT-03 — Strict-A isolation**  
+**SV-INT-03 — Strict-A isolation**
 Strict-A logic shall not directly handle JSON strings, sockets, or timestamps; it shall operate exclusively on normalized numeric values and configuration.
 
 ---
 
 #### 3.4.5 Test & Coverage Requirements
 
-**SV-TEST-01 — Unit coverage**  
+**SV-TEST-01 — Unit coverage**
 All Strict-A modules shall achieve **100% statement coverage** and **≥ 95% branch coverage**.
 
-**SV-TEST-02 — MC/DC**  
+**SV-TEST-02 — MC/DC**
 All decision points in Strict-A logic (envelope, fallback, status classification) shall be covered by MC/DC-style tests.
 
-**SV-TEST-03 — Fault injection coverage**  
-The test suite shall exercise all six fault modes:  
-`normal`, `high_fault`, `low_fault`, `severe_disagreement`, `frozen`, `stuck_drift`,  
+**SV-TEST-03 — Fault injection coverage**
+The test suite shall exercise all six fault modes:
+`normal`, `high_fault`, `low_fault`, `severe_disagreement`, `frozen`, `stuck_drift`,
 and verify the resulting statuses and outputs.
-
 
 ## 4. High-Level Architecture
 ```text
@@ -278,13 +277,14 @@ and verify the resulting statuses and outputs.
  ┌─────────────────────────┐
  │ CRSS Client App         │
  │  - JSON parsing (Core-C)│
- │  - Validation (Core-C)  │
- │  - Voting (Core-B)      │
- │  - Safety Envelope      │
- │    + Plausibility       │
+ │  - Framing/shape checks │
+ │    (Core-C / Strict-B)  │
+ │  - Inner Orchestrator   │
+ │    (Strict-B)           │
+ │  - Voting + Envelope    │
  │    + Rate-limiting      │
  │    + Safe-default       │
- │    (Strict-A)           │
+ │    (Strict-A @critical) │
  └───────────┬─────────────┘
              │ JSON/TCP
              ▼
@@ -638,7 +638,7 @@ reason = "SEVERE_DISAGREEMENT"
 ```
 
 ### 16.5 Frozen Sensors
-Frozen sensors are detected implicitly by observing identical values across multiple frames; 
+Frozen sensors are detected implicitly by observing identical values across multiple frames;
 the gateway does not transmit a dedicated "FROZEN" status:
 ```python
 final = previous_output  # stable hold
@@ -773,14 +773,15 @@ Strict-A must satisfy:
 - static memory footprint
 
 ### 22.2 Core-B Responsibilities
-Core-B is deterministic but not safety-critical:
-- computes median
-- evaluates spread
-- assigns disagreement severity
-- performs numeric checks
+Core-B implements non-critical, deterministic orchestration and integration helpers that are **not** on the Level-A critical decision path.
 
-Core-B may raise exceptions internally, which must be caught and handled in Core-C.
+Typical Core-B responsibilities in this example:
+- non-critical application loops (offline step runner, TCP client controller harness)
+- calling the Strict-B inner orchestrator with already-framed inputs
+- scheduling / GC control (non-critical)
+- error handling and restart logic around non-critical infrastructure
 
+Core-B MUST NOT implement or duplicate Level-A safety logic such as voting, envelope application, SAFE_DEFAULT selection, or safety status classification (those are Strict-A).
 ### 22.3 Core-C Responsibilities
 Core-C handles:
 - TCP networking

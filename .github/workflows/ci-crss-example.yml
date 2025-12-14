@@ -38,7 +38,7 @@ jobs:
           SERVER_PID=$!
 
           # Give it a moment to start
-          sleep 1
+          sleep 2
 
           # Run client for a few seconds
           timeout 5 python3 -m crss_example_sensor_voting.app.tcp_controller_client || true
@@ -46,8 +46,14 @@ jobs:
           # Stop server
           kill $SERVER_PID || true
 
+      - name: Offline smoke test
+        run: |
+          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
+          python3 -m crss_example_sensor_voting.app.main_loop
+
       - name: Upload coverage artifact
         uses: actions/upload-artifact@v4
         with:
           name: crss-example-coverage
           path: CRSS/6-Examples/crss_example_sensor_voting_reference/coverage.xml
+          retention-days: 14

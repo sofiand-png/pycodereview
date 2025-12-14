@@ -15,7 +15,7 @@ from typing import Optional
 from crss_example_sensor_voting.crss_phase.markers import non_critical_phase
 from crss_example_sensor_voting.config.loader import load_config
 from crss_example_sensor_voting.config.model import SAFE_DEFAULT
-from crss_example_sensor_voting.safety_logic.controller import SafetyController
+from crss_example_sensor_voting.orchestrator.inner_orchestrator import InnerOrchestrator, frame_inputs
 from crss_example_sensor_voting.io.json_protocol import (
     SensorFrame,
     ActuatorRequest,
@@ -32,7 +32,7 @@ LOGGER = get_logger(__name__)
 @non_critical_phase
 def run_client(host: str = "127.0.0.1", port: int = 9000) -> None:
     cfg = load_config()
-    controller = SafetyController(cfg)
+    inner = InnerOrchestrator(cfg)
 
     with socket.create_connection((host, port)) as sock:
         LOGGER.info("Connected to TCP sensor server at %s:%s", host, port)
@@ -50,7 +50,8 @@ def run_client(host: str = "127.0.0.1", port: int = 9000) -> None:
 
                 validate_sensor_frame(frame, cfg)
 
-                cmd = controller.step(frame.values)
+                framed = frame_inputs(frame.values)
+                cmd = inner.step(framed)
 
                 safe_default_used = cmd.value == SAFE_DEFAULT
 

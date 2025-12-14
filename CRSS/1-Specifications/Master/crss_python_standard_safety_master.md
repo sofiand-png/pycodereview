@@ -1,4 +1,4 @@
-# CRSS-Python Unified Safety Specification
+# CRSS-Python Standard Safety Master
 
 **Version:** v1.0.0
 **Status:** Normative
@@ -1309,17 +1309,38 @@ It applies to:
 
 ### 15.2 Version and Source Control
 
-TPL-1 — **Pinned Versions Only**  
+**TPL-1 — Pinned Versions Only**  
 All third-party dependencies MUST be:
 
 - Version-pinned in the dependency manifest, and  
 - Recorded in the Configuration Baseline Manifest (CBM).   
 
-TPL-2 — **No Implicit Online Resolution**  
+**TPL-2 — No Implicit Online Resolution**  
 Production builds and certification builds MUST NOT fetch packages from the public internet at build or deploy time. All dependencies MUST come from:
 
 - an internal mirror, or  
 - a pre-frozen local repository.
+
+**TPL-2.1 — Certification Build Offline Enforcement (Normative)**
+Certification builds SHALL enforce “no public internet resolution” by one of:
+- installing exclusively from an internal mirror (configured index URL), OR
+- using pip --no-index --find-links with a pre-frozen local repository.
+
+**TPL-2.2 — Frozen Repository Requirement (Normative)**
+When installing CRSS project code in certification builds:
+- dependency resolution MUST be disabled (e.g. pip install . --no-deps)
+- all dependencies MUST be installed explicitly from the approved source.
+
+If a pre-frozen local repository is used, it MUST be treated as a baseline input:
+- its contents (wheels/sdists) MUST be versioned or hash-manifested,
+- the manifest MUST be recorded in the CBM,
+- any change to frozen repository contents triggers a new baseline (new CBM + re-test).
+
+This directly operationalizes TPL-1/TPL-2 in CI.
+
+Test and evidence tools (pytest/coverage/etc.) are permitted in certification only if :
+- they are version-pinned
+- they are included in CBM/toolchain registry.
 
 ### 15.3 Critical vs Non-Critical Usage
 

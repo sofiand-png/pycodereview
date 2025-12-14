@@ -371,6 +371,9 @@ Deployments to production SHOULD (Core) and MUST (Strict) be performed exclusive
 - operate from signed release artifacts, and
 - enforce CBM conformity checks before deployment.
 
+CI pipelines used for baseline creation MUST implement TPL-2 controls (offline install mode) 
+and MUST record dependency + toolchain versions into CBM.
+
 ---
 
 **DPL-12.16 – Separation of Duties in Deployment**

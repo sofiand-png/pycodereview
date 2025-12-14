@@ -59,8 +59,10 @@ Decisions covered:
 - **D2**: voting returns DEGRADED → DEGRADED command
 - **D3**: voting returns NORMAL → NORMAL command
 ---
-# Fault Model
 
+# 5. Fault Injection Report
+
+## 5.1 Fault model
 The following faults are modelled at the sensor/input level:
 
 1. **Single-sensor high fault**
@@ -90,3 +92,39 @@ Faults are injected via:
   severe_disagreement, frozen, stuck_drift)
 - `_derive_sensor_statuses` in `app.tcp_sensor_server`
 - random status flipping (low probability) to simulate diagnostic metadata bugs.
+
+
+## 5.2 Fault Classes Exercised
+
+The test suite covers the following fault classes (representative, not exhaustive):
+
+1. **Sensor disagreement / plausibility faults**
+   - One sensor deviates beyond the plausibility threshold.
+   - Two sensors deviate (insufficient agreement).
+2. **Out-of-range values**
+   - Inputs below `min_safe` or above `max_safe` and/or outside sanity limits.
+3. **Degenerate input shapes**
+   - Wrong sensor vector length (handled upstream / non-critical validation).
+4. **SAFE_DEFAULT fallback**
+   - Conditions where no valid vote exists result in SAFE_DEFAULT command.
+
+## 5.3 Evidence: Test Locations
+
+Primary tests exercising these behaviors:
+
+- Voting MC/DC:
+  - `src/tests/mcdc/test_voting_mcdc.py`
+- Envelope MC/DC:
+  - `src/tests/mcdc/test_envelope_mcdc.py`
+- Controller (integration of vote + envelope + status):
+  - `src/tests/unit/test_controller.py`
+  - `src/tests/integration/test_single_step_integration.py`
+  - `src/tests/integration/test_full_cycle_integration.py`
+
+## 5.4 Expected Safety Response
+
+For invalid / inconsistent / implausible inputs, the Strict-A kernel MUST:
+
+- avoid unsafe actuation,
+- select SAFE_DEFAULT or equivalent failsafe command,
+- expose a FAILSAFE/DEGRADED status in the returned abstract command object.

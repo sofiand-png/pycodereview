@@ -338,6 +338,12 @@ Requires:
 - rollback strategy
 - production gating
 
+**Certification Build Definition:** 
+A “certification build” is a build executed under TPL-2 constraints:
+- no public internet package resolution 
+- using the baseline interpreter + pinned dependencies
+- and producing TEP/CBM inputs.
+
 ---
 
 # Toolchain Confidence Assessment
