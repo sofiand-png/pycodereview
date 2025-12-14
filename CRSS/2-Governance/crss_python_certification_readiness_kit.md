@@ -173,6 +173,7 @@ Before certification begins, the following MUST exist:
 - Deviation Register (if applicable)
 - SCEM Master Evidence Package
 - Certification Readiness Checklist (CRC)
+- Certified Artifact(s) and hash list
 
 All artifacts must:
 

@@ -152,6 +152,8 @@ Activities:
 Artifact:
 - CBM
 
+The Baseline SHALL include references to Freeze Build outputs (wheelhouse, locked dependency manifest) used by the Certified Build.
+
 ## Phase 5 — Certification Readiness
 Artifacts:
 - final SBR

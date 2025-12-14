@@ -166,6 +166,7 @@ The External Assessor SHALL receive, at minimum:
    - Architecture Decision Records (ADR)
    - Third-Party Register (TPR)
    - Deployment Snapshot
+   - Certified Artifact (.whl) exists and hash matches CBM.
 
 2. **Rule Compliance Report (RCR) — Mandatory**
    - Must be complete, signed, hashed, and versioned.

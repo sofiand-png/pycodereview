@@ -39,7 +39,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [9.1 Zero Modification](#91-zero-modification)
     - [9.2 Change Requires New Release](#92-change-requires-new-release)
   - [10. Release Approval Authority](#10-release-approval-authority)
-  - [11. Summary](#11-summary)
+  - [12. Summary](#11-summary)
 
 ---
 
@@ -282,7 +282,234 @@ Developers and CI/CD systems **cannot self-approve** Releases.
 
 ---
 
-## 11. Summary
+## 11. Certified Build and Packaging Process
+
+### 11.1 Purpose and Scope
+
+This section defines the mandatory process by which a CRSS-compliant project SHALL produce a certified software package, including:
+
+- dependency freezing and locking,
+- offline, deterministic installation,
+- generation of immutable build artifacts,
+- and collection of certification evidence.
+
+This process applies to all projects claiming CRSS compliance at any Safety Level.
+
+---
+
+### 11.2 Conceptual Model
+
+CRSS distinguishes between two fundamentally different activities:
+
+- Dependency Freeze Operations
+- Certified Builds
+
+These activities MUST be logically and operationally separated.
+
+| Activity | Internet Access | Purpose |
+|---------|-----------------|---------|
+| Dependency Freeze | Allowed (controlled) | Produce frozen dependency baseline |
+| Certified Build | Forbidden | Produce certifiable software artifact |
+
+This separation enforces TPL-2 (No Implicit Online Resolution) and ensures reproducibility.
+
+---
+
+### 11.3 Dependency Freeze Operation (Normative)
+
+A Dependency Freeze Operation is a controlled maintenance action whose goal is to produce a frozen dependency baseline.
+
+#### 11.3.1 Inputs
+
+- `requirements.txt`, or equivalent manifests
+- Approved package sources (internal mirror or PyPI during freeze only)
+
+#### 11.3.2 Mandatory Outputs
+
+The freeze operation SHALL produce:
+
+- `requirements.lock.txt`  
+  Fully pinned dependency list (exact versions).
+
+- A platform-specific wheelhouse, for example:
+  - `third_party/wheelhouse/linux/`
+  - `third_party/wheelhouse/windows/`
+
+- A cryptographic manifest:
+  - `wheelhouse_manifest_<platform>.sha256.txt`
+
+#### 11.3.3 Constraints
+
+- Only binary distributions (`.whl`) SHALL be used.
+- Source builds during freeze SHOULD be avoided.
+- The freeze operation MUST be auditable and repeatable.
+
+#### 11.3.4 Status
+
+Freeze operations:
+
+- MAY be manual,
+- MAY be CI-driven,
+- MUST NOT be considered certification builds.
+
+---
+
+### 11.4 Certified Build (Normative)
+
+A Certified Build is the authoritative process that produces the certified software artifact.
+#### 11.4.1 Certified Build Definition
+
+A Certified Build is a build execution that satisfies all of the following
+conditions:
+
+1. All third-party dependencies are installed exclusively from a frozen,
+   version-pinned, offline dependency baseline (TPL-1, TPL-2).
+2. No implicit online dependency resolution occurs at build, test, or packaging time.
+3. The software is packaged into an immutable, versioned artifact
+   (e.g. Python wheel).
+4. All verification activities (tests, coverage, robustness checks) are executed
+   against the packaged artifact or an installation thereof.
+5. All build outputs and evidence are recorded in the Configuration Baseline
+   Manifest (CBM) and Test Evidence Package (TEP).
+
+A Certified Build represents the authoritative technical basis for CRSS
+certification claims and SHALL be the build referenced by SCEM and CRC artifacts.
+
+
+#### 11.4.2 Network Policy
+
+During a certified build:
+
+- No public internet access is permitted.
+- Package installation MUST use:
+  - `--no-index`
+  - pre-frozen wheelhouse only
+
+Any violation SHALL be treated as hard non-compliance.
+
+#### 11.4.3 Certified Build Steps (Required Order)
+
+A certified build SHALL execute the following steps in order:
+
+#### Step 1 — Offline Dependency Installation
+
+Dependencies MUST be installed exclusively from the frozen wheelhouse:
+
+```bash
+python -m pip install --no-index   --find-links third_party/wheelhouse/<platform>   -r third_party/requirements.lock.txt
+```
+
+This step SHALL fail if any dependency is missing.
+
+#### Step 2 — Certified Wheel Generation
+
+The project SHALL be packaged into an immutable wheel artifact:
+
+```bash
+python -m pip wheel . --no-deps -w certified/wheels
+```
+
+Rules:
+
+- Editable installs (`-e`) are NOT allowed.
+- Dependency resolution is NOT allowed during packaging.
+- The wheel SHALL represent the exact certified software unit.
+
+#### Step 3 — Offline Installation of Certified Artifact
+
+The certified wheel SHALL be installed offline to verify installability:
+
+```bash
+python -m pip install --no-index certified/wheels/<project>-*.whl
+```
+
+This confirms:
+
+- no hidden dependencies,
+- no implicit resolution,
+- correct packaging metadata.
+
+#### Step 4 — Verification and Testing
+
+All verification activities SHALL be executed against the installed wheel, including:
+
+- unit tests,
+- integration tests,
+- coverage measurement,
+- robustness / fault injection tests (if applicable).
+
+---
+
+### 11.5 Certified Build Outputs (Normative)
+
+A certified build SHALL produce a Certified Build Package containing:
+
+```text
+certified/
+  wheels/
+    <project>-<version>-py3-none-any.whl
+  evidence/
+    coverage.xml
+    wheel_manifest.sha256.txt
+    tool_versions.txt
+```
+
+#### 11.5.1 Mandatory Evidence
+
+- Certified wheel (primary deliverable)
+- Wheel hash manifest (immutability proof)
+- Coverage report
+- Tool version record
+
+These artifacts SHALL be referenced in:
+
+- CBM (Configuration Baseline Manifest),
+- TEP (Test Evidence Package),
+- CRC (Certification Readiness Checklist).
+
+---
+
+### 11.6 Packaging Rules and CRSS Implications
+
+Projects claiming CRSS compliance SHALL observe the following packaging rules:
+
+- Packaging MUST be deterministic.
+- `setup.py` / `pyproject.toml` MUST:
+  - declare all runtime dependencies explicitly,
+  - avoid dynamic dependency computation.
+
+The resulting wheel MUST:
+
+- be installable offline,
+- not execute network operations at install time,
+- not rely on editable source layouts.
+
+For pure-Python CRSS projects, wheels SHOULD use the `py3-none-any` tag where possible.
+
+---
+
+### 11.7 Platform-Specific Certification Baselines
+
+CRSS permits platform-specific certified builds.
+
+- Dependency wheelhouses MAY differ per platform.
+- Certified wheels MAY be generated per platform, even if functionally identical.
+- Each certified build SHALL maintain its own evidence and hash manifests.
+- Platform-specific certification SHALL be treated as distinct certification baselines.
+
+---
+
+### 11.8 Relationship to Other CRSS Artifacts
+
+| Artifact | Role |
+|---------|------|
+| CBM | Records certified wheel + dependency baseline |
+| SCEM | Explains certification argument |
+| TEP | Holds test and coverage evidence |
+| CRC | Final readiness decision |
+
+
+## 12. Summary
 
 A Release is:
 - Immutable
