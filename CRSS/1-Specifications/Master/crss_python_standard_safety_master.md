@@ -1321,14 +1321,16 @@ Production builds and certification builds MUST NOT fetch packages from the publ
 - an internal mirror, or  
 - a pre-frozen local repository.
 
-**TPL-2.1 — Certified Build Offline Install Mode (Normative)**
-Certification builds MUST enforce offline dependency resolution by using at least one of:
-- pip --no-index --find-links <frozen_repo>, or
-- pip --index-url <internal_mirror> --no-deps with a fully pinned lock,
-
-such that no dependency can be fetched from the public internet.
+**TPL-2.1 — Certification Build Offline Enforcement (Normative)**
+Certification builds SHALL enforce “no public internet resolution” by one of:
+- installing exclusively from an internal mirror (configured index URL), OR
+- using pip --no-index --find-links with a pre-frozen local repository.
 
 **TPL-2.2 — Frozen Repository Requirement (Normative)**
+When installing CRSS project code in certification builds:
+- dependency resolution MUST be disabled (e.g. pip install . --no-deps)
+- all dependencies MUST be installed explicitly from the approved source.
+
 If a pre-frozen local repository is used, it MUST be treated as a baseline input:
 - its contents (wheels/sdists) MUST be versioned or hash-manifested,
 - the manifest MUST be recorded in the CBM,
