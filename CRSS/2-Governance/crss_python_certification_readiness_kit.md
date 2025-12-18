@@ -94,51 +94,51 @@ The CRC is a mandatory artifact confirming readiness.
 ### CRC-1 — Compliance Completion
 - Phases 1–4 completed
 - All mandatory artifacts exist
-- [NOT ALLOWED] Missing artifacts -> NOT READY
+- Missing artifacts -> NOT READY
 
 ### CRC-2 — SCEM Completion
 - All SCEM domains complete
 - All annex artifacts complete
-- [NOT ALLOWED] Missing items -> NOT READY
+- Missing items -> NOT READY
 
 ### CRC-3 — Toolchain Integrity
 - All tools fixed-version
 - TCL levels documented
 - No auto-update
-- [NOT ALLOWED] Tool drift -> NOT READY
+- Tool drift -> NOT READY
 
 ### CRC-4 — Configuration Immutability
 - CBM finalized
 - No config changes pending
-- [NOT ALLOWED] Unfrozen configuration -> NOT READY
+- Unfrozen configuration -> NOT READY
 
 ### CRC-5 — Mode Enforcement Confirmation
 - MAR finalized
 - Propagation resolved
 - Critical never calls non-critical
-- [NOT ALLOWED] Unresolved promotions -> NOT READY
+- Unresolved promotions -> NOT READY
 
 ### CRC-6 — Critical Phase Integrity
 - Critical boundaries defined
 - Determinism validated
 - Strict-A: zero violations in `@critical`
-- [NOT ALLOWED] Any `@critical` violation -> NOT READY
+- Any `@critical` violation -> NOT READY
 
 ### CRC-7 — Deviation Resolution
 - Strict-A deviations documented
 - Strict-A deviations approved
 - Strict-A deviations isolated
-- [NOT ALLOWED] Unapproved deviation -> NOT READY
+- Unapproved deviation -> NOT READY
 
 ### CRC-8 — Build Reproducibility
 - Rebuild = identical result
 - Reproducibility demonstrated
-- [NOT ALLOWED] Non-reproducible builds -> NOT READY
+- Non-reproducible builds -> NOT READY
 
 ### CRC-9 — Organizational Readiness
 - SMM Level ≥ **S2** for Strict
 - SMM Level ≥ **S4** for Strict-A
-- [NOT ALLOWED] Organizational gaps -> NOT READY
+- Organizational gaps -> NOT READY
 
 ---
 
@@ -146,14 +146,14 @@ The CRC is a mandatory artifact confirming readiness.
 
 Certification CANNOT begin if:
 
-- [NOT ALLOWED] Multiple Python versions exist
-- [NOT ALLOWED] Mode downgrades occurred
-- [NOT ALLOWED] Critical calls non-critical
-- [NOT ALLOWED] Incomplete SCEM
-- [NOT ALLOWED] Tool or dependency drift
-- [NOT ALLOWED] Missing CBM
-- [NOT ALLOWED] Auto-updating systems in place
-- [NOT ALLOWED] Strict-A deviation unapproved
+- Multiple Python versions exist
+- Mode downgrades occurred
+- Critical calls non-critical
+- Incomplete SCEM
+- Tool or dependency drift
+- Missing CBM
+- Auto-updating systems in place
+- Strict-A deviation unapproved
 
 These are **absolute blockers** that cannot be waived.
 
@@ -220,8 +220,8 @@ This document:
 
 Certification readiness is **binary**:
 
-> [OK] READY
-> [NOT ALLOWED] NOT READY
+> READY
+> NOT READY
 
 There is no partial readiness under CRSS-Python.
 

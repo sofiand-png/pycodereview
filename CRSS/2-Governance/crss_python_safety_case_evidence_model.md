@@ -156,11 +156,12 @@ If any artifact is missing -> SCEM **INCOMPLETE** -> project cannot certify.
 
 ## 1.5 SCEM & Modes
 
-| Mode | SCEM Required? | MC/DC? | Determinism Proof? |
-|------|----------------|-------|---------------------|
-| Core | Recommended | [NOT ALLOWED] | [NOT ALLOWED] |
-| Strict | Mandatory | [NOT ALLOWED] | ⚠ Only if safety-relevant |
-| Strict-A | Mandatory | [OK] | [OK] Required |
+| Mode      | SCEM Required | MC/DC Required | Determinism Proof Required |
+|-----------|---------------|----------------|----------------------------|
+| Core      | Recommended   | No             | No                         |
+| Strict    | Mandatory     | No             | Only if safety-relevant    |
+| Strict-A  | Mandatory     | Yes            | Yes                        |
+
 
 Strict-A MUST include:
 

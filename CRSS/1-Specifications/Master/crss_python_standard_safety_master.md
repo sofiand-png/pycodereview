@@ -800,12 +800,12 @@ Non-critical code may perform operations that are forbidden in critical code:
 - Blocking operations (within limits)
 
 **Rule relaxation:**
-- [NOT ALLOWED] Does **not** occur. Global profile rules still apply everywhere.
+- Does **not** occur. Global profile rules still apply everywhere.
 
 In other words:
 
 - Non-critical code has more operational freedom
-- [NOT ALLOWED] But no lower enforcement for MUST/MUST-NOT rules.
+- But no lower enforcement for MUST/MUST-NOT rules.
 
 ---
 
@@ -1930,7 +1930,7 @@ def safety_step(cfg_a: SafetyConfig, inputs: VotedInputs) -> ActuatorCommand:
     return cmd
 ```
 
-If Strict-B starts doing safety-relevant logic (example NOT ALLOWED):
+If Strict-B starts doing safety-relevant logic:
 ```python
 if v.confidence < 0.8:
     # different safety behavior here

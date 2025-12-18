@@ -23,7 +23,7 @@ This document MUST NOT introduce new requirements beyond those in the Master.
 - [CRSS Phase-Aware Rule Interpretation Model](#crss-phase-aware-rule-interpretation-model)
   - [0. Scope of this document](#0-scope-of-this-document)
   - [1. Interpretation in `@critical` Code](#1-interpretation-in-critical-code)
-    - [[NOT ALLOWED] Forbidden in Critical Code](#[NOT ALLOWED]-forbidden-in-critical-code)
+    - [Forbidden in Critical Code](#forbidden-in-critical-code)
     - [Critical Code Principle](#critical-code-principle)
   - [2. Interpretation in Non-Critical Code](#2-interpretation-in-non-critical-code)
     - [[OK] Permitted in Non-Critical Code](#[OK]-permitted-in-non-critical-code)
@@ -64,7 +64,7 @@ Applicable to:
 
 When inside a **critical execution phase**, a phase-aware rule is enforced at **maximum strictness**:
 
-### [NOT ALLOWED] Forbidden in Critical Code
+### Forbidden in Critical Code
 
 - **I/O of any kind**
   - filesystem

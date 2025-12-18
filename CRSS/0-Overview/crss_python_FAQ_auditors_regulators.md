@@ -41,9 +41,9 @@ CRSS-Python certification applies to **software units written in Python**, speci
 
 Certification DOES NOT apply to:
 
-- [NOT ALLOWED] System-level safety certification
-- [NOT ALLOWED] Hardware certification
-- [NOT ALLOWED] Primary actuator control loops
+- System-level safety certification
+- Hardware certification
+- Primary actuator control loops
 
 CRSS-Python certification confirms **software compliance**, not system compliance.
 
@@ -61,9 +61,9 @@ CRSS-Python certification confirms **software compliance**, not system complianc
 
 CRSS-Python does **not** support:
 
-- [NOT ALLOWED] ASIL D primary actuation
-- [NOT ALLOWED] SIL 4
-- [NOT ALLOWED] DAL A/B flight control
+- ASIL D primary actuation
+- SIL 4
+- DAL A/B flight control
 
 ---
 
@@ -73,7 +73,7 @@ Yes.
 
 CRSS-Python defines certification status as:
 
-- **PASS** or [NOT ALLOWED] **FAIL**
+- **PASS** or **FAIL**
 
 There is no partial, percentage-based, or “conditional” compliance.
 
@@ -114,14 +114,14 @@ All must be versioned, immutable, and traceable.
 
 ##  6. What Violations Automatically Fail Certification?
 
-- [NOT ALLOWED] Critical code calling non-critical code
-- [NOT ALLOWED] Dynamic allocation in `@critical`
-- [NOT ALLOWED] GC enabled in `@critical`
-- [NOT ALLOWED] Threads in `@critical`
-- [NOT ALLOWED] Deviation in Strict-A `@critical`
-- [NOT ALLOWED] Python version mismatch
-- [NOT ALLOWED] Dependency drift from CBM
-- [NOT ALLOWED] Hotfixes or runtime updates
+- Critical code calling non-critical code
+- Dynamic allocation in `@critical`
+- GC enabled in `@critical`
+- Threads in `@critical`
+- Deviation in Strict-A `@critical`
+- Python version mismatch
+- Dependency drift from CBM
+- Hotfixes or runtime updates
 
 Any one of these = **FAIL**.
 
@@ -130,7 +130,7 @@ Any one of these = **FAIL**.
 ##  7. Are Deviations Allowed?
 
 ###  Strict-A `@critical`
-- [NOT ALLOWED] No deviations permitted.
+- No deviations permitted.
 
 ###  Strict-A `@non_critical_phase`
 - Deviations allowed only if:

@@ -16,9 +16,6 @@ This document defines the long-term improvement roadmap for the CRSS Python ecos
 It addresses:
 - architectural gaps identified across large-scale systems
 - runtime considerations
-- distributed deployments
-- Python veteran feedback (async, IO, microservices, FastAPI, NumPy, Pandas)
-- auditor and safety-expert feedback (traceability, determinism, multi-component verification)
 - tooling and CI hardening
 
 It is **not normative** but provides recommended evolution steps for CRSS adopters.

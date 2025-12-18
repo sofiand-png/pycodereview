@@ -212,7 +212,7 @@ Compliance follows a **5-phase process**:
 Compliance is **binary**:
 
 - PASS  
-- [NOT ALLOWED] FAIL  
+- FAIL  
 
 There is no “partial compliance.”
 
@@ -422,7 +422,7 @@ All paths below are under the `CRSS/` folder of the public repository.
 - [Mode, Safety Levels & Critical Phase Model](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_mode_and_safety_model.md)  
   Modes, levels, and phase semantics.
 
-- [External Assessment Protocol (EAP) – v1.1.0](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_external_assessment_process_to_verify.md)  
+- [External Assessment Protocol (EAP) – v1.0.0](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_external_assessment_process_to_verify.md)  
   Third-party assessment and certificate model.
 
 ### 2.4 Deployment & Baselines

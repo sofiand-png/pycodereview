@@ -3133,7 +3133,7 @@ import re
 RE_ID = re.compile(r"[A-Z0-9]+")
 
 def find_ids(payload: str) -> list[str]:
-    # [NOT ALLOWED] payload comes from network, no length bound
+    # payload comes from network, no length bound
     return RE_ID.findall(payload)
 ```
 
@@ -3186,7 +3186,7 @@ If a project needs a complex pattern, it MUST be rewritten as:
 ```python
 import re
 
-# [NOT ALLOWED] Catastrophic pattern – exponential backtracking
+# Catastrophic pattern – exponential backtracking
 RE_BAD = re.compile(r"^(a+)+$")
 ```
 
@@ -3222,7 +3222,7 @@ Core:
 import re
 
 def filter_lines(pattern_from_user: str, text: str) -> list[str]:
-    # [NOT ALLOWED] arbitrary user-supplied regex
+    # arbitrary user-supplied regex
     reg = re.compile(pattern_from_user)
     return [line for line in text.splitlines() if reg.search(line)]
 ```
@@ -3306,7 +3306,7 @@ certification acceptance.
 ```python
 import re
 
-# [NOT ALLOWED] Catastrophic pattern – exponential backtracking
+# Catastrophic pattern – exponential backtracking
 RE_BAD = re.compile(r"^(a+)+$")
 
 def validate(data: str) -> bool:

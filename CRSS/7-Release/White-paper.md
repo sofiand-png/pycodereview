@@ -17,7 +17,7 @@ Python has historically been excluded from safety-critical domains such as autom
 
 The CRSS Python Standard (Code Review Safety Standard — Python Edition) provides a unified safety framework that transforms Python into a predictable, enforceable, evidence-driven engineering environment suitable for high-criticality software.
 
-This whitepaper presents the vision, design principles, and architecture behind CRSS-Python v1.1.0. It does not replace the specifications; instead, it explains the motivation, conceptual models, and safety rationale that the rulebooks and governance processes implement.
+This whitepaper presents the vision, design principles, and architecture behind CRSS-Python v1.0.0. It does not replace the specifications; instead, it explains the motivation, conceptual models, and safety rationale that the rulebooks and governance processes implement.
 
 ### 1.1 Key Capabilities Introduced by CRSS-Python
 
@@ -1325,7 +1325,7 @@ No system can be considered safe if it drifts from its verified configuration.
 
 ## 14. Supported Python Versions
 
-CRSS v1.1.0 officially supports:
+CRSS v1.0.0 officially supports:
 
 > Python 3.9.x → Python 3.12.x (inclusive)
 
@@ -1707,7 +1707,7 @@ Unauthorized divergence from the validated CBM.
 
 ## 18. Conclusion
 
-CRSS-Python v1.1.0 represents a major milestone:  
+CRSS-Python v1.0.0 represents a major milestone:  
 a fully engineered, deterministic, traceable, and certifiable Python ecosystem.
 
 It enables something previously considered unattainable:

@@ -29,9 +29,10 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [3.3 Stage 2 — Evidence & RCR Verification](#33-stage-2-evidence-rcr-verification)
     - [3.4 Stage 3 — Technical Deep-Dive Sampling](#34-stage-3-technical-deep-dive-sampling)
     - [3.5 Stage 4 — Decision & Reporting](#35-stage-4-decision-reporting)
+    - [3.6 Interpretation of Conditional Stage Outcomes](#36-interpretation-of-conditional-stage-outcomes)
   - [4. Non-Conformance Handling](#4-non-conformance-handling)
   - [5. Revocation & Reassessment](#5-revocation-reassessment)
-  - [6. Summary of v1.1 Enhancements](#6-summary-of-v11-enhancements)
+  - [6. Summary of v1.0.0 Enhancements](#6-summary-of-v11-enhancements)
 
 ---
 
@@ -43,10 +44,10 @@ The **CRSS-Python External Assessment Protocol (EAP)** defines how independent a
 - Review safety cases and compliance evidence
 - Validate rule compliance outcomes, thresholds, and assumptions
 - Judge conformance against CRSS profiles (Core, Strict, Strict Level A)
-- Decide approval, conditional approval, rejection, and revocation
+- Decide certification, non-certification, and revocation
 - Ensure every term, artifact, and component is unambiguously defined
 
-This version (v1.1.0) introduces:
+This version (v1.0.0) introduces:
 
 - Explicit inclusion of the **Rule Compliance Report (RCR)** as a mandatory input
 - Definitions for all referenced terms not previously defined
@@ -98,7 +99,7 @@ The final output of EAP documenting:
 - Findings and non-conformances
 - Assessment outcomes
 - Approval signatures
-- Final status (APPROVED / CONDITIONAL / REJECTED)
+- Final certification status (CERTIFIED / NOT CERTIFIED)
 
 ### 1.5 Deployment Snapshot
 
@@ -206,8 +207,8 @@ Each stage has explicit status codes (PASS / CONDITIONAL / FAIL) to keep the ass
 - **COND-Sx** — Stage x conditionally satisfied, minor issues remediable without full restart
 - **FAIL-Sx** — Stage x not satisfied; assessment cannot proceed until corrected
 
-Strict Level A assessments must ultimately have **PASS-S1, PASS-S2, PASS-S3**; conditional passes are not allowed at final approval time.
-
+For Strict Level A, certification SHALL ONLY be granted if all applicable stages reach PASS-Sx.
+Any unresolved COND-Sx SHALL result in NOT CERTIFIED.
 ---
 
 ### 3.1 Stage 0 — Intake & Eligibility
@@ -255,8 +256,6 @@ EA SHALL validate:
 - Each violation is documented and justified, with risk assessment and approval where applicable
 - Evidence referenced in the RCR (tests, analysis, reviews) exists and is traceable
 - Acceptance Rules Addendum has been properly applied
-- Verify that the Certified Artifact (.whl) referenced in the CBM was produced
-  by a Certified Build executed according to the Release Management specification.
 
 **Outcome codes**
 
@@ -290,17 +289,34 @@ Strict Level A: conditional passes (**COND-S3**) require remediation and re-samp
 ### 3.5 Stage 4 — Decision & Reporting
 
 The External Assessor SHALL synthesize S0–S3 outcomes into a final decision:
+- **CERTIFIED**
+- **NOT CERTIFIED**
 
-- **APPROVED** — PASS-S1, PASS-S2, PASS-S3 (and PASS-S0)
-- **CONDITIONALLY APPROVED** — At most COND-S1 / COND-S2 / COND-S3 for non-Level A systems, with clearly documented corrective actions and deadlines
-- **REJECTED** — Any FAIL-Sx not corrected; or for Strict Level A, any Cond-Sx not resolved to PASS-Sx
+
+The assessment MAY remain in a PENDING state while conditional findings are being remediated.
+A system in PENDING state is NOT CERTIFIED and SHALL NOT be deployed under CRSS claims.
+
+Certification SHALL only be granted once all conditional findings are resolved
+and all applicable stages reach PASS-Sx.
+
 
 The Assessment Report (AR) MUST:
 
 - Record all stage outcomes (PASS-Sx / COND-Sx / FAIL-Sx)
 - Reference the RCR explicitly
 - List all non-conformances with NC levels
-- Document any required corrective actions for conditional approvals
+
+### 3.6 Interpretation of Conditional Stage Outcomes
+
+Conditional stage outcomes (COND-Sx):
+
+- indicate that the assessment MAY continue,
+- do NOT constitute approval,
+- do NOT authorize deployment,
+- do NOT imply partial certification.
+
+A system with any unresolved COND-Sx SHALL be considered NOT CERTIFIED.
+
 
 ---
 

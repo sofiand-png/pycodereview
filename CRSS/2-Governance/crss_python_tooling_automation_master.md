@@ -186,8 +186,8 @@ All tools used in certification:
 ## 5.2 Toolchain Drift = Automatic FAIL
 
 If any tool changes version after CBM:
-- [NOT ALLOWED] All automated evidence is invalid
-- [NOT ALLOWED] Certification must restart
+- All automated evidence is invalid
+- Certification must restart
 
 ---
 
@@ -244,10 +244,10 @@ Accepted only if:
 
 ## 7.2 Automatic Rejection Conditions
 
-- [NOT ALLOWED] Output generated after tool version drift
-- [NOT ALLOWED] Missing data fields
-- [NOT ALLOWED] Non-deterministic results
-- [NOT ALLOWED] Unsupported output formats
+- Output generated after tool version drift
+- Missing data fields
+- Non-deterministic results
+- Unsupported output formats
 
 ### 7.3 Tool Confidence Categories
 

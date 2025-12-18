@@ -60,9 +60,9 @@ CRSS-Python enables Python to be used in:
 - DO-278 ground systems
 
 However, it **does not certify** Python for:
-- [NOT ALLOWED] Primary actuation loops (e.g., braking, flight control)
-- [NOT ALLOWED] Single-channel safety enforcement
-- [NOT ALLOWED] Hard real-time DAL A avionics
+- Primary actuation loops (e.g., braking, flight control)
+- Single-channel safety enforcement
+- Hard real-time DAL A avionics
 
 Python must operate as part of a **multilayer safety architecture**.
 
@@ -104,14 +104,14 @@ It marks pre/post-critical functions where:
 are allowed **before** critical execution begins.
 
 However:
-- [NOT ALLOWED] Strict-A rules still apply
-- [NOT ALLOWED] MUST violations remain blocking
-- [NOT ALLOWED] Critical code cannot call non-critical code
+- Strict-A rules still apply
+- MUST violations remain blocking
+- Critical code cannot call non-critical code
 
 ---
 
 ## 7. Can we use multiple Python versions in a project?
-- [NOT ALLOWED] No.
+- No.
 
 The standard covers Python **3.9–3.12**, but each project MUST:
 - Select exactly one version
@@ -123,9 +123,9 @@ Switching versions = new baseline + new certification.
 ---
 
 ## 8. Does CRSS-Python allow hotfixes?
-- [NOT ALLOWED] No hotfixes.
-- [NOT ALLOWED] No patch-in-production.
-- [NOT ALLOWED] No runtime edits.
+- No hotfixes.
+- No patch-in-production.
+- No runtime edits.
 
 Any change -> new:
 - CBM
@@ -138,7 +138,7 @@ This ensures reproducibility and safety traceability.
 
 ## 9. Is automated deployment allowed?
 - In TEST environment
-- [NOT ALLOWED] Never in PROD
+- Never in PROD
 
 Prod deployments must be:
 - Manual approval
@@ -148,7 +148,7 @@ Prod deployments must be:
 ---
 
 ## 10. Can Python install dependencies at runtime?
-- [NOT ALLOWED] Absolutely not.
+- Absolutely not.
 Runtime installation (pip, apt, conda, etc.) is prohibited.
 
 Dependencies must be:
@@ -159,9 +159,9 @@ Dependencies must be:
 ---
 
 ## 11. Can CRSS-Python software use threads?
-In Strict-A `@critical`: [NOT ALLOWED] No
-In Strict: ⚠ Allowed with restrictions
-In Core: [OK] Allowed
+In Strict-A `@critical`: No
+In Strict: Allowed with restrictions
+In Core: Allowed
 
 Strict-A requires single-threaded critical execution to guarantee determinism.
 
@@ -195,7 +195,7 @@ A project is compliant only if:
 - Toolchain fixed
 
 Compliance is **binary**:
-- PASS or [NOT ALLOWED] FAIL
+- PASS or FAIL
 
 ---
 
@@ -215,7 +215,7 @@ Yes, but extensions must:
 - Monitoring pipelines
 - Data validation
 
-- [NOT ALLOWED] Not for:
+- Not for:
 - Real-time inference controlling primary actuators
 
 ML models must be treated as untrusted components.
@@ -223,7 +223,7 @@ ML models must be treated as untrusted components.
 ---
 
 ## 17. Does CRSS-Python replace ISO 26262 / IEC 61508?
-- [NOT ALLOWED] No.
+- No.
 
 It is a **coding and software governance standard**, not a full system-level safety standard. It must operate **under** the applicable domain standard.
 
