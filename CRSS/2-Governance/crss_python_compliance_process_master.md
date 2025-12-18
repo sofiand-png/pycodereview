@@ -152,7 +152,9 @@ Activities:
 Artifact:
 - CBM
 
-The Baseline SHALL include references to Freeze Build outputs (wheelhouse, locked dependency manifest) used by the Certified Build.
+The certification baseline SHALL reference a Certified Build as defined in the
+Release Management specification, including the certified wheel artifact and
+its associated dependency freeze evidence.
 
 ## Phase 5 — Certification Readiness
 Artifacts:

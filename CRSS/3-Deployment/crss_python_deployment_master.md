@@ -44,6 +44,25 @@ It consolidates and supersedes:
 It is **normative** for all projects claiming CRSS-Python compliance (Core or Strict).
 All MUST / MUST-NOT / SHOULD / SHOULD-NOT statements in this document are identified by **DPL-12.x** IDs.
 
+CRSS deliberately separates architectural safety rules from release and build governance.
+
+The authoritative, normative definition of how a CRSS-compliant software artifact is produced — including dependency freezing, 
+offline installation, wheel generation, and evidence collection — is specified in the Release Management and Deployment Policy.
+
+The whitepaper does not re-define these procedures. Instead, it relies on the Release Management specification as the single source of truth for:
+
+Dependency freezing and lockfile generation
+
+Offline, deterministic installation
+
+Certified wheel creation
+
+Artifact immutability and cryptographic hashing
+
+Evidence integration into CBM, TEP, and CRC
+
+This separation ensures that conceptual guidance remains stable while allowing build and release processes to evolve in a controlled, auditable manner.
+
 ---
 
 ## 1. Deployment & Baseline Rule Catalog (DPL-12.x)

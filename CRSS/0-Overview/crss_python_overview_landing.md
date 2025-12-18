@@ -60,7 +60,12 @@ It provides:
 - Deterministic execution models  
 - Certification-ready evidence  
 
-CRSS-Python does **not** turn Python into a real-time actuator controller. Instead, it allows Python to be used **safely and confidently** in supervisory and decision-support components.
+CRSS-Python does not claim to transform Python into a real-time operating system/controller,
+nor does it authorize Python to directly control time-critical physical actuators (e.g. torque, braking, flight control surfaces).
+- The standard is explicitly scoped to supervisory, decision-making, validation, arbitration, monitoring, and safety-envelope logic, where determinism, bounded behavior, and strong evidence can be established through architectural constraints and process discipline.
+- For avionics, CRSS-Python is intended for ground systems, tooling, test infrastructure, and safety-support functions, not airborne flight-critical control software.
+
+Any claims of safety integrity remain system-level claims: CRSS defines how Python software can be made certifiable within its declared scope, not how an entire system achieves certification.
 
 ---
 

@@ -62,7 +62,7 @@ Strict-A is wrapped by:
 - deterministic adapter
 - JSON-safe bounded interface
 
-FastAPI layer → Core-C wrapper → Strict-A → Core-C adapter → FastAPI response #TODO: verify this
+FastAPI layer → Core-C wrapper → Strict-B validation → Strict-A Kernel → FastAPI response
 
 ---
 

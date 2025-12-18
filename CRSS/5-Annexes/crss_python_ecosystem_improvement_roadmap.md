@@ -40,11 +40,10 @@ Each section proposes future CRSS annexes, enhancements or recommended best prac
 ## 3. Architecture Maturity Improvements
 
 ### 3.1 Multi-Component System Modeling
-CRSS will expand its architectural guidance to cover: # TODO:check if this should be updated
+CRSS will expand its architectural guidance to cover:
 - multi-service systems (several CRSS components communicating)
-- mixed-criticality topologies (Strict-A + Core-C interacting with external systems)
-- gateway partitioning (I/O, filtering, sanity checks, time-bounds)
-- digital twin interactions for simulation and testing
+- mixed-criticality topologies
+- MC/DC tools
 
 ### 3.2 CRSS Architectural Patterns
 Future guidance will define:

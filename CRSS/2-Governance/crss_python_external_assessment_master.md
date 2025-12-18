@@ -255,6 +255,8 @@ EA SHALL validate:
 - Each violation is documented and justified, with risk assessment and approval where applicable
 - Evidence referenced in the RCR (tests, analysis, reviews) exists and is traceable
 - Acceptance Rules Addendum has been properly applied
+- Verify that the Certified Artifact (.whl) referenced in the CBM was produced
+  by a Certified Build executed according to the Release Management specification.
 
 **Outcome codes**
 

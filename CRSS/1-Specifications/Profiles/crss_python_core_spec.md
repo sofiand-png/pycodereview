@@ -1689,7 +1689,7 @@ def reset_connection_pool() -> None:
 - **Category**: Defensive Programming
 - **Type**: Static / Process
 - **Profiles**:
-  - Core: SHOULD-NOT TODO VERIFY THIS
+  - Core: SHOULD-NOT
   - Strict: MUST-NOT
 - **Scope**: `all_code`
 
@@ -2613,8 +2613,8 @@ ADRs shall live alongside source code in the same repository or a tightly linked
 -   **Category**: Availability & Fault Tolerance
 -   **Type**: Design / Process
 -   **Profiles**:
-    -   Core: SHOULD
-    -   Strict Level A: MUST TODO VERIFY THIS
+    -   Core: MUST
+    -   Strict: MUST
 -   **Scope**: `all_code`
 
 For safety-critical functions, the architecture shall be designed so that no single runtime instance or external dependency can cause an uncontrolled unsafe failure.

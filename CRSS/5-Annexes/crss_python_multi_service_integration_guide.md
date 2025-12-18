@@ -22,11 +22,8 @@ Provide a model-level description of how CRSS components interact safely in:
 ---
 
 ## 2. System Interaction Topology
-A typical topology:
-
-- Sensors → Core-C Gateway → Core-B Fusion → Strict-A Controller → Core-C Output Gateway → Actuators # TODO: verify this
-
-
+A typical topology using an orchestrator:
+- Sensors → Core-C Gateway → Strict-B Fusion → Strict-A Controller → Core-C Output Gateway → Actuators
 
 Additional optional:
 - Supervisor UI (Core-C)

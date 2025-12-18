@@ -1318,7 +1318,6 @@ All third-party dependencies MUST be:
 The generation, freezing, and verification of pinned dependency sets SHALL be
 performed according to the Certified Build and Packaging Process defined in the
 Release Management specification.
- 
 
 **TPL-2 — No Implicit Online Resolution**
 Production builds and certification builds MUST NOT fetch packages from the public internet at build or deploy time. All dependencies MUST come from:
@@ -1879,7 +1878,7 @@ If raw inputs cannot be parsed or mapped into the Level-A input model:
 ### 16.14 Level-A Composition and Call Graph
 
 **CRSS-Call-Graph-1 (Normative — Level-A Call Graph Structure)**
-For Level-A code, the call graph SHOULD form a Directed Acyclic Graph (DAG) at the module or service boundary.
+For Level-A code, the call graph MUST form a Directed Acyclic Graph (DAG) at the module or service boundary.
 
 Where Level-A cycles are unavoidable (e.g. small mutual recursion):
 
@@ -1938,6 +1937,11 @@ if v.confidence < 0.8:
     ...
 ```
 then that logic is effectively Level-A and MUST be moved into Level-A (into A₂ or a new A₃).
+
+Note:
+Pattern 1 is valid because the orchestration is itself Level-A Strict code; it is not an ‘orchestrator layer’
+in the profile sense. The ‘inner orchestrator’ rule applies when orchestration is implemented outside Level-A.”
+
 
 **CRSS-LA-Result-1 (Normative — Single Source of Truth for Level-A Results)**
 Safety-relevant derived quantities at Level-A (e.g. voted value, final actuator command, safety envelope status) SHOULD have a single authoritative implementation.
