@@ -152,7 +152,6 @@ def another_exit():
     import sys
     sys.exit(2)
 
-# UndefinedNameRule (deduped via your rule)—appear once, not twice
 def uses_undefined():
     return third_missing + not_defined1 + also_missing  # noqa: F821
 

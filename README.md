@@ -172,9 +172,12 @@ Options:
 
 ---
 
-## Relationship to CRSS-Python
+### Learn more about CRSS-Python (v2.0.0)
 
-**pycodereview** is the reference static-analysis engine for the **CRSS-Python Standard** — a safety-oriented subset of Python inspired by MISRA-style discipline and certification expectations.
+CRSS-Python is a safety and compliance standard that pycodereview progressively supports.
+
+- **CRSS-Python Overview & Repository Map (v2.0.0)**  
+  https://github.com/sofiand-png/pycodereview/tree/v2.0.0/CRSS/0-Overview/crss_python_overview_landing.md
 
 **CRSS-Python (Certifiable Reliability Safety Standard - Python)** is an original safety and reliability standard for Python,
 authored by **Sofian Daghsen**. It defines two profiles:
@@ -188,6 +191,12 @@ authored by **Sofian Daghsen**. It defines two profiles:
 - Critical monitoring systems
 - High-assurance automation
 - Mission-critical supervisory logic
+
+---
+
+## Relationship to CRSS-Python
+
+**pycodereview** is the reference static-analysis engine for the **CRSS-Python Standard** - a safety-oriented subset of Python inspired by MISRA-style discipline and certification expectations.
 
 
 ### What you can do today (no CRSS required)
