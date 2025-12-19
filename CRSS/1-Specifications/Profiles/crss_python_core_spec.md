@@ -10,243 +10,67 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-  - [0.1 Purpose and Objectives](#01-purpose-and-objectives)
-  - [0.2 What Core Is Not](#02-what-core-is-not)
-  - [0.3 Relation to Strict](#03-relation-to-strict)
+- [0.1 Purpose and Objectives](#01-purpose-and-objectives)
+- [0.2 What Core Is Not](#02-what-core-is-not)
+- [0.3 Relation to Strict](#03-relation-to-strict)
 - [0.4 Versioning and Rule ID Stability](#04-versioning-and-rule-id-stability)
   - [0.5 Chapter Structure and ID Ranges](#05-chapter-structure-and-id-ranges)
   - [0.6 Companion Documents and Annexes](#06-companion-documents-and-annexes)
   - [0.7 Tooling](#07-tooling)
   - [0.8 Python Version Scope](#08-python-version-scope)
   - [0.9 Project-Declared Python Target Range](#09-project-declared-python-target-range)
-- [1. Scope & Goals](#1-scope-goals)
+- [1. Scope & Goals](#1-scope--goals)
 - [2. Rule Model](#2-rule-model)
 - [3. Core Language Usage](#3-core-language-usage)
-  - [CRSS-3.1.1 - Avoid runtime code generation](#crss-311-avoid-runtime-code-generation)
-  - [CRSS-3.1.2 - Constrain dynamic imports](#crss-312-constrain-dynamic-imports)
-  - [CRSS-3.1.3 - No runtime monkeypatching of imported modules](#crss-313-no-runtime-monkeypatching-of-imported-modules)
-  - [CRSS-3.1.4 - Limit lambda usage to simple local expressions](#crss-314-limit-lambda-usage-to-simple-local-expressions)
-  - [CRSS-3.1.5 - Identifiers shall not reuse reserved keywords or builtins](#crss-315-identifiers-shall-not-reuse-reserved-keywords-or-builtins)
-  - [CRSS-3.1.6 – Ban custom metaclasses in Strict](#crss-316-ban-custom-metaclasses-in-strict)
-  - [CRSS-3.2.1 - Reflection shall not drive high-level control flow](#crss-321-reflection-shall-not-drive-high-level-control-flow)
-  - [CRSS-3.2.2 - globals/locals/vars for introspection only](#crss-322-globalslocalsvars-for-introspection-only)
-  - [CRSS-3.2.3 - Cross-profile import policy](#crss-323-cross-profile-import-policy)
-  - [CRSS-3.3.1 - Assignment expressions (walrus) limited / forbidden](#crss-331-assignment-expressions-walrus-limited-forbidden)
-  - [CRSS-3.4.1 - Inheritance across profiles](#crss-341-inheritance-across-profiles)
-- [4. Error Handling, Exceptions & Control Flow](#4-error-handling-exceptions-control-flow)
-  - [CRSS-4.1.1 - Assertions not for runtime validation](#crss-411-assertions-not-for-runtime-validation)
-  - [CRSS-4.2.1 - No bare except:](#crss-421-no-bare-except)
-  - [CRSS-4.2.2 - except Exception requires explicit handling](#crss-422-except-exception-requires-explicit-handling)
-  - [CRSS-4.2.3 - Exceptions shall not be used for normal control flow](#crss-423-exceptions-shall-not-be-used-for-normal-control-flow)
-  - [CRSS-4.2.4 - Preserve exception context when re-raising](#crss-424-preserve-exception-context-when-re-raising)
-  - [CRSS-4.3.1 - Avoid multiple evaluations of function calls in one condition](#crss-431-avoid-multiple-evaluations-of-function-calls-in-one-condition)
-  - [CRSS-4.3.2 - Loop conditions should be free of hidden side effects](#crss-432-loop-conditions-should-be-free-of-hidden-side-effects)
-  - [CRSS-4.3.3 – Async only for non-hard-real-time paths](#crss-433-async-only-for-non-hard-real-time-paths)
-  - [CRSS-4.3.4 - Late-bound loop variables](#crss434-late-bound-loop-variables)
-  - [CRSS-4.3.5 - Async task failures and cancellation](#crss-435-handle-async-task-failures-and-cancellation-explicitly)
-  - [CRSS-4.4.1 - Index bounds validation on externally derived indices](#crss-441-index-bounds-validation-on-externally-derived-indices)
-  - [CRSS-4.4.2 - Safe dictionary access for external keys](#crss-442-safe-dictionary-access-for-external-keys)
-  - [CRSS-4.4.3 - Safe unpacking and length assumptions](#crss-443-safe-unpacking-and-length-assumptions)
-- [4. Parsing & Data Validation (7.9.x)](#4-parsing-data-validation-79x)
-- [5. Types, Data & Interfaces](#5-types-data-interfaces)
-  - [CRSS-5.1.1 - Type hints on public APIs](#crss-511-type-hints-on-public-apis)
-  - [CRSS-5.1.2 - Constrain use of Any](#crss-512-constrain-use-of-any)
-  - [CRSS-5.1.3 – Use nominal interfaces (ABCs) for Strict code](#crss-513-use-nominal-interfaces-abcs-for-strict-code)
-  - [CRSS-5.1.4 – Control polymorphism and ban duck typing in Strict](#crss-514-control-polymorphism-and-ban-duck-typing-in-strict)
-  - [CRSS-5.1.5 - Restrict use of `typing.cast`](#crss-515-restrict-use-of-typingcast)
-  - [CRSS-5.1.6 – Explicit module exports via `__all__` in Strict](#crss-516-explicit-module-exports-via-all-in-strict)
-  - [CRSS-5.1.7 - Mutable default arguments](#crss-517-mutable-default-arguments)
-  - [CRSS-5.1.8 - Identity vs equality](#crss-518-identity-vs-equality)
-  - [CRSS-5.2.1 - Avoid hidden mutable global state](#crss-521-avoid-hidden-mutable-global-state)
-  - [CRSS-5.2.2 - No implicit side effects on import](#crss-522-no-implicit-side-effects-on-import)
-  - [CRSS-5.3.1 - Constrain nondeterministic random number generation](#crss-531-constrain-nondeterministic-random-number-generation)
-  - [CRSS-5.3.2 - No nondeterministic randomness in Strict code](#crss-532-no-nondeterministic-randomness-in-strict-code)
-  - [CRSS-5.3.3 - Cryptographic-strength randomness only via approved APIs](#crss-533-cryptographic-strength-randomness-only-via-approved-apis)
-  - [CRSS-5.3.4 - NaN/Inf checks on Strict numeric outputs](#crss-534-naninf-checks-on-strict-numeric-outputs)
-  - [CRSS-5.3.5 - Explicit range margins for safety-critical signals](#crss-535-explicit-range-margins-for-safety-critical-signals)
-  - [CRSS-5.3.6 - Unified internal time representation (UTC)](#crss-536-unified-internal-time-representation-utc)
-  - [CRSS-5.3.7 - Ban on naive datetimes in cross-boundary logic](#crss-537-ban-on-naive-datetimes-in-cross-boundary-logic)
-  - [CRSS-5.3.8 - Controlled date parsing and formatting](#crss-538-controlled-date-parsing-and-formatting)
-  - [CRSS-5.3.9 - Declared numeric precision and tolerance](#crss-539-declared-numeric-precision-and-tolerance)
-  - [CRSS-5.3.10 - Prefer fixed-point or decimal for exact domains](#crss-5310-prefer-fixed-point-or-decimal-for-exact-domains)
-  - [CRSS-5.4.1 - Avoid unbounded growth of in-memory collections](#crss-541-avoid-unbounded-growth-of-in-memory-collections)
-  - [CRSS-5.4.2 - Explicit lifecycle for large objects and buffers](#crss-542-explicit-lifecycle-for-large-objects-and-buffers)
-  - [CRSS-5.4.3 - Resource pools and caches must support explicit reset](#crss-543-resource-pools-and-caches-must-support-explicit-reset)
-  - [CRSS-5.4.4 – No silent failure](#crss-544-no-silent-failure)
-  - [CRSS-5.4.5 – Explicit preconditions and range checks](#crss-545-explicit-preconditions-and-range-checks)
-  - [CRSS-5.4.6 – Bounded heap usage for Strict processes](#crss-546-bounded-heap-usage-for-strict-processes)
-  - [CRSS-5.5.1 - Bounded memory usage for bulk data](#crss-551-bounded-memory-usage-for-bulk-data)
-  - [CRSS-5.5.2 - Chunked processing and pagination](#crss-552-chunked-processing-and-pagination)
-  - [CRSS-5.5.3 - Query efficiency and index awareness](#crss-553-query-efficiency-and-index-awareness)
-- [3. Robustness Against Index / Key / Buffer Errors (4.4.x)](#3-robustness-against-index-key-buffer-errors-44x)
-  - [CRSS-5.6.1 - Explicit cache policy and scope](#crss-561-explicit-cache-policy-and-scope)
-  - [CRSS-5.6.2 - Bounded cache size and eviction policy](#crss-562-bounded-cache-size-and-eviction-policy)
-  - [CRSS-5.6.3 - Freshness requirements for cached safety-relevant data](#crss-563-freshness-requirements-for-cached-safety-relevant-data)
-  - [CRSS-5.6.4 - Defined behavior on cache miss/failure](#crss-564-defined-behavior-on-cache-missfailure)
-  - [CRSS-5.6.5 - No hidden dependence on cache availability](#crss-565-no-hidden-dependence-on-cache-availability)
-  - [CRSS-5.7.1 – Document operating ranges and thresholds for safety-relevant signals](#crss-571-document-operating-ranges-and-thresholds-for-safety-relevant-signals)
-  - [CRSS-5.7.2 – Test behavior around thresholds and noise margins](#crss-572-test-behavior-around-thresholds-and-noise-margins)
-  - [CRSS-5.7.3 – Bound and document filter/processing latency](#crss-573-bound-and-document-filterprocessing-latency)
+  - [3.1 Dynamic Code & Imports](#31-dynamic-code--imports)
+  - [3.2 Reflection & Introspection](#32-reflection--introspection)
+  - [3.3 Assignment Expressions](#33-assignment-expressions)
+  - [3.4 Inheritance Across Profiles](#34-inheritance-across-profiles)
+- [4. Error Handling, Exceptions & Control Flow](#4-error-handling-exceptions--control-flow)
+  - [4.1 Assertions](#41-assertions)
+  - [4.2 Exception Usage](#42-exception-usage)
+  - [4.3 Control Flow & Async](#43-control-flow--async)
+  - [4.4 Defensive Indexing & Access](#44-defensive-indexing--access)
+- [Robustness Against Index / Key / Buffer Errors (4.4.x)](#3-robustness-against-index--key--buffer-errors-44x)
+- [5. Types, Data & Interfaces](#5-types-data--interfaces)
+  - [5.1 Type Discipline & APIs](#51-type-discipline--apis)
+  - [5.2 State & Global Effects](#52-state--global-effects)
+  - [5.3 Determinism, Time & Randomness](#53-determinism-time--randomness)
+  - [5.4 Memory, Resources & Lifecycle](#54-memory-resources--lifecycle)
+  - [5.5 Bulk Data & Large Processing](#55-bulk-data--large-processing)
+  - [5.6 Cache Semantics & Safety](#56-cache-semantics--safety)
+  - [5.7 Numeric Ranges & Thresholds](#57-numeric-ranges--thresholds)
 - [6. Security Rules (Core)](#6-security-rules-core)
-  - [CRSS-6.1.1 - Dangerous functions and APIs](#crss-611-dangerous-functions-and-apis)
-  - [CRSS-6.1.2 - Hardcoded secrets](#crss-612-hardcoded-secrets)
-  - [CRSS-6.1.3 – Concurrency only via approved patterns](#crss-613-concurrency-only-via-approved-patterns)
-  - [CRSS-6.1.4 - Native extensions & FFI](#crss-614-native-extensions--and-ffi-only-via-approved-adapters)
-  - [CRSS-6.2.1 - Insecure HTTP and disabled TLS verification](#crss-621-insecure-http-and-disabled-tls-verification)
-  - [CRSS-6.2.3 – Prohibition of subprocess execution in Strict units](#crss-623-prohibition-of-subprocess-execution-in-strict-units)
-  - [CRSS-6.2.4 – Shell invocation forbidden](#crss-624-shell-invocation-forbidden)
-  - [CRSS-6.3.1 - Input validation for external data](#crss-631-input-validation-for-external-data)
-  - [CRSS-6.4.1 - Data classification and tagging](#crss-641-data-classification-and-tagging)
-  - [CRSS-6.4.2 - Encryption in transit and at rest for sensitive data](#crss-642-encryption-in-transit-and-at-rest-for-sensitive-data)
-  - [CRSS-6.4.3 - Redaction and minimization in logs](#crss-643-redaction-and-minimization-in-logs)
-  - [CRSS-6.4.4 - Access control for sensitive data flows](#crss-644-access-control-for-sensitive-data-flows)
-- [6. Network Failure Modes & Partial Operations](#6-network-failure-modes-partial-operations)
-  - [CRSS-6.4.5 - Approved key exchange and storage](#crss-645-approved-key-exchange-and-storage)
-  - [CRSS-6.4.6 - Key rotation and expiry](#crss-646-key-rotation-and-expiry)
-- [8. OS Interaction & Environment Variables (7.10.x)](#8-os-interaction-environment-variables-710x)
-  - [CRSS-6.4.7 - No long-lived caching of sensitive data](#crss-647-no-long-lived-caching-of-sensitive-data)
-  - [CRSS-6.4.8 - Cache isolation between tenants/security domains](#crss-648-cache-isolation-between-tenantssecurity-domains)
-  - [CRSS-6.4.9 – Centralize RBAC and access checks](#crss-649-centralize-rbac-and-access-checks)
-- [**CRSS-6.4.10 – Secret Storage & Lifecycle**](#crss-6410-secret-storage-lifecycle)
-- [**CRSS-6.4.11 – Password & Credential Policy**](#crss-6411-password-credential-policy)
-- [**CRSS-6.4.12 – Token & Session Lifetime Management**](#crss-6412-token-session-lifetime-management)
-- [**CRSS-6.4.13 – Authentication vs Authorization Separation**](#crss-6413-authentication-vs-authorization-separation)
-- [**CRSS-6.4.14 – Safety-Significant Action Authorization**](#crss-6414-safety-significant-action-authorization)
-- [7. Robustness & Portability](#7-robustness-portability)
-  - [CRSS-7.1.1 - Explicit encoding for text file I/O](#crss-711-explicit-encoding-for-text-file-io)
-  - [CRSS-7.1.2 - Use context managers for file I/O](#crss-712-use-context-managers-for-file-io)
-  - [CRSS-7.1.3 - Maximum length for external string inputs](#crss-713-maximum-length-for-external-string-inputs)
-  - [CRSS-7.1.4 - Encoding and Unicode handling](#crss-714-encoding-and-unicode-handling)
-  - [CRSS-7.1.5 - Special character and control character validation](#crss-715-special-character-and-control-character-validation)
-  - [CRSS-7.1.6 - Language and locale configuration](#crss-716-language-and-locale-configuration)
-  - [CRSS-7.2.1 - Avoid platform-specific hardcoded paths](#crss-721-avoid-platform-specific-hardcoded-paths)
-  - [CRSS-7.2.2 - Third-party dependency documentation](#crss-722-third-party-dependency-documentation)
-  - [CRSS-7.2.3 - Interface schema verification](#crss-723-interface-schema-verification)
-  - [CRSS-7.6.1 - Explicit architecture definition](#crss-761-explicit-architecture-definition)
-  - [CRSS-7.6.2 - Architecture Decision Records (ADR)](#crss-762-architecture-decision-records-adr)
-  - [CRSS-7.6.3 - Avoidance of single point of failure for critical paths](#crss-763-avoidance-of-single-point-of-failure-for-critical-paths)
-  - [CRSS-7.6.4 - Bounded retries and timeouts for network calls](#crss-764-bounded-retries-and-timeouts-for-network-calls)
-  - [CRSS-7.6.5 - Idempotent semantics for retried operations](#crss-765-idempotent-semantics-for-retried-operations)
-  - [CRSS-7.6.6 - Architecture responsibility and approval roles](#crss-766-architecture-responsibility-and-approval-roles)
-  - [CRSS-7.7.1 - No unmanaged global single connection for shared resources](#crss-771-no-unmanaged-global-single-connection-for-shared-resources)
-  - [CRSS-7.7.2 - Connection health check before use](#crss-772-connection-health-check-before-use)
-  - [CRSS-7.7.3 - Bounded reconnect policies](#crss-773-bounded-reconnect-policies)
-  - [CRSS-7.7.4 - Safe file transfer preconditions](#crss-774-safe-file-transfer-preconditions)
-  - [CRSS-7.8.1 - Stable service contracts and versioning](#crss-781-stable-service-contracts-and-versioning)
-  - [CRSS-7.8.2 - Bounded payload sizes and rates](#crss-782-bounded-payload-sizes-and-rates)
-  - [CRSS-7.8.3 - Circuit breakers and backpressure for critical dependencies](#crss-783-circuit-breakers-and-backpressure-for-critical-dependencies)
-  - [CRSS-7.8.4 - Latency budgets for critical network operations](#crss-784-latency-budgets-for-critical-network-operations)
-- [2. Big Data & Large Dataset Handling (5.5.x)](#2-big-data-large-dataset-handling-55x)
-  - [CRSS-7.8.5 - Distributed cache consistency for critical data](#crss-785-distributed-cache-consistency-for-critical-data)
-  - [CRSS-7.8.6 - Cache is never the source of truth](#crss-786-cache-is-never-the-source-of-truth)
-  - [CRSS-7.8.7 - Explicit HTTP caching directives](#crss-787-explicit-http-caching-directives)
-- [9. Summary](#9-summary)
-  - [CRSS-7.9.1 - Strict JSON parsing and schema validation](#crss-791-strict-json-parsing-and-schema-validation)
-  - [CRSS-7.9.2 - Explicit CSV dialect and header handling](#crss-792-explicit-csv-dialect-and-header-handling)
-  - [CRSS-7.9.3 - Handling malformed or binary-like text input](#crss-793-handling-malformed-or-binary-like-text-input)
-- [5. Sensitive Data Handling (6.4.x)](#5-sensitive-data-handling-64x)
-  - [CRSS-7.9.4 - Detection of partial network writes and reads](#crss-794-detection-of-partial-network-writes-and-reads)
-  - [CRSS-7.9.5 - Integrity checks for critical transfers](#crss-795-integrity-checks-for-critical-transfers)
-  - [CRSS-7.9.6 - Safe behavior on mid-operation disconnection](#crss-796-safe-behavior-on-mid-operation-disconnection)
-- [7. Key Exchange & Cryptographic Material (6.4.x continuation)](#7-key-exchange-cryptographic-material-64x-continuation)
-  - [CRSS-7.10.1 - Restricted operating system interaction](#crss-7101-restricted-operating-system-interaction)
-  - [CRSS-7.10.2 - Environment variables as configuration inputs](#crss-7102-environment-variables-as-configuration-inputs)
-  - [CRSS-7.10.3 - No hidden behavior toggles in environment](#crss-7103-no-hidden-behavior-toggles-in-environment)
-  - [CRSS-7.11.0 – Regex Usage in Critical Phases](#crss-7110-regex-usage-in-critical-phases)
-  - [CRSS-7.11.1 – Bounded Input for Regex Operations](#crss-7111-bounded-input-for-regex-operations)
-  - [CRSS-7.11.2 – Prohibited High-Complexity Regex Patterns](#crss-7112-prohibited-high-complexity-regex-patterns)
-  - [CRSS-7.11.3 – User-Supplied or Dynamic Regex Patterns](#crss-7113-user-supplied-or-dynamic-regex-patterns)
-  - [CRSS-7.11.4 – Regex Testing & Worst-Case Behavior](#crss-7114-regex-testing-worst-case-behavior)
-  - [CRSS-7.11.5 – SCEM Evidence for Regex Safety](#crss-7115-scem-evidence-for-regex-safety)
-- [Summary](#summary)
-- [8. Maintainability & Documentation](#8-maintainability-documentation)
-  - [CRSS-8.1.1 - Limit cyclomatic complexity](#crss-811-limit-cyclomatic-complexity)
-  - [CRSS-8.1.2 - Require docstrings on public APIs](#crss-812-require-docstrings-on-public-apis)
-  - [CRSS-8.2.1 - Do not shadow Python builtins or core types](#crss-821-do-not-shadow-python-builtins-or-core-types)
-- [9. Testing & Coverage Guidelines (Core)](#9-testing-coverage-guidelines-core)
+  - [6.1 Secrets & Logging](#61-secrets--logging)
+  - [6.2 Transport Security](#62-transport-security)
+  - [6.3 Safety-Relevant Endpoints](#63-safety-relevant-endpoints)
+  - [6.4 Data Protection Rules](#64-data-protection-rules)
+- [7. Robustness & Portability](#7-robustness--portability)
+  - [7.1 File & Text Handling](#71-file--text-handling)
+  - [7.2 Network I/O](#72-network-io)
+  - [7.3 Locale & Timezone](#73-locale--timezone)
+  - [7.4 Logging](#74-logging)
+  - [7.5 Dependencies](#75-dependencies)
+  - [7.6 Resource Pools](#76-resource-pools)
+  - [7.7 Connection Management](#77-connection-management)
+  - [7.8 Datastores & Caching](#78-datastores--caching)
+  - [7.9 Parsing & Data Validation](#79-parsing--data-validation)
+  - [7.10 OS & Environment Interaction](#710-os--environment-interaction)
+    - [(CRSS-7.10.1 / 7.10.2)](#crss-7101--7102)
+  - [7.11 Regex Safety](#711-regex-safety)
+- [8. Maintainability & Documentation](#8-maintainability--documentation)
+- [9. Testing & Coverage Guidelines (Core)](#9-testing--coverage-guidelines-core)
   - [9.0 Criticality Levels](#90-criticality-levels)
-  - [CRSS-9.1.1 - Target high branch coverage](#crss-911-target-high-branch-coverage)
-  - [CRSS-9.1.2 - Every bugfix must have a regression test](#crss-912-every-bugfix-must-have-a-regression-test)
-  - [CRSS-9.1.3 – Strict type checking for critical units (Strict)](#crss-913-strict-type-checking-for-critical-units-strict)
-- [**CRSS-9.2.1 – Authentication, Token & Session Negative Testing**](#crss-921-authentication-token-session-negative-testing)
-- [**CRSS-9.2.2 – SCEM Evidence for Authentication & Authorization**](#crss-922-scem-evidence-for-authentication-authorization)
-  - [CRSS-9.3.1 - MC/DC for Level A decisions](#crss-931-mcdc-for-level-a-decisions)
-  - [CRSS-9.3.2 - On-target / hardware-in-the-loop testing for Strict units](#crss-932-on-target-hardware-in-the-loop-testing-for-strict-units)
-  - [CRSS-9.4.1 - Guideline Compliance Summary (GCS)](#crss-941-guideline-compliance-summary-gcs)
-  - [CRSS-9.5.1 - Declared target platform set](#crss-951-declared-target-platform-set)
-  - [CRSS-9.5.2 - Full configuration testing matrix](#crss-952-full-configuration-testing-matrix)
-  - [CRSS-9.5.3 - Environment delta documentation](#crss-953-environment-delta-documentation)
-- [10. Python Version & Tooling Compatibility](#10-python-version-tooling-compatibility)
-  - [CRSS-10.1.1 - Declare target Python version range](#crss-1011-declare-target-python-version-range)
-  - [CRSS-10.1.2 - Static analysis uses the declared target version](#crss-1012-static-analysis-uses-the-declared-target-version)
-  - [CRSS-10.1.3 - No usage of features newer than the minimum supported version](#crss-1013-no-usage-of-features-newer-than-the-minimum-supported-version)
-  - [CRSS-10.1.4 - No use of removed or deprecated-in-target features](#crss-1014-no-use-of-removed-or-deprecated-in-target-features)
-  - [CRSS-10.2.1 - Analysis Python version may differ, but must be documented](#crss-1021-analysis-python-version-may-differ-but-must-be-documented)
-  - [CRSS-10.2.2 - Feature usage must be consistent with the declared profile](#crss-1022-feature-usage-must-be-consistent-with-the-declared-profile)
-  - [CRSS-10.3.1 - Frozen interpreter and OS configuration](#crss-1031-frozen-interpreter-and-os-configuration)
-  - [CRSS-10.3.2 - Interpreter conformance test suite for CRSS subset](#crss-1032-interpreter-conformance-test-suite-for-crss-subset)
-  - [CRSS-10.4.1 - No automated updates in deployed environments](#crss-1041-no-automated-updates-in-deployed-environments)
-  - [CRSS-10.4.2 - Frozen dependency set](#crss-1042-frozen-dependency-set)
-  - [CRSS-10.4.3 - Interpreter immutability](#crss-1043-interpreter-immutability)
-  - [CRSS-10.5.1 - Frozen container images](#crss-1051-frozen-container-images)
-  - [CRSS-10.5.2 - Single-purpose containers for Strict execution](#crss-1052-single-purpose-containers-for-strict-execution)
-  - [CRSS-12.0.1 - Compliance Process Requirement](#crss-1201-compliance-process-requirement)
-  - [CRSS-12.0.2 - Safety Baseline Establishment](#crss-1202-safety-baseline-establishment)
-  - [CRSS-12.0.3 - Artifact Versioning](#crss-1203-artifact-versioning)
-  - [CRSS-12.0.4 - Mandatory Artifact Completeness](#crss-1204-mandatory-artifact-completeness)
-  - [CRSS-12.0.5 - Artifact-to-Baseline Linkage](#crss-1205-artifact-to-baseline-linkage)
-  - [CRSS-12.0.6 - Re-Approval Requirement](#crss-1206-re-approval-requirement)
-  - [CRSS-12.0.7 - Private Dependency Repository](#crss-1207-private-dependency-repository)
-  - [CRSS-12.0.8 - Reproducible Build Requirement](#crss-1208-reproducible-build-requirement)
-  - [CRSS-12.0.9 - Interpreter Version Range with Single-Baseline Freeze](#crss-1209-interpreter-version-range-with-single-baseline-freeze)
-  - [CRSS-12.1.1 - Unified Versioning](#crss-1211-unified-versioning)
-  - [CRSS-12.1.2 - Interpreter Version Range with Single-Baseline Freeze](#crss-1212-interpreter-version-range-with-single-baseline-freeze)
-  - [CRSS-12.1.3 - Emergency Release](#crss-1213-emergency-release)
-  - [CRSS-12.1.4 - Scope Limitation](#crss-1214-scope-limitation)
-  - [CRSS-12.1.5 - Backport Requirement](#crss-1215-backport-requirement)
-- [CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3](#crss-541-crss-542-crss-543)
-  - [Phase-Aware Interpretation Note — Collections & Allocation](#phase-aware-interpretation-note-collections-allocation)
-  - [**Critical Phase**](#critical-phase)
-  - [**Non-Critical Phase**](#non-critical-phase)
-- [CRSS-5.5.2 / CRSS-5.5.3](#crss-552-crss-553)
-  - [Phase-Aware Interpretation Note — Big Data & Queries](#phase-aware-interpretation-note-big-data-queries)
-  - [**Critical Phase**](#critical-phase)
-  - [**Non-Critical Phase**](#non-critical-phase)
-- [Cache Rules (CRSS-5.6.1 / 5.6.2 / 5.6.3 / 7.8.5 / 7.8.6)](#cache-rules-crss-561-562-563-785-786)
-  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
-  - [**Critical Phase**](#critical-phase)
-  - [**Non-Critical Phase**](#non-critical-phase)
-- [Network & Microservices](#network-microservices)
-  - [(CRSS-7.6.4 / 7.6.5 / 7.7.x / 7.8.2–7.8.4 / 7.9.4–7.9.6)](#crss-764-765-77x-782-784-794-796)
-  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
-  - [**Critical Phase**](#critical-phase)
-  - [**Non-Critical Phase**](#non-critical-phase)
-- [Parsing & Transfer Integrity](#parsing-transfer-integrity)
-  - [(CRSS-7.9.1–7.9.3 / 7.9.5)](#crss-791-793-795)
-  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
-  - [**Critical Phase**](#critical-phase)
-  - [**Non-Critical Phase**](#non-critical-phase)
-- [OS & Environment Interaction](#os-environment-interaction)
-  - [(CRSS-7.10.1 / 7.10.2)](#crss-7101-7102)
-  - [Phase-Aware Interpretation Note](#phase-aware-interpretation-note)
-  - [**Critical Phase**](#critical-phase)
-  - [**Non-Critical Phase**](#non-critical-phase)
+  - [9.1 Coverage Rules](#91-coverage-rules)
+  - [9.2 Security & Auth Testing](#92-security--auth-testing)
+  - [9.3 Structural Coverage](#93-structural-coverage)
+  - [9.4 Guideline Compliance Summary](#94-guideline-compliance-summary)
+  - [9.5 Platform & Configuration Testing](#95-platform--configuration-testing)
+- [10. Python Runtime & Version Compliance (Core)](#10-python-runtime--version-compliance-core)
+- [12. Configuration & Deployment Integrity](#12-configuration--deployment-integrity)
+- [13. Phase-Aware Interpretation Rules (Normative)](#13-phase-aware-interpretation-rules-normative)
 
-**CRSS-Python** (Critical Reliability & Security Standard for Python)
-defines a family of coding standards and profiles to improve robustness,
-security, testability, and analyzability of Python code.
-
-The **Core** profile is a pragmatic, high-reliability subset intended
-for production backends, services, tools, and libraries where quality
-and maintainability matter, but the code is not necessarily hard
-real-time or safety-critical.
-
-It is more strict than simple style linting, but less restrictive than
-the **CRSS-Python Strict** profile.
-
-------------------------------------------------------------------------
-
-------------------------------------------------------------------------
+---
 
 ### 0.1 Purpose and Objectives
 
@@ -416,9 +240,9 @@ Each rule has:
 
 -   **ID**: `CRSS-x.y.z`
 -   **Title**
--   **Category**: e.g. Dynamic Features, Correctness, Security,
+-   **Category** (optional): e.g. Dynamic Features, Correctness, Security,
     Robustness, Maintainability.
--   **Type**:
+-   **Type** (optional): 
     -   *Static* -- enforceable via static analysis
         (e.g. `pycodereview`).
     -   *Dynamic* -- requires runtime / coverage tooling.
@@ -428,12 +252,12 @@ Each rule has:
     strength:
     -   Core: MUST / SHOULD / SHOULD-NOT / MUST-NOT / N/A
     -   Strict: MUST / SHOULD / SHOULD-NOT / MUST-NOT / N/A
--   **Rationale**
--   **Examples**
+-   **Rationale** (optional)
+-   **Examples** (optional)
 
 This document is the **canonical catalog** of CRSS rules.
 The **Strict** profile reuses these IDs with stronger requirements and
-adds a small number of Strict-only rules (see `crss_python_strict.md`).
+adds a small number of Strict-only rules (see `crss_python_strict_spec.md`).
 
 ------------------------------------------------------------------------
 
@@ -1689,7 +1513,7 @@ def reset_connection_pool() -> None:
 - **Category**: Defensive Programming
 - **Type**: Static / Process
 - **Profiles**:
-  - Core: SHOULD-NOT TODO VERIFY THIS
+  - Core: SHOULD-NOT
   - Strict: MUST-NOT
 - **Scope**: `all_code`
 
@@ -2166,7 +1990,7 @@ Access to sensitive data in code must:
 
 ---
 
-## 6. Network Failure Modes & Partial Operations
+### 6.x Network Failure Modes & Partial Operations
 
 ### CRSS-6.4.5 - Approved key exchange and storage
 
@@ -2199,8 +2023,6 @@ Projects should define policies for:
 - updating running systems to new keys without downtime where required.
 
 ---
-
-## 8. OS Interaction & Environment Variables (7.10.x)
 
 ### CRSS-6.4.7 - No long-lived caching of sensitive data
 
@@ -2613,8 +2435,8 @@ ADRs shall live alongside source code in the same repository or a tightly linked
 -   **Category**: Availability & Fault Tolerance
 -   **Type**: Design / Process
 -   **Profiles**:
-    -   Core: SHOULD
-    -   Strict Level A: MUST TODO VERIFY THIS
+    -   Core: MUST
+    -   Strict: MUST
 -   **Scope**: `all_code`
 
 For safety-critical functions, the architecture shall be designed so that no single runtime instance or external dependency can cause an uncontrolled unsafe failure.
@@ -3133,7 +2955,7 @@ import re
 RE_ID = re.compile(r"[A-Z0-9]+")
 
 def find_ids(payload: str) -> list[str]:
-    # [NOT ALLOWED] payload comes from network, no length bound
+    # payload comes from network, no length bound
     return RE_ID.findall(payload)
 ```
 
@@ -3186,7 +3008,7 @@ If a project needs a complex pattern, it MUST be rewritten as:
 ```python
 import re
 
-# [NOT ALLOWED] Catastrophic pattern – exponential backtracking
+# Catastrophic pattern – exponential backtracking
 RE_BAD = re.compile(r"^(a+)+$")
 ```
 
@@ -3222,7 +3044,7 @@ Core:
 import re
 
 def filter_lines(pattern_from_user: str, text: str) -> list[str]:
-    # [NOT ALLOWED] arbitrary user-supplied regex
+    # arbitrary user-supplied regex
     reg = re.compile(pattern_from_user)
     return [line for line in text.splitlines() if reg.search(line)]
 ```
@@ -3306,7 +3128,7 @@ certification acceptance.
 ```python
 import re
 
-# [NOT ALLOWED] Catastrophic pattern – exponential backtracking
+# Catastrophic pattern – exponential backtracking
 RE_BAD = re.compile(r"^(a+)+$")
 
 def validate(data: str) -> bool:
@@ -4189,158 +4011,167 @@ Emergency fixes MUST be integrated back into:
 
 No divergence.
 
-# CRSS Phase-Aware Interpretation Notes (Extended Set)
+## 13. Phase-Aware Interpretation Rules (Normative)
 
-## CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3
-### Phase-Aware Interpretation Note — Collections & Allocation
+This section defines **normative phase-aware interpretation rules** for CRSS-Python.
+They specify which operations are permitted during **Critical** and **Non-Critical**
+execution phases.
 
-### **Critical Phase**
-- Collections, large objects, and object pools used by `@critical` functions **MUST NOT grow**.
-- They MUST NOT be mutated, resized, extended, or pruned during critical execution.
-- Maximum size, shape, and membership **MUST be fixed or provably bounded** prior to entering the critical phase.
-- No new entries may be added or removed during critical execution.
+A **Critical Phase** corresponds to execution of:
+- `@critical` functions or methods,
+- Strict safety-relevant logic,
+- any computation whose behavior must be deterministic, bounded, and analyzable.
 
-### **Non-Critical Phase**
-- Collections and pools MAY be:
-  - populated,
-  - cleared,
-  - resized,
-  - rebuilt,
-  - or reset.
-- BUT:
-  - explicit upper bounds **must be enforced**,
-  - lifecycle management must be deterministic,
-  - any state used in critical code must be fully initialized and bounded **before** the critical call begins.
+A **Non-Critical Phase** includes:
+- initialization,
+- I/O,
+- configuration loading,
+- validation,
+- aggregation,
+- interaction with external systems.
+
+Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-## CRSS-5.5.2 / CRSS-5.5.3
-### Phase-Aware Interpretation Note — Big Data & Queries
+### 1. Collections, Allocation & Resource Management  
+*(CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3)*
 
-### **Critical Phase**
-- Critical code MUST NOT:
-  - perform chunked I/O,
+#### Critical Phase
+- Collections, large objects, and object pools used by critical code **MUST NOT grow**.
+- They **MUST NOT** be mutated, resized, extended, pruned, or reallocated.
+- Maximum size, structure, and membership **MUST be fixed or provably bounded** before entering the critical phase.
+- No new entries may be added or removed during critical execution.
+
+#### Non-Critical Phase
+- Collections and pools MAY be populated, cleared, resized, rebuilt, or reset.
+- Conditions:
+  - explicit upper bounds **MUST** be enforced,
+  - lifecycle management **MUST** be deterministic,
+  - all state required by critical code **MUST** be fully initialized, validated, and bounded **before** critical execution begins.
+
+---
+
+### 2. Bulk Data Processing & Queries  
+*(CRSS-5.5.2 / CRSS-5.5.3)*
+
+#### Critical Phase
+- Critical code **MUST NOT** perform:
+  - chunked or streamed I/O,
   - pagination,
   - database queries,
   - distributed datastore access.
-- All required data MUST be:
+- All required data **MUST** be:
   - pre-filtered,
   - pre-aggregated,
   - pre-validated,
-  - kept in bounded in-memory structures.
+  - stored in bounded in-memory structures.
 
-### **Non-Critical Phase**
+#### Non-Critical Phase
 - Chunked I/O, pagination, and query-based processing MAY occur.
 - Conditions:
-  - per-operation volume MUST be explicit and bounded,
-  - failures MUST follow CRSS robustness rules,
+  - per-operation volume **MUST** be explicit and bounded,
+  - failures **MUST** follow CRSS robustness rules,
   - only reduced, bounded, validated results may be forwarded to critical computation.
 
 ---
 
-## Cache Rules (CRSS-5.6.1 / 5.6.2 / 5.6.3 / 7.8.5 / 7.8.6)
-### Phase-Aware Interpretation Note
+### 3. Cache Semantics & Safety  
+*(CRSS-5.6.1 / 5.6.2 / 5.6.3 / 7.8.5 / 7.8.6)*
 
-### **Critical Phase**
-- Critical code MUST NOT:
+#### Critical Phase
+- Critical code **MUST NOT**:
   - insert into caches,
   - evict from caches,
   - mutate cache entries.
-- It MAY read from:
+- It MAY read from caches **only if** they are:
   - pre-populated,
   - bounded,
-  - deterministic caches.
-- Behavior on missing or stale cache entries MUST be deterministic.
+  - deterministic.
+- Behavior on missing or stale cache entries **MUST** be deterministic and lead to a defined safe outcome.
 
-### **Non-Critical Phase**
-- Cache population, eviction, refresh cycles MAY occur.
+#### Non-Critical Phase
+- Cache population, eviction, and refresh cycles MAY occur.
 - Conditions:
-  - cache size MUST be bounded,
-  - lifetimes and eviction policies MUST be documented,
-  - caches MUST NOT become a single source of truth for safety decisions,
-  - updates MUST NOT violate invariants required by critical code.
+  - cache size **MUST** be bounded,
+  - lifetimes and eviction policies **MUST** be documented,
+  - caches **MUST NOT** become a single source of truth for safety decisions,
+  - updates **MUST NOT** violate invariants required by critical code.
 
 ---
 
-## Network & Microservices
-### (CRSS-7.6.4 / 7.6.5 / 7.7.x / 7.8.2–7.8.4 / 7.9.4–7.9.6)
-### Phase-Aware Interpretation Note
+### 4. Network, Microservices & Distributed Interaction  
+*(CRSS-7.6.4 / 7.6.5 / 7.7.x / 7.8.2–7.8.4 / 7.9.4–7.9.6)*
 
-### **Critical Phase**
-- Critical code SHALL NOT perform:
+#### Critical Phase
+- Critical code **SHALL NOT** perform:
   - network calls,
   - remote API queries,
   - microservice RPCs,
   - retries,
   - circuit-breaker logic.
-- All safety decisions must rely on:
+- Safety decisions **MUST** rely solely on:
   - already-available,
   - validated,
   - bounded local data.
-- If data is stale or unavailable:
-  - a safe fallback path MUST be used (fail-safe).
+- If data is stale or unavailable, a **fail-safe fallback** MUST be used.
 
-### **Non-Critical Phase**
-- Network I/O, microservice interactions, retries, and circuit-breakers MAY be used.
+#### Non-Critical Phase
+- Network I/O, microservice interaction, retries, and circuit breakers MAY be used.
 - Conditions:
   - strict latency budgets and timeout bounds,
   - partial-failure detection,
-  - status propagation to higher layers,
-  - critical code MUST remain tolerant of “no response / stale data”.
+  - explicit status propagation,
+  - critical code **MUST** tolerate no-response or stale-data conditions.
 
 ---
 
-## Parsing & Transfer Integrity
-### (CRSS-7.9.1–7.9.3 / 7.9.5)
-### Phase-Aware Interpretation Note
+### 5. Parsing, Validation & Transfer Integrity  
+*(CRSS-7.9.1–7.9.3 / 7.9.5)*
 
-### **Critical Phase**
-- Critical code MUST NOT:
+#### Critical Phase
+- Critical code **MUST NOT**:
   - perform JSON/CSV/XML parsing,
   - perform schema validation,
-  - run integrity checks (CRC/checksum/signature),
+  - execute integrity checks (CRC, checksum, signature),
   - stream or reassemble partial data.
-- Critical code may only consume:
+- It may only consume data that is:
   - validated,
   - normalized,
   - bounded,
-  - pre-checked data structures.
+  - integrity-checked before entering the critical phase.
 
-### **Non-Critical Phase**
-- Non-critical code MUST implement:
+#### Non-Critical Phase
+- Non-critical code **MUST** implement:
   - strict parsing,
   - schema validation,
   - malformed-input defenses,
-  - checksum/hash/signature verification,
-  - ingress integrity guarantees.
+  - checksum, hash, or signature verification.
 - Only validated outputs may enter critical paths.
 
 ---
 
-## OS & Environment Interaction
-### (CRSS-7.10.1 / 7.10.2)
-### Phase-Aware Interpretation Note
+### 6. OS & Environment Interaction  
+*(CRSS-7.10.1 / 7.10.2)*
 
-### **Critical Phase**
-- Critical code MUST NOT:
+#### Critical Phase
+- Critical code **MUST NOT**:
   - read environment variables,
   - inspect the filesystem,
   - perform OS-level introspection,
   - query dynamic configuration sources.
-- All required configuration MUST be:
+- All required configuration **MUST** be:
   - resolved,
   - validated,
   - normalized,
   - frozen before entering the critical phase.
 
-### **Non-Critical Phase**
+#### Non-Critical Phase
 - Non-critical code MAY:
   - read environment variables,
   - load configuration files,
-  - inspect limited OS info.
+  - inspect limited OS information.
 - Conditions:
-  - all values MUST be validated,
-  - all critical-relevant configuration MUST be frozen before critical execution,
-  - dynamically changing configuration MUST NOT affect deterministic critical logic.
-
----
+  - all values **MUST** be validated,
+  - all safety-relevant configuration **MUST** be frozen before critical execution,
+  - dynamic configuration **MUST NOT** affect deterministic critical logic.

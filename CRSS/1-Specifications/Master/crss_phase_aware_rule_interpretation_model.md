@@ -20,18 +20,18 @@ This document MUST NOT introduce new requirements beyond those in the Master.
 
 ## Table of Contents
 
-- [CRSS Phase-Aware Rule Interpretation Model](#crss-phase-aware-rule-interpretation-model)
-  - [0. Scope of this document](#0-scope-of-this-document)
-  - [1. Interpretation in `@critical` Code](#1-interpretation-in-critical-code)
-    - [[NOT ALLOWED] Forbidden in Critical Code](#[NOT ALLOWED]-forbidden-in-critical-code)
-    - [Critical Code Principle](#critical-code-principle)
-  - [2. Interpretation in Non-Critical Code](#2-interpretation-in-non-critical-code)
-    - [[OK] Permitted in Non-Critical Code](#[OK]-permitted-in-non-critical-code)
-  - [3. Meaning for Compliance Tools](#3-meaning-for-compliance-tools)
-    - [ Tool Interpretation Matrix](#-tool-interpretation-matrix)
-  - [4. Meaning for Human Review](#4-meaning-for-human-review)
-  - [5. Meaning for Runtime / Architecture](#5-meaning-for-runtime-architecture)
-  - [Summary](#summary)
+- [0. Scope of this document](#0-scope-of-this-document)
+- [1. Interpretation in `@critical` Code](#1-interpretation-in-critical-code)
+  - [Forbidden in Critical Code](#forbidden-in-critical-code)
+  - [Critical Code Principle](#critical-code-principle)
+- [2. Interpretation in Non-Critical Code](#2-interpretation-in-non-critical-code)
+  - [[OK] Permitted in Non-Critical Code](#ok-permitted-in-non-critical-code)
+- [3. Meaning for Compliance Tools](#3-meaning-for-compliance-tools)
+  - [Tool Interpretation Matrix](#tool-interpretation-matrix)
+- [4. Meaning for Human Review](#4-meaning-for-human-review)
+- [5. Meaning for Runtime / Architecture](#5-meaning-for-runtime--architecture)
+- [Summary](#summary)
+
 
 ---
 
@@ -64,7 +64,7 @@ Applicable to:
 
 When inside a **critical execution phase**, a phase-aware rule is enforced at **maximum strictness**:
 
-### [NOT ALLOWED] Forbidden in Critical Code
+### Forbidden in Critical Code
 
 - **I/O of any kind**
   - filesystem

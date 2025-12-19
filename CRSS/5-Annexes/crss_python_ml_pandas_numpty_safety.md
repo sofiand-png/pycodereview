@@ -11,6 +11,21 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
+## Table of Contents
+
+- [1. Purpose](#1-purpose)
+- [2. ML in Safety Context](#2-ml-in-safety-context)
+  - [2.1 Strict-A: Fully Forbidden](#21-strict-a-fully-forbidden)
+  - [2.2 Core-B: Allowed With Restrictions](#22-core-b-allowed-with-restrictions)
+  - [2.3 Core-C: Fully Allowed](#23-core-c-fully-allowed)
+- [3. Pandas / Numpy](#3-pandas--numpy)
+- [4. ML Safety Patterns](#4-ml-safety-patterns)
+  - [4.1 ML-Assisted Monitoring Layer](#41-ml-assisted-monitoring-layer)
+- [5. Conclusion](#5-conclusion)
+
+
+---
+
 ## 1. Purpose
 Provide guidance for using popular data libraries (NumPy, Pandas, ML frameworks) **safely** under CRSS.
 

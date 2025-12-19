@@ -10,23 +10,22 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-- [CRSS-Python Certification FAQ for Auditors & Regulators](#crss-python-certification-faq-for-auditors-regulators)
-  - [ 1. What Is the Certification Scope of CRSS-Python?](#-1-what-is-the-certification-scope-of-crss-python)
-  - [ 2. What Safety Levels Can CRSS-Python Support?](#-2-what-safety-levels-can-crss-python-support)
-  - [ 3. Is Compliance Binary?](#-3-is-compliance-binary)
-  - [ 4. What Are the Core Enforcement Mechanisms?](#-4-what-are-the-core-enforcement-mechanisms)
-  - [ 5. What Evidence Is Required?](#-5-what-evidence-is-required)
-  - [ 6. What Violations Automatically Fail Certification?](#-6-what-violations-automatically-fail-certification)
-  - [ 7. Are Deviations Allowed?](#-7-are-deviations-allowed)
-    - [ Strict-A `@critical`](#-strict-a-critical)
-    - [ Strict-A `@non_critical_phase`](#-strict-a-noncriticalphase)
-    - [ Strict-B/C and Core](#-strict-bc-and-core)
-  - [ 8. How Is Determinism Verified?](#-8-how-is-determinism-verified)
-  - [ 9. How Is the Interpreter Addressed?](#-9-how-is-the-interpreter-addressed)
-  - [ 10. How Are Deployments Certified?](#-10-how-are-deployments-certified)
-  - [ 11. What Is the Role of Organizational Maturity?](#-11-what-is-the-role-of-organizational-maturity)
-  - [ 12. What Is the Auditor’s Checklist?](#-12-what-is-the-auditor’s-checklist)
-  - [ 13. Final Summary](#-13-final-summary)
+- [1. What Is the Certification Scope of CRSS-Python?](#1-what-is-the-certification-scope-of-crss-python)
+- [2. What Safety Levels Can CRSS-Python Support?](#2-what-safety-levels-can-crss-python-support)
+- [3. Is Compliance Binary?](#3-is-compliance-binary)
+- [4. What Are the Core Enforcement Mechanisms?](#4-what-are-the-core-enforcement-mechanisms)
+- [5. What Evidence Is Required?](#5-what-evidence-is-required)
+- [6. What Violations Automatically Fail Certification?](#6-what-violations-automatically-fail-certification)
+- [7. Are Deviations Allowed?](#7-are-deviations-allowed)
+  - [Strict-A `@critical`](#strict-a-critical)
+  - [Strict-A `@non_critical_phase`](#strict-a-non_critical_phase)
+  - [Strict-B/C and Core](#strict-bc-and-core)
+- [8. How Is Determinism Verified?](#8-how-is-determinism-verified)
+- [9. How Is the Interpreter Addressed?](#9-how-is-the-interpreter-addressed)
+- [10. How Are Deployments Certified?](#10-how-are-deployments-certified)
+- [11. What Is the Role of Organizational Maturity?](#11-what-is-the-role-of-organizational-maturity)
+- [12. What Is the Auditor’s Checklist?](#12-what-is-the-auditors-checklist)
+- [13. Final Summary](#13-final-summary)
 
 ---
 
@@ -41,9 +40,9 @@ CRSS-Python certification applies to **software units written in Python**, speci
 
 Certification DOES NOT apply to:
 
-- [NOT ALLOWED] System-level safety certification
-- [NOT ALLOWED] Hardware certification
-- [NOT ALLOWED] Primary actuator control loops
+- System-level safety certification
+- Hardware certification
+- Primary actuator control loops
 
 CRSS-Python certification confirms **software compliance**, not system compliance.
 
@@ -61,9 +60,9 @@ CRSS-Python certification confirms **software compliance**, not system complianc
 
 CRSS-Python does **not** support:
 
-- [NOT ALLOWED] ASIL D primary actuation
-- [NOT ALLOWED] SIL 4
-- [NOT ALLOWED] DAL A/B flight control
+- ASIL D primary actuation
+- SIL 4
+- DAL A/B flight control
 
 ---
 
@@ -73,7 +72,7 @@ Yes.
 
 CRSS-Python defines certification status as:
 
-- **PASS** or [NOT ALLOWED] **FAIL**
+- **PASS** or **FAIL**
 
 There is no partial, percentage-based, or “conditional” compliance.
 
@@ -114,14 +113,14 @@ All must be versioned, immutable, and traceable.
 
 ##  6. What Violations Automatically Fail Certification?
 
-- [NOT ALLOWED] Critical code calling non-critical code
-- [NOT ALLOWED] Dynamic allocation in `@critical`
-- [NOT ALLOWED] GC enabled in `@critical`
-- [NOT ALLOWED] Threads in `@critical`
-- [NOT ALLOWED] Deviation in Strict-A `@critical`
-- [NOT ALLOWED] Python version mismatch
-- [NOT ALLOWED] Dependency drift from CBM
-- [NOT ALLOWED] Hotfixes or runtime updates
+- Critical code calling non-critical code
+- Dynamic allocation in `@critical`
+- GC enabled in `@critical`
+- Threads in `@critical`
+- Deviation in Strict-A `@critical`
+- Python version mismatch
+- Dependency drift from CBM
+- Hotfixes or runtime updates
 
 Any one of these = **FAIL**.
 
@@ -130,7 +129,7 @@ Any one of these = **FAIL**.
 ##  7. Are Deviations Allowed?
 
 ###  Strict-A `@critical`
-- [NOT ALLOWED] No deviations permitted.
+- No deviations permitted.
 
 ###  Strict-A `@non_critical_phase`
 - Deviations allowed only if:

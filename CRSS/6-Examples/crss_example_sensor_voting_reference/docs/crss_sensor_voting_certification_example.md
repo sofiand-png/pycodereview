@@ -1,8 +1,24 @@
 # CRSS-Python Certification Example — Sensor Voting Reference
 
+**Version:** v1.0.0
+**Status:** Informative (Reference Example)
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
 > **Important:** This document is an example of the evidence structure for
 > a CRSS-compliant component. It is not an official certificate from
 > any authority.
+
+## Table of Contents
+
+- [1. Component Identification](#1-component-identification)
+- [2. Applicable Standard](#2-applicable-standard)
+- [3. Evidence](#3-evidence)
+- [4. Summary Assessment (Example)](#4-summary-assessment-example)
+
 
 ## 1. Component Identification
 

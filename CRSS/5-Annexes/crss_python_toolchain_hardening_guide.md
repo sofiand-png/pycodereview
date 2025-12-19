@@ -11,6 +11,24 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
+## Table of Contents
+
+- [1. Purpose](#1-purpose)
+- [2. Interpreter Hardening](#2-interpreter-hardening)
+  - [2.1 Pin Python Version](#21-pin-python-version)
+  - [2.2 Disable Sources of Nondeterminism](#22-disable-sources-of-nondeterminism)
+- [3. Build Hardening](#3-build-hardening)
+  - [3.1 Reproducible Installations](#31-reproducible-installations)
+  - [3.2 Dependency Whitelisting](#32-dependency-whitelisting)
+- [4. Testing Pipeline Improvements](#4-testing-pipeline-improvements)
+  - [4.1 MC/DC Reporting](#41-mcdc-reporting)
+  - [4.2 Fault Injection Evidence](#42-fault-injection-evidence)
+- [5. Evidence Aggregation](#5-evidence-aggregation)
+- [6. Conclusion](#6-conclusion)
+
+
+---
+
 ## 1. Purpose
 Define a hardened toolchain strategy that ensures:
 - reproducible builds

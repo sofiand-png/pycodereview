@@ -10,24 +10,24 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-- [CRSS-Python Deployment, Release & Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
-  - [0. Purpose](#0-purpose)
-  - [1. Deployment & Baseline Rule Catalog (DPL-12.x)](#1-deployment-baseline-rule-catalog-dpl-12x)
-    - [1.1 Environment & Immutability](#11-environment-immutability)
-    - [1.2 Baseline & CBM](#12-baseline-cbm)
-    - [1.3 Releases & Immutability](#13-releases-immutability)
-    - [1.4 Updates & Upgrade Process](#14-updates-upgrade-process)
-    - [1.5 CI/CD & Deployment Pipeline](#15-cicd-deployment-pipeline)
-    - [1.6 Environment Parity & Testing](#16-environment-parity-testing)
-    - [1.7 Production Safeguards](#17-production-safeguards)
-  - [1.8 Upgrade process](#18-upgrade-process)
-    - [DPL-12.24 - Interpreter Version Range with Single-Baseline Freeze](#dpl-1224-interpreter-version-range-with-single-baseline-freeze)
-    - [DPL-12.25 - Emergency Release](#dpl-1225-emergency-release)
-    - [DPL-12.26 - Scope Limitation](#dpl-1226-scope-limitation)
-    - [DPL-12.27 - Backport Requirement](#dpl-1227-backport-requirement)
-  - [2. Relationship to Code-Level 12.x Rules](#2-relationship-to-code-level-12x-rules)
-  - [3. Versioning & Governance](#3-versioning-governance)
-  - [4. Summary](#4-summary)
+- [0. Purpose](#0-purpose)
+- [1. Deployment & Baseline Rule Catalog (DPL-12.x)](#1-deployment--baseline-rule-catalog-dpl-12x)
+  - [1.1 Environment & Immutability](#11-environment--immutability)
+  - [1.2 Baseline & CBM](#12-baseline--cbm)
+  - [1.3 Releases & Immutability](#13-releases--immutability)
+  - [1.4 Updates & Upgrade Process](#14-updates--upgrade-process)
+  - [1.5 CI/CD & Deployment Pipeline](#15-cicd--deployment-pipeline)
+  - [1.6 Environment Parity & Testing](#16-environment-parity--testing)
+  - [1.7 Production Safeguards](#17-production-safeguards)
+  - [1.8 Upgrade Process](#18-upgrade-process)
+    - [DPL-12.24 – Interpreter Version Range with Single-Baseline Freeze](#dpl-1224--interpreter-version-range-with-single-baseline-freeze)
+    - [DPL-12.25 – Emergency Release](#dpl-1225--emergency-release)
+    - [DPL-12.26 – Scope Limitation](#dpl-1226--scope-limitation)
+    - [DPL-12.27 – Backport Requirement](#dpl-1227--backport-requirement)
+- [2. Relationship to Code-Level 12.x Rules](#2-relationship-to-code-level-12x-rules)
+- [3. Versioning & Governance](#3-versioning--governance)
+- [4. Summary](#4-summary)
+
 
 ---
 
@@ -43,6 +43,25 @@ It consolidates and supersedes:
 
 It is **normative** for all projects claiming CRSS-Python compliance (Core or Strict).
 All MUST / MUST-NOT / SHOULD / SHOULD-NOT statements in this document are identified by **DPL-12.x** IDs.
+
+CRSS deliberately separates architectural safety rules from release and build governance.
+
+The authoritative, normative definition of how a CRSS-compliant software artifact is produced — including dependency freezing, 
+offline installation, wheel generation, and evidence collection — is specified in the Release Management and Deployment Policy.
+
+The whitepaper does not re-define these procedures. Instead, it relies on the Release Management specification as the single source of truth for:
+
+Dependency freezing and lockfile generation
+
+Offline, deterministic installation
+
+Certified wheel creation
+
+Artifact immutability and cryptographic hashing
+
+Evidence integration into CBM, TEP, and CRC
+
+This separation ensures that conceptual guidance remains stable while allowing build and release processes to evolve in a controlled, auditable manner.
 
 ---
 

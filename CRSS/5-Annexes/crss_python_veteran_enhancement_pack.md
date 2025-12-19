@@ -11,6 +11,29 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
+## Table of Contents
+
+- [1. Purpose](#1-purpose)
+- [2. Async & Await Under CRSS](#2-async--await-under-crss)
+  - [2.1 Allowed in Core-C Only](#21-allowed-in-core-c-only)
+  - [2.2 Forbidden in Strict-A](#22-forbidden-in-strict-a)
+  - [2.3 Bounded Async in Core-B](#23-bounded-async-in-core-b)
+- [3. FastAPI Support](#3-fastapi-support)
+  - [3.1 Allowed Uses](#31-allowed-uses)
+  - [3.2 Forbidden Uses](#32-forbidden-uses)
+  - [3.3 Recommended Pattern](#33-recommended-pattern)
+- [4. Pandas / NumPy Usage](#4-pandas--numpy-usage)
+  - [4.1 Strict-A = NEVER](#41-strict-a--never)
+  - [4.2 Core-B = LIMITED](#42-core-b--limited)
+  - [4.3 Core-C = FULL](#43-core-c--full)
+- [5. Distributed Pipelines](#5-distributed-pipelines)
+  - [5.1 Cross-Component Boundaries](#51-cross-component-boundaries)
+  - [5.2 Isolation Strategy](#52-isolation-strategy)
+- [6. Conclusion](#6-conclusion)
+
+
+---
+
 ## 1. Purpose
 Address concerns from highly experienced Python developers:
 - Async
@@ -62,7 +85,7 @@ Strict-A is wrapped by:
 - deterministic adapter
 - JSON-safe bounded interface
 
-FastAPI layer → Core-C wrapper → Strict-A → Core-C adapter → FastAPI response #TODO: verify this
+FastAPI layer → Core-C wrapper → Strict-B validation → Strict-A Kernel → FastAPI response
 
 ---
 

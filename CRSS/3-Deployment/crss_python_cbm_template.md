@@ -8,14 +8,6 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 The normative CBM content requirements are defined in the Deployment Master and Release Management specifications.
 
 ---
-
-cbm_version: "1.0.0"
-baseline_id: "BASELINE-XXXX"
-release_id: "RELEASE-XXXX"
-commit_hash: "xxxxxxxxxxxxxxxxxxxx"
-
-# 1. Requirements
-
 ## Table of Contents
 
 - [1. Requirements](#1-requirements)
@@ -26,11 +18,19 @@ commit_hash: "xxxxxxxxxxxxxxxxxxxx"
 - [6. Container/VM Image (if applicable)](#6-containervm-image-if-applicable)
 - [7. Hardware Platform](#7-hardware-platform)
 - [8. Build Configuration](#8-build-configuration)
-- [9. Database / External State (if applicable)](#9-database-external-state-if-applicable)
+- [9. Database / External State (if applicable)](#9-database--external-state-if-applicable)
 - [10. Test Context](#10-test-context)
 - [11. Linked Artifacts (Mandatory)](#11-linked-artifacts-mandatory)
 - [12. Integrity](#12-integrity)
 
+---
+
+cbm_version: "1.0.0"
+baseline_id: "BASELINE-XXXX"
+release_id: "RELEASE-XXXX"
+commit_hash: "xxxxxxxxxxxxxxxxxxxx"
+
+# 1. Requirements
 requirements:
   requirements_version: "REQ-SET-1.2.3"
   criticality_level: "A|B|C"

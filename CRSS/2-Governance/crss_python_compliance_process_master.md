@@ -8,6 +8,48 @@ Distributed under CC BY-NC-ND 4.0
 
 ---
 
+## Table of Contents
+
+- [Purpose](#purpose)
+- [Scope](#scope)
+- [Normative References](#normative-references)
+- [Definitions](#definitions)
+- [Identifier Model](#identifier-model)
+- [Compliance Overview](#compliance-overview)
+- [Profiles](#profiles)
+- [Safety Levels](#safety-levels)
+- [MAR & Phase Model](#mar--phase-model)
+- [Entry Criteria](#entry-criteria)
+- [Compliance Actor Roles](#compliance-actor-roles)
+- [Compliance Lifecycle (Five-Phase Model)](#compliance-lifecycle-five-phase-model)
+  - [Phase 1 — Design Compliance](#phase-1--design-compliance)
+  - [Phase 2 — Rule Compliance](#phase-2--rule-compliance)
+  - [Phase 3 — Test Compliance](#phase-3--test-compliance)
+  - [Phase 4 — Baseline Compliance](#phase-4--baseline-compliance)
+  - [Phase 5 — Certification Readiness](#phase-5--certification-readiness)
+  - [Release Approval](#release-approval)
+  - [Post-Release Monitoring](#post-release-monitoring)
+- [Enforcement & Acceptance Model](#enforcement--acceptance-model)
+- [One-Version Rule (Interpreter Freeze)](#one-version-rule-interpreter-freeze)
+- [Mandatory Artifacts](#mandatory-artifacts)
+- [Artifact Chain](#artifact-chain)
+- [Re-Approval Rules](#re-approval-rules)
+- [Deviations & Exceptions](#deviations--exceptions)
+- [Testing Compliance](#testing-compliance)
+- [Deployment Compliance](#deployment-compliance)
+- [Toolchain Confidence Assessment](#toolchain-confidence-assessment)
+- [Certificate Issuance](#certificate-issuance)
+- [Archival Rules](#archival-rules)
+- [Auditor Guidance](#auditor-guidance)
+- [Checklists](#checklists)
+  - [Developer Checklist](#developer-checklist)
+  - [Reviewer Checklist](#reviewer-checklist)
+  - [Safety Manager Checklist](#safety-manager-checklist)
+  - [Release Authority Checklist](#release-authority-checklist)
+- [Compliance Flow](#compliance-flow)
+
+---
+
 # Purpose
 This unified specification consolidates:
 - crss_compliance_process_version_to_verify.md
@@ -151,6 +193,10 @@ Activities:
 - produce CBM
 Artifact:
 - CBM
+
+The certification baseline SHALL reference a Certified Build as defined in the
+Release Management specification, including the certified wheel artifact and
+its associated dependency freeze evidence.
 
 ## Phase 5 — Certification Readiness
 Artifacts:

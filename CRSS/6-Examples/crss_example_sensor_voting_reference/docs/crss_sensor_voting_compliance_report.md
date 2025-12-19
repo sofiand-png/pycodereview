@@ -1,5 +1,24 @@
 # CRSS Compliance Report — Sensor Voting Reference Example
 
+**Version:** v1.0.0
+**Status:** Informative (Reference Example)
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
+## Table of Contents
+
+- [1. Scope](#1-scope)
+- [2. Rule Mapping Summary](#2-rule-mapping-summary)
+  - [2.1 Strict-A Deterministic Control Logic](#21-strict-a-deterministic-control-logic)
+  - [2.2 Phase-Aware Boundaries & Data Flow](#22-phase-aware-boundaries--data-flow)
+  - [2.3 Configuration & Safe Defaults](#23-configuration--safe-defaults)
+  - [2.4 JSON I/O & Validation (Non-critical)](#24-json-io--validation-non-critical)
+- [3. Deviations](#3-deviations)
+
+
 - **Project**: CRSS Python Sensor Voting Reference Example
 - **Version**: 1.0.0
 - **Language**: Python 3.11.x

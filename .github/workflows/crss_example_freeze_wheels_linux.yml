@@ -1,11 +1,10 @@
-name: CRSS Example – Freeze Linux Wheelhouse
+name: CRSS Example – Freeze Wheelhouse (Linux)
 
 on:
   workflow_dispatch:
 
 permissions:
-  contents: write   # needed only if you want to commit results back
-  actions: write
+  contents: read
 
 jobs:
   freeze-wheelhouse-linux:
@@ -21,15 +20,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      - name: Prepare wheelhouse directories
+      - name: Prepare third_party structure
         run: |
           cd CRSS/6-Examples/crss_example_sensor_voting_reference/
           mkdir -p third_party/wheelhouse/linux
 
-      - name: Generate requirements.lock.txt (pinned)
+      - name: Generate requirements.lock.txt (pinned inputs)
         run: |
           cd CRSS/6-Examples/crss_example_sensor_voting_reference/
-          cat requirements-ci.txt \
+          cat requirements.txt requirements-ci.txt \
             | sed '/^\s*#/d' \
             | sed '/^\s*$/d' \
             | sort -u \
@@ -38,33 +37,23 @@ jobs:
       - name: Download Linux wheels (binary only)
         run: |
           cd CRSS/6-Examples/crss_example_sensor_voting_reference/
-
           python -m pip install -U pip
-
           python -m pip download \
             --only-binary=:all: \
             --dest third_party/wheelhouse/linux \
             -r third_party/requirements.lock.txt
 
-      - name: Build project wheel (Linux)
-        run: |
-          cd CRSS/6-Examples/crss_example_sensor_voting_reference/
-
-          python -m pip install wheel
-          python -m pip wheel . --no-deps -w third_party/wheelhouse/linux
-
-      - name: Generate wheelhouse SHA256 manifest (CBM input)
+      - name: Generate wheelhouse manifest (sha256)
         run: |
           cd CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse/linux
+          sha256sum *.whl > ../../wheelhouse_manifest_linux.sha256.txt
 
-          sha256sum *.whl > ../wheelhouse_manifest_linux.sha256.txt
-
-      - name: Upload wheelhouse artifact (for review or commit)
+      - name: Upload wheelhouse bundle (14 days)
         uses: actions/upload-artifact@v4
         with:
           name: crss-example-wheelhouse-linux
           path: |
-            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse/linux
             CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/requirements.lock.txt
+            CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse/linux
             CRSS/6-Examples/crss_example_sensor_voting_reference/third_party/wheelhouse_manifest_linux.sha256.txt
           retention-days: 14

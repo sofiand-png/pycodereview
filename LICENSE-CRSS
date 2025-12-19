@@ -3,7 +3,7 @@ CRSS-Python Standard Text License
 
 © 2025 Sofian Daghsen. All rights reserved.
 
-The CRSS-Python specification documents (Core, Strict, and all annexes)
+The CRSS-Python specification documents (Core, Strict, and all specifications)
 are licensed under the Creative Commons
 Attribution–NonCommercial–NoDerivatives 4.0 International License
 (CC BY-NC-ND 4.0).
@@ -17,8 +17,7 @@ Under the following terms:
 - NoDerivatives — You may not distribute modified versions.
 
 This license applies ONLY to the standard text located under:
-docs/specs/
-docs/annexes/
+CRSS/**
 
 The pycodereview software and all its source code are licensed separately
 under the MIT License (see LICENSE).

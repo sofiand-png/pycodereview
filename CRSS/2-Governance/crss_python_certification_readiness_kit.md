@@ -10,21 +10,20 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-- [CRSS-Python Certification Readiness Master Kit](#crss-python-certification-readiness-master-kit)
 - [0. Purpose](#0-purpose)
 - [1. Certification Readiness Definition](#1-certification-readiness-definition)
 - [2. Certification Readiness Checklist (CRC)](#2-certification-readiness-checklist-crc)
   - [2.1 CRC Sections](#21-crc-sections)
   - [2.2 CRC Requirements](#22-crc-requirements)
-    - [CRC-1 — Compliance Completion](#crc-1-compliance-completion)
-    - [CRC-2 — SCEM Completion](#crc-2-scem-completion)
-    - [CRC-3 — Toolchain Integrity](#crc-3-toolchain-integrity)
-    - [CRC-4 — Configuration Immutability](#crc-4-configuration-immutability)
-    - [CRC-5 — Mode Enforcement Confirmation](#crc-5-mode-enforcement-confirmation)
-    - [CRC-6 — Critical Phase Integrity](#crc-6-critical-phase-integrity)
-    - [CRC-7 — Deviation Resolution](#crc-7-deviation-resolution)
-    - [CRC-8 — Build Reproducibility](#crc-8-build-reproducibility)
-    - [CRC-9 — Organizational Readiness](#crc-9-organizational-readiness)
+    - [CRC-1 — Compliance Completion](#crc-1--compliance-completion)
+    - [CRC-2 — SCEM Completion](#crc-2--scem-completion)
+    - [CRC-3 — Toolchain Integrity](#crc-3--toolchain-integrity)
+    - [CRC-4 — Configuration Immutability](#crc-4--configuration-immutability)
+    - [CRC-5 — Mode Enforcement Confirmation](#crc-5--mode-enforcement-confirmation)
+    - [CRC-6 — Critical Phase Integrity](#crc-6--critical-phase-integrity)
+    - [CRC-7 — Deviation Resolution](#crc-7--deviation-resolution)
+    - [CRC-8 — Build Reproducibility](#crc-8--build-reproducibility)
+    - [CRC-9 — Organizational Readiness](#crc-9--organizational-readiness)
 - [3. Certification Blocking Conditions](#3-certification-blocking-conditions)
 - [4. Mandatory Certification Artifacts](#4-mandatory-certification-artifacts)
 - [5. Certification Readiness Workflow](#5-certification-readiness-workflow)
@@ -94,51 +93,51 @@ The CRC is a mandatory artifact confirming readiness.
 ### CRC-1 — Compliance Completion
 - Phases 1–4 completed
 - All mandatory artifacts exist
-- [NOT ALLOWED] Missing artifacts -> NOT READY
+- Missing artifacts -> NOT READY
 
 ### CRC-2 — SCEM Completion
 - All SCEM domains complete
 - All annex artifacts complete
-- [NOT ALLOWED] Missing items -> NOT READY
+- Missing items -> NOT READY
 
 ### CRC-3 — Toolchain Integrity
 - All tools fixed-version
 - TCL levels documented
 - No auto-update
-- [NOT ALLOWED] Tool drift -> NOT READY
+- Tool drift -> NOT READY
 
 ### CRC-4 — Configuration Immutability
 - CBM finalized
 - No config changes pending
-- [NOT ALLOWED] Unfrozen configuration -> NOT READY
+- Unfrozen configuration -> NOT READY
 
 ### CRC-5 — Mode Enforcement Confirmation
 - MAR finalized
 - Propagation resolved
 - Critical never calls non-critical
-- [NOT ALLOWED] Unresolved promotions -> NOT READY
+- Unresolved promotions -> NOT READY
 
 ### CRC-6 — Critical Phase Integrity
 - Critical boundaries defined
 - Determinism validated
 - Strict-A: zero violations in `@critical`
-- [NOT ALLOWED] Any `@critical` violation -> NOT READY
+- Any `@critical` violation -> NOT READY
 
 ### CRC-7 — Deviation Resolution
 - Strict-A deviations documented
 - Strict-A deviations approved
 - Strict-A deviations isolated
-- [NOT ALLOWED] Unapproved deviation -> NOT READY
+- Unapproved deviation -> NOT READY
 
 ### CRC-8 — Build Reproducibility
 - Rebuild = identical result
 - Reproducibility demonstrated
-- [NOT ALLOWED] Non-reproducible builds -> NOT READY
+- Non-reproducible builds -> NOT READY
 
 ### CRC-9 — Organizational Readiness
 - SMM Level ≥ **S2** for Strict
 - SMM Level ≥ **S4** for Strict-A
-- [NOT ALLOWED] Organizational gaps -> NOT READY
+- Organizational gaps -> NOT READY
 
 ---
 
@@ -146,14 +145,14 @@ The CRC is a mandatory artifact confirming readiness.
 
 Certification CANNOT begin if:
 
-- [NOT ALLOWED] Multiple Python versions exist
-- [NOT ALLOWED] Mode downgrades occurred
-- [NOT ALLOWED] Critical calls non-critical
-- [NOT ALLOWED] Incomplete SCEM
-- [NOT ALLOWED] Tool or dependency drift
-- [NOT ALLOWED] Missing CBM
-- [NOT ALLOWED] Auto-updating systems in place
-- [NOT ALLOWED] Strict-A deviation unapproved
+- Multiple Python versions exist
+- Mode downgrades occurred
+- Critical calls non-critical
+- Incomplete SCEM
+- Tool or dependency drift
+- Missing CBM
+- Auto-updating systems in place
+- Strict-A deviation unapproved
 
 These are **absolute blockers** that cannot be waived.
 
@@ -173,6 +172,7 @@ Before certification begins, the following MUST exist:
 - Deviation Register (if applicable)
 - SCEM Master Evidence Package
 - Certification Readiness Checklist (CRC)
+- Certified Artifact(s) and hash list
 
 All artifacts must:
 
@@ -219,8 +219,8 @@ This document:
 
 Certification readiness is **binary**:
 
-> [OK] READY
-> [NOT ALLOWED] NOT READY
+> READY
+> NOT READY
 
 There is no partial readiness under CRSS-Python.
 

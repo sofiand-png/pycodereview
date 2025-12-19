@@ -1,9 +1,9 @@
 # CRSS-Python Overview & Repository Map
 
-**Version:** v1.0.0
-**Status:** Informative
-**Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
+**Version:** v1.0.0  
+**Status:** Informative  
+**Maturity:** Stable  
+© 2025 Sofian Daghsen – All rights reserved  
 Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
@@ -35,8 +35,9 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [2.3 Governance & Evidence](#23-governance--evidence)
   - [2.4 Deployment & Baselines](#24-deployment--baselines)
   - [2.5 Policies](#25-policies)
-  - [2.6 Annexes & Guides](#26-annexes--guides)
-  - [2.7 Release & Meta](#27-release--meta)
+  - [2.6 Annexes, Guides & Roadmaps](#26-annexes-guides--roadmaps)
+  - [2.7 Examples](#27-examples)
+  - [2.8 Release & Meta](#28-release--meta)
 
 ---
 
@@ -60,7 +61,13 @@ It provides:
 - Deterministic execution models  
 - Certification-ready evidence  
 
-CRSS-Python does **not** turn Python into a real-time actuator controller. Instead, it allows Python to be used **safely and confidently** in supervisory and decision-support components.
+CRSS-Python does not claim to transform Python into a real-time operating system/controller,
+nor does it authorize Python to directly control time-critical physical actuators (e.g. torque, braking, flight control surfaces).
+
+- The standard is explicitly scoped to supervisory, decision-making, validation, arbitration, monitoring, and safety-envelope logic, where determinism, bounded behavior, and strong evidence can be established through architectural constraints and process discipline.
+- For avionics, CRSS-Python is intended for ground systems, tooling, test infrastructure, and safety-support functions, not airborne flight-critical control software.
+
+Any claims of safety integrity remain system-level claims: CRSS defines how Python software can be made certifiable within its declared scope, not how an entire system achieves certification.
 
 ---
 
@@ -125,7 +132,7 @@ Level A demands the strongest safety controls.
 
 ---
 
-# 16. Modes: The Enforcement Engine
+### 1.6 Modes: The Enforcement Engine
 
 A **Mode** = Profile × Safety Level.
 
@@ -160,7 +167,6 @@ In particular:
   - require proportionally lighter evidence packages.
 
 Strict-A = **maximum assurance**, not a different programming language.
-
 
 ---
 
@@ -207,7 +213,7 @@ Compliance follows a **5-phase process**:
 Compliance is **binary**:
 
 - PASS  
-- [NOT ALLOWED] FAIL  
+- FAIL  
 
 There is no “partial compliance.”
 
@@ -313,11 +319,11 @@ Regardless of project stage:
 
 | If you want to understand… | Read |
 |----------------------------|------|
-| Overall rules & concepts | **Unified Safety Spec** |
-| How to prove compliance | **Compliance Master** |
-| Evidence and certification | **SCEM Master** |
+| Overall rules & concepts | **Standard Safety Master** |
+| How to prove compliance | **Compliance Process Master** |
+| Evidence and certification | **Safety Case Evidence Model (SCEM)** |
 | Deployment & release | **Deployment Master** |
-| Tooling automation | **Tooling Master** |
+| Tooling automation | **Tooling & Automation Master** |
 
 The Overview Page is your **map**.  
 The specs are the **manuals**.
@@ -373,76 +379,85 @@ All paths below are under the `CRSS/` folder of the public repository.
 
 ### 2.1 Overview
 
-- [CRSS-Python Overview & Navigation Guide](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/crss_python_overview_landing.md)  
+- [CRSS-Python Overview & Repository Map](./crss_python_overview_landing.md)  
   High-level introduction, concepts, and navigation map.
-- [Study Path & Curriculum](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_python_study_path_curriculum.md)  
+
+- [Study Path & Curriculum](./crss_python_study_path_curriculum.md)  
   Recommended learning order and topics.
+
+- [FAQ (General)](./crss_python_FAQ_general.md)  
+  General CRSS-Python Q&A.
+
+- [FAQ (Auditors & Regulators)](./crss_python_FAQ_auditors_regulators.md)  
+  Certification-facing and regulator-oriented Q&A.
+
+---
 
 ### 2.2 Specifications
 
-- **Core Profile**
-  - [CRSS-Python Core Specification](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_core_master_specs.md)  
-    Core rule set and requirements (to be replaced by the scoped, cleaned version).
+**Profiles**
+- [CRSS-Python Core Profile Specification](../1-Specifications/Profiles/crss_python_core_spec.md)  
+- [CRSS-Python Strict Profile Specification](../1-Specifications/Profiles/crss_python_strict_spec.md)
 
-- **Strict Profile**
-  - [CRSS-Python Strict Specification](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_strict_master_specs.md)  
-    Strict rule set and strengthened requirements.
+**Master (cross-cutting)**
+- [CRSS-Python Standard Safety Master](../1-Specifications/Master/crss_python_standard_safety_master.md)  
+- [Phase-Aware Rule Interpretation Model](../1-Specifications/Master/crss_phase_aware_rule_interpretation_model.md)  
+- [Safety Standard Mapping Annex](../1-Specifications/Master/crss_python_safety_standard_mapping_annex.md)
 
-- **Master Safety Spec**
-  - [CRSS-Python Unified Safety Master Specification](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_standard_safety_master_specs.md)  
-    Consolidated safety model, rules family, and cross-document alignment.
-
-- **Standard Levels & Modes**
-  - [Standard Levels & Applicability (current WIP)](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_standard_levels.md)  
-  - [Standard Levels & Applicability – Updated Mapping](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_standard_levels_v2_to_verify.md)  
-  - [Standard Levels, Modes & Enforcement Model (Normative Replacement)](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_standard_levels_v3_to_verify.md)  
+---
 
 ### 2.3 Governance & Evidence
 
-- [Compliance Process Master Specification](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_compliance_process_master.md)  
-  End-to-end compliance phases and completion criteria.
+- [Compliance Process Master](../2-Governance/crss_python_compliance_process_master.md)  
+- [Safety Case Evidence Model](../2-Governance/crss_python_safety_case_evidence_model.md)  
+- [SCEM Annexes](../2-Governance/crss_python_SCEM_annexes.md)  
+- [Certification Readiness Kit](../2-Governance/crss_python_certification_readiness_kit.md)  
+- [External Assessment Master](../2-Governance/crss_python_external_assessment_master.md)  
+- [Integration with V-Model and ASPICE](../2-Governance/crss_python_integration_with_v-model_and-ASPICE.md)  
+- [Tooling & Automation Master](../2-Governance/crss_python_tooling_automation_master.md)
 
-- [Safety Case Evidence Model (SCEM) Master](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_safety_case_evidence_model.md)  
-  SCEM structure, evidence chains, and maturity model.
-
-- [SCEM Annexes](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_SCEM_annexes.md)  
-  Detailed annex material for SCEM.
-
-- [Certification Readiness Master Kit](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_certification_readiness_kit.md)  
-  CRC checklist and readiness criteria.
-
-- [Tooling & Automation Master](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_tooling_automation.md)  
-  Requirements on analyzers, pipelines, and automation.
-
-- [Mode, Safety Levels & Critical Phase Model](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_mode_and_safety_model.md)  
-  Modes, levels, and phase semantics.
-
-- [External Assessment Protocol (EAP) – v1.1.0](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_external_assessment_process_to_verify.md)  
-  Third-party assessment and certificate model.
+---
 
 ### 2.4 Deployment & Baselines
 
-- [Deployment & Release Baseline Master](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_deployment_master.md)  
-- [Release Management & Zero-Drift Policy](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_python_release_management.md)  
-- [CBM Template](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/cbm.md)  
+- [Deployment Master](../3-Deployment/crss_python_deployment_master.md)  
+- [Release Management](../3-Deployment/crss_python_release_management.md)  
+- [CBM Template](../3-Deployment/crss_python_cbm_template.md)
+
+---
 
 ### 2.5 Policies
 
-- [Deviations Policy](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/specs/crss_deviations_policy.md)  
-- [Rule Scope Categories](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/Scope%20Categories.md)  
+- [Deviations Policy](../4-Policies/crss_python_deviations_policy.md)  
+- [Repository Publication Standard](../4-Policies/crss_python_repository_publication_standard.md)  
+- [Toolchain Baseline](../4-Policies/crss_python_toolchain_baseline.md)
 
-### 2.6 Annexes & Guides
+---
 
-- [Architecture Guide](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_architecture_guide.md)  
-- [Phase-Aware Rule Interpretation Model](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_phase_aware_rule_interpretation_model.md)  
-- [Architecture Blueprint](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_python_architecture_blueprint.md)  
-- [Certification FAQ](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_python_certification_faq.md)  
-- [Common Mistakes & How to Avoid Them](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_python_common_mistakes.md)  
-- [CRSS-Python FAQ](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_python_faq.md)  
-- [Reference Use Case – Sensor Voting](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/annexes/crss_reference_use_case_sensor_voting.md)  
+### 2.6 Annexes, Guides & Roadmaps
 
-### 2.7 Release & Meta
+- [Architecture Blueprint](../5-Annexes/crss_python_architecture_blueprint.md)  
+- [Architecture Guide](../5-Annexes/crss_python_architecture_guide.md)  
+- [Distributed System Design Guide](../5-Annexes/crss_python_distributed_system_design_guide.md)  
+- [Integration Architecture](../5-Annexes/crss_python_integration_architecture.md)  
+- [Multi-Service Integration Guide](../5-Annexes/crss_python_multi_service_integration_guide.md)  
+- [Toolchain Hardening Guide](../5-Annexes/crss_python_toolchain_hardening_guide.md)  
+- [ML / Pandas / NumPy Safety](../5-Annexes/crss_python_ml_pandas_numpty_safety.md)  
+- [Common Mistakes](../5-Annexes/crss_python_common_mistakes.md)  
+- [Ecosystem Improvement Roadmap](../5-Annexes/crss_python_ecosystem_improvement_roadmap.md)  
+- [Veteran Enhancement Pack](../5-Annexes/crss_python_veteran_enhancement_pack.md)
 
-- [CRSS-Python v1.0.0 Release Notes](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/release_notes_v1-0-0.md)  
-- [Repository & Publication Standard](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/crss_python_repository_publication_standard.md)  
-- [Repository & Publishing Package](https://github.com/sofiand-png/pycodereview/blob/create_crss_specs/CRSS/crss_python_repo_standard_to_verify.md)  
+---
+
+### 2.7 Examples
+
+- [Sensor Voting Reference Example (README)](../6-Examples/crss_example_sensor_voting_reference/README.md)  
+- [Sensor Voting Certification Example](../6-Examples/crss_example_sensor_voting_reference/docs/crss_sensor_voting_certification_example.md)  
+- [Sensor Voting Compliance Report](../6-Examples/crss_example_sensor_voting_reference/docs/crss_sensor_voting_compliance_report.md)
+
+---
+
+### 2.8 Release & Meta
+
+- [Release Notes v1.0.0](../7-Release/release_notes_v1-0-0.md)  
+- [Whitepaper (PDF)](../7-Release/CRSS_Python_Whitepaper_v1_0_0.pdf)
