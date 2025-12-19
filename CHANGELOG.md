@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.0] - 2025-12-19
+- CRSS Specs
+- New set of rules for code review
+
 ## [1.0.1] - 2025-10-22
 Fixed logo issue in readme file.
 

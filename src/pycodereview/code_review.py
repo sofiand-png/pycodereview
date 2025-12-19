@@ -1857,7 +1857,7 @@ def main(argv: Optional[List[str]] = None) -> int:
     parser.add_argument(
         "--version",
         action="version",
-        version="pycodereview 1.0.1",
+        version="pycodereview 2.0.0",
     )
 
     args = parser.parse_args(argv)

@@ -32,7 +32,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [3.6 Interpretation of Conditional Stage Outcomes](#36-interpretation-of-conditional-stage-outcomes)
   - [4. Non-Conformance Handling](#4-non-conformance-handling)
   - [5. Revocation & Reassessment](#5-revocation-reassessment)
-  - [6. Summary of v1.0.0 Enhancements](#6-summary-of-v11-enhancements)
+  - [6. Summary of Enhancements](#6-summary-of-enhancements)
 
 ---
 
@@ -347,7 +347,7 @@ Certification SHALL be revoked if:
 
 ---
 
-## 6. Summary of v1.1 Enhancements
+## 6. Summary of Enhancements
 
 - RCR added as a mandatory input
 - RCR verification added to Stage 2 & Stage 3
