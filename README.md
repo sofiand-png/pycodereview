@@ -203,10 +203,12 @@ No config required. It produces impact-based findings you can use in reviews and
 CRSS introduces:
 - Stable **rule IDs** (e.g., `CRSS-3.1.5`, `CRSS-6.2.1`, `CRSS-9.1.4`)
 - Two profiles:
-  - **Core** → pragmatic baseline for most Python code
-  - **Strict** → analyzable subset for `@critical` / high-integrity logic
+  - **Core**: pragmatic baseline for most Python code
+  - **Strict**: analyzable subset for `@critical` / high-integrity logic
 - Deviation handling, compliance reporting, and evidence structure
 - Import / inheritance policies and certification-facing artifacts
+- Certified Deployment/Packaging
+- Compliance Process/ External Assessment Process
 
 ### Where the CRSS documents live in this repo
 (Repository paths)
@@ -283,12 +285,12 @@ The CRSS-Python specification documents (Core, Strict, and all specifications) a
 **Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)**.
 
 You are free to:
-- Share — copy and redistribute the material in any medium or format
+- Share: copy and redistribute the material in any medium or format
 
 Under the following terms:
-- Attribution — You must give appropriate credit.
-- NonCommercial — You may not use the material for commercial purposes.
-- NoDerivatives — You may not distribute modified versions.
+- Attribution: You must give appropriate credit.
+- NonCommercial: You may not use the material for commercial purposes.
+- NoDerivatives: You may not distribute modified versions.
 
 This license applies **only** to the standard text located under:
 - CRSS/
