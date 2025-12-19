@@ -10,16 +10,16 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-- [CRSS-Python SCEM Annexes](#crss-python-scem-annexes)
-  - [0. Purpose](#0-purpose)
-  - [1. Annex A — FMEA Template](#1-annex-a-fmea-template)
-    - [A.1 FMEA Table](#a1-fmea-table)
-    - [A.2 Rules](#a2-rules)
-  - [2. Annex B — Hazard Log Template](#2-annex-b-hazard-log-template)
-  - [3. Annex C — Safety Architecture Diagram Requirements](#3-annex-c-safety-architecture-diagram-requirements)
-  - [4. Annex D — Auditor Checklist](#4-annex-d-auditor-checklist)
-  - [5. Annex E — Timing Evidence Protocol](#5-annex-e-timing-evidence-protocol)
-  - [6. Summary](#6-summary)
+- [0. Purpose](#0-purpose)
+- [1. Annex A — FMEA Template](#1-annex-a--fmea-template)
+  - [A.1 FMEA Table](#a1-fmea-table)
+  - [A.2 Rules](#a2-rules)
+- [2. Annex B — Hazard Log Template](#2-annex-b--hazard-log-template)
+- [3. Annex C — Safety Architecture Diagram Requirements](#3-annex-c--safety-architecture-diagram-requirements)
+- [4. Annex D — Auditor Checklist](#4-annex-d--auditor-checklist)
+- [5. Annex E — Timing Evidence Protocol](#5-annex-e--timing-evidence-protocol)
+- [6. Summary](#6-summary)
+
 
 ---
 

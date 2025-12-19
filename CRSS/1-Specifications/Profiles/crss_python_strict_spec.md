@@ -10,8 +10,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-  - [0.1 Purpose and Objectives](#01-purpose-and-objectives)
-  - [0.1 What Strict Is Not](#01-what-strict-is-not)
+- [0.1 Purpose and Objectives](#01-purpose-and-objectives)
+- [0.1 What Strict Is Not](#01-what-strict-is-not)
 - [1. Relation to Core Profile & Intention](#1-relation-to-core-profile-intention)
   - [1.1 Rule ID and Chapter Mapping](#11-rule-id-and-chapter-mapping)
   - [1.2 Criticality Levels](#12-criticality-levels)
@@ -23,7 +23,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [CRSS-11.3.3 – Structural typing prohibited in Strict code (Strict-only)](#crss-1133-structural-typing-prohibited-in-strict-code-strict-only)
 - [4. Error Handling, Exceptions & Control Flow](#4-error-handling-exceptions-control-flow)
   - [CRSS-11.4.1 – Loops must be demonstrably bounded](#crss-1141-loops-must-be-demonstrably-bounded)
-  - [CRSS-11.4.2 – No raw `while True` loops](#crss-1142-no-raw-while-true-loops)
+  - [CRSS-11.4.2 – No raw while True loops](#crss-1142-no-raw-while-true-loops)
   - [CRSS-11.4.3 – No unbounded recursion in Strict code](#crss-1143-no-unbounded-recursion-in-strict-code)
   - [CRSS-11.4.5 – No dependence on scheduling or GC timing](#crss-1145-no-dependence-on-scheduling-or-gc-timing)
   - [CRSS-11.4.6 – Documented execution bounds for Strict units](#crss-1146-documented-execution-bounds-for-strict-units)
@@ -35,7 +35,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [CRSS-11.5.3 – No I/O in core computational logic - I/O vs Critical & Non-Critical Phases](#crss-1153-no-io-in-core-computational-logic-io-vs-critical-non-critical-phases)
   - [CRSS-11.5.6 – No dynamic allocation in critical execution paths (Strict-only)](#crss-1156-no-dynamic-allocation-in-critical-execution-paths-strict-only)
   - [CRSS-11.5.7 – GC disabled during Strict critical execution](#crss-1157-gc-disabled-during-strict-critical-execution)
-  - [CRSS-11.5.8 – No finalizers (__del__) in Strict object graphs](#crss-1158-no-finalizers-del-in-strict-object-graphs)
+  - [CRSS-11.5.8 – No finalizers __del__ in Strict object graphs](#crss-1158-no-finalizers-del-in-strict-object-graphs)
   - [CRSS-11.5.9 – Acyclic Strict-owned object graphs](#crss-1159-acyclic-strict-owned-object-graphs)
   - [CRSS-11.6.1 – Strict execution shall be single-threaded](#crss-1161-strict-execution-shall-be-single-threaded)
 - [7. Robustness & Portability](#7-robustness-portability)
@@ -53,11 +53,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [CRSS-11.9.5 – Guideline Compliance Summary for CRSS-Strict](#crss-1195-guideline-compliance-summary-for-crss-strict)
   - [CRSS-11.9.7 – Fault injection for safety mechanisms](#crss-1197-fault-injection-for-safety-mechanisms)
 
-The **CRSS-Python Strict** profile is a restricted subset of Python
-intended for runtime-critical, safety-sensitive, or mission-critical
-components.
 
-It is conceptually similar to MISRA-style subsets for C/C++.
+---
 
 ### 0.1 Purpose and Objectives
 

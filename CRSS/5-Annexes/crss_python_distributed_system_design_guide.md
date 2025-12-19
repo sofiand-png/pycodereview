@@ -11,6 +11,26 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
+## Table of Contents
+
+- [1. Purpose](#1-purpose)
+- [2. Distributed System Layers](#2-distributed-system-layers)
+- [3. Allowed Interactions](#3-allowed-interactions)
+  - [3.1 Strict-A Allowed Inputs](#31-strict-a-allowed-inputs)
+  - [3.2 Strict-A Outputs](#32-strict-a-outputs)
+- [4. Message-Passing Contracts](#4-message-passing-contracts)
+  - [4.1 Core-C → Strict-A Contract](#41-core-c--strict-a-contract)
+  - [4.2 Strict-A → Core-C Contract](#42-strict-a--core-c-contract)
+- [5. Fault Propagation Rules](#5-fault-propagation-rules)
+  - [5.1 Critical Path Isolation](#51-critical-path-isolation)
+  - [5.2 Failsafe Guarantees](#52-failsafe-guarantees)
+- [6. Scaling Up to Multiple Controllers](#6-scaling-up-to-multiple-controllers)
+- [7. Mixed-Criticality Bus Interactions](#7-mixed-criticality-bus-interactions)
+- [8. Conclusion](#8-conclusion)
+
+
+---
+
 ## 1. Purpose
 This document explains **how CRSS-compliant components can coexist in a distributed architecture** while maintaining full compliance with strict determinism and mixed-criticality rules.
 

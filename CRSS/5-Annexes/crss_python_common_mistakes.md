@@ -10,23 +10,23 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-- [CRSS-Python Common Mistakes & How to Avoid Them](#crss-python-common-mistakes-how-to-avoid-them)
-- [ 1. Mixing Critical and Non-Critical Code](#-1-mixing-critical-and-non-critical-code)
-- [ 2. Forgetting that Strict-A is Zero Tolerance](#-2-forgetting-that-strict-a-is-zero-tolerance)
-- [ 3. Using Threads in Critical Logic](#-3-using-threads-in-critical-logic)
-- [ 4. Relying on Hotfixes or Quick Patches](#-4-relying-on-hotfixes-or-quick-patches)
-- [ 5. Runtime Installation or Updates](#-5-runtime-installation-or-updates)
-- [ 6. Unbounded Loops or Recursion](#-6-unbounded-loops-or-recursion)
-- [ 7. Large Critical Functions](#-7-large-critical-functions)
-- [ 8. Direct External Input in Critical Code](#-8-direct-external-input-in-critical-code)
-- [ 9. Dynamic Behavior](#-9-dynamic-behavior)
-- [ 10. Ignoring the One-Python-Version Rule](#-10-ignoring-the-one-python-version-rule)
-- [ 11. Untested Edge Cases](#-11-untested-edge-cases)
-- [ 12. Skipping Documentation Early](#-12-skipping-documentation-early)
-- [ 13. Overusing Shared State](#-13-overusing-shared-state)
-- [ 14. Assuming Compliance = Safety](#-14-assuming-compliance-safety)
-- [ 15. Trying to Jump Directly to Strict-A](#-15-trying-to-jump-directly-to-strict-a)
-- [ Summary](#-summary)
+- [1. Mixing Critical and Non-Critical Code](#1-mixing-critical-and-non-critical-code)
+- [2. Forgetting that Strict-A is Zero Tolerance](#2-forgetting-that-strict-a-is-zero-tolerance)
+- [3. Using Threads in Critical Logic](#3-using-threads-in-critical-logic)
+- [4. Relying on Hotfixes or Quick Patches](#4-relying-on-hotfixes-or-quick-patches)
+- [5. Runtime Installation or Updates](#5-runtime-installation-or-updates)
+- [6. Unbounded Loops or Recursion](#6-unbounded-loops-or-recursion)
+- [7. Large Critical Functions](#7-large-critical-functions)
+- [8. Direct External Input in Critical Code](#8-direct-external-input-in-critical-code)
+- [9. Dynamic Behavior](#9-dynamic-behavior)
+- [10. Ignoring the One-Python-Version Rule](#10-ignoring-the-one-python-version-rule)
+- [11. Untested Edge Cases](#11-untested-edge-cases)
+- [12. Skipping Documentation Early](#12-skipping-documentation-early)
+- [13. Overusing Shared State](#13-overusing-shared-state)
+- [14. Assuming Compliance = Safety](#14-assuming-compliance--safety)
+- [15. Trying to Jump Directly to Strict-A](#15-trying-to-jump-directly-to-strict-a)
+- [Summary](#summary)
+
 
 ---
 

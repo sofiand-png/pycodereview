@@ -11,6 +11,23 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
+## Table of Contents
+
+- [1. Purpose](#1-purpose)
+- [2. System Interaction Topology](#2-system-interaction-topology)
+- [3. Interactions and Contracts](#3-interactions-and-contracts)
+  - [3.1 Core-C Gateway → Core-B Fusion](#31-core-c-gateway--core-b-fusion)
+  - [3.2 Core-B Fusion → Strict-A Controller](#32-core-b-fusion--strict-a-controller)
+  - [3.3 Strict-A Controller → Core-C Output Gateway](#33-strict-a-controller--core-c-output-gateway)
+- [4. Fault Containment](#4-fault-containment)
+  - [4.1 Isolation Rules](#41-isolation-rules)
+  - [4.2 State Recovery](#42-state-recovery)
+- [5. Integration Requirements Checklist](#5-integration-requirements-checklist)
+- [6. Conclusion](#6-conclusion)
+
+
+---
+
 ## 1. Purpose
 Provide a model-level description of how CRSS components interact safely in:
 - distributed systems

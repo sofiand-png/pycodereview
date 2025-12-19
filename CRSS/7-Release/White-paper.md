@@ -428,7 +428,7 @@ For example, a Core rule that is “SHOULD NOT” may become “MUST NOT” in S
 
 Tools interpret Modes as a hierarchy:
 
-> Strict-A > Strict-B > Strict-C > Core-A > Core-B > Core-C
+> Strict-A > Strict-B > Strict-C > Core-B > Core-C
 
 The highest Mode wins during evaluation.
 

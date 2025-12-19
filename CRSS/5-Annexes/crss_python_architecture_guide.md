@@ -10,30 +10,24 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## Table of Contents
 
-- [CRSS-Python Architecture Guide](#crss-python-architecture-guide)
-- [ 1. Purpose](#-1-purpose)
-- [ 2. Core Architectural Principles](#-2-core-architectural-principles)
+- [1. Purpose](#1-purpose)
+- [2. Core Architectural Principles](#2-core-architectural-principles)
   - [2.1 Isolation Over Complexity](#21-isolation-over-complexity)
   - [2.2 Process, Not Thread Isolation](#22-process-not-thread-isolation)
   - [2.3 Critical Code Must Be Minimal](#23-critical-code-must-be-minimal)
   - [2.4 Stateless-by-Default](#24-stateless-by-default)
   - [2.5 Defensive Boundaries](#25-defensive-boundaries)
-- [ 3. Recommended System Architecture](#-3-recommended-system-architecture)
-- [ 4. Recommended Deployment Architecture](#-4-recommended-deployment-architecture)
-- [ 5. Module Design Templates](#-5-module-design-templates)
+- [3. Recommended System Architecture](#3-recommended-system-architecture)
+- [4. Recommended Deployment Architecture](#4-recommended-deployment-architecture)
+- [5. Module Design Templates](#5-module-design-templates)
   - [5.1 Critical Module](#51-critical-module)
   - [5.2 Non-Critical Module](#52-non-critical-module)
-- [ 6. Data Flow Best Practices](#-6-data-flow-best-practices)
-- [ 7. Logging & Monitoring Strategy](#-7-logging-monitoring-strategy)
-- [ 8. Architecture Anti-Patterns (Avoid)](#-8-architecture-anti-patterns-avoid)
-- [ 9. Path to Strict-A Architecture](#-9-path-to-strict-a-architecture)
-    - [Step 1 — Identify critical decisions](#step-1-identify-critical-decisions)
-    - [Step 2 — Isolate into a dedicated module](#step-2-isolate-into-a-dedicated-module)
-    - [Step 3 — Shrink critical logic](#step-3-shrink-critical-logic)
-    - [Step 4 — Split phases (`@non_critical_phase`)](#step-4-split-phases-noncriticalphase)
-    - [Step 5 — Pre-compute everything possible](#step-5-pre-compute-everything-possible)
-    - [Step 6 — Freeze toolchain and CBM](#step-6-freeze-toolchain-and-cbm)
-- [ 10. Summary](#-10-summary)
+- [6. Data Flow Best Practices](#6-data-flow-best-practices)
+- [7. Logging & Monitoring Strategy](#7-logging--monitoring-strategy)
+- [8. Architecture Anti-Patterns (Avoid)](#8-architecture-anti-patterns-avoid)
+- [9. Path to Strict-A Architecture](#9-path-to-strict-a-architecture)
+- [10. Summary](#10-summary)
+
 
 ---
 

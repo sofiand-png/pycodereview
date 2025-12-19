@@ -8,6 +8,24 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ---
 
+## Table of Contents
+
+- [1. Purpose](#1-purpose)
+- [2. Integration Tiers](#2-integration-tiers)
+- [3. Integration Boundaries (CRSS-Critical)](#3-integration-boundaries-crss-critical)
+- [4. Hardware Integration Patterns](#4-hardware-integration-patterns)
+  - [4.1 Gateway Shield (Recommended)](#41-gateway-shield-recommended)
+  - [4.2 HAL Wrapper](#42-hal-wrapper)
+  - [4.3 RTOS Push Model](#43-rtos-push-model)
+- [5. Allowed/Forbidden Operations](#5-allowedforbidden-operations)
+- [6. Safety Timing Model](#6-safety-timing-model)
+- [7. Watchdog Integration](#7-watchdog-integration)
+- [8. Deployment Considerations](#8-deployment-considerations)
+- [9. Example: Sensor Voting System](#9-example-sensor-voting-system)
+
+
+---
+
 ## 1. Purpose
 This annex defines how CRSS-compliant Python applications integrate safely with:
 - Embedded control hardware

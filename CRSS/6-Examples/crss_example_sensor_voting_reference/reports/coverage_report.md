@@ -1,4 +1,31 @@
 # Coverage Report — Sensor Voting Reference Example
+
+**Version:** v1.0.0
+**Status:** Informative (Reference Example)
+**Maturity:** Stable
+© 2025 Sofian Daghsen – All rights reserved
+Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+
+---
+
+## Table of Contents
+
+- [1. Tools](#1-tools)
+- [2. Test Suite Breakdown](#2-test-suite-breakdown)
+  - [Unit tests](#unit-tests)
+  - [MC/DC-style tests (logical decisions)](#mcdc-style-tests-logical-decisions)
+  - [Integration tests](#integration-tests)
+- [3. Coverage Metrics (core logic only)](#3-coverage-metrics-core-logic-only)
+- [4. MC/DC Justification (summary)](#4-mcdc-justification-summary)
+  - [4.1 compute_voted_value (voting)](#41-compute_voted_value-voting)
+  - [4.2 apply_safety_envelope (envelope)](#42-apply_safety_envelope-envelope)
+  - [4.3 SafetyController.step (controller)](#43-safetycontrollerstep-controller)
+- [5. Fault Injection Report](#5-fault-injection-report)
+  - [5.1 Fault model](#51-fault-model)
+  - [5.2 Fault Classes Exercised](#52-fault-classes-exercised)
+  - [5.3 Evidence: Test Locations](#53-evidence-test-locations)
+  - [5.4 Expected Safety Response](#54-expected-safety-response)
+
 ## 1. Tools
 - **Test runner**: pytest
 - **Coverage tool**: coverage.py (branch coverage enabled)
