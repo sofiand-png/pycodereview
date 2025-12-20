@@ -15,10 +15,10 @@ Distributed under CC BY-NC-ND 4.0
   - [0. Purpose](#0-purpose)
   - [1. Safety Requirements and Levels](#1-safety-requirements-and-levels)
     - [1.1 CRSS Safety Levels vs Industry Notions](#11-crss-safety-levels-vs-industry-notions)
-    - [1.2 Safety Goals mapping to CRSS Safety Levels](#12-safety-goals-mapping-to-crss-safety-levels)
+    - [1.2 Safety Goals Mapping To CRSS Safety Levels](#12-safety-goals-mapping-to-crss-safety-levels)
   - [2. CRSS Artifacts vs Safety Case Artifacts](#2-crss-artifacts-vs-safety-case-artifacts)
     - [2.1 High-Level Mapping](#21-high-level-mapping)
-  - [3. Process Alignment V Model / ASPICE](#3-process-alignment-v-model-aspice)
+  - [3. Process Alignment V Model and ASPICE](#3-process-alignment-v-model-and-aspice)
 
 ---
 
@@ -93,7 +93,7 @@ These artifacts are already defined normatively in the SCEM and Compliance Maste
 
 ---
 
-## 3. Process Alignment V Model / ASPICE
+## 3. Process Alignment V Model and ASPICE
 
 > [⬆ Back to Table of Contents](#toc)
 
