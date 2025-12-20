@@ -19,8 +19,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [1.2 Criticality Levels](#12-criticality-levels)
     - [1.3 Companion Documents](#13-companion-documents)
     - [1.4 Python Version Scope and Relation to Core](#14-python-version-scope-and-relation-to-core)
-  - [2.1. Strengthened Rules From Core To Strict](#21-strengthened-rules-from-core-to-strict)
-  - [2.2. Strict-Only Rules](#22-strict-only-rules)
+  - [2. Strengthened Rules From Core To Strict](#2-strengthened-rules-from-core-to-strict)
   - [3. Core Language Usage](#3-core-language-usage)
   - [4. Error Handling, Exceptions and Control Flow](#4-error-handling-exceptions-and-control-flow)
   - [5. Data and Interfaces](#5-data-and-interfaces)
@@ -198,7 +197,7 @@ and profile selection, see the Core specification chapter 10 and the
 
 ------------------------------------------------------------------------
 
-## 2.1 Strengthened Rules From Core To Strict
+## 2 Strengthened Rules From Core To Strict
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -306,15 +305,11 @@ the Strict profile:
 Strict-compliant code must therefore be a **subset** of Core-compliant
 code.
 
+The rules in all the next sections apply **only** in the Strict profile. For clarity,
+they are described here (Core: N/A, Strict: MUST/SHOULD/MUST-NOT).
+
 ------------------------------------------------------------------------
 
-## 2.2 Strict-Only Rules
-
-> [⬆ Back to Table of Contents](#toc)
-
-
-The following rules apply **only** in the Strict profile. For clarity,
-they are described here (Core: N/A, Strict: MUST/SHOULD/MUST-NOT).
 
 ## 3. Core Language Usage
 
