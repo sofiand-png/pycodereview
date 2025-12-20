@@ -15,9 +15,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [1. Purpose](#1-purpose)
   - [2. Integration Tiers](#2-integration-tiers)
   - [3. Integration Boundaries (CRSS-Critical)](#3-integration-boundaries-crss-critical)
-    - [Strict-A components:](#strict-a-components)
-    - [Core-B components:](#core-b-components)
-    - [Core-C components:](#core-c-components)
+    - [Strict-A components](#strict-a-components)
+    - [Core-B components](#core-b-components)
+    - [Core-C components](#core-c-components)
   - [4. Hardware Integration Patterns](#4-hardware-integration-patterns)
     - [4.1 Gateway Shield (Recommended)](#41-gateway-shield-recommended)
     - [4.2 HAL Wrapper](#42-hal-wrapper)
@@ -64,17 +64,17 @@ The reference example corresponds to **Tier 2**.
 
 CRSS mandates strict separation:
 
-### Strict-A components:
+### Strict-A components
 - No direct communication with hardware or OS
 - Only operate on validated, deterministic inputs
 - No I/O, no threads, no GC, no syscalls
 - Pure computational kernel
 
-### Core-B components:
+### Core-B components
 - Minimal deterministic preprocessing
 - No nondeterministic effects
 
-### Core-C components:
+### Core-C components
 - JSON/TCP
 - File I/O
 - Logging
