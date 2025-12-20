@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Strict Profile](#crss-python-strict-profile)
   - [Table of Contents](#table-of-contents)
@@ -96,6 +97,9 @@ Its primary goals are:
 ------------------------------------------------------------------------
 
 ## 1. Relation to Core Profile & Intention
+
+> [⬆ Back to Table of Contents](#toc)
+
 CRSS Strict reuses the rule catalog defined in
 `crss_python_core.md`. For each rule `CRSS-x.y.z`:
 
@@ -223,6 +227,9 @@ and profile selection, see the Core specification chapter 10 and the
 
 ## 2. Strengthened Rules (Core --> Strict)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The following existing rules from the Core catalog are strengthened in
 the Strict profile:
 
@@ -330,10 +337,16 @@ code.
 
 ## 3. Strict-Only Rules
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The following rules apply **only** in the Strict profile. For clarity,
 they are described here (Core: N/A, Strict: MUST/SHOULD/MUST-NOT).
 
 ## 3. Core Language Usage
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-11.3.3 - Structural typing prohibited in Strict code (Strict-only)
 -   **Profiles**:
@@ -371,6 +384,9 @@ Structural typing:
 Strict requires **explicit, verifiable, nominal interfaces**.
 
 ## 4. Error Handling, Exceptions & Control Flow
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-11.4.1 - Loops must be demonstrably bounded
 -   **Category**: Control Flow
@@ -483,6 +499,9 @@ Strict units shall not use wall-clock time (e.g. time.time(), datetime.now()) to
 External clock behavior is platform-dependent and vulnerable to drift, NTP jumps, etc. Critical correctness must not depend on it.
 
 ## 5. Types, Data & Interfaces
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-11.5.1 - Object-oriented design restrictions
 -   **Category**: Design / Types
@@ -627,6 +646,9 @@ Single-threaded execution eliminates data races and heavily simplifies reasoning
 
 ## 7. Robustness & Portability
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### CRSS-11.7.1 - No wildcard imports (Strict-only)
 -   **Category**: Imports
 -   **Type**: Static
@@ -692,6 +714,9 @@ Even with strict coding rules, unexpected faults must not lead to uncontrolled b
 
 ## 8. Maintainability & Documentation
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### CRSS-11.8.1 - Single responsibility per Strict module (Strict-only)
 -   **Category**: Design / Maintainability
 -   **Type**: Process
@@ -704,6 +729,9 @@ Each Strict module should have a single, clear purpose. Mixing unrelated
 concerns in one file is discouraged.
 
 ## 9. Testing & Coverage Guidelines
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-11.9.1 - 100% branch coverage for Strict modules
 -   **Category**: Testing & Coverage

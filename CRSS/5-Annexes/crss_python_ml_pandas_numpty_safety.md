@@ -11,6 +11,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS ML / Pandas / Numpy Safety Annex](#crss-ml-pandas-numpy-safety-annex)
   - [Table of Contents](#table-of-contents)
@@ -30,11 +31,17 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 Provide guidance for using popular data libraries (NumPy, Pandas, ML frameworks) **safely** under CRSS.
 
 ---
 
 ## 2. ML in Safety Context
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 2.1 Strict-A: Fully Forbidden
 No ML inference allowed in Strict-A.
@@ -55,6 +62,9 @@ Model training, analytics, and offline pipelines.
 ---
 
 ## 3. Pandas / Numpy
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### Allowed:
 - preprocessing
@@ -80,6 +90,9 @@ Only with:
 
 ## 4. ML Safety Patterns
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 4.1 ML-Assisted Monitoring Layer
 ML can suggest:
 - sensor fault likelihood
@@ -91,5 +104,8 @@ Strict-A must not rely on ML outputs.
 ---
 
 ## 5. Conclusion
+
+> [⬆ Back to Table of Contents](#toc)
+
 ML can coexist safely with CRSS if confined to non-critical paths and treated as advisory information.
 

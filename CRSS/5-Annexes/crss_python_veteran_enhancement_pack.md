@@ -11,6 +11,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Python Veteran Enhancement Pack](#crss-python-veteran-enhancement-pack)
   - [Table of Contents](#table-of-contents)
@@ -35,6 +36,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 Address concerns from highly experienced Python developers:
 - Async
 - FastAPI
@@ -47,6 +51,9 @@ This annex defines *how* these may coexist with CRSS.
 ---
 
 ## 2. Async & Await Under CRSS
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 2.1 Allowed in Core-C Only
 Async frameworks (FastAPI, aiohttp, uvicorn) **are allowed** exclusively in:
@@ -70,6 +77,9 @@ Optional but only with:
 
 ## 3. FastAPI Support
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 3.1 Allowed Uses
 - dashboards
 - operators observing system states
@@ -91,6 +101,9 @@ FastAPI layer → Core-C wrapper → Strict-B validation → Strict-A Kernel →
 
 ## 4. Pandas / NumPy Usage
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 4.1 Strict-A = NEVER
 Not allowed because:
 - memory allocations
@@ -111,6 +124,9 @@ Simulation code, logs, analytics, etc.
 
 ## 5. Distributed Pipelines
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 5.1 Cross-Component Boundaries
 - Strict-A runs as a synchronous compute node
 - Other components may be async/multi-threaded
@@ -124,5 +140,8 @@ Place Strict-A in its own module/package with:
 ---
 
 ## 6. Conclusion
+
+> [⬆ Back to Table of Contents](#toc)
+
 This annex defines how Python veterans can build modern systems (FastAPI, async, Numpy) while keeping CRSS safety intact.
 

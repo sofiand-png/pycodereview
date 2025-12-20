@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Toolchain Baseline & Qualification Notes](#crss-toolchain-baseline-qualification-notes)
   - [Table of Contents](#table-of-contents)
@@ -37,14 +38,23 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Explain why toolchain stability matters for safety
 
 ## 2. Python Runtime Baseline
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Supported ranges
 - Micro-version policy
 - Reproducibility constraints
 
 ## 3. Test Tooling Baseline
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 3.1 pytest (pinned version)
 
@@ -56,6 +66,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 4. Static Analysis Baseline
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 4.1 Ruff / Mypy / Pyright
 
 ### 4.2 Strictness levels
@@ -64,15 +77,24 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 5. Build & Packaging Tools
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 5.1 setuptools / wheel versions
 
 ### 5.2 Constraints on upgrades
 
 ## 6. Logging & Diagnostics Tools
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Approved libraries
 - Security considerations
 
 ## 7. Tool Qualification Guidance
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 7.1 ISO 26262 TCL guidance
 
@@ -84,4 +106,10 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 8. Deviations & Exception Handling
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ## 9. Toolchain Update Process
+
+> [⬆ Back to Table of Contents](#toc)
+

@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Study Path & Learning Curriculum](#crss-python-study-path-learning-curriculum)
   - [Table of Contents](#table-of-contents)

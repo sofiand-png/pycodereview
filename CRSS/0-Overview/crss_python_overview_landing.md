@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Overview & Repository Map](#crss-python-overview-repository-map)
   - [Table of Contents](#table-of-contents)
@@ -45,6 +46,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. CRSS-Python Overview
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 1.1 What Is CRSS-Python?
 
@@ -377,6 +381,9 @@ CRSS-Python gives you a **path**, not just rules.
 ---
 
 ## 2. Repository Map (CRSS/)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 All paths below are under the `CRSS/` folder of the public repository.
 

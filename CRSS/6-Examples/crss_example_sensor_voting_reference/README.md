@@ -15,6 +15,9 @@ Strict-A safety controller for cooling temperature supervision with:
 
 ## Quick start
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ```bash
 python -m venv .venv
 # On Windows:

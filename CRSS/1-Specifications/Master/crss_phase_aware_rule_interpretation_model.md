@@ -18,6 +18,7 @@ This document MUST NOT introduce new requirements beyond those in the Master.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Phase-Aware Rule Interpretation Model](#crss-phase-aware-rule-interpretation-model)
   - [Table of Contents](#table-of-contents)
@@ -41,6 +42,9 @@ A rule marked **`Scope: all_code (phase-aware)`** **shall be interpreted using t
 
 ## 0. Scope of this document
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This document defines normative semantics for CRSS execution phases
 (e.g. `@critical`, `@non_critical_phase`) and the interpretation of
 Master-spec rules within those phases.
@@ -56,6 +60,9 @@ In case of any conflict, the CRSS Master Specification SHALL prevail.
 
 
 ## 1. Interpretation in `@critical` Code
+
+> [⬆ Back to Table of Contents](#toc)
+
 Applicable to:
 
 - Strict-A critical functions
@@ -94,6 +101,9 @@ When inside a **critical execution phase**, a phase-aware rule is enforced at **
 
 ## 2. Interpretation in Non-Critical Code
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Phase-aware rules still apply, but with **operational relaxation**.
 
 ### [OK] Permitted in Non-Critical Code
@@ -121,6 +131,9 @@ However, these allowances are valid only if:
 
 ## 3. Meaning for Compliance Tools
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A **phase-aware rule** MUST be evaluated in two contexts:
 
 ###  Tool Interpretation Matrix
@@ -141,6 +154,9 @@ Tools must:
 
 ## 4. Meaning for Human Review
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Human reviewers must apply this principle:
 
 > **A phase-aware rule changes only its interpretation, never its presence.**
@@ -154,6 +170,9 @@ Meaning:
 ---
 
 ## 5. Meaning for Runtime / Architecture
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A phase-aware rule MUST guarantee:
 
@@ -169,6 +188,9 @@ A phase-aware rule MUST guarantee:
 ---
 
 ## Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This model ensures:
 

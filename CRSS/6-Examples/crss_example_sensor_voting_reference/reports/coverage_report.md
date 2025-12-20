@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [Coverage Report - Sensor Voting Reference Example](#coverage-report-sensor-voting-reference-example)
   - [Table of Contents](#table-of-contents)
@@ -32,6 +33,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 # 5. Fault Injection Report
 
 ## 5.1 Fault model
+
+> [⬆ Back to Table of Contents](#toc)
+
 The following faults are modelled at the sensor/input level:
 
 1. **Single-sensor high fault**
@@ -65,6 +69,9 @@ Faults are injected via:
 
 ## 5.2 Fault Classes Exercised
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The test suite covers the following fault classes (representative, not exhaustive):
 
 1. **Sensor disagreement / plausibility faults**
@@ -79,6 +86,9 @@ The test suite covers the following fault classes (representative, not exhaustiv
 
 ## 5.3 Evidence: Test Locations
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Primary tests exercising these behaviors:
 
 - Voting MC/DC:
@@ -91,6 +101,9 @@ Primary tests exercising these behaviors:
   - `src/tests/integration/test_full_cycle_integration.py`
 
 ## 5.4 Expected Safety Response
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 For invalid / inconsistent / implausible inputs, the Strict-A kernel MUST:
 

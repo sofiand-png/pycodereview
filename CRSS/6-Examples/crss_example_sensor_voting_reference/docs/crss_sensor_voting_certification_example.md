@@ -12,6 +12,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 > a CRSS-compliant component. It is not an official certificate from
 > any authority.
 
+<a id="toc"></a>
 ## Table of Contents
 
 - [1. Component Identification](#1-component-identification)
@@ -22,6 +23,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 1. Component Identification
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Name**: CRSS Python Sensor Voting Reference Example
 - **Version**: 1.0.0
 - **Language**: Python 3.11.x
@@ -30,6 +34,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 2. Applicable Standard
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Standard**: CRSS-Python (Core + Strict profiles)
 - **Profiles used**:
   - Strict-A: safety kernel (controller, voting, envelope, actuator interface)
@@ -37,6 +44,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - Core-B/C: orchestration, simulation, I/O, logging
 
 ## 3. Evidence
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 The following artefacts are available:
 
@@ -58,6 +68,9 @@ The following artefacts are available:
   - Rule compliance summary: this document + compliance report.
 
 ## 4. Summary Assessment (Example)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Based on the artefacts listed above:
 

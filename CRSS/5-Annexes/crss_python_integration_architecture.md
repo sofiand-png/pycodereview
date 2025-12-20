@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Integration Architecture Annex](#crss-integration-architecture-annex)
   - [Table of Contents](#table-of-contents)
@@ -30,6 +31,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 This annex defines how CRSS-compliant Python applications integrate safely with:
 - Embedded control hardware
 - RTOS environments
@@ -41,6 +45,9 @@ This annex defines how CRSS-compliant Python applications integrate safely with:
 It ensures that Python components can serve as deterministic, bounded, safety-contained modules inside larger systems.
 
 ## 2. Integration Tiers
+
+> [⬆ Back to Table of Contents](#toc)
+
 CRSS defines three integration tiers:
 
 | Tier | Description |
@@ -52,6 +59,9 @@ CRSS defines three integration tiers:
 The reference example corresponds to **Tier 2**.
 
 ## 3. Integration Boundaries (CRSS-Critical)
+
+> [⬆ Back to Table of Contents](#toc)
+
 CRSS mandates strict separation:
 
 ### Strict-A components:
@@ -73,6 +83,9 @@ CRSS mandates strict separation:
 - Threads allowed
 
 ## 4. Hardware Integration Patterns
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 4.1 Gateway Shield (Recommended)
 ```
@@ -100,6 +113,9 @@ Native shim sends:
 As JSON to Python.
 
 ## 5. Allowed/Forbidden Operations
+
+> [⬆ Back to Table of Contents](#toc)
+
 | Operation | Strict-A | Core-B | Core-C |
 |-----------|----------|--------|--------|
 | TCP I/O | NO | NO | YES |
@@ -112,6 +128,9 @@ As JSON to Python.
 | GC | NO | NO | YES |
 
 ## 6. Safety Timing Model
+
+> [⬆ Back to Table of Contents](#toc)
+
 A CRSS module must publish:
 - Execution-time budget
 - WCET of Strict-A section
@@ -122,12 +141,18 @@ A CRSS module must publish:
 Gateways enforce real-time schedule.
 
 ## 7. Watchdog Integration
+
+> [⬆ Back to Table of Contents](#toc)
+
 For real systems:
 - Python emits heartbeat
 - Gateway monitors heartbeat
 - Timeout → safe-default actuator state
 
 ## 8. Deployment Considerations
+
+> [⬆ Back to Table of Contents](#toc)
+
 Python is **never** flashed onto MCU memory.
 Python runs in:
 - Containers
@@ -137,6 +162,9 @@ Python runs in:
 All dependencies must be pinned.
 
 ## 9. Example: Sensor Voting System
+
+> [⬆ Back to Table of Contents](#toc)
+
 Applies directly to reference design:
 - Sensors via TCP gateway
 - Strict-A evaluates deterministically

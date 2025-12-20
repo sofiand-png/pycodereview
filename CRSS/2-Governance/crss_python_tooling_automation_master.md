@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Tooling & Automation Master Specification](#crss-python-tooling-automation-master-specification)
   - [Table of Contents](#table-of-contents)
@@ -68,6 +69,9 @@ It is the **single source of truth** for automation and tool usage in CRSS-Pytho
 # 1. Tooling Governance Model
 
 ## 1.1 Role of Tools in CRSS
+
+> [⬆ Back to Table of Contents](#toc)
+
 Tools are used to:
 - Analyze code
 - Enforce rules
@@ -79,6 +83,9 @@ Tools are used to:
 Tools **do not reduce** responsibility for correctness.
 
 ## 1.2 Tool Categories
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 | Category | Examples | Purpose |
 |----------|----------|---------|
@@ -94,6 +101,9 @@ Tools **do not reduce** responsibility for correctness.
 
 ## 2.1 Mandatory Automation Targets
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Automation must support:
 - Rule compliance checking
 - Mode & Phase detection
@@ -104,6 +114,9 @@ Automation must support:
 - SCEM completeness validation
 
 ## 2.2 Non-Automatable Components
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 The following require human review:
 - Safety Level assignment
@@ -119,6 +132,9 @@ Human approval is mandatory for Strict-A.
 
 ## 3.1 Tool Confidence Levels (TCL)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | TCL | Name | Usage |
 |-----|------|-------|
 | **TCL-0** | Unverified | Not allowed in certification |
@@ -132,6 +148,9 @@ Strict-A requires **TCL-3** for:
 - Mode propagation validation
 
 ## 3.2 Tool Confidence Assessment (TCA)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 TCA evaluates:
 - Correctness
@@ -150,6 +169,9 @@ A tool **cannot** be upgraded without:
 
 ## 4.1 Mandatory Artifacts
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Automation MUST generate:
 - Rule Compliance Report (RCR)
 - Mode Assignment Register (MAR)
@@ -160,6 +182,9 @@ Automation MUST generate:
 - SCEM Completeness Score
 
 ## 4.2 File Format Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 All automated outputs must be:
 - Deterministic
@@ -178,12 +203,18 @@ Recommended formats:
 
 ## 5.1 One-Version Rule
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 All tools used in certification:
 - Must be version-fixed
 - Must be captured in CBM
 - Must not auto-update
 
 ## 5.2 Toolchain Drift = Automatic FAIL
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 If any tool changes version after CBM:
 - All automated evidence is invalid
@@ -194,6 +225,9 @@ If any tool changes version after CBM:
 # 6. SCEM Tool-Assisted Templates
 
 ## 6.1 MAR Template
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ```yaml
 - function: "module.Class.method"
@@ -209,6 +243,9 @@ If any tool changes version after CBM:
 
 ## 6.2 Propagation Report Template
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ```yaml
 propagation_events:
   - caller: "A"
@@ -219,6 +256,9 @@ propagation_events:
 ```
 
 ## 6.3 Coverage Template
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ```yaml
 coverage:
@@ -236,6 +276,9 @@ CRSS does not define a full ISO 26262 Tool Confidence Level (TCL) process, but p
 
 ## 7.1 Automated Evidence Acceptance
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Accepted only if:
 - TCL level is sufficient
 - Output matches CBM tool version
@@ -243,6 +286,9 @@ Accepted only if:
 - No missing artifacts
 
 ## 7.2 Automatic Rejection Conditions
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - Output generated after tool version drift
 - Missing data fields

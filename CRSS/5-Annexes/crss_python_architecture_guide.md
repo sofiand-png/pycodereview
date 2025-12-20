@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Architecture Guide](#crss-python-architecture-guide)
   - [Table of Contents](#table-of-contents)
@@ -47,6 +48,9 @@ This is NOT a rulebook - it is **highly recommended guidance** to help build sys
 # 2. Core Architectural Principles
 
 ## 2.1 Isolation Over Complexity
+
+> [⬆ Back to Table of Contents](#toc)
+
 Prefer **small, isolated components** over large, multi-purpose modules.
 
 - Single responsibility
@@ -59,6 +63,9 @@ Prefer **small, isolated components** over large, multi-purpose modules.
 ---
 
 ## 2.2 Process, Not Thread Isolation
+
+> [⬆ Back to Table of Contents](#toc)
+
 For safety and determinism:
 
 - Isolate components into **separate processes**
@@ -70,6 +77,9 @@ Threads inside a shared interpreter increase unpredictability and risk.
 ---
 
 ## 2.3 Critical Code Must Be Minimal
+
+> [⬆ Back to Table of Contents](#toc)
+
 `@critical` code should be:
 
 - Small
@@ -82,6 +92,9 @@ Goal: **Make the critical core tiny, predictable, and rock-solid.**
 ---
 
 ## 2.4 Stateless-by-Default
+
+> [⬆ Back to Table of Contents](#toc)
+
 State introduces danger. Prefer:
 
 - Stateless processing
@@ -97,6 +110,9 @@ If state is required:
 ---
 
 ## 2.5 Defensive Boundaries
+
+> [⬆ Back to Table of Contents](#toc)
+
 All external inputs must be treated as untrusted.
 
 - Validate
@@ -165,6 +181,9 @@ Python must not command actuators directly - it must supervise or recommend.
 
 ## 5.1 Critical Module
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - No I/O
 - No allocation
 - No blocking calls
@@ -173,6 +192,9 @@ Python must not command actuators directly - it must supervise or recommend.
 - Deterministic branching
 
 ## 5.2 Non-Critical Module
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - Initialization
 - File/Network access

@@ -11,6 +11,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Distributed System Design Guide](#crss-distributed-system-design-guide)
   - [Table of Contents](#table-of-contents)
@@ -32,6 +33,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 This document explains **how CRSS-compliant components can coexist in a distributed architecture** while maintaining full compliance with strict determinism and mixed-criticality rules.
 
 This guide is *model-level only* (no implementation).
@@ -39,6 +43,9 @@ This guide is *model-level only* (no implementation).
 ---
 
 ## 2. Distributed System Layers
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A CRSS multi-component architecture typically includes:
 
@@ -60,6 +67,9 @@ A CRSS multi-component architecture typically includes:
 ---
 
 ## 3. Allowed Interactions
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 3.1 Strict-A Allowed Inputs
 - Validated, sanitized numeric values (bounded arrays / sets)
@@ -87,6 +97,9 @@ No metadata, no timestamps.
 
 ## 4. Message-Passing Contracts
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 4.1 Core-C → Strict-A Contract
 - Flat arrays
 - All numeric values validated before entry
@@ -102,6 +115,9 @@ No metadata, no timestamps.
 
 ## 5. Fault Propagation Rules
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 5.1 Critical Path Isolation
 Faults from Core-C must not enter Strict-A.
 
@@ -114,6 +130,9 @@ Strict-A fallback is **purely local**:
 ---
 
 ## 6. Scaling Up to Multiple Controllers
+
+> [⬆ Back to Table of Contents](#toc)
+
 Examples:
 - multiple actuation surfaces
 - multiple sensor clusters
@@ -128,6 +147,9 @@ Rules:
 ---
 
 ## 7. Mixed-Criticality Bus Interactions
+
+> [⬆ Back to Table of Contents](#toc)
+
 CRSS supports integration with:
 - CAN/LIN (through Core-C gateways)
 - TCP (example)
@@ -142,5 +164,8 @@ Gateways must:
 ---
 
 ## 8. Conclusion
+
+> [⬆ Back to Table of Contents](#toc)
+
 This document defines the model-level guidance needed to scale CRSS to distributed, multi-component systems without compromising Strict-A determinism.
 

@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python External Assessment Protocol (EAP)](#crss-python-external-assessment-protocol-eap)
   - [Table of Contents](#table-of-contents)
@@ -38,6 +39,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 0. Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The **CRSS-Python External Assessment Protocol (EAP)** defines how independent assessors shall:
 
 - Evaluate CRSS-Python compliant systems
@@ -58,6 +62,9 @@ EAP is mandatory for all projects claiming **CRSS-Strict Level A** and recommend
 ---
 
 ## 1. Definitions
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 To eliminate ambiguity, all terms used in EAP are defined below.
 
@@ -155,6 +162,9 @@ Classified NC-0 to NC-3.
 
 ## 2. Assessment Inputs
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The External Assessor SHALL receive, at minimum:
 
 1. **Certification Readiness Kit (CRK)**, including:
@@ -192,6 +202,9 @@ If RCR is missing or incomplete, the assessment MUST be recorded as **“NOT ASS
 ---
 
 ## 3. Assessment Stages
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 EAP defines a **5-stage assessment sequence**:
 
@@ -322,6 +335,9 @@ A system with any unresolved COND-Sx SHALL be considered NOT CERTIFIED.
 
 ## 4. Non-Conformance Handling
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 NC rules are unchanged:
 
 - NC-0: Informational
@@ -338,6 +354,9 @@ For Strict Level A:
 
 ## 5. Revocation & Reassessment
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Certification SHALL be revoked if:
 
 - Drift is detected
@@ -348,6 +367,9 @@ Certification SHALL be revoked if:
 ---
 
 ## 6. Summary of Enhancements
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - RCR added as a mandatory input
 - RCR verification added to Stage 2 & Stage 3

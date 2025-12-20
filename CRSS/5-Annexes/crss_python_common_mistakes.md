@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Common Mistakes & How to Avoid Them](#crss-python-common-mistakes-how-to-avoid-them)
   - [Table of Contents](#table-of-contents)

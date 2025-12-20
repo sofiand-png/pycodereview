@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Release Management Specification](#crss-python-release-management-specification)
   - [Table of Contents](#table-of-contents)
@@ -66,6 +67,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 0. Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This document defines the mandatory requirements, definitions, processes, rules, and artifacts governing **Release Management** under the CRSS-Python standard.
 
 It acts as an official annex to the **CRSS-Python Configuration & Deployment Integrity Policy** and ensures that:
@@ -81,6 +85,9 @@ This specification is **non-deviable** for Strict Level A components.
 ---
 
 ## 1. Definition of a Release
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### **CRSS Definition**
 A **Release** is:
@@ -105,6 +112,9 @@ A Release exists **only after** Compliance Certification.
 ---
 
 ## 2. Required Properties of a Release
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A Release MUST be:
 
@@ -146,6 +156,9 @@ Only Releases may be deployed to Production.
 
 ## 3. Release Contents
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A Release SHALL consist of the following minimum components:
 
 | Component | Source |
@@ -168,6 +181,9 @@ If **any** required component is missing:
 
 ## 4. Distinction Between Build, Baseline, and Release
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Concept | Defines | Mutable? | Deployable? | Certified? |
 |--------|---------|----------|-------------|------------|
 | **Build** | Compiled artifact | Yes |  No |  No |
@@ -184,6 +200,9 @@ A Release is the **final authorized output**.
 ---
 
 ## 5. Release Versioning Rules
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### **CRSS-13.1 - Unique Versioning**
 - Every Release SHALL have a unique version number.
@@ -205,6 +224,9 @@ A new Release:
 ---
 
 ## 6. Release Lifecycle
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 6.1 Stages
 1. **Candidate Build** (DEV)
@@ -228,6 +250,9 @@ Transition rules:
 
 ## 7. Release Registry Policy
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A Release MUST be stored in a **controlled Release Registry** with:
 
 - Restricted write access
@@ -241,6 +266,9 @@ No Release may be deleted or overwritten.
 ---
 
 ## 8. Release Deployment Rules
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 8.1 Deployment Eligibility
 A Release is deployable ONLY IF:
@@ -261,6 +289,9 @@ Production SHALL execute **only one Release at a time** unless redundancy archit
 ---
 
 ## 9. Release Modification
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 9.1 Zero Modification
 Releases SHALL NOT be:
@@ -291,6 +322,9 @@ There is no partial acceptance.
 
 ## 10. Release Approval Authority
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A Release MUST be:
 - Reviewed
 - Validated
@@ -304,6 +338,9 @@ Developers and CI/CD systems **cannot self-approve** Releases.
 ---
 
 ## 11. Certified Build and Packaging Process
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 11.1 Purpose and Scope
 
@@ -531,6 +568,9 @@ CRSS permits platform-specific certified builds.
 
 
 ## 12. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A Release is:
 - Immutable

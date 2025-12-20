@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Safety Standard Mapping Annex](#crss-python-safety-standard-mapping-annex)
   - [Table of Contents](#table-of-contents)
@@ -23,6 +24,9 @@ Distributed under CC BY-NC-ND 4.0
 
 ## 0. Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This annex explains how **CRSS-Python** concepts map onto the terminology and expectations of common safety standards:
 
 - ISO 26262 (automotive)
@@ -36,6 +40,9 @@ It is **non-normative**: it does not change any CRSS requirements, but helps aud
 ---
 
 ## 1. Safety Requirements and Levels
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 1.1 CRSS Safety Levels vs Industry Notions
 
@@ -66,6 +73,9 @@ Instead:
 
 ## 2. CRSS Artifacts vs Safety Case Artifacts
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 2.1 High-Level Mapping
 
 | CRSS Concept / Artifact   | Typical Safety-Standard Equivalent                |
@@ -84,6 +94,9 @@ These artifacts are already defined normatively in the SCEM and Compliance Maste
 ---
 
 ## 3. Process Alignment (V-Model / ASPICE)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 CRSS compliance phases map onto a V-model / ASPICE-style lifecycle as follows:
 

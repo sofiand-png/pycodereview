@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Compliance Master Specification](#crss-python-compliance-master-specification)
   - [Table of Contents](#table-of-contents)
@@ -177,6 +178,9 @@ A project enters compliance when:
 # Compliance Lifecycle (Five-Phase Model)
 
 ## Phase 1 - Design Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - hazard mapping
 - level assignment
@@ -186,6 +190,9 @@ Artifacts:
 - initial SBR
 
 ## Phase 2 - Rule Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - static analysis
 - manual review
@@ -193,6 +200,9 @@ Artifact:
 - RCR
 
 ## Phase 3 - Test Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - unit tests
 - MC/DC (for Level A)
@@ -203,6 +213,9 @@ Artifact:
 - TEP
 
 ## Phase 4 - Baseline Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - freeze environment
 - produce CBM
@@ -214,15 +227,24 @@ Release Management specification, including the certified wheel artifact and
 its associated dependency freeze evidence.
 
 ## Phase 5 - Certification Readiness
+
+> [⬆ Back to Table of Contents](#toc)
+
 Artifacts:
 - final SBR
 - SCEM
 
 ## Release Approval
+
+> [⬆ Back to Table of Contents](#toc)
+
 - independent assessment
 - CC issued
 
 ## Post-Release Monitoring
+
+> [⬆ Back to Table of Contents](#toc)
+
 - anomaly tracking
 - dependency CVE monitoring
 - safety event logging
@@ -232,17 +254,26 @@ Artifacts:
 # Enforcement & Acceptance Model
 
 ## Rule Severity
+
+> [⬆ Back to Table of Contents](#toc)
+
 - **INFO** - informational
 - **WARN** - counts toward threshold
 - **ERROR** - blocking unless justified
 - **BLOCKER** - unconditional failure
 
 ## Strict-A Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 - **0 WARN**
 - **0 ERROR**
 - **0 BLOCKER**
 
 ## Deviations
+
+> [⬆ Back to Table of Contents](#toc)
+
 Allowed only if:
 - no Level A @critical rule affected
 - documented risk assessment
@@ -255,6 +286,9 @@ Forbidden for:
 - interpreter freeze rules
 
 ## No Silent Downgrade
+
+> [⬆ Back to Table of Contents](#toc)
+
 Reviewers cannot reduce severity to pass compliance.
 
 ---
@@ -274,6 +308,9 @@ No partial acceptance.
 # Mandatory Artifacts
 
 ## RCR - Rule Compliance Report
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes:
 - Release/Baseline IDs
 - mapping of rules
@@ -281,6 +318,9 @@ Includes:
 - signatures
 
 ## TEP - Test Evidence Package
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes:
 - test suite version
 - platform matrix
@@ -290,6 +330,9 @@ Includes:
 - negative & security tests
 
 ## CBM - Configuration Baseline Manifest
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes:
 - Python version
 - OS version
@@ -300,18 +343,33 @@ Includes:
 - hashes
 
 ## SBR - Safety Baseline Report
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes hazard mappings, risks, platform, deployment context.
 
 ## CC - Compliance Certificate
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes official release certification.
 
 ## DL - Deviations Log
+
+> [⬆ Back to Table of Contents](#toc)
+
 Contains rule ID, justification, approver, evidence.
 
 ## MAR - Mode Assignment Register
+
+> [⬆ Back to Table of Contents](#toc)
+
 Defines unit -> level -> profile -> phase.
 
 ## SCEM - Evidence Matrix
+
+> [⬆ Back to Table of Contents](#toc)
+
 Maps Requirements -> Rules -> Tests -> Evidence.
 
 ---
@@ -366,12 +424,18 @@ Severity:
 # Deviations & Exceptions
 
 ## Allowed Deviations
+
+> [⬆ Back to Table of Contents](#toc)
+
 Only if:
 - not Level A critical
 - risk documented
 - Safety Manager approval
 
 ## Forbidden Deviations
+
+> [⬆ Back to Table of Contents](#toc)
+
 For:
 - Strict-Level-A MUST rules
 - deterministic behavior
@@ -451,22 +515,34 @@ Auditors verify:
 # Checklists
 
 ## Developer Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - no rule violations
 - tests complete
 - MAR correct
 - coverage adequate
 
 ## Reviewer Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - rule-by-rule analysis
 - static review
 - deviation validation
 
 ## Safety Manager Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - SBR correctness
 - SCEM completeness
 - risk soundness
 
 ## Release Authority Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - ID consistency
 - artifact integrity
 - signature and attestation

@@ -2,11 +2,17 @@
 
 ## 1. System Overview
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Function**: cooling temperature supervision using triple-redundant sensors,
   voting, and safety envelope.
 - **Output**: normalized actuator command representing cooling demand.
 
 ## 2. Environment
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - **Language runtime**: CPython 3.11.x
 - **Dependencies**:
@@ -17,6 +23,9 @@
     (`app.main_loop.run_single_step`), reflecting Strict-A GC discipline.
 
 ## 3. CRSS Modes in Scope (Profile + Safety Level)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - **Strict-A (Strict, Level A)**:
   - `safety_logic.voting`
@@ -39,12 +48,18 @@
 
 ## 4. Assumptions
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - Underlying platform provides:
   - deterministic basic arithmetic for doubles within the range used
   - OS-level process isolation and standard TCP behaviour
 - The example represents the **safety kernel**, not a full embedded deployment.
 
 ## 5. Evidence Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - CRSS compliance report: `docs/crss_sensor_voting_compliance_report.md`
 - Coverage report: `reports/coverage_report.md`

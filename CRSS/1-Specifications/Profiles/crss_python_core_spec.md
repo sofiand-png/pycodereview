@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Core Profile](#crss-python-core-profile)
   - [Table of Contents](#table-of-contents)
@@ -273,6 +274,9 @@ Its objectives are:
 
 ## 0.4 Versioning and Rule ID Stability
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS-Python uses semantic versioning: `vMAJOR.MINOR.PATCH`.
 
 - **Rule IDs are never reused.**
@@ -379,6 +383,9 @@ supports.
 
 ## 1. Scope & Goals
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS-Python Core aims to:
 
 -   Reduce common correctness and security bugs.
@@ -396,6 +403,9 @@ It is suitable for:
 ------------------------------------------------------------------------
 
 ## 2. Rule Model
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Each rule has:
 
@@ -423,6 +433,9 @@ adds a small number of Strict-only rules (see `crss_python_strict_spec.md`).
 ------------------------------------------------------------------------
 
 ## 3. Core Language Usage
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-3.1.1 - Avoid runtime code generation
 
@@ -759,6 +772,9 @@ See also: *CRSS Inheritance Policy* (`docs/annexes/crss_inheritance_policy.md`) 
 
 ## 4. Error Handling, Exceptions & Control Flow
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### CRSS-4.1.1 - Assertions not for runtime validation
 
 -   **Category**: Error Handling / Correctness
@@ -1033,7 +1049,13 @@ Malformed input can produce sequences of unexpected length, causing `ValueError`
 
 ## 4. Parsing & Data Validation (7.9.x)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ## 5. Types, Data & Interfaces
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-5.1.1 - Type hints on public APIs
 
@@ -1779,6 +1801,9 @@ Inefficient queries can cause slowdowns or lock contention, impacting timely saf
 
 ## 3. Robustness Against Index / Key / Buffer Errors (4.4.x)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 > Python does not suffer from classic C-style buffer overflows, but it is still vulnerable to memory blowup, `IndexError`, `KeyError`, and unchecked growth when driven by external input.
 
 1. Cache Policy & Scope
@@ -1965,6 +1990,9 @@ Filters improve stability but also add delay. In safety applications, this delay
 5. Caching in Microservices / Distributed Systems
 
 ## 6. Security Rules (Core)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-6.1.1 - Dangerous functions and APIs
 
@@ -2261,6 +2289,9 @@ and reduces security-related safety failures.
 
 ## **CRSS-6.4.10 - Secret Storage & Lifecycle**
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Category**: Security / Secrets
 - **Type**: Design / Process
 - **Profiles**:
@@ -2295,6 +2326,9 @@ Secret leakage leads to system compromise and loss of trust in safety-significan
 
 ## **CRSS-6.4.11 - Password & Credential Policy**
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Category**: Security / Authentication
 - **Type**: Design / Process
 - **Profiles**:
@@ -2324,6 +2358,9 @@ Weak credential handling is a major source of compromise in operational systems.
 ---
 
 ## **CRSS-6.4.12 - Token & Session Lifetime Management**
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - **Category**: Security / Sessions & Tokens
 - **Type**: Design / Process
@@ -2355,6 +2392,9 @@ Long-lived or unchecked sessions create unsafe implicit trust.
 
 ## **CRSS-6.4.13 - Authentication vs Authorization Separation**
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Category**: Security / Access Control
 - **Type**: Design / Static
 - **Profiles**:
@@ -2385,6 +2425,9 @@ Auth bypass is one of the most common and catastrophic security failures.
 ---
 
 ## **CRSS-6.4.14 - Safety-Significant Action Authorization**
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - **Category**: Security / Safety Interaction
 - **Type**: Design / Process
@@ -2418,6 +2461,9 @@ Safety configuration changes must not rely on weak or stale access control.
 ---
 
 ## 7. Robustness & Portability
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-7.1.1 - Explicit encoding for text file I/O
 
@@ -2802,6 +2848,9 @@ Unbounded latency can cause stale decisions and unsafe behavior in distributed s
 
 ## 2. Big Data & Large Dataset Handling (5.5.x)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### CRSS-7.8.5 - Distributed cache consistency for critical data
 
 -   **Category**: Microservices / Caching
@@ -2873,6 +2922,9 @@ treat incorrectly cached responses (e.g. stale) as faults when detected.
 Implicit caching by browsers or intermediate proxies can serve stale or cross-user data in unexpected ways.
 
 ## 9. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This annex strengthens CRSS for:
 
@@ -2946,6 +2998,9 @@ Malformed or hostile text input can break parsers, pollute logs, or trigger unex
 
 ## 5. Sensitive Data Handling (6.4.x)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### CRSS-7.9.4 - Detection of partial network writes and reads
 
 -   **Category**: Robustness / IO
@@ -2994,6 +3049,9 @@ If network disconnection occurs mid-operation (for example during an HTTP PUT, a
 ---
 
 ## 7. Key Exchange & Cryptographic Material (6.4.x continuation)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-7.10.1 - Restricted operating system interaction
 
@@ -3330,6 +3388,9 @@ Why compliant:
 
 ## Summary
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The CRSS-7.11.x rules ensure that:
 
 - regex is **never** used in critical, deterministic execution;
@@ -3343,6 +3404,9 @@ and catastrophic backtracking from compromising safety-critical Python systems.
 ---
 
 ## 8. Maintainability & Documentation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-8.1.1 - Limit cyclomatic complexity
 
@@ -3405,6 +3469,9 @@ def process_items(items: Sequence[Mapping[str, int]]) -> None:
 
 ## 9. Testing & Coverage Guidelines (Core)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 9.0 Criticality Levels
 
 CRSS defines three criticality levels for modules and functions:
@@ -3460,6 +3527,9 @@ explicit deviations with justification and impact analysis.
 
 ## **CRSS-9.2.1 - Authentication, Token & Session Negative Testing**
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Category**: Testing & Security
 - **Type**: Process
 - **Profiles**:
@@ -3489,6 +3559,9 @@ Negative testing is essential for verifying robustness under malicious or degrad
 ---
 
 ## **CRSS-9.2.2 - SCEM Evidence for Authentication & Authorization**
+
+> [⬆ Back to Table of Contents](#toc)
+
 - **Category**: SCEM & Compliance
 - **Type**: Process
 - **Profiles**:
@@ -3649,6 +3722,9 @@ Any difference between Testing environment and Deployment environment must be:
 ------------------------------------------------------------------------
 
 ## 10. Python Version & Tooling Compatibility
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRSS-10.1.1 - Declare target Python version range
 
@@ -4173,6 +4249,9 @@ Emergency fixes MUST be integrated back into:
 No divergence.
 
 ## 13. Phase-Aware Interpretation Rules (Normative)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This section defines **normative phase-aware interpretation rules** for CRSS-Python.
 They specify which operations are permitted during **Critical** and **Non-Critical**

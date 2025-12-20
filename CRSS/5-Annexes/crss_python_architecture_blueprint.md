@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Architecture Blueprint (Reference Example)](#crss-python-architecture-blueprint-reference-example)
   - [Table of Contents](#table-of-contents)
@@ -45,6 +46,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 0. Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This document provides a **complete reference architecture blueprint** for a CRSS-Python-compliant system.
 
 It is designed to show, end-to-end:
@@ -60,6 +64,9 @@ This blueprint is **non-normative** (informative), but fully aligned with all v3
 ---
 
 ## 1. Example Scenario - Safety Supervisory System
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 We model a generic **Safety Supervisory System** used in domains such as:
 
@@ -80,6 +87,9 @@ Python is **not** directly commanding actuators. It supervises and decides; cert
 ---
 
 ## 2. High-Level Architecture
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 2.1 Logical View
 
@@ -120,6 +130,9 @@ Python is **not** directly commanding actuators. It supervises and decides; cert
 
 ## 3. Component Breakdown
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 3.1 Components Overview
 
 | Component                  | Responsibility                         | Mode        |
@@ -144,6 +157,9 @@ Only **part of `SafetyController`** is `@critical`:
 ---
 
 ## 4. Modes & Phases in the Blueprint
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 4.1 Mode Assignment
 
@@ -198,6 +214,9 @@ Example entries (MAR-style):
 ---
 
 ## 5. Example Code - Core Critical Flow
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 5.1 Input & Config (Non-Critical)
 
@@ -326,6 +345,9 @@ This orchestrator is **non-critical**; only `decide()` is `@critical`.
 
 ## 6. Deployment & CBM View
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 6.1 Deployment Diagram
 
 ```text
@@ -386,6 +408,9 @@ Prod deployment must match this CBM exactly.
 
 ## 7. Compliance Story for the Blueprint
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 7.1 Modes and Enforcement
 
 - `SafetyController.decide` → Strict-A, `@critical`
@@ -410,6 +435,9 @@ Prod deployment must match this CBM exactly.
 
 ## 8. How to Adapt This Blueprint
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 You can adapt this architecture for:
 
 - Multiple sensors and channels
@@ -426,6 +454,9 @@ Guiding rules:
 ---
 
 ## 9. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This blueprint shows:
 

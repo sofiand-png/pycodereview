@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Certification Readiness Master Kit](#crss-python-certification-readiness-master-kit)
   - [Table of Contents](#table-of-contents)
@@ -77,6 +78,9 @@ The CRC is a mandatory artifact confirming readiness.
 
 ## 2.1 CRC Sections
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Section | Purpose |
 |--------|---------|
 | CRC-1 | Compliance Completion |
@@ -90,6 +94,9 @@ The CRC is a mandatory artifact confirming readiness.
 | CRC-9 | Organizational Readiness |
 
 ## 2.2 CRC Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CRC-1 - Compliance Completion
 - Phases 1-4 completed

@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Deployment, Release & Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
   - [Table of Contents](#table-of-contents)
@@ -32,6 +33,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 0. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This master specification defines **how CRSS-Python projects are deployed, released, versioned, and baselined**.
 
@@ -66,6 +70,9 @@ This separation ensures that conceptual guidance remains stable while allowing b
 ---
 
 ## 1. Deployment & Baseline Rule Catalog (DPL-12.x)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This section defines the **canonical deployment, release, and baseline rules**.
 
@@ -497,6 +504,9 @@ Certified baselines (code, CBM, artifacts) MUST be stored in durable, redundant 
 
 ## 1.8 Upgrade process
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### DPL-12.24 - Interpreter Version Range with Single-Baseline Freeze
 
 -   **Category**: Controlled Upgrade Process
@@ -585,6 +595,9 @@ No divergence.
 
 ## 2. Relationship to Code-Level 12.x Rules
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The **DPL-12.x** rules in this document complement the **CRSS-12.x** code-level configuration & deployment integrity rules defined in the Core/Strict catalogs.
 
 - `CRSS-12.x` → what the **code and technical configuration** must guarantee.
@@ -595,6 +608,9 @@ Both sets MUST be satisfied for a project to claim full CRSS-Python compliance.
 ---
 
 ## 3. Versioning & Governance
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This master specification:
 
@@ -611,6 +627,9 @@ All projects SHALL clearly state:
 ---
 
 ## 4. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This master specification:
 

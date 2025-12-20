@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 
 - [CRSS-Python Deviation Policy](#crss-python-deviation-policy)
@@ -40,6 +41,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 1. Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This document defines the formal deviation policy for the CRSS-Python Standard.
 It provides:
 
@@ -56,6 +60,9 @@ ASIL-D / SIL-3 supervisory safety expectations.
 ---
 
 ## 2. Principles (Foundational)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 2.1 Deviations Are **NEVER Allowed** for MUST / MUST-NOT
 
@@ -98,6 +105,9 @@ These represent strong guidance but can be deviated through a **controlled proce
 ---
 
 ## 3. Deviation Types (Formal)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 3.1 **RIC - Rule Interpretation Clarification**
 
@@ -144,6 +154,9 @@ This is the **highest severity** deviation.
 
 ## 4. Deviations - Forbidden Categories
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 These rules can **NEVER** be deviated:
 
 | Category | Reason |
@@ -166,6 +179,9 @@ Violating any of these is always unsafe.
 
 ## 5. Deviations - Allowed Categories
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Permitted ONLY for SHOULD/SHOULD-NOT rules in:
 
 - **Core A/B/C**
@@ -183,6 +199,9 @@ Approval level depends on deviation type (RIC/CD/ED).
 ---
 
 ## 6. Required Contents of a Deviation (DMR)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Every deviation MUST include:
 
@@ -234,6 +253,9 @@ Every deviation MUST include:
 
 ## 7. Deviation Matrix (Formal, v2.0)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A rule is evaluated by:
 
 (Profile) × (Safety Level) × (Phase)
@@ -250,6 +272,9 @@ Example rows:
 
 ## 8. Scope Rules
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Deviations MUST specify:
 
 - line range
@@ -264,6 +289,9 @@ Deviations MUST specify:
 
 ## 9. Integration With Mode Model
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Mode | Deviation Allowed? |
 |-------|---------------------|
 | Core (A/B/C) | SHOULD rules only |
@@ -274,6 +302,9 @@ Deviations MUST specify:
 ---
 
 ## 10. Final Policy Statement (Normative)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 **Deviations are permitted ONLY for SHOULD / SHOULD-NOT rules,
 NEVER for MUST / MUST-NOT rules,
@@ -292,6 +323,9 @@ Unscoped/open-ended deviations are prohibited.
 ---
 
 ## 11. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This deviation model:
 

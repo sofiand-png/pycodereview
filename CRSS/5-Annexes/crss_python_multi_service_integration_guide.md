@@ -11,6 +11,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Multi-Service Integration Guide](#crss-multi-service-integration-guide)
   - [Table of Contents](#table-of-contents)
@@ -31,6 +32,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 Provide a model-level description of how CRSS components interact safely in:
 - distributed systems
 - multi-node systems
@@ -41,6 +45,9 @@ Provide a model-level description of how CRSS components interact safely in:
 ---
 
 ## 2. System Interaction Topology
+
+> [⬆ Back to Table of Contents](#toc)
+
 A typical topology using an orchestrator:
 - Sensors → Core-C Gateway → Strict-B Fusion → Strict-A Controller → Core-C Output Gateway → Actuators
 
@@ -52,6 +59,9 @@ Additional optional:
 ---
 
 ## 3. Interactions and Contracts
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 3.1 Core-C Gateway → Core-B Fusion
 Payloads:
@@ -78,6 +88,9 @@ No timestamps, no JSON, no strings.
 
 ## 4. Fault Containment
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 4.1 Isolation Rules
 A failure in:
 - TCP  
@@ -94,6 +107,9 @@ Strict-A always produces safe output via safe_default.
 
 ## 5. Integration Requirements Checklist
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### Mandatory
 - fixed schemas
 - bounded message sizes
@@ -108,5 +124,8 @@ Strict-A always produces safe output via safe_default.
 ---
 
 ## 6. Conclusion
+
+> [⬆ Back to Table of Contents](#toc)
+
 CRSS supports real multi-node architectures through strict interface contracts and critical-path isolation.
 

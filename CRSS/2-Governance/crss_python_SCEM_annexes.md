@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python SCEM Annexes](#crss-python-scem-annexes)
   - [Table of Contents](#table-of-contents)
@@ -25,6 +26,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 0. Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This annex set formalizes templates, checklists, and required structures that support SCEM v1.0. These annexes ensure that safety cases are:
 
 - Complete
@@ -38,6 +42,9 @@ All Strict Level A systems MUST use these annexes.
 ---
 
 ## 1. Annex A - FMEA Template
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### A.1 FMEA Table
 
@@ -64,6 +71,9 @@ All Strict Level A systems MUST use these annexes.
 
 ## 2. Annex B - Hazard Log Template
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Field | Description |
 |-------|-------------|
 | Hazard ID | Unique identifier |
@@ -77,6 +87,9 @@ All Strict Level A systems MUST use these annexes.
 ---
 
 ## 3. Annex C - Safety Architecture Diagram Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Diagrams MUST include:
 
@@ -92,6 +105,9 @@ Format: PDF or PNG, under version control.
 
 ## 4. Annex D - Auditor Checklist
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Auditors MUST verify:
 
 - All SCEM artifacts exist
@@ -104,10 +120,16 @@ Auditors MUST verify:
 
 ## 5. Annex E - Timing Evidence Protocol
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 See Formal Timing Methodology.
 
 ---
 
 ## 6. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 These annexes convert SCEM into a repeatable, certifiable workflow.

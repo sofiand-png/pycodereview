@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Standard Safety Master](#crss-python-standard-safety-master)
   - [Table of Contents](#table-of-contents)
@@ -148,6 +149,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ## 0. Purpose and Conflict Resolution
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The **CRSS-Python Unified Safety Specification** is the **single, authoritative** standard for:
 
 - Profiles (**Core**, **Strict**)
@@ -187,6 +191,9 @@ It is designed to:
 ---
 
 ## 1. Core Concepts
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 1.1 Profiles
 
@@ -282,6 +289,9 @@ Any change in Mode requires:
 - Re-certification
 
 ## 1.6 Granularity of Safety Levels, Profiles, and Modes
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 CRSS distinguishes between:
 
@@ -397,6 +407,9 @@ If metadata and module declaration disagree → stricter interpretation applies 
 
 ## 1.7 Profile Granularity Model (Core vs Strict)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Profiles describe rule strictness; Safety Levels describe hazard severity.
 
 ---
@@ -457,6 +470,9 @@ A function at Safety Level B or C **MAY** be Core.
 
 ## 2. Environment and Boundaries
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Safety Levels and Profile responsibilities exist inside a well-defined software safety domain.
 Not all components of a deployed system share that domain, and not all boundaries permit safety-level propagation.
 
@@ -471,6 +487,9 @@ This section defines:
 ---
 
 ## 2.1 Definition of Boundaries
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A boundary is any architectural separation across which CRSS cannot enforce Python-level guarantees.
 
@@ -523,6 +542,9 @@ Hardware/firmware is outside the CRSS domain and cannot be treated as Level-A/B.
 
 ## 2.2 No Promotion Across Boundaries
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 **CRSS-Boundary-1 (Normative)**
 Safety Level promotion does **not** cross boundaries.
 
@@ -545,6 +567,9 @@ Python code must:
 
 ## 2.3 No Safety Leakage Beyond Boundaries
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 **CRSS-Boundary-2 (Normative)**
 Strict-A/B components MUST assume:
 
@@ -557,6 +582,9 @@ Strict-A/B components MUST assume:
 ---
 
 ## 2.4 Boundary Interaction Contracts
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 2.4.1 OS Process Boundary Contract
 
@@ -628,6 +656,9 @@ Strict-A/B components MUST assume:
 
 ## 2.5 Call Graph Interaction with Boundaries
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Boundaries **break** call-graph promotion.
 
 ### Example 1 - Correct
@@ -690,6 +721,9 @@ Valid because:
 
 ## 2.6 Boundary Failures Must Not Break Level-A Logic
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 **CRSS-Boundary-3 (Normative)**
 External failure - timeout, corruption, crash, stall - MUST NOT break:
 
@@ -708,6 +742,9 @@ Required responses:
 
 ## 2.7 Summary of Boundary Rules
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Boundary | Promotion Allowed? | Strict-A Assumption | Required Path | Forbidden |
 |----------|---------------------|----------------------|----------------|-----------|
 | OS process | No | external untrusted | Gateway → Strict-B → Strict-A | critical dependence |
@@ -718,6 +755,9 @@ Required responses:
 ---
 
 ## 2.8 Final Statement
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Boundaries define non-trustable edges.
 CRSS safety responsibilities begin only once:
@@ -730,6 +770,9 @@ CRSS safety responsibilities begin only once:
 ---
 
 ## 3. Safety Level Assignment and Propagation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 3.1 Assignment from Requirements
 
@@ -789,6 +832,9 @@ without re-certification.
 ---
 
 ## 4. Critical vs Non-Critical Execution Model
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 4.1 Definitions
 
@@ -861,6 +907,9 @@ In other words:
 
 ## 5. Rule Categorization
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Rules are categorized along two orthogonal axes:
 
 - **Scope:** Global vs Phase-scoped
@@ -900,11 +949,17 @@ Apply only within `@critical`:
 
 ## 6. Error and Violation Categorization
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This section aligns analyzer severities with the updated Profile and Safety-Level model.
 
 ---
 
 ## 6.1 Severity Levels
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - **INFO**
   Non-actionable, stylistic, or informational messages.
@@ -924,6 +979,9 @@ This section aligns analyzer severities with the updated Profile and Safety-Leve
 ---
 
 ## 6.2 Enforcement Matrix
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 | Mode / Phase             | MUST/MUST-NOT Violation        | SHOULD/SHOULD-NOT Violation          |
 |--------------------------|---------------------------------|--------------------------------------|
@@ -945,6 +1003,9 @@ A violation is **BLOCKER** by default, but may be accepted *only if*:
 ---
 
 ## 7. Critical-Phase Rules (CP)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### CP-1 - No Allocation in Critical
 
@@ -984,6 +1045,9 @@ Within `@critical`:
 
 ## 8. Non-Critical-Phase Rules (NCP)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### NCP-1 - Allowed Operations
 
 In `@non_critical_phase` (Strict & Strict-A):
@@ -1022,6 +1086,9 @@ Any data used in `@critical` must:
 
 ## 10. Inheritance Policy
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 10.1 Depth Constraint
 
 - Maximum inheritance depth in Strict code: **1** (base + one subclass)
@@ -1054,6 +1121,9 @@ If a Strict-B/C subclass participates in a Strict-A call chain:
 ---
 
 ## 11. Exceptions and Utilities
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 11.1 Logging
 
@@ -1090,6 +1160,9 @@ Strictly forbidden in `@critical`.
 ---
 
 ## 12. Compliance and Acceptance Model
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 12.1 Core-Only Projects
 
@@ -1148,6 +1221,9 @@ System passes only if:
 
 ## 13. Certification-Grade Conditions (High-Level)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 When implemented correctly, this specification supports:
 
 Use of Python in **ASIL D / SIL 3** supervisory roles, under conditions:
@@ -1165,6 +1241,9 @@ Python is **not** used:
 ---
 
 ## 14. Reference Use Case (Mode + Phases + Dependencies)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 14.1 Scenario
 
@@ -1345,6 +1424,9 @@ Mode = **Strict-A**, Phase = `@critical`
 
 ## 15. Third-Party Library and Framework Containment
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 15.1 Scope
 
 This section defines how third-party Python packages, frameworks, and native extensions MAY be used in a CRSS-Python system without compromising Strict-A guarantees.
@@ -1438,6 +1520,9 @@ For Strict-A systems, auditors SHOULD be able to see a clear **“third-party de
 
 
 ## 16 Call Graph, Orchestrators, and Level-A Data Validation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 16.1 Purpose
 
@@ -1575,6 +1660,9 @@ tools, UI adapters, etc.).
 
 ## 16.4 Profile Call Constraints (Strict vs Core)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Core ↔ Core: Allowed
 Core → Strict: Allowed
 Strict → Strict: Allowed
@@ -1590,6 +1678,9 @@ Strict→Core allowed only in tests/tools.
 
 ## 16.5 Phase Interaction
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 **CRSS-Call-Phase-1 (Normative)**
 
 - @critical MUST NOT call @non_critical_phase.
@@ -1599,6 +1690,9 @@ Strict→Core allowed only in tests/tools.
 ---
 
 ## 16.6 Level-A Separation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 **CRSS-Call-A-1 (Normative)**
 
@@ -1613,6 +1707,9 @@ Logging must occur in wrappers (Strict-B/Core-C), not within Level-A.
 ---
 
 ## 16.7 Canonical Data Flow
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ```
 Core-C/B Gateway
@@ -1636,6 +1733,9 @@ before any @critical use.
 ---
 
 ## 16.8 Orchestrators
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 **Outer Orchestrator (Core)**
 Handles I/O, frames, invokes Strict-B/A.
@@ -2035,6 +2135,9 @@ computational stages, not independent safety decisions.
 
 ## 17. Machine-Readable Metadata (Optional Annex)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Tools may represent each code unit as:
 
 ```yaml
@@ -2073,6 +2176,9 @@ This schema enables:
 ---
 
 ## 18 Allowed / Forbidden Matrix
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 18.1 Modes
 
@@ -2126,6 +2232,9 @@ Core-C/B Gateway
 ---
 
 ## 19. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This Unified Safety Specification
 

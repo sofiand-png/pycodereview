@@ -8,6 +8,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS-Python Safety Case & Maturity Master Specification](#crss-python-safety-case-maturity-master-specification)
   - [Table of Contents](#table-of-contents)
@@ -73,6 +74,9 @@ This is the **single authoritative reference** for building, maintaining, and ev
 
 ## 1.1 Objective
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The SCEM defines **what evidence** must exist to:
 - Support safety claims,
 - Demonstrate rule compliance,
@@ -87,6 +91,9 @@ It is formal, auditable, and mandatory for **Strict** and **Strict-A** projects.
 ---
 
 ## 1.2 SCEM Evidence Categories
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 The SCEM is organized into **six mandatory evidence domains**:
 
@@ -104,6 +111,9 @@ Each domain contains required artifacts.
 ---
 
 ## 1.3 Mandatory SCEM Artifacts
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### D1 - Requirements & Classification
 - Requirements Traceability Matrix (RTM)
@@ -142,6 +152,9 @@ Each domain contains required artifacts.
 
 ## 1.4 SCEM Completion Rules
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A SCEM is considered **complete** only if:
 
 - All artifacts exist
@@ -155,6 +168,9 @@ If any artifact is missing -> SCEM **INCOMPLETE** -> project cannot certify.
 ---
 
 ## 1.5 SCEM & Modes
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 | Mode      | SCEM Required | MC/DC Required | Determinism Proof Required |
 |-----------|---------------|----------------|----------------------------|
@@ -172,6 +188,9 @@ Strict-A MUST include:
 ---
 
 ## 1.6 Quantitative Verification Targets per Mode
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This section defines **minimum quantitative verification targets** per Mode. Projects MAY exceed these targets; falling below them is only allowed if justified by an approved deviation in SCEM-D4 (Testing & Behavior).
 
@@ -235,6 +254,9 @@ The following annexes define **standard templates** for SCEM artifacts.
 
 ## Annex A - Mode Assignment Register (MAR)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 **Purpose:** Record Mode (Profile × Level) for each function/method.
 
 **Fields:**
@@ -252,6 +274,9 @@ Modes MUST NOT be downgraded after assignment.
 
 ## Annex B - Critical Boundary Declaration (CBD)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 **Purpose:** Declare where critical execution begins and ends.
 
 **Fields:**
@@ -268,6 +293,9 @@ Critical code may **never** call non-critical code.
 
 ## Annex C - Mode Propagation Record
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 **Purpose:** Capture promotions triggered by the call chain.
 
 **Fields:**
@@ -282,6 +310,9 @@ Modes only **increase**.
 ---
 
 ## Annex D - Deviation Register
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 **Purpose:** Document Strict-A non-critical deviations.
 
@@ -300,6 +331,9 @@ Strict-A `@critical` deviations are **not permitted**.
 
 ## Annex E - Determinism Validation Checklist (Strict-A Only)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Confirms:
 
 - No dynamic allocation
@@ -313,6 +347,9 @@ Failure -> Strict-A **BLOCKER**.
 ---
 
 ## Annex F - One-Version Python Confirmation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Confirms:
 
@@ -328,6 +365,9 @@ Multiple versions -> **Automatic FAIL**.
 
 ## 3.1 Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The SMM defines organizational readiness to develop CRSS-compliant systems.
 
 It answers:
@@ -338,6 +378,9 @@ The SMM assesses **process maturity**, not code correctness.
 ---
 
 ## 3.2 Levels
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 | Level | Name | Description |
 |-------|------|-------------|
@@ -350,6 +393,9 @@ The SMM assesses **process maturity**, not code correctness.
 ---
 
 ## 3.3 Maturity Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### S1 - Controlled
 - Rules known
@@ -374,6 +420,9 @@ The SMM assesses **process maturity**, not code correctness.
 ---
 
 ## 3.4 Maturity Assessment Output
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - Maturity Level Statement
 - Gap Analysis

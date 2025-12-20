@@ -16,6 +16,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Reference Specification - Sensor Voting & Safe Actuation System](#crss-reference-specification-sensor-voting-safe-actuation-system)
   - [Table of Contents](#table-of-contents)
@@ -92,6 +93,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Introduction
+
+> [⬆ Back to Table of Contents](#toc)
+
 This document describes a complete CRSS reference example demonstrating how to implement a safety-related closed-loop control function in Python while maintaining CRSS compliance, determinism, and isolating critical versus non-critical behavior.
 
 It systematically defines:
@@ -113,6 +117,9 @@ This reference is designed to act as:
 - a template for teams building real CRSS applications
 
 ## 2. Goals of the Example
+
+> [⬆ Back to Table of Contents](#toc)
+
 This system is intended to:
 
 - Demonstrate how CRSS strict-level code interacts with real-world systems through a deterministic interface (gateway).
@@ -125,6 +132,9 @@ This system is intended to:
 - Provide a known-good example for auditors to evaluate CRSS compliance.
 
 ## 3. System Overview
+
+> [⬆ Back to Table of Contents](#toc)
+
 ### 3.1 Safety Goals
 
 - **SG-1 - Safe envelope:**
@@ -270,6 +280,9 @@ The test suite shall exercise all six fault modes:
 and verify the resulting statuses and outputs.
 
 ## 4. High-Level Architecture
+
+> [⬆ Back to Table of Contents](#toc)
+
 ```text
  ┌─────────────────────────┐
  │ Sensor Simulator (Core-C)│
@@ -303,6 +316,9 @@ and verify the resulting statuses and outputs.
 All safety-critical calculations are pure functions in Strict-A. All nondeterministic activity stays in Core-C.
 
 ## 5. Key CRSS Compliance Principles Used
+
+> [⬆ Back to Table of Contents](#toc)
+
 - **Strict determinism in critical logic**
   No randomness, no I/O, no GC, no dynamic creation in Strict-A.
 - **Phase-aware profiles**
@@ -317,6 +333,9 @@ All safety-critical calculations are pure functions in Strict-A. All nondetermin
   The example includes a full test suite ensuring CRSS verification quality.
 
 ## 6. Actors and Data Flow
+
+> [⬆ Back to Table of Contents](#toc)
+
 Inputs:
 - Three simulated sensors
 - Fault modes applied via deterministic or random model
@@ -333,6 +352,9 @@ Execution loop:
 - Runs indefinitely at a nominal period of 60 ms.
 
 ## 7. Profiles and Criticality Zones
+
+> [⬆ Back to Table of Contents](#toc)
+
 | Component                     | CRSS Profile |
 |------------------------------|--------------|
 | Safety Envelope              | Strict-A     |
@@ -348,6 +370,9 @@ Execution loop:
 Strict-A logic must remain pure, side-effect free, deterministic, and isolated.
 
 ## 8. Detailed External Interface
+
+> [⬆ Back to Table of Contents](#toc)
+
 The system exchanges two message types:
 - `SensorFrame` (gateway → CRSS client)
 - `ActuatorRequest` (CRSS client → gateway)
@@ -355,12 +380,18 @@ The system exchanges two message types:
 Both are JSON, line-delimited, UTF-8 encoded. This ensures maximal tooling compatibility and allows integration on Windows, Linux, embedded shells, or cloud systems.
 
 ## 9. Message Timing Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Sensor frames must arrive approximately every 60 ms.
 - Client must produce a corresponding actuator output for every frame.
 - Long gaps (>200 ms) are interpreted as gateway degradation (Core-C concern).
 - Strict-A logic must complete within a stable deterministic execution bound.
 
 ## 10. Data Model (Full Definition)
+
+> [⬆ Back to Table of Contents](#toc)
+
 The reference system exchanges two structured message types:
 
 - `SensorFrame` - from gateway simulator to CRSS client
@@ -411,6 +442,9 @@ Warnings are emitted when:
 Warnings remain Core-C and do not affect Strict-A determinism.
 
 ## 11. ActuatorRequest Structure
+
+> [⬆ Back to Table of Contents](#toc)
+
 Returned by the Strict-A/Core-B client logic back to the gateway.
 
 ```json
@@ -432,6 +466,9 @@ Returned by the Strict-A/Core-B client logic back to the gateway.
 | `reason`          | str    | Contextual explanation (`"OK"`, `"SEVERE_DISAGREEMENT"`, etc.) |
 
 ## 12. JSON Schemas (Canonical Version)
+
+> [⬆ Back to Table of Contents](#toc)
+
 These schemas define the on-wire protocol.
 
 ### 12.1 SensorFrame Schema
@@ -495,6 +532,9 @@ These schemas define the on-wire protocol.
 ```
 
 ## 13. Fault Model: Full Specification
+
+> [⬆ Back to Table of Contents](#toc)
+
 The reference example simulates six deterministic fault modes. Fault selection follows either:
 - deterministic `forced_mode` (for testing), or
 - probabilistic distribution based on RNG seed at runtime.
@@ -531,6 +571,9 @@ SimulatedSensors(seed=1, forced_mode="frozen")
 ```
 
 ## 14. Sensor Simulation: Full Behavioral Specification
+
+> [⬆ Back to Table of Contents](#toc)
+
 This section fixes missing details and aligns the specification with the v3 code.
 
 ### 14.1 Value Generation Base Logic
@@ -569,6 +612,9 @@ values = [base - 2.0, base, base + 2.0]
 - Current frame values derive from `stuck_value` plus small noise.
 
 ## 15. Voting Algorithm (Core-B Deterministic Logic)
+
+> [⬆ Back to Table of Contents](#toc)
+
 The voting algorithm is designed to:
 - remove obvious outliers
 - detect single-channel failures
@@ -608,6 +654,9 @@ This matches common TMR practice.
 Note: `SEVERE_DISAGREEMENT` is not yet a failsafe event; Strict-A envelope decides how to react.
 
 ## 16. Safety Envelope (Strict-A)
+
+> [⬆ Back to Table of Contents](#toc)
+
 ### 16.1 Inputs
 - `voted_value` (from Core-B)
 - `previous_output`
@@ -655,6 +704,9 @@ reason = "FROZEN_SENSORS_DETECTED"
 Slow drift is allowed as long as envelope clamps and rate limits maintain safety. The system may remain `"NORMAL"` or `"DEGRADED"` depending on configuration and drift magnitude.
 
 ## 17. Actuator Command Classification
+
+> [⬆ Back to Table of Contents](#toc)
+
 The controller produces status values:
 - `"NORMAL"`
 - `"DEGRADED"`
@@ -663,6 +715,9 @@ The controller produces status values:
 `"FAILSAFE"` is only produced by Strict-A (envelope / SAFE_DEFAULT logic).
 
 ## 18. Logging Rules (Core-C)
+
+> [⬆ Back to Table of Contents](#toc)
+
 The implementation logs:
 - gateway sending frames
 - client receiving frames
@@ -677,6 +732,9 @@ The implementation logs:
 Logging is purely diagnostic and entirely outside Strict-A.
 
 ## 19. Execution Model (End-to-End)
+
+> [⬆ Back to Table of Contents](#toc)
+
 The system follows a deterministic, safety-oriented loop:
 
 ```python
@@ -705,6 +763,9 @@ Execution continues until:
 Strict-A code never handles exceptions nor performs retries - exception handling belongs to Core-C.
 
 ## 20. Timing Constraints
+
+> [⬆ Back to Table of Contents](#toc)
+
 This reference example does not implement real-time scheduling, jitter monitoring, deadlines, or latency tracking.
 Instead:
 
@@ -717,6 +778,9 @@ This example demonstrates CRSS-compliant structure, not real-time behavior.
 Real applications must define domain-appropriate timing constraints separately.
 
 ## 21. Configuration Model (CRSS-Compliant)
+
+> [⬆ Back to Table of Contents](#toc)
+
 All configuration is immutable after startup.
 
 Example config:
@@ -749,6 +813,9 @@ Configuration:
 | `initial_output`      | boot output                        | must still obey bounds  |
 
 ## 22. CRSS Compliance Mapping (Full Version)
+
+> [⬆ Back to Table of Contents](#toc)
+
 This expands the shorter table from the high-level spec.
 
 ### 22.1 Strict-A Responsibilities
@@ -809,6 +876,9 @@ But Core-C must:
 - isolate external faults
 
 ## 23. Test & Verification Requirements (Full)
+
+> [⬆ Back to Table of Contents](#toc)
+
 Testing and verification are central to this reference example.
 
 ### 23.1 Unit Testing Requirements
@@ -869,6 +939,9 @@ Tests must assert:
 - absence of nondeterministic exceptions
 
 ## 24. CI/CD Pipeline Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 The reference CI/CD pipeline must:
 - use pinned Python version (3.11)
 - pin unit test + coverage packages
@@ -885,6 +958,9 @@ Recommended extensions:
 - static analysis (ruff, mypy)
 
 ## 25. Deployment and Runtime Environment
+
+> [⬆ Back to Table of Contents](#toc)
+
 Even for a reference system, CRSS defines deployment constraints.
 
 ### 25.1 Environment Freezing
@@ -910,6 +986,9 @@ Deployment must include:
 - CBM (Configuration Baseline Manifest)
 
 ## 26. Shutdown and Restart Behavior
+
+> [⬆ Back to Table of Contents](#toc)
+
 On shutdown (Ctrl+C):
 - Core-C handles `KeyboardInterrupt`.
 - Strict-A logic is not involved.
@@ -922,6 +1001,9 @@ On restart:
 This matches CRSS principles: no hidden state and no unintended side effects.
 
 ## 27. Informative Domain-Specific Notes
+
+> [⬆ Back to Table of Contents](#toc)
+
 This reference system is suitable for:
 - automotive: thermal management, sensor fusion
 - medical: temperature-controlled environments

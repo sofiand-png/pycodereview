@@ -11,6 +11,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
 - [CRSS Toolchain Hardening Guide](#crss-toolchain-hardening-guide)
   - [Table of Contents](#table-of-contents)
@@ -31,6 +32,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 ---
 
 ## 1. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 Define a hardened toolchain strategy that ensures:
 - reproducible builds
 - controlled dependencies
@@ -41,6 +45,9 @@ Define a hardened toolchain strategy that ensures:
 ---
 
 ## 2. Interpreter Hardening
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 2.1 Pin Python Version
 Pinned:
@@ -57,6 +64,9 @@ Pinned:
 
 ## 3. Build Hardening
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 3.1 Reproducible Installations
 Use:
 - `pip install --no-deps --require-hashes`
@@ -72,6 +82,9 @@ Only allow:
 
 ## 4. Testing Pipeline Improvements
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 4.1 MC/DC Reporting
 - custom MC/DC collector
 - required coverage thresholds stored in artifacts
@@ -83,6 +96,9 @@ Only allow:
 ---
 
 ## 5. Evidence Aggregation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### Mandatory
 - unit test coverage
@@ -96,5 +112,8 @@ Only allow:
 ---
 
 ## 6. Conclusion
+
+> [⬆ Back to Table of Contents](#toc)
+
 This annex provides a hardened, reproducible, certifiable toolchain template for CRSS projects.
 
