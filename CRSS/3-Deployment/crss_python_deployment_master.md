@@ -13,7 +13,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [CRSS-Python Deployment, Release and Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
   - [Table of Contents](#table-of-contents)
   - [0. Purpose](#0-purpose)
-  - [1. Deployment and Baseline Rule Catalog (DPL-12.x)](#1-deployment-baseline-rule-catalog-dpl-12x)
+  - [1. Deployment and Baseline Rule Catalog)](#1-deployment-baseline-rule-catalog)
     - [1.1 Environment and Immutability](#11-environment-and-immutability)
     - [1.2 Baseline and CBM](#12-baseline-and-cbm)
     - [1.3 Releases and Immutability](#13-releases--andimmutability)
@@ -22,10 +22,6 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [1.6 Environment Parity and Testing](#16-environment-parity-and-testing)
     - [1.7 Production Safeguards](#17-production-safeguards)
   - [1.8 Upgrade process](#18-upgrade-process)
-    - [DPL-12.24 - Interpreter Version Range with Single-Baseline Freeze](#dpl-1224-interpreter-version-range-with-single-baseline-freeze)
-    - [DPL-12.25 - Emergency Release](#dpl-1225-emergency-release)
-    - [DPL-12.26 - Scope Limitation](#dpl-1226-scope-limitation)
-    - [DPL-12.27 - Backport Requirement](#dpl-1227-backport-requirement)
   - [2. Relationship to Code-Level 12.x Rules](#2-relationship-to-code-level-12x-rules)
   - [3. Versioning and Governance](#3-versioning-and-governance)
   - [4. Summary](#4-summary)
@@ -69,7 +65,7 @@ This separation ensures that conceptual guidance remains stable while allowing b
 
 ---
 
-## 1. Deployment and Baseline Rule Catalog (DPL-12.x)
+## 1. Deployment and Baseline Rule Catalog
 
 > [⬆ Back to Table of Contents](#toc)
 
