@@ -13,7 +13,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [CRSS-Python Deployment, Release and Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
   - [Table of Contents](#table-of-contents)
   - [0. Purpose](#0-purpose)
-  - [1. Deployment and Baseline Rule Catalog)](#1-deployment-baseline-rule-catalog)
+  - [1. Deployment and Baseline Rule Catalog](#1-deployment-baseline-rule-catalog)
     - [1.1 Environment and Immutability](#11-environment-and-immutability)
     - [1.2 Baseline and CBM](#12-baseline-and-cbm)
     - [1.3 Releases and Immutability](#13-releases--andimmutability)
