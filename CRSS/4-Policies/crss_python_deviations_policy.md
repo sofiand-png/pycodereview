@@ -18,9 +18,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [2.2 Deviations Are NEVER Allowed Inside Strict-A @critical](#22-deviations-are-never-allowed-inside-strict-a-critical)
     - [2.3 Deviations Are Allowed Only for SHOULD / SHOULD-NOT](#23-deviations-are-allowed-only-for-should-should-not)
   - [3. Deviation Types (Formal)](#3-deviation-types-formal)
-    - [3.1 RIC - Rule Interpretation Clarification](#31-ric-rule-interpretation-clarification)
-    - [3.2 CD - Conditional Deviation](#32-cd-conditional-deviation)
-    - [3.3 ED - Exceptional Deviation](#33-ed-exceptional-deviation)
+    - [3.1 RIC Rule Interpretation Clarification](#31-ric-rule-interpretation-clarification)
+    - [3.2 CD Conditional Deviation](#32-cd-conditional-deviation)
+    - [3.3 ED Exceptional Deviation](#33-ed-exceptional-deviation)
   - [4. Deviations - Forbidden Categories](#4-deviations-forbidden-categories)
   - [5. Deviations - Allowed Categories](#5-deviations-allowed-categories)
   - [6. Required Contents of a Deviation (DMR)](#6-required-contents-of-a-deviation-dmr)
@@ -109,7 +109,7 @@ These represent strong guidance but can be deviated through a **controlled proce
 > [⬆ Back to Table of Contents](#toc)
 
 
-### 3.1 RIC - Rule Interpretation Clarification
+### 3.1 RIC Rule Interpretation Clarification
 
 Used when:
 
@@ -121,7 +121,7 @@ Used when:
 
 ---
 
-### 3.2 CD - Conditional Deviation
+### 3.2 CD Conditional Deviation
 
 Used when:
 
@@ -134,7 +134,7 @@ Used when:
 
 ---
 
-### 3.3 ED - Exceptional Deviation
+### 3.3 ED Exceptional Deviation
 
 Used when:
 
