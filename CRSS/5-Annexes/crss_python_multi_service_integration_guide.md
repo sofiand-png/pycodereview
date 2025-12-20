@@ -19,7 +19,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [2. System Interaction Topology](#2-system-interaction-topology)
   - [3. Interactions and Contracts](#3-interactions-and-contracts)
     - [3.1 Core-C Gateway To Core-B Fusion](#31-core-c-gateway-to-core-b-fusion)
-    - [3.2 Core-B Fusion To Strict-A Controller](#32-core-b-fusion-to-trict-a-controller)
+    - [3.2 Core-B Fusion To Strict-A Controller](#32-core-b-fusion-to-strict-a-controller)
     - [3.3 Strict-A Controller To Core-C Output Gateway](#33-strict-a-controller-to-core-c-output-gateway)
   - [4. Fault Containment](#4-fault-containment)
     - [4.1 Isolation Rules](#41-isolation-rules)
