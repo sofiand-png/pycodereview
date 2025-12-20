@@ -16,7 +16,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [2. Principles (Foundational)](#2-principles-foundational)
     - [2.1 Deviations Are NEVER Allowed for MUST / MUST-NOT](#21-deviations-are-never-allowed-for-must-must-not)
     - [2.2 Deviations Are NEVER Allowed Inside Strict-A @critical](#22-deviations-are-never-allowed-inside-strict-a-critical)
-    - [2.3 Deviations Are Allowed Only for SHOULD / SHOULD-NOT](#23-deviations-are-allowed-only-for-should-should-not)
+    - [2.3 Deviations Are Allowed Only for SHOULD and SHOULD-NOT](#23-deviations-are-allowed-only-for-should-and-should-not)
   - [3. Deviation Types (Formal)](#3-deviation-types-formal)
     - [3.1 RIC Rule Interpretation Clarification](#31-ric-rule-interpretation-clarification)
     - [3.2 CD Conditional Deviation](#32-cd-conditional-deviation)
@@ -93,7 +93,7 @@ Strict-A critical code is a **zero-tolerance** zone.
 
 ---
 
-### 2.3 Deviations Are Allowed Only for SHOULD / SHOULD-NOT
+### 2.3 Deviations Are Allowed Only for SHOULD and SHOULD-NOT
 
 Valid deviation candidates must be rules of type:
 
