@@ -177,7 +177,7 @@ A project enters compliance when:
 
 # Compliance Lifecycle (Five-Phase Model)
 
-## Phase 1 - Design Compliance
+## Phase1 Design Compliance
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -189,7 +189,7 @@ Artifacts:
 - MAR
 - initial SBR
 
-## Phase 2 - Rule Compliance
+## Phase2 Rule Compliance
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -199,7 +199,7 @@ Activities:
 Artifact:
 - RCR
 
-## Phase 3 - Test Compliance
+## Phase3 Test Compliance
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -212,7 +212,7 @@ Activities:
 Artifact:
 - TEP
 
-## Phase 4 - Baseline Compliance
+## Phase4 Baseline Compliance
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -226,7 +226,7 @@ The certification baseline SHALL reference a Certified Build as defined in the
 Release Management specification, including the certified wheel artifact and
 its associated dependency freeze evidence.
 
-## Phase 5 - Certification Readiness
+## Phase5 Certification Readiness
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -307,7 +307,7 @@ No partial acceptance.
 
 # Mandatory Artifacts
 
-## RCR - Rule Compliance Report
+## RCR Rule Compliance Report
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -317,7 +317,7 @@ Includes:
 - deviations
 - signatures
 
-## TEP - Test Evidence Package
+## TEP Test Evidence Package
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -329,7 +329,7 @@ Includes:
 - fault injection
 - negative and security tests
 
-## CBM - Configuration Baseline Manifest
+## CBM Configuration Baseline Manifest
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -342,31 +342,31 @@ Includes:
 - hardware details
 - hashes
 
-## SBR - Safety Baseline Report
+## SBR Safety Baseline Report
 
 > [⬆ Back to Table of Contents](#toc)
 
 Includes hazard mappings, risks, platform, deployment context.
 
-## CC - Compliance Certificate
+## CC Compliance Certificate
 
 > [⬆ Back to Table of Contents](#toc)
 
 Includes official release certification.
 
-## DL - Deviations Log
+## DL Deviations Log
 
 > [⬆ Back to Table of Contents](#toc)
 
 Contains rule ID, justification, approver, evidence.
 
-## MAR - Mode Assignment Register
+## MAR Mode Assignment Register
 
 > [⬆ Back to Table of Contents](#toc)
 
 Defines unit -> level -> profile -> phase.
 
-## SCEM - Evidence Matrix
+## SCEM Evidence Matrix
 
 > [⬆ Back to Table of Contents](#toc)
 
