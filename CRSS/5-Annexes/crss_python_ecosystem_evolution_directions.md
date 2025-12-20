@@ -56,7 +56,7 @@ CRSS improvement areas fall into four categories:
 
 1. **Architecture Maturity**
 2. **Toolchain Expansion**
-3. **Runtime Determinism & Predictability**
+3. **Runtime Determinism and Predictability**
 4. **Cross-Component Interaction Models**
 
 Each section proposes future CRSS annexes, enhancements or recommended best practices.

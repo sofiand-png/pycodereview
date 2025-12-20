@@ -209,7 +209,7 @@ Strict-A requires single-threaded critical execution to guarantee determinism.
 - Process isolation
 - Stable APIs
 - Network timeout rules
-- Retry & fail-safe strategies
+- Retry and fail-safe strategies
 - Mode propagation policies
 
 ---

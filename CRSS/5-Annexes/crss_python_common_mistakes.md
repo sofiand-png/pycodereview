@@ -1,4 +1,4 @@
-# CRSS-Python Common Mistakes & How to Avoid Them
+# CRSS-Python Common Mistakes and How to Avoid Them
 
 **Version:** v1.0.0
 **Status:** Informative
@@ -10,7 +10,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Common Mistakes & How to Avoid Them](#crss-python-common-mistakes-how-to-avoid-them)
+- [CRSS-Python Common Mistakes and How to Avoid Them](#crss-python-common-mistakes-how-to-avoid-them)
   - [Table of Contents](#table-of-contents)
 - [1. Mixing Critical and Non-Critical Code](#1-mixing-critical-and-non-critical-code)
 - [2. Forgetting that Strict-A is Zero Tolerance](#2-forgetting-that-strict-a-is-zero-tolerance)

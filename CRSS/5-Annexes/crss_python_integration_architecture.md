@@ -169,6 +169,6 @@ Applies directly to reference design:
 - Sensors via TCP gateway
 - Strict-A evaluates deterministically
 - Actuator output bounded
-- Gateway logs & validates
+- Gateway logs and validates
 
 Functions as a complete closed-loop test bench.

@@ -25,7 +25,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [5.1 Critical Module](#51-critical-module)
   - [5.2 Non-Critical Module](#52-non-critical-module)
 - [6. Data Flow Best Practices](#6-data-flow-best-practices)
-- [7. Logging & Monitoring Strategy](#7-logging-monitoring-strategy)
+- [7. Logging and Monitoring Strategy](#7-logging-and-monitoring-strategy)
 - [8. Architecture Anti-Patterns (Avoid)](#8-architecture-anti-patterns-avoid)
 - [9. Path to Strict-A Architecture](#9-path-to-strict-a-architecture)
 - [10. Summary](#10-summary)
@@ -217,7 +217,7 @@ Still must follow rules - but more flexible.
 
 ---
 
-# 7. Logging & Monitoring Strategy
+# 7. Logging and Monitoring Strategy
 
 Logging MUST NOT appear in `@critical`.
 

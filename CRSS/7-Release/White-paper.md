@@ -4,7 +4,7 @@
 > [⬆ Back to Table of Contents](#toc)
 
 
-**CRSS = Certifiable Reliability & Safety Standard for Python**
+**CRSS = Certifiable Reliability and Safety Standard for Python**
 
 © 2025 Sofian Daghsen - All rights reserved  
 Distributed under CC BY-NC-ND 4.0  
@@ -202,12 +202,12 @@ CRSS is composed of coordinated specifications and documents:
 
 - Profiles (Core / Strict)
 - Safety Master Specification
-- Mode & Safety Model
+- Mode and Safety Model
 - Phase-Aware Rule Interpretation Model
 - SCEM (Safety Case Evidence Model)
 - Compliance Process Master
 - External Assessment Process
-- Tooling & Automation Specification
+- Tooling and Automation Specification
 - Deployment / Release Management Models
 
 This modular architecture ensures each domain is independently maintainable yet conceptually unified.
@@ -248,7 +248,7 @@ Imports, closures, async tasks, exceptions, and GC interactions must behave expl
 
 ---
 
-# A Modern Safety & Compliance Framework for High-Integrity Python Systems  
+# A Modern Safety and Compliance Framework for High-Integrity Python Systems  
 ## Part 2 — Sections 5–8
 
 > [⬆ Back to Table of Contents](#toc)
@@ -608,9 +608,9 @@ Example categories:
 
 - Control Flow
 - Dynamic Features
-- Types & Interfaces
+- Types and Interfaces
 - Concurrency
-- Memory & Resources
+- Memory and Resources
 - I/O
 - Security
 
@@ -743,7 +743,7 @@ CRSS eliminates or constrains each hazard.
 
 A classic Python pitfall that leads to shared state leaks.  
 CRSS Strict-A: Prohibited  
-CRSS Core: Warn & discourage
+CRSS Core: Warn and discourage
 
 #### 8.2.2 Late-Bound Closures
 
@@ -855,7 +855,7 @@ Domains typically include:
 - Dynamic/Runtime Evidence
 - Process Evidence
 - Toolchain Evidence
-- Release & Deployment Evidence
+- Release and Deployment Evidence
 - Exception Justification Evidence
 
 Each domain groups evidence of similar purpose but different origin.
@@ -1042,7 +1042,7 @@ Outcome:
 
 This is often the longest phase.
 
-### 10.5 Phase 3 — Dynamic & Behavioral Analysis
+### 10.5 Phase 3 — Dynamic and Behavioral Analysis
 
 Artifacts:
 
@@ -1138,7 +1138,7 @@ Assessors check:
 - Runtime logs
 - Phase-aware rule interpretations
 
-#### 11.2.3 Rule Violations & Exceptions
+#### 11.2.3 Rule Violations and Exceptions
 
 Each exception must include:
 
@@ -1186,7 +1186,7 @@ Certification is based on objective, evidence-driven criteria.
 
 ---
 
-## 12. Tooling & Automation
+## 12. Tooling and Automation
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1202,7 +1202,7 @@ TCL defines the maturity of a tool:
 - TCL-1 — Basic analysis
 - TCL-2 — Deterministic behavior modeling
 - TCL-3 — Phase-aware interpretation
-- TCL-4 — Evidence export & SCEM integration
+- TCL-4 — Evidence export and SCEM integration
 - TCL-5 — Full automation with CI/CD blockers
 
 ### 12.2 Tool Compliance Attributes (TCA)
@@ -1257,7 +1257,7 @@ Automation is how CRSS ensures continuous integrity, not just manual integrity.
 
 ---
 
-# A Modern Safety & Compliance Framework for High-Integrity Python Systems  
+# A Modern Safety and Compliance Framework for High-Integrity Python Systems  
 ## Part 4 — Sections 13–16
 
 > [⬆ Back to Table of Contents](#toc)
@@ -1265,7 +1265,7 @@ Automation is how CRSS ensures continuous integrity, not just manual integrity.
 
 ---
 
-## 13. Deployment & Release Model
+## 13. Deployment and Release Model
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1443,7 +1443,7 @@ CRSS intentionally delays adoption until safety integrity can be ensured.
 
 ---
 
-## 15. Architecture & Structural Safety
+## 15. Architecture and Structural Safety
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1518,7 +1518,7 @@ Critical safety decisions MUST occur locally to guarantee determinism.
 
 ↓ sanitized data  
 
-**Validation & Preprocessing**  
+**Validation and Preprocessing**  
 - Schema validation  
 - Bounds checking  
 - Sanitization  
@@ -1585,7 +1585,7 @@ These architectural guarantees form the backbone of certifiable Python systems.
 
 ---
 
-## 16. Network, Microservices & Distributed Safety
+## 16. Network, Microservices and Distributed Safety
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1652,7 +1652,7 @@ Safety relies on predictable, bounded error behavior.
 
 ↓ validated and bounded  
 
-**Sanitization & Preprocessing**  
+**Sanitization and Preprocessing**  
 - Schema validation  
 - Size constraints  
 - Sanitization  
@@ -1672,7 +1672,7 @@ Safety relies on predictable, bounded error behavior.
 - Send API response  
 - Store to DB  
 
-### 16.7 Timeout, Retry & Backoff Safety Rules
+### 16.7 Timeout, Retry and Backoff Safety Rules
 
 CRSS requires:
 

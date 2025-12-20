@@ -109,7 +109,7 @@ Phase-aware rules still apply, but with **operational relaxation**.
 ### [OK] Permitted in Non-Critical Code
 
 - File / network I/O
-- Memory allocation & object creation
+- Memory allocation and object creation
 - Caching, buffering, lookup tables
 - Subprocess invocation
 - Configuration loading
@@ -141,7 +141,7 @@ A **phase-aware rule** MUST be evaluated in two contexts:
 | Context     | Required Interpretation                                                                                 |
 |-------------|----------------------------------------------------------------------------------------------------------|
 | **Critical**     | *Stricter interpretation:* I/O forbidden, allocation forbidden, boundedness MUST be statically provable, determinism required |
-| **Non-Critical** | *Normal interpretation:* I/O & allocation allowed, but rule semantics still enforced; must ensure no leakage into critical |
+| **Non-Critical** | *Normal interpretation:* I/O and allocation allowed, but rule semantics still enforced; must ensure no leakage into critical |
 
 Tools must:
 

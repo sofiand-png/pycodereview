@@ -72,7 +72,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 This document defines the mandatory requirements, definitions, processes, rules, and artifacts governing **Release Management** under the CRSS-Python standard.
 
-It acts as an official annex to the **CRSS-Python Configuration & Deployment Integrity Policy** and ensures that:
+It acts as an official annex to the **CRSS-Python Configuration and Deployment Integrity Policy** and ensures that:
 
 - Releases are unambiguous and formally defined
 - Releases are immutable, traceable, and certifiable

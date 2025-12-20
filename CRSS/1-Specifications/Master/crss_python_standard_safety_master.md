@@ -128,8 +128,8 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [bad_example.py](#bad_examplepy)
 - [strict_b_step.py  (Level B, Strict-B)](#strict_b_steppy-level-b-strict-b)
     - [16.10 Data Handling](#1610-data-handling)
-    - [16.11 Level-A Output & Actuation Boundary](#1611-level-a-output-actuation-boundary)
-    - [16.12 Level-A API & Signature Rules](#1612-level-a-api-signature-rules)
+    - [16.11 Level-A Output and Actuation Boundary](#1611-level-a-output-actuation-and-boundary)
+    - [16.12 Level-A API and Signature Rules](#1612-level-a-api-and-signature-rules)
       - [16.12.1 Defaults in Level-A Signatures](#16121-defaults-in-level-a-signatures)
       - [16.12.2 Handling “Non-Provided” or Unknown Data](#16122-handling-non-provided-or-unknown-data)
     - [16.13 Upstream Responsibility for Uncallable Cases](#1613-upstream-responsibility-for-uncallable-cases)
@@ -141,7 +141,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [18.1 Modes](#181-modes)
     - [18.2 Safety-Level Matrix](#182-safety-level-matrix)
     - [18.3 Mode→Mode Matrix (Baseline)](#183-modemode-matrix-baseline)
-    - [18.4 Utility & Logging Rules](#184-utility-logging-rules)
+    - [18.4 Utility and Logging Rules](#184-utility-and-logging-rules)
     - [18.5 Canonical Safe Pattern](#185-canonical-safe-pattern)
   - [19. Summary](#19-summary)
 
@@ -158,12 +158,12 @@ The **CRSS-Python Unified Safety Specification** is the **single, authoritative*
 - Safety Levels (**A**, **B**, **C**)
 - Modes (Profile × Safety Level)
 - Critical vs Non-Critical execution
-- Error & violation categorization
+- Error and violation categorization
 - Safety Level propagation
-- Import & inheritance constraints
+- Import and inheritance constraints
 - Runtime and architectural constraints
 - Exceptions (logging, telemetry, diagnostics)
-- Compliance & acceptance criteria (Core-only, Strict-only, mixed)
+- Compliance and acceptance criteria (Core-only, Strict-only, mixed)
 - A realistic, minimal reference use case
 
 
@@ -1050,11 +1050,11 @@ Within `@critical`:
 
 ### NCP-1 - Allowed Operations
 
-In `@non_critical_phase` (Strict & Strict-A):
+In `@non_critical_phase` (Strict and Strict-A):
 
 - Allowed:
 
-- Object creation & memory allocation
+- Object creation and memory allocation
 - Configuration loading (e.g., JSON, YAML)
 - Network I/O (e.g., retrieving config or calibrations)
 - DB access
@@ -1236,7 +1236,7 @@ Python is **not** used:
 - As a SIL 4 kernel,
 - As primary actuation in DO-178C DAL A.
 
-(The detailed domain mapping can be covered in a separate *“Standard Levels & Applicability”* document.)
+(The detailed domain mapping can be covered in a separate *“Standard Levels and Applicability”* document.)
 
 ---
 
@@ -1407,7 +1407,7 @@ Mode = **Strict-A**, Phase = `@critical`
 **SafetyController.initialize:**
 
 - Mode = **Strict-A**, Phase = `@non_critical_phase`
-- May allocate & perform I/O
+- May allocate and perform I/O
 - Any MUST violation -> **BLOCKER** unless deviation with isolation is fully justified.
 
 **read_sensor_raw** and **load_config**:
@@ -1813,7 +1813,7 @@ Any data (inputs, configuration, thresholds, state) that influences a Level-A `@
 
 Direct feeding of raw or partially validated data into Strict-A validators or kernels (e.g. `Core → Strict-A kernel`, `Strict-B → Strict-A kernel` without steps 2 and 3) is **NOT ALLOWED** and constitutes a violation of **CRSS-Call-Data-1**.
 
-**CRSS-Data-Ownership-1 (Normative - Level-A Data Ownership & Immutability)**
+**CRSS-Data-Ownership-1 (Normative - Level-A Data Ownership and Immutability)**
 
 1. Any data or configuration used by Level-A validators or Level-A critical kernels
    SHALL be treated as **owned by Level-A** once validation is complete.
@@ -1867,7 +1867,7 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
 
 ---
 
-### 16.11 Level-A Output & Actuation Boundary
+### 16.11 Level-A Output and Actuation Boundary
 
 **CRSS-Output-1 (Normative - Level-A Output Semantics)**
 
@@ -1937,7 +1937,7 @@ The validator chain exists for assurance and clarity, not as a fragile precondit
 
 ---
 
-### 16.12 Level-A API & Signature Rules
+### 16.12 Level-A API and Signature Rules
 
 **CRSS-API-1 (Normative - Closed Signatures for Level-A)**
 Level-A Strict-A kernel functions SHALL use fixed, explicit signatures:
@@ -2212,7 +2212,7 @@ Strict→Core is always **Not Allowed** in baseline.
 
 ---
 
-### 18.4 Utility & Logging Rules
+### 18.4 Utility and Logging Rules
 
 - Level-A never calls logging/metrics/utilities.
 - Strict→Core allowed only in tools/tests.

@@ -1,4 +1,4 @@
-# CRSS-Python Safety Case & Maturity Master Specification
+# CRSS-Python Safety Case and Maturity Master Specification
 
 **Version:** v1.0.0
 **Status:** Normative
@@ -10,24 +10,24 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Safety Case & Maturity Master Specification](#crss-python-safety-case-maturity-master-specification)
+- [CRSS-Python Safety Case and Maturity Master Specification](#crss-python-safety-case-and-maturity-master-specification)
   - [Table of Contents](#table-of-contents)
 - [0. Purpose](#0-purpose)
 - [1. SCEM - Safety Case Evidence Model](#1-scem-safety-case-evidence-model)
   - [1.1 Objective](#11-objective)
   - [1.2 SCEM Evidence Categories](#12-scem-evidence-categories)
   - [1.3 Mandatory SCEM Artifacts](#13-mandatory-scem-artifacts)
-    - [D1 - Requirements & Classification](#d1-requirements-classification)
-    - [D2 - Design & Architecture](#d2-design-architecture)
+    - [D1 - Requirements and Classification](#d1-requirements-and-classification)
+    - [D2 - Design and Architecture](#d2-design-and-architecture)
     - [D3 - Compliance Artifacts](#d3-compliance-artifacts)
-    - [D4 - Testing & Behavior](#d4-testing-behavior)
+    - [D4 - Testing and Behavior](#d4-testing-and-behavior)
     - [D5 - Configuration Integrity](#d5-configuration-integrity)
     - [D6 - Operational Readiness](#d6-operational-readiness)
   - [1.4 SCEM Completion Rules](#14-scem-completion-rules)
-  - [1.5 SCEM & Modes](#15-scem-modes)
+  - [1.5 SCEM and Modes](#15-scem-and-modes)
   - [1.6 Quantitative Verification Targets per Mode](#16-quantitative-verification-targets-per-mode)
     - [1.6.1 Coverage Targets](#161-coverage-targets)
-    - [1.6.2 Robustness & Fault Injection](#162-robustness-fault-injection)
+    - [1.6.2 Robustness and Fault Injection](#162-robustness-and-fault-injection)
     - [1.6.3 Independence](#163-independence)
 - [2. SCEM Annexes (Consolidated)](#2-scem-annexes-consolidated)
   - [Annex A - Mode Assignment Register (MAR)](#annex-a-mode-assignment-register-mar)
@@ -99,12 +99,12 @@ The SCEM is organized into **six mandatory evidence domains**:
 
 | Domain | Purpose |
 |--------|---------|
-| D1 - Requirements & Safety Classification | Shows correct Mode & Level assignment |
-| D2 - Design & Architecture Control | Shows structural safety compliance |
+| D1 - Requirements and Safety Classification | Shows correct Mode and Level assignment |
+| D2 - Design and Architecture Control | Shows structural safety compliance |
 | D3 - Rule Compliance Evidence | Shows adherence to CRSS rules |
-| D4 - Testing & Behavioral Evidence | Shows correctness & determinism |
-| D5 - Configuration & Environment Integrity | Shows reproducibility & immutability |
-| D6 - Operational Safety Readiness | Shows runtime safety measures & monitoring |
+| D4 - Testing and Behavioral Evidence | Shows correctness and determinism |
+| D5 - Configuration and Environment Integrity | Shows reproducibility and immutability |
+| D6 - Operational Safety Readiness | Shows runtime safety measures and monitoring |
 
 Each domain contains required artifacts.
 
@@ -115,12 +115,12 @@ Each domain contains required artifacts.
 > [⬆ Back to Table of Contents](#toc)
 
 
-### D1 - Requirements & Classification
+### D1 - Requirements and Classification
 - Requirements Traceability Matrix (RTM)
 - Mode Assignment Register (MAR)
 - Critical Boundary Declaration (CBD)
 
-### D2 - Design & Architecture
+### D2 - Design and Architecture
 - System Architecture Diagram
 - Module/Class Dependency Map
 - Mode Propagation Analysis
@@ -131,7 +131,7 @@ Each domain contains required artifacts.
 - Deviation Register (if applicable)
 - Static Analysis Logs
 
-### D4 - Testing & Behavior
+### D4 - Testing and Behavior
 - Coverage Report (per Mode)
 - Determinism Validation Report (Strict-A)
 - Fault Injection Logs
@@ -167,7 +167,7 @@ If any artifact is missing -> SCEM **INCOMPLETE** -> project cannot certify.
 
 ---
 
-## 1.5 SCEM & Modes
+## 1.5 SCEM and Modes
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -192,7 +192,7 @@ Strict-A MUST include:
 > [⬆ Back to Table of Contents](#toc)
 
 
-This section defines **minimum quantitative verification targets** per Mode. Projects MAY exceed these targets; falling below them is only allowed if justified by an approved deviation in SCEM-D4 (Testing & Behavior).
+This section defines **minimum quantitative verification targets** per Mode. Projects MAY exceed these targets; falling below them is only allowed if justified by an approved deviation in SCEM-D4 (Testing and Behavior).
 
 ### 1.6.1 Coverage Targets
 
@@ -218,7 +218,7 @@ This section defines **minimum quantitative verification targets** per Mode. Pro
 
 All coverage evidence is recorded in **TEP** and referenced from SCEM-D4.   
 
-### 1.6.2 Robustness & Fault Injection
+### 1.6.2 Robustness and Fault Injection
 
 **Strict-A @critical:**
 
@@ -388,7 +388,7 @@ The SMM assesses **process maturity**, not code correctness.
 | **S1** | Controlled | Basic rule awareness |
 | **S2** | Managed | Formal compliance process |
 | **S3** | Verified | Evidence-driven, audited compliance |
-| **S4** | Certified | Capable of Strict-A certification & external audits |
+| **S4** | Certified | Capable of Strict-A certification and external audits |
 
 ---
 

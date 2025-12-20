@@ -1,4 +1,4 @@
-# CRSS Reference Specification - Sensor Voting & Safe Actuation System
+# CRSS Reference Specification - Sensor Voting and Safe Actuation System
 
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
@@ -18,7 +18,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS Reference Specification - Sensor Voting & Safe Actuation System](#crss-reference-specification-sensor-voting-safe-actuation-system)
+- [CRSS Reference Specification - Sensor Voting and Safe Actuation System](#crss-reference-specification-sensor-voting-safe-actuation-system)
   - [Table of Contents](#table-of-contents)
   - [1. Introduction](#1-introduction)
   - [2. Goals of the Example](#2-goals-of-the-example)
@@ -30,7 +30,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
       - [3.4.1 Safety / Envelope Requirements](#341-safety-envelope-requirements)
       - [3.4.2 Fault-Handling Requirements](#342-fault-handling-requirements)
       - [3.4.3 Interface / JSON / TCP Requirements](#343-interface-json-tcp-requirements)
-      - [3.4.5 Test & Coverage Requirements](#345-test-coverage-requirements)
+      - [3.4.5 Test and Coverage Requirements](#345-test-and-coverage-requirements)
   - [4. High-Level Architecture](#4-high-level-architecture)
   - [5. Key CRSS Compliance Principles Used](#5-key-crss-compliance-principles-used)
   - [6. Actors and Data Flow](#6-actors-and-data-flow)
@@ -73,11 +73,11 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [21. Configuration Model (CRSS-Compliant)](#21-configuration-model-crss-compliant)
     - [21.1 CRSS Constraints for Config](#211-crss-constraints-for-config)
     - [21.2 Parameters](#212-parameters)
-  - [22. CRSS Compliance Mapping (Full Version)](#22-crss-compliance-mapping-full-version)
+  - [22. CRSS Compliance Mapping](#22-crss-compliance-mapping)
     - [22.1 Strict-A Responsibilities](#221-strict-a-responsibilities)
     - [22.2 Core-B Responsibilities](#222-core-b-responsibilities)
     - [22.3 Core-C Responsibilities](#223-core-c-responsibilities)
-  - [23. Test & Verification Requirements (Full)](#23-test-verification-requirements-full)
+  - [23. Test and Verification Requirements](#23-test-and-verification-requirements)
     - [23.1 Unit Testing Requirements](#231-unit-testing-requirements)
     - [23.2 MC/DC Requirements](#232-mcdc-requirements)
     - [23.3 Integration Tests](#233-integration-tests)
@@ -266,7 +266,7 @@ Strict-A logic shall not directly handle JSON strings, sockets, or timestamps; i
 
 ---
 
-#### 3.4.5 Test & Coverage Requirements
+#### 3.4.5 Test and Coverage Requirements
 
 **SV-TEST-01 - Unit coverage**
 All Strict-A modules shall achieve **100% statement coverage** and **≥ 95% branch coverage**.
@@ -812,7 +812,7 @@ Configuration:
 | `fallback_value`      | SAFE_DEFAULT                       | must be constant        |
 | `initial_output`      | boot output                        | must still obey bounds  |
 
-## 22. CRSS Compliance Mapping (Full Version)
+## 22. CRSS Compliance Mapping
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -875,7 +875,7 @@ But Core-C must:
 - enforce schema correctness
 - isolate external faults
 
-## 23. Test & Verification Requirements (Full)
+## 23. Test and Verification Requirements
 
 > [⬆ Back to Table of Contents](#toc)
 

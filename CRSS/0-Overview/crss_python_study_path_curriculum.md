@@ -1,4 +1,4 @@
-# CRSS-Python Study Path & Learning Curriculum
+# CRSS-Python Study Path and Learning Curriculum
 
 **Version:** v1.0.0
 **Status:** Informative
@@ -10,7 +10,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Study Path & Learning Curriculum](#crss-python-study-path-learning-curriculum)
+- [CRSS-Python Study Path and Learning Curriculum](#crss-python-study-path-learning-curriculum)
   - [Table of Contents](#table-of-contents)
 - [Overview](#overview)
 - [Stage 1 - Foundation (Beginner)](#stage-1-foundation-beginner)
@@ -64,7 +64,7 @@ Each stage builds on the previous one.
 
 ###  Required Reading
 - **Overview / Landing Page**
-- Profiles & Levels section of Unified Safety Spec
+- Profiles and Levels section of Unified Safety Spec
 
 ###  Skills Gained
 - Explain Core vs Strict
@@ -84,7 +84,7 @@ Each stage builds on the previous one.
 
 ###  Required Reading
 - Unified Safety Spec (Core rules)
-- Compliance Master (Phase 1 & 2)
+- Compliance Master (Phase 1 and 2)
 
 ###  Hands-On Tasks
 - Create a MAR
@@ -100,7 +100,7 @@ Each stage builds on the previous one.
 ###  Learning Objectives
 - Strict rules and enforcement
 - Deterministic design
-- Testing & coverage requirements
+- Testing and coverage requirements
 
 ###  Required Reading
 - Unified Safety Spec (Strict rules)
@@ -122,7 +122,7 @@ Each stage builds on the previous one.
 - Strict-A zero-deviation policy
 - `@critical` execution rules
 - Determinism and WCET
-- Deployment & CBM
+- Deployment and CBM
 
 ###  Required Reading
 - Deployment Master

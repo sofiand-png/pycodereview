@@ -41,7 +41,7 @@ This master document consolidates and replaces the former **Certification Readin
 - CRSS Unified Safety Specification v3.0.0
 - Compliance Master v3.0.1
 - SCEM Master v3.0.0
-- Tooling & Automation Master v3.0.0
+- Tooling and Automation Master v3.0.0
 
 It defines:
 

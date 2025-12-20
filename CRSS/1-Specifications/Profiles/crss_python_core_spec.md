@@ -21,7 +21,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [0.7 Tooling](#07-tooling)
     - [0.8 Python Version Scope](#08-python-version-scope)
     - [0.9 Project-Declared Python Target Range](#09-project-declared-python-target-range)
-  - [1. Scope & Goals](#1-scope-goals)
+  - [1. Scope and Goals](#1-scope-and-goals)
   - [2. Rule Model](#2-rule-model)
   - [3. Core Language Usage](#3-core-language-usage)
     - [CRSS-3.1.1 - Avoid runtime code generation](#crss-311-avoid-runtime-code-generation)
@@ -37,7 +37,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [CRSS-3.2.3 - Cross-profile import policy](#crss-323-cross-profile-import-policy)
     - [CRSS-3.3.1 - Assignment expressions (walrus) limited / forbidden](#crss-331-assignment-expressions-walrus-limited-forbidden)
     - [CRSS-3.4.1 - Inheritance across profiles](#crss-341-inheritance-across-profiles)
-  - [4. Error Handling, Exceptions & Control Flow](#4-error-handling-exceptions-control-flow)
+  - [4. Error Handling, Exceptions and Control Flow](#4-error-handling-exceptions-and-control-flow)
     - [CRSS-4.1.1 - Assertions not for runtime validation](#crss-411-assertions-not-for-runtime-validation)
     - [CRSS-4.2.1 - No bare except:](#crss-421-no-bare-except)
     - [CRSS-4.2.2 - except Exception requires explicit handling](#crss-422-except-exception-requires-explicit-handling)
@@ -51,8 +51,8 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [CRSS-4.4.1 - Index bounds validation on externally derived indices](#crss-441-index-bounds-validation-on-externally-derived-indices)
     - [CRSS-4.4.2 - Safe dictionary access for external keys](#crss-442-safe-dictionary-access-for-external-keys)
     - [CRSS-4.4.3 - Safe unpacking and length assumptions](#crss-443-safe-unpacking-and-length-assumptions)
-  - [4. Parsing & Data Validation (7.9.x)](#4-parsing-data-validation-79x)
-  - [5. Types, Data & Interfaces](#5-types-data-interfaces)
+  - [4. Parsing and Data Validation (7.9.x)](#4-parsing-and-data-validation-79x)
+  - [5. Data and Interfaces](#5-data-and-interfaces)
     - [CRSS-5.1.1 - Type hints on public APIs](#crss-511-type-hints-on-public-apis)
     - [CRSS-5.1.2 - Constrain use of Any](#crss-512-constrain-use-of-any)
     - [CRSS-5.1.3 - Use nominal interfaces (ABCs) for Strict code](#crss-513-use-nominal-interfaces-abcs-for-strict-code)
@@ -106,19 +106,19 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [CRSS-6.4.2 - Encryption in transit and at rest for sensitive data](#crss-642-encryption-in-transit-and-at-rest-for-sensitive-data)
     - [CRSS-6.4.3 - Redaction and minimization in logs](#crss-643-redaction-and-minimization-in-logs)
     - [CRSS-6.4.4 - Access control for sensitive data flows](#crss-644-access-control-for-sensitive-data-flows)
-    - [6.x Network Failure Modes & Partial Operations](#6x-network-failure-modes-partial-operations)
+    - [6.x Network Failure Modes and Partial Operations](#6x-network-failure-modes-partial-operations)
     - [CRSS-6.4.5 - Approved key exchange and storage](#crss-645-approved-key-exchange-and-storage)
     - [CRSS-6.4.6 - Key rotation and expiry](#crss-646-key-rotation-and-expiry)
     - [CRSS-6.4.7 - No long-lived caching of sensitive data](#crss-647-no-long-lived-caching-of-sensitive-data)
     - [CRSS-6.4.8 - Cache isolation between tenants/security domains](#crss-648-cache-isolation-between-tenantssecurity-domains)
     - [CRSS-6.4.9 - Centralize RBAC and access checks](#crss-649-centralize-rbac-and-access-checks)
-  - [**CRSS-6.4.10 - Secret Storage & Lifecycle**](#crss-6410-secret-storage-lifecycle)
-  - [**CRSS-6.4.11 - Password & Credential Policy**](#crss-6411-password-credential-policy)
-- [2. Token & Session Management Rules (6.4.x)](#2-token-session-management-rules-64x)
-  - [**CRSS-6.4.12 - Token & Session Lifetime Management**](#crss-6412-token-session-lifetime-management)
+  - [**CRSS-6.4.10 - Secret Storage and Lifecycle**](#crss-6410-secret-storage-lifecycle)
+  - [**CRSS-6.4.11 - Password and Credential Policy**](#crss-6411-password-credential-policy)
+- [2. Token and Session Management Rules (6.4.x)](#2-token-and-session-management-rules-64x)
+  - [**CRSS-6.4.12 - Token and Session Lifetime Management**](#crss-6412-token-session-lifetime-management)
   - [**CRSS-6.4.13 - Authentication vs Authorization Separation**](#crss-6413-authentication-vs-authorization-separation)
   - [**CRSS-6.4.14 - Safety-Significant Action Authorization**](#crss-6414-safety-significant-action-authorization)
-  - [7. Robustness & Portability](#7-robustness-portability)
+  - [7. Robustness and Portability](#7-robustness-and-portability)
     - [CRSS-7.1.1 - Explicit encoding for text file I/O](#crss-711-explicit-encoding-for-text-file-io)
     - [CRSS-7.1.2 - Use context managers for file I/O](#crss-712-use-context-managers-for-file-io)
     - [CRSS-7.1.3 - Maximum length for external string inputs](#crss-713-maximum-length-for-external-string-inputs)
@@ -142,7 +142,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [CRSS-7.8.2 - Bounded payload sizes and rates](#crss-782-bounded-payload-sizes-and-rates)
     - [CRSS-7.8.3 - Circuit breakers and backpressure for critical dependencies](#crss-783-circuit-breakers-and-backpressure-for-critical-dependencies)
     - [CRSS-7.8.4 - Latency budgets for critical network operations](#crss-784-latency-budgets-for-critical-network-operations)
-  - [2. Big Data & Large Dataset Handling (5.5.x)](#2-big-data-large-dataset-handling-55x)
+  - [2. Big Data and Large Dataset Handling (5.5.x)](#2-big-data-and-large-dataset-handling-55x)
     - [CRSS-7.8.5 - Distributed cache consistency for critical data](#crss-785-distributed-cache-consistency-for-critical-data)
     - [CRSS-7.8.6 - Cache is never the source of truth](#crss-786-cache-is-never-the-source-of-truth)
     - [CRSS-7.8.7 - Explicit HTTP caching directives](#crss-787-explicit-http-caching-directives)
@@ -154,7 +154,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [CRSS-7.9.4 - Detection of partial network writes and reads](#crss-794-detection-of-partial-network-writes-and-reads)
     - [CRSS-7.9.5 - Integrity checks for critical transfers](#crss-795-integrity-checks-for-critical-transfers)
     - [CRSS-7.9.6 - Safe behavior on mid-operation disconnection](#crss-796-safe-behavior-on-mid-operation-disconnection)
-  - [7. Key Exchange & Cryptographic Material (6.4.x continuation)](#7-key-exchange-cryptographic-material-64x-continuation)
+  - [7. Key Exchange and Cryptographic Material (6.4.x continuation)](#7-key-exchange-and-cryptographic-material-64x-continuation)
     - [CRSS-7.10.1 - Restricted operating system interaction](#crss-7101-restricted-operating-system-interaction)
     - [CRSS-7.10.2 - Environment variables as configuration inputs](#crss-7102-environment-variables-as-configuration-inputs)
     - [CRSS-7.10.3 - No hidden behavior toggles in environment](#crss-7103-no-hidden-behavior-toggles-in-environment)
@@ -163,28 +163,28 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [CRSS-7.11.2 - Prohibited High-Complexity Regex Patterns](#crss-7112-prohibited-high-complexity-regex-patterns)
 - [Catastrophic pattern - exponential backtracking](#catastrophic-pattern-exponential-backtracking)
     - [CRSS-7.11.3 - User-Supplied or Dynamic Regex Patterns](#crss-7113-user-supplied-or-dynamic-regex-patterns)
-    - [CRSS-7.11.4 - Regex Testing & Worst-Case Behavior](#crss-7114-regex-testing-worst-case-behavior)
+    - [CRSS-7.11.4 - Regex Testing and Worst-Case Behavior](#crss-7114-regex-testing-worst-case-behavior)
     - [CRSS-7.11.5 - SCEM Evidence for Regex Safety](#crss-7115-scem-evidence-for-regex-safety)
 - [Catastrophic pattern - exponential backtracking](#catastrophic-pattern-exponential-backtracking)
   - [Summary](#summary)
-  - [8. Maintainability & Documentation](#8-maintainability-documentation)
+  - [8. Maintainability and Documentation](#8-maintainability-and-documentation)
     - [CRSS-8.1.1 - Limit cyclomatic complexity](#crss-811-limit-cyclomatic-complexity)
     - [CRSS-8.1.2 - Require docstrings on public APIs](#crss-812-require-docstrings-on-public-apis)
     - [CRSS-8.2.1 - Do not shadow Python builtins or core types](#crss-821-do-not-shadow-python-builtins-or-core-types)
-  - [9. Testing & Coverage Guidelines (Core)](#9-testing-coverage-guidelines-core)
+  - [9. Testing and Coverage Guidelines (Core)](#9-testing-and-coverage-guidelines-core)
     - [9.0 Criticality Levels](#90-criticality-levels)
     - [CRSS-9.1.1 - Target high branch coverage](#crss-911-target-high-branch-coverage)
     - [CRSS-9.1.2 - Every bugfix must have a regression test](#crss-912-every-bugfix-must-have-a-regression-test)
     - [CRSS-9.1.3 - Strict type checking for critical units (Strict)](#crss-913-strict-type-checking-for-critical-units-strict)
-  - [**CRSS-9.2.1 - Authentication, Token & Session Negative Testing**](#crss-921-authentication-token-session-negative-testing)
-  - [**CRSS-9.2.2 - SCEM Evidence for Authentication & Authorization**](#crss-922-scem-evidence-for-authentication-authorization)
+  - [**CRSS-9.2.1 - Authentication, Token and Session Negative Testing**](#crss-921-authentication-token-and-session-negative-testing)
+  - [**CRSS-9.2.2 - SCEM Evidence for Authentication and Authorization**](#crss-922-scem-evidence-for-authentication-and-authorization)
     - [CRSS-9.3.1 - MC/DC for Level A decisions](#crss-931-mcdc-for-level-a-decisions)
     - [CRSS-9.3.2 - On-target / hardware-in-the-loop testing for Strict units](#crss-932-on-target-hardware-in-the-loop-testing-for-strict-units)
     - [CRSS-9.4.1 - Guideline Compliance Summary (GCS)](#crss-941-guideline-compliance-summary-gcs)
     - [CRSS-9.5.1 - Declared target platform set](#crss-951-declared-target-platform-set)
     - [CRSS-9.5.2 - Full configuration testing matrix](#crss-952-full-configuration-testing-matrix)
     - [CRSS-9.5.3 - Environment delta documentation](#crss-953-environment-delta-documentation)
-  - [10. Python Version & Tooling Compatibility](#10-python-version-tooling-compatibility)
+  - [10. Python Version and Tooling Compatibility](#10-python-version-and-tooling-compatibility)
     - [CRSS-10.1.1 - Declare target Python version range](#crss-1011-declare-target-python-version-range)
     - [CRSS-10.1.2 - Static analysis uses the declared target version](#crss-1012-static-analysis-uses-the-declared-target-version)
     - [CRSS-10.1.3 - No usage of features newer than the minimum supported version](#crss-1013-no-usage-of-features-newer-than-the-minimum-supported-version)
@@ -213,22 +213,22 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [CRSS-12.1.4 - Scope Limitation](#crss-1214-scope-limitation)
     - [CRSS-12.1.5 - Backport Requirement](#crss-1215-backport-requirement)
   - [13. Phase-Aware Interpretation Rules (Normative)](#13-phase-aware-interpretation-rules-normative)
-    - [1. Collections, Allocation & Resource Management](#1-collections-allocation-resource-management)
+    - [1. Collections, Allocation and Resource Management](#1-collections-allocation-and-resource-management)
       - [Critical Phase](#critical-phase)
       - [Non-Critical Phase](#non-critical-phase)
-    - [2. Bulk Data Processing & Queries](#2-bulk-data-processing-queries)
+    - [2. Bulk Data Processing and Queries](#2-bulk-data-processing-and-queries)
       - [Critical Phase](#critical-phase)
       - [Non-Critical Phase](#non-critical-phase)
-    - [3. Cache Semantics & Safety](#3-cache-semantics-safety)
+    - [3. Cache Semantics and Safety](#3-cache-semantics-and-safety)
       - [Critical Phase](#critical-phase)
       - [Non-Critical Phase](#non-critical-phase)
-    - [4. Network, Microservices & Distributed Interaction](#4-network-microservices-distributed-interaction)
+    - [4. Network, Microservices and Distributed Interaction](#4-network-microservices-and-distributed-interaction)
       - [Critical Phase](#critical-phase)
       - [Non-Critical Phase](#non-critical-phase)
-    - [5. Parsing, Validation & Transfer Integrity](#5-parsing-validation-transfer-integrity)
+    - [5. Parsing, Validation and Transfer Integrity](#5-parsing-validation-and-transfer-integrity)
       - [Critical Phase](#critical-phase)
       - [Non-Critical Phase](#non-critical-phase)
-    - [6. OS & Environment Interaction](#6-os-environment-interaction)
+    - [6. OS and Environment Interaction](#6-os-environment-and-interaction)
       - [Critical Phase](#critical-phase)
       - [Non-Critical Phase](#non-critical-phase)
 
@@ -289,19 +289,19 @@ CRSS-Python uses semantic versioning: `vMAJOR.MINOR.PATCH`.
 
 The following chapters define stable ranges for rule IDs:
 
-- **3.x**  - Core Language & Dynamic Features
-- **4.x**  - Error Handling & Control Flow
-- **5.1x** - Types & Interfaces
-- **5.2x** - State & Global Effects
-- **5.3x** - Randomness & Determinism
-- **5.4x** - Memory, Collections & Resources
+- **3.x**  - Core Language and Dynamic Features
+- **4.x**  - Error Handling and Control Flow
+- **5.1x** - Types and Interfaces
+- **5.2x** - State and Global Effects
+- **5.3x** - Randomness and Determinism
+- **5.4x** - Memory, Collections and Resources
 - **6.x**  - Security
-- **7.x**  - Robustness & Portability
-- **8.x**  - Maintainability & Documentation
-- **9.x**  - Testing, Coverage & Process
-- **10.x** - Python Versioning & Tooling
+- **7.x**  - Robustness and Portability
+- **8.x**  - Maintainability and Documentation
+- **9.x**  - Testing, Coverage and Process
+- **10.x** - Python Versioning and Tooling
 - **11.chapter_id_[3..10, 12].x** - Strict only rules
-- **12.x** - Configuration& Deployment Integrity
+- **12.x** - Configurationand Deployment Integrity
 Within each chapter, rule IDs (`CRSS-x.y.z`) are not reused. When a rule
 is retired, its ID remains reserved and is marked as deprecated rather
 than being reassigned.
@@ -381,7 +381,7 @@ supports.
 
 ------------------------------------------------------------------------
 
-## 1. Scope & Goals
+## 1. Scope and Goals
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -687,7 +687,7 @@ ACTIONS[cmd]()
 
 ### CRSS-3.2.3 - Cross-profile import policy
 
-- **Category**: Modules & Dependencies
+- **Category**: Modules and Dependencies
 - **Type**: Static / Process
 - **Profiles**:
   - Core: SHOULD
@@ -770,7 +770,7 @@ See also: *CRSS Inheritance Policy* (`docs/annexes/crss_inheritance_policy.md`) 
 
 ------------------------------------------------------------------------
 
-## 4. Error Handling, Exceptions & Control Flow
+## 4. Error Handling, Exceptions and Control Flow
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -930,7 +930,7 @@ paths, not for core safety decisions.
 
 ### CRSS-4.3.4 - Avoid late-bound closures over loop variables
 -	**Category**
--	**Category**: Control Flow / Loops & Closures
+-	**Category**: Control Flow / Loops and Closures
 -	**Type**: Static
 -	**Profiles**:
 	- 	Core: SHOULD-NOT
@@ -1047,19 +1047,19 @@ Malformed input can produce sequences of unexpected length, causing `ValueError`
 
 ---
 
-## 4. Parsing & Data Validation (7.9.x)
+## 4. Parsing and Data Validation (7.9.x)
 
 > [⬆ Back to Table of Contents](#toc)
 
 
-## 5. Types, Data & Interfaces
+## 5. Data and Interfaces
 
 > [⬆ Back to Table of Contents](#toc)
 
 
 ### CRSS-5.1.1 - Type hints on public APIs
 
--   **Category**: Types & Interfaces
+-   **Category**: Types and Interfaces
 -   **Type**: Static
 -   **Profiles**:
     -   Core: SHOULD
@@ -1068,7 +1068,7 @@ Malformed input can produce sequences of unexpected length, causing `ValueError`
 
 ### CRSS-5.1.2 - Constrain use of Any
 
--   **Category**: Types & Interfaces
+-   **Category**: Types and Interfaces
 -   **Type**: Static
 -   **Profiles**:
     -   Core: SHOULD-NOT
@@ -1077,7 +1077,7 @@ Malformed input can produce sequences of unexpected length, causing `ValueError`
 
 ### CRSS-5.1.3 - Use nominal interfaces (ABCs) for Strict code
 
-- **Category**: Types & Interfaces
+- **Category**: Types and Interfaces
 - **Type**: Static / Design
 - **Profiles**:
   - Core: SHOULD
@@ -1104,7 +1104,7 @@ In safety-critical contexts, “if it quacks like a duck” is not sufficient; i
 
 ### CRSS-5.1.4 - Control polymorphism and ban duck typing in Strict
 
-- **Category**: Types & Interfaces
+- **Category**: Types and Interfaces
 - **Type**: Static / Design
 - **Profiles**:
   - Core: SHOULD-NOT (for safety-relevant code paths)
@@ -1152,7 +1152,7 @@ Explicit polymorphism allows Stronger guarantees and better tool support.
 
 ### CRSS-5.1.5 - Restrict use of `typing.cast`
 
--   **Category**: Types & Interfaces
+-   **Category**: Types and Interfaces
 -   **Type**: Static
 -   **Profiles**:
     -   Core: SHOULD-NOT
@@ -1195,7 +1195,7 @@ def get_speed(raw: Any) -> float:
 ```
 ### CRSS-5.1.6 - Explicit module exports via `__all__` in Strict
 
-- **Category**: Types & Interfaces / Encapsulation
+- **Category**: Types and Interfaces / Encapsulation
 - **Type**: Static
 - **Profiles**:
   - Core: SHOULD
@@ -1230,7 +1230,7 @@ __all__ = ["SafetyController"]
 
 ### CRSS-5.1.7 - Ban mutable default arguments
 
--	**Category**: Types & Interfaces / Functions
+-	**Category**: Types and Interfaces / Functions
 -	**Type**: Static
 -	**Profiles**:
 	- 	Core: SHOULD-NOT
@@ -1270,7 +1270,7 @@ def add_sensor_reading(reading: float, buffer: Optional[List[float]] = None) -> 
 
 ### CRSS-5.1.8 - Use is only for None and singletons
 
--	**Category**: Types & Interfaces / Semantics
+-	**Category**: Types and Interfaces / Semantics
 -	**Type**: Static
 -	**Profiles**:
 	- 	Core: SHOULD
@@ -1297,7 +1297,7 @@ return flag == "OK"
 
 ### CRSS-5.2.1 - Avoid hidden mutable global state
 
--   **Category**: State & Concurrency
+-   **Category**: State and Concurrency
 -   **Type**: Static
 -   **Profiles**:
     -   Core: SHOULD-NOT
@@ -1306,7 +1306,7 @@ return flag == "OK"
 
 ### CRSS-5.2.2 - No implicit side effects on import
 
--   **Category**: State & Initialization
+-   **Category**: State and Initialization
 -   **Type**: Static
 -   **Profiles**:
     -   Core: SHOULD-NOT
@@ -1560,7 +1560,7 @@ Binary floating-point cannot represent many decimal fractions exactly and can ca
 
 ### CRSS-5.4.1 - Avoid unbounded growth of in-memory collections
 
--   **Category**: State & Resources
+-   **Category**: State and Resources
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -1605,7 +1605,7 @@ def handle_request(req):
 
 ### CRSS-5.4.2 - Explicit lifecycle for large objects and buffers
 
--   **Category**: State & Resources
+-   **Category**: State and Resources
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -1650,7 +1650,7 @@ def load_snapshot():
 
 ### CRSS-5.4.3 - Resource pools and caches must support explicit reset
 
--   **Category**: State & Resources
+-   **Category**: State and Resources
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -1721,7 +1721,7 @@ safe fallback), not undefined states.
 
 ### CRSS-5.4.6 - Bounded heap usage for Strict processes
 
-- **Category**: State & Processes
+- **Category**: State and Processes
 - **Type**: Process
 - **Profiles**:
   - Core: SHOULD
@@ -1741,7 +1741,7 @@ Prevents unbounded memory usage from causing unpredictable failures or OS-level 
 
 ### CRSS-5.5.1 - Bounded memory usage for bulk data
 
--   **Category**: Memory & Performance
+-   **Category**: Memory and Performance
 -   **Type**: Design / Static
 -   **Profiles**:
     -   Core: SHOULD
@@ -1806,7 +1806,7 @@ Inefficient queries can cause slowdowns or lock contention, impacting timely saf
 
 > Python does not suffer from classic C-style buffer overflows, but it is still vulnerable to memory blowup, `IndexError`, `KeyError`, and unchecked growth when driven by external input.
 
-1. Cache Policy & Scope
+1. Cache Policy and Scope
 
 ### CRSS-5.6.1 - Explicit cache policy and scope
 
@@ -1829,11 +1829,11 @@ This policy MUST be documented (ADR + Safety Baseline) and not live only “in c
 **Rationale**
 Caches are invisible state. Without an explicit policy, their behavior and impact on correctness/latency becomes unpredictable.
 
-2. Cache Size & Memory Bounds
+2. Cache Size and Memory Bounds
 
 ### CRSS-5.6.2 - Bounded cache size and eviction policy
 
--   **Category**: Memory & Performance / Caching
+-   **Category**: Memory and Performance / Caching
 -   **Type**: Design / Static
 -   **Profiles**:
 -   **Scope**: `all_code (phase-aware)`
@@ -1870,7 +1870,7 @@ For any safety-relevant decision that uses cached information (e.g. latest senso
 **Rationale**
 “Fast but stale” is dangerous; using outdated data for safety-critical decisions is often worse than having no data.
 
-4. Cache Failure Modes & Fallback Behavior
+4. Cache Failure Modes and Fallback Behavior
 
 ### CRSS-5.6.4 - Defined behavior on cache miss/failure
 
@@ -2069,7 +2069,7 @@ Centralized adapter with validation and error handling.
 
 ### CRSS-6.2.3 - Prohibition of subprocess execution in Strict units
 
-- **Category**: Execution & External Interfaces
+- **Category**: Execution and External Interfaces
 - **Type**: Static
 - **Profiles**:
   - Core: SHOULD-NOT
@@ -2179,7 +2179,7 @@ Access to sensitive data in code must:
 
 ---
 
-### 6.x Network Failure Modes & Partial Operations
+### 6.x Network Failure Modes and Partial Operations
 
 ### CRSS-6.4.5 - Approved key exchange and storage
 
@@ -2287,7 +2287,7 @@ and reduces security-related safety failures.
 
 ---
 
-## **CRSS-6.4.10 - Secret Storage & Lifecycle**
+## **CRSS-6.4.10 - Secret Storage and Lifecycle**
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -2324,7 +2324,7 @@ Secret leakage leads to system compromise and loss of trust in safety-significan
 
 ---
 
-## **CRSS-6.4.11 - Password & Credential Policy**
+## **CRSS-6.4.11 - Password and Credential Policy**
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -2353,16 +2353,16 @@ Weak credential handling is a major source of compromise in operational systems.
 
 ---
 
-# 2. Token & Session Management Rules (6.4.x)
+# 2. Token and Session Management Rules (6.4.x)
 
 ---
 
-## **CRSS-6.4.12 - Token & Session Lifetime Management**
+## **CRSS-6.4.12 - Token and Session Lifetime Management**
 
 > [⬆ Back to Table of Contents](#toc)
 
 
-- **Category**: Security / Sessions & Tokens
+- **Category**: Security / Sessions and Tokens
 - **Type**: Design / Process
 - **Profiles**:
   - Core: SHOULD
@@ -2460,7 +2460,7 @@ Safety configuration changes must not rely on weak or stale access control.
 
 ---
 
-## 7. Robustness & Portability
+## 7. Robustness and Portability
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -2504,7 +2504,7 @@ Unbounded string inputs can lead to memory exhaustion, performance degradation, 
 
 ### CRSS-7.1.4 - Encoding and Unicode handling
 
--   **Category**: Encoding & Internationalization
+-   **Category**: Encoding and Internationalization
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -2524,7 +2524,7 @@ Incorrect assumptions about encoding or character length lead to truncation, mis
 
 ### CRSS-7.1.5 - Special character and control character validation
 
--   **Category**: Input Validation & Security
+-   **Category**: Input Validation and Security
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -2542,7 +2542,7 @@ Control characters and unexpected symbols in strings can lead to command injecti
 
 ### CRSS-7.1.6 - Language and locale configuration
 
--   **Category**: Internationalization & Configuration
+-   **Category**: Internationalization and Configuration
 -   **Type**: Process
 -   **Profiles**:
     -   Core: MAY
@@ -2603,7 +2603,7 @@ We assume the third party behaves within its documented contract; we defend agai
 
 ### CRSS-7.6.1 - Explicit architecture definition
 
--   **Category**: Architecture & Design
+-   **Category**: Architecture and Design
 -   **Type**: Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -2639,7 +2639,7 @@ ADRs shall live alongside source code in the same repository or a tightly linked
 
 ### CRSS-7.6.3 - Avoidance of single point of failure for critical paths
 
--   **Category**: Availability & Fault Tolerance
+-   **Category**: Availability and Fault Tolerance
 -   **Type**: Design / Process
 -   **Profiles**:
     -   Core: MUST
@@ -2654,7 +2654,7 @@ Where a single instance is unavoidable, the Safety Baseline must document:
 
 ### CRSS-7.6.4 - Bounded retries and timeouts for network calls
 
--   **Category**: Robustness & Networking
+-   **Category**: Robustness and Networking
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -2742,7 +2742,7 @@ Reconnection logic for external dependencies shall:
 
 ### CRSS-7.7.4 - Safe file transfer preconditions
 
--   **Category**: I/O Robustness & Safety
+-   **Category**: I/O Robustness and Safety
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -2846,7 +2846,7 @@ Unbounded latency can cause stale decisions and unsafe behavior in distributed s
 
 ---
 
-## 2. Big Data & Large Dataset Handling (5.5.x)
+## 2. Big Data and Large Dataset Handling (5.5.x)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -3048,7 +3048,7 @@ If network disconnection occurs mid-operation (for example during an HTTP PUT, a
 
 ---
 
-## 7. Key Exchange & Cryptographic Material (6.4.x continuation)
+## 7. Key Exchange and Cryptographic Material (6.4.x continuation)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -3112,7 +3112,7 @@ Critical safety behavior shall not be controlled by undocumented environment fla
 
 ### CRSS-7.11.0 - Regex Usage in Critical Phases
 
-- **Category**: Robustness & External Input
+- **Category**: Robustness and External Input
 - **Type**: Static
 - **Profiles**:
   - Core: MUST-NOT (in critical regions)
@@ -3145,7 +3145,7 @@ invoked.
 
 ### CRSS-7.11.1 - Bounded Input for Regex Operations
 
-- **Category**: Robustness & External Input
+- **Category**: Robustness and External Input
 - **Type**: Static + Behavioral
 - **Profiles**:
   - Core: SHOULD
@@ -3196,7 +3196,7 @@ def find_ids(payload: str) -> list[str]:
 
 ### CRSS-7.11.2 - Prohibited High-Complexity Regex Patterns
 
-- **Category**: Robustness & External Input
+- **Category**: Robustness and External Input
 - **Type**: Static
 - **Profiles**:
   - Core: SHOULD-NOT
@@ -3235,7 +3235,7 @@ RE_BAD = re.compile(r"^(a+)+$")
 
 ### CRSS-7.11.3 - User-Supplied or Dynamic Regex Patterns
 
-- **Category**: Robustness & External Input
+- **Category**: Robustness and External Input
 - **Type**: Static + Behavioral
 - **Profiles**:
   - Core: SHOULD-NOT
@@ -3285,9 +3285,9 @@ def is_valid_email(raw: str) -> bool:
 
 ---
 
-### CRSS-7.11.4 - Regex Testing & Worst-Case Behavior
+### CRSS-7.11.4 - Regex Testing and Worst-Case Behavior
 
-- **Category**: Testing, Coverage & Process
+- **Category**: Testing, Coverage and Process
 - **Type**: Process
 - **Profiles**:
   - Core: SHOULD
@@ -3317,7 +3317,7 @@ For **Strict-Level-A**:
 
 ### CRSS-7.11.5 - SCEM Evidence for Regex Safety
 
-- **Category**: SCEM & Compliance
+- **Category**: SCEM and Compliance
 - **Type**: Process
 - **Profiles**:
   - Core: SHOULD
@@ -3403,7 +3403,7 @@ and catastrophic backtracking from compromising safety-critical Python systems.
 
 ---
 
-## 8. Maintainability & Documentation
+## 8. Maintainability and Documentation
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -3467,7 +3467,7 @@ def process_items(items: Sequence[Mapping[str, int]]) -> None:
 
 ------------------------------------------------------------------------
 
-## 9. Testing & Coverage Guidelines (Core)
+## 9. Testing and Coverage Guidelines (Core)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -3495,7 +3495,7 @@ onto these three levels. At minimum:
 
 ### CRSS-9.1.1 - Target high branch coverage
 
--   **Category**: Testing & Coverage
+-   **Category**: Testing and Coverage
 -   **Type**: Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -3504,7 +3504,7 @@ onto these three levels. At minimum:
 
 ### CRSS-9.1.2 - Every bugfix must have a regression test
 
--   **Category**: Testing & Coverage
+-   **Category**: Testing and Coverage
 -   **Type**: Process
 -   **Profiles**:
     -   Core: MUST
@@ -3525,12 +3525,12 @@ annotated `@critical`) must pass strict static type checking (e.g.
 Type-ignores (`# type: ignore`) are disallowed or must be treated as
 explicit deviations with justification and impact analysis.
 
-## **CRSS-9.2.1 - Authentication, Token & Session Negative Testing**
+## **CRSS-9.2.1 - Authentication, Token and Session Negative Testing**
 
 > [⬆ Back to Table of Contents](#toc)
 
 
-- **Category**: Testing & Security
+- **Category**: Testing and Security
 - **Type**: Process
 - **Profiles**:
   - Core: SHOULD
@@ -3558,11 +3558,11 @@ Negative testing is essential for verifying robustness under malicious or degrad
 
 ---
 
-## **CRSS-9.2.2 - SCEM Evidence for Authentication & Authorization**
+## **CRSS-9.2.2 - SCEM Evidence for Authentication and Authorization**
 
 > [⬆ Back to Table of Contents](#toc)
 
-- **Category**: SCEM & Compliance
+- **Category**: SCEM and Compliance
 - **Type**: Process
 - **Profiles**:
   - Core: SHOULD
@@ -3598,7 +3598,7 @@ Authentication/authorization control must be demonstrably safe in operation.
 
 ### CRSS-9.3.1 - MC/DC for Level A decisions
 
--   **Category**: Testing & Coverage
+-   **Category**: Testing and Coverage
 -   **Type**: Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -3626,7 +3626,7 @@ A simple table template:
 
 ### CRSS-9.3.2 - On-target / hardware-in-the-loop testing for Strict units
 
--   **Category**: Testing & Coverage
+-   **Category**: Testing and Coverage
 -   **Type**: Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -3721,14 +3721,14 @@ Any difference between Testing environment and Deployment environment must be:
 
 ------------------------------------------------------------------------
 
-## 10. Python Version & Tooling Compatibility
+## 10. Python Version and Tooling Compatibility
 
 > [⬆ Back to Table of Contents](#toc)
 
 
 ### CRSS-10.1.1 - Declare target Python version range
 
--   **Category**: Versioning & Tooling
+-   **Category**: Versioning and Tooling
 -   **Type**: Process / Static
 -   **Profiles**:
     -   Core: MUST
@@ -3749,7 +3749,7 @@ features, standard library behavior, and deprecations.
 
 ### CRSS-10.1.2 - Static analysis uses the declared target version
 
--   **Category**: Versioning & Tooling
+-   **Category**: Versioning and Tooling
 -   **Type**: Process / Static
 -   **Profiles**:
     -   Core: SHOULD
@@ -3770,7 +3770,7 @@ syntax issues, deprecations, or subtle behavioral changes.
 
 ### CRSS-10.1.3 - No usage of features newer than the minimum supported version
 
--   **Category**: Versioning & Portability
+-   **Category**: Versioning and Portability
 -   **Type**: Static
 -   **Profiles**:
     -   Core: SHOULD-NOT
@@ -3796,7 +3796,7 @@ For `requires-python = ">=3.9"`:
 
 ### CRSS-10.1.4 - No use of removed or deprecated-in-target features
 
--   **Category**: Versioning & Portability
+-   **Category**: Versioning and Portability
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: SHOULD-NOT
@@ -3821,7 +3821,7 @@ and can make upgrades unsafe.
 
 ### CRSS-10.2.1 - Analysis Python version may differ, but must be documented
 
--   **Category**: Versioning & Tooling
+-   **Category**: Versioning and Tooling
 -   **Type**: Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -3842,7 +3842,7 @@ testing across the supported versions.
 
 ### CRSS-10.2.2 - Feature usage must be consistent with the declared profile
 
--   **Category**: Versioning & Profiles
+-   **Category**: Versioning and Profiles
 -   **Type**: Static / Process
 -   **Profiles**:
     -   Core: MUST
@@ -3868,7 +3868,7 @@ when both are explicitly aligned.
 
 ### CRSS-10.3.1 - Frozen interpreter and OS configuration
 
--   **Category**: Versioning & Toolchain
+-   **Category**: Versioning and Toolchain
 -   **Type**: Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -3971,7 +3971,7 @@ Any change constitutes a new baseline requiring full re-evaluation.
 
 ### CRSS-10.5.1 - Frozen container images
 
--   **Category**: Deployment & Packaging
+-   **Category**: Deployment and Packaging
 -   **Type**: Process
 -   **Profiles**:
     -   Core: SHOULD
@@ -4007,7 +4007,7 @@ This prevents runtime mutation.
     -   Strict: MUST (non-deviable for Level A)
 -   **Scope**: `all_code`
 
-All projects claiming CRSS compliance shall execute the full Compliance Process as defined in the Configuration & Deployment Integrity Specification.
+All projects claiming CRSS compliance shall execute the full Compliance Process as defined in the Configuration and Deployment Integrity Specification.
 A project is not compliant until all required artifacts have been produced, approved, versioned, and linked to a Safety Baseline.
 
 ### CRSS-12.0.2 - Safety Baseline Establishment
@@ -4023,9 +4023,9 @@ All Strict releases shall define a **Safety Baseline**, consisting of:
 - Source code commit hash
 - Requirements version
 - Test evidence package
-- Interpreter & OS versions
+- Interpreter and OS versions
 - Dependency manifest
-- Build & configuration flags
+- Build and configuration flags
 - Deployment architecture
 - Platform characteristics
 - Compliance artifacts (RCR, TEP, CBM, CC)
@@ -4180,14 +4180,14 @@ All artifacts must:
 **Phase 3 - Test Requalification**
 - Re-run full TEP
 - Re-run platform matrix
-- Re-run performance & reliability tests
+- Re-run performance and reliability tests
 
 **Phase 4 - New Baseline Creation**
 - Create new CBM
 - Update RCR, TEP, SBR
 - Assign new Baseline ID
 
-**Phase 5 - Approval & Release**
+**Phase 5 - Approval and Release**
 - Independent approval
 - Issue new Compliance Certificate
 
@@ -4274,7 +4274,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 1. Collections, Allocation & Resource Management  
+### 1. Collections, Allocation and Resource Management  
 *(CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3)*
 
 #### Critical Phase
@@ -4292,7 +4292,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 2. Bulk Data Processing & Queries  
+### 2. Bulk Data Processing and Queries  
 *(CRSS-5.5.2 / CRSS-5.5.3)*
 
 #### Critical Phase
@@ -4316,7 +4316,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 3. Cache Semantics & Safety  
+### 3. Cache Semantics and Safety  
 *(CRSS-5.6.1 / 5.6.2 / 5.6.3 / 7.8.5 / 7.8.6)*
 
 #### Critical Phase
@@ -4340,7 +4340,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 4. Network, Microservices & Distributed Interaction  
+### 4. Network, Microservices and Distributed Interaction  
 *(CRSS-7.6.4 / 7.6.5 / 7.7.x / 7.8.2-7.8.4 / 7.9.4-7.9.6)*
 
 #### Critical Phase
@@ -4366,7 +4366,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 5. Parsing, Validation & Transfer Integrity  
+### 5. Parsing, Validation and Transfer Integrity  
 *(CRSS-7.9.1-7.9.3 / 7.9.5)*
 
 #### Critical Phase
@@ -4391,7 +4391,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 6. OS & Environment Interaction  
+### 6. OS and Environment Interaction  
 *(CRSS-7.10.1 / 7.10.2)*
 
 #### Critical Phase

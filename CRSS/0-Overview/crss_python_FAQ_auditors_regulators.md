@@ -1,4 +1,4 @@
-# CRSS-Python Certification FAQ for Auditors & Regulators
+# CRSS-Python Certification FAQ for Auditors and Regulators
 
 **Version:** v1.0.0
 **Status:** Informative
@@ -10,7 +10,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Certification FAQ for Auditors & Regulators](#crss-python-certification-faq-for-auditors-regulators)
+- [CRSS-Python Certification FAQ for Auditors and Regulators](#crss-python-certification-faq-for-auditors-regulators)
   - [Table of Contents](#table-of-contents)
   - [1. What Is the Certification Scope of CRSS-Python?](#1-what-is-the-certification-scope-of-crss-python)
   - [2. What Safety Levels Can CRSS-Python Support?](#2-what-safety-levels-can-crss-python-support)

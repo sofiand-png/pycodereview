@@ -1,4 +1,4 @@
-# CRSS-Python Tooling & Automation Master Specification
+# CRSS-Python Tooling and Automation Master Specification
 
 **Version:** v1.0.0
 **Status:** Normative
@@ -10,7 +10,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Tooling & Automation Master Specification](#crss-python-tooling-automation-master-specification)
+- [CRSS-Python Tooling and Automation Master Specification](#crss-python-tooling-automation-master-specification)
   - [Table of Contents](#table-of-contents)
 - [0. Purpose](#0-purpose)
 - [1. Tooling Governance Model](#1-tooling-governance-model)
@@ -59,7 +59,7 @@ This document defines:
 - Automation rules
 - Evidence-generation workflows
 - Toolchain qualification
-- Data schemas & templates
+- Data schemas and templates
 - Acceptance criteria for automated outputs
 
 It is the **single source of truth** for automation and tool usage in CRSS-Python certification.
@@ -76,7 +76,7 @@ Tools are used to:
 - Analyze code
 - Enforce rules
 - Generate evidence
-- Track Modes & Phases
+- Track Modes and Phases
 - Validate SCEM artifacts
 - Support certification audits
 
@@ -92,7 +92,7 @@ Tools **do not reduce** responsibility for correctness.
 | Static Analysis | Rule checkers, linters | Detect violations |
 | Mode Analysis | Propagation engines | Compute Modes |
 | Test Automation | Coverage, MC/DC | Generate test evidence |
-| Build & Baseline | Package lock, container builder | Freeze configuration |
+| Build and Baseline | Package lock, container builder | Freeze configuration |
 | Monitoring | Determinism probes, timing checks | Validate runtime behavior |
 
 ---
@@ -106,7 +106,7 @@ Tools **do not reduce** responsibility for correctness.
 
 Automation must support:
 - Rule compliance checking
-- Mode & Phase detection
+- Mode and Phase detection
 - Dependency graph extraction
 - Critical boundary validation
 - Violation classification

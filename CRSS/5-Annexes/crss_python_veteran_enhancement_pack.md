@@ -16,7 +16,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [CRSS Python Veteran Enhancement Pack](#crss-python-veteran-enhancement-pack)
   - [Table of Contents](#table-of-contents)
   - [1. Purpose](#1-purpose)
-  - [2. Async & Await Under CRSS](#2-async-await-under-crss)
+  - [2. Async and Await Under CRSS](#2-async-and-await-under-crss)
     - [2.1 Allowed in Core-C Only](#21-allowed-in-core-c-only)
     - [2.2 Forbidden in Strict-A](#22-forbidden-in-strict-a)
     - [2.3 Bounded Async in Core-B](#23-bounded-async-in-core-b)
@@ -50,7 +50,7 @@ This annex defines *how* these may coexist with CRSS.
 
 ---
 
-## 2. Async & Await Under CRSS
+## 2. Async and Await Under CRSS
 
 > [⬆ Back to Table of Contents](#toc)
 

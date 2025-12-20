@@ -20,7 +20,7 @@ Distributed under CC BY-NC-ND 4.0
 - [Compliance Overview](#compliance-overview)
 - [Profiles](#profiles)
 - [Safety Levels](#safety-levels)
-- [MAR & Phase Model](#mar-phase-model)
+- [MAR and Phase Model](#mar-and-phase-model)
 - [Entry Criteria](#entry-criteria)
 - [Compliance Actor Roles](#compliance-actor-roles)
 - [Compliance Lifecycle (Five-Phase Model)](#compliance-lifecycle-five-phase-model)
@@ -31,7 +31,7 @@ Distributed under CC BY-NC-ND 4.0
   - [Phase 5 - Certification Readiness](#phase-5-certification-readiness)
   - [Release Approval](#release-approval)
   - [Post-Release Monitoring](#post-release-monitoring)
-- [Enforcement & Acceptance Model](#enforcement-acceptance-model)
+- [Enforcement and Acceptance Model](#enforcement-and-acceptance-model)
   - [Rule Severity](#rule-severity)
   - [Strict-A Requirements](#strict-a-requirements)
   - [Deviations](#deviations)
@@ -48,7 +48,7 @@ Distributed under CC BY-NC-ND 4.0
   - [SCEM - Evidence Matrix](#scem-evidence-matrix)
 - [Artifact Chain](#artifact-chain)
 - [Re-Approval Rules](#re-approval-rules)
-- [Deviations & Exceptions](#deviations-exceptions)
+- [Deviations and Exceptions](#deviations-and-exceptions)
   - [Allowed Deviations](#allowed-deviations)
   - [Forbidden Deviations](#forbidden-deviations)
 - [Testing Compliance](#testing-compliance)
@@ -143,7 +143,7 @@ Levels apply per unit/function, not module.
 
 ---
 
-# MAR & Phase Model
+# MAR and Phase Model
 The Mode Assignment Register specifies:
 - Level
 - Profile
@@ -207,7 +207,7 @@ Activities:
 - unit tests
 - MC/DC (for Level A)
 - negative tests
-- performance & determinism tests
+- performance and determinism tests
 - security tests
 Artifact:
 - TEP
@@ -251,7 +251,7 @@ Artifacts:
 
 ---
 
-# Enforcement & Acceptance Model
+# Enforcement and Acceptance Model
 
 ## Rule Severity
 
@@ -327,7 +327,7 @@ Includes:
 - coverage
 - MC/DC
 - fault injection
-- negative & security tests
+- negative and security tests
 
 ## CBM - Configuration Baseline Manifest
 
@@ -421,7 +421,7 @@ Severity:
 
 ---
 
-# Deviations & Exceptions
+# Deviations and Exceptions
 
 ## Allowed Deviations
 

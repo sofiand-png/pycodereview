@@ -15,9 +15,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [1. Scope](#1-scope)
   - [2. Rule Mapping Summary](#2-rule-mapping-summary)
     - [2.1 Strict-A Deterministic Control Logic](#21-strict-a-deterministic-control-logic)
-    - [2.2 Phase-Aware Boundaries & Data Flow](#22-phase-aware-boundaries-data-flow)
-    - [2.3 Configuration & Safe Defaults](#23-configuration-safe-defaults)
-    - [2.4 JSON I/O & Validation (Non-critical)](#24-json-io-validation-non-critical)
+    - [2.2 Phase-Aware Boundaries and Data Flow](#22-phase-aware-boundaries-and-data-flow)
+    - [2.3 Configuration and Safe Defaults](#23-configuration-and-safe-defaults)
+    - [2.4 JSON I/O and Validation (Non-critical)](#24-json-io-and-validation-non-critical)
     - [2.5 Deviations](#25-deviations)
   - [3. Deviations](#3-deviations)
 
@@ -68,7 +68,7 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
   - deterministic fallback (`SAFE_DEFAULT`) when no valid pair.
 - No randomness, no I/O, no mutable global state in Strict-A modules.
 
-### 2.2 Phase-Aware Boundaries & Data Flow
+### 2.2 Phase-Aware Boundaries and Data Flow
 
 | Rule ID      | Title (short)                               | Module(s)                                      | Compliance |
 |-------------|-----------------------------------------------|------------------------------------------------|-----------|
@@ -82,7 +82,7 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
 - Strict-A classes accept/return pure Python primitives / dataclasses (`ActuatorCommand`).
 - All socket and JSON handling is done in non-critical `app.tcp_controller_client` / `app.tcp_sensor_server`.
 
-### 2.3 Configuration & Safe Defaults
+### 2.3 Configuration and Safe Defaults
 
 | Rule ID      | Title (short)                     | Module(s)                   | Compliance |
 |-------------|------------------------------------|-----------------------------|-----------|
@@ -95,7 +95,7 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
 - `SAFE_DEFAULT` = `0.0` used as fail-safe.
 - `SafetyConfig` is a frozen dataclass (immutable at runtime).
 
-### 2.4 JSON I/O & Validation (Non-critical)
+### 2.4 JSON I/O and Validation (Non-critical)
 
 | Rule ID      | Title (short)                             | Module(s)                             | Compliance |
 |-------------|--------------------------------------------|---------------------------------------|-----------|

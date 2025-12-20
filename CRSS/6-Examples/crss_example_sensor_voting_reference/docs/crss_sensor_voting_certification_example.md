@@ -50,12 +50,12 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 The following artefacts are available:
 
-- **Specifications & design**:
+- **Specifications and design**:
   - Sensor voting use case specification (cooling temperature)
   - Safety baseline: `docs/crss_sensor_voting_safety_baseline.md`
 - **Rule compliance**:
   - CRSS compliance report: `docs/crss_sensor_voting_compliance_report.md`
-- **Testing & coverage**:
+- **Testing and coverage**:
   - Test suite: unit, MC/DC-style, and integration tests in `tests/`
   - Coverage report: `reports/coverage_report.md` (statement and branch coverage)
 - **Fault injection**:
@@ -63,8 +63,8 @@ The following artefacts are available:
   - Fault model implemented in simulation + status inconsistencies.
 - **SCEM artefacts**:
   - Modes and allocation: `scem/mar.yaml`
-  - Test & evidence plan: `scem/tep.yaml`
-  - Build & environment metadata: `scem/cbm.json` (if present)
+  - Test and evidence plan: `scem/tep.yaml`
+  - Build and environment metadata: `scem/cbm.json` (if present)
   - Rule compliance summary: this document + compliance report.
 
 ## 4. Summary Assessment (Example)

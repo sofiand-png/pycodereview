@@ -1,4 +1,4 @@
-# CRSS-Python Deployment, Release & Baseline Master Specification
+# CRSS-Python Deployment, Release and Baseline Master Specification
 
 **Version:** v1.0.0
 **Status:** Normative
@@ -10,16 +10,16 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Deployment, Release & Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
+- [CRSS-Python Deployment, Release and Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
   - [Table of Contents](#table-of-contents)
   - [0. Purpose](#0-purpose)
-  - [1. Deployment & Baseline Rule Catalog (DPL-12.x)](#1-deployment-baseline-rule-catalog-dpl-12x)
-    - [1.1 Environment & Immutability](#11-environment-immutability)
-    - [1.2 Baseline & CBM](#12-baseline-cbm)
-    - [1.3 Releases & Immutability](#13-releases-immutability)
-    - [1.4 Updates & Upgrade Process](#14-updates-upgrade-process)
-    - [1.5 CI/CD & Deployment Pipeline](#15-cicd-deployment-pipeline)
-    - [1.6 Environment Parity & Testing](#16-environment-parity-testing)
+  - [1. Deployment and Baseline Rule Catalog (DPL-12.x)](#1-deployment-baseline-rule-catalog-dpl-12x)
+    - [1.1 Environment and Immutability](#11-environment-and-immutability)
+    - [1.2 Baseline and CBM](#12-baseline-and-cbm)
+    - [1.3 Releases and Immutability](#13-releases--andimmutability)
+    - [1.4 Updates and Upgrade Process](#14-updates-and-upgrade-process)
+    - [1.5 CI/CD and Deployment Pipeline](#15-cicd-and-deployment-pipeline)
+    - [1.6 Environment Parity and Testing](#16-environment-parity-and-testing)
     - [1.7 Production Safeguards](#17-production-safeguards)
   - [1.8 Upgrade process](#18-upgrade-process)
     - [DPL-12.24 - Interpreter Version Range with Single-Baseline Freeze](#dpl-1224-interpreter-version-range-with-single-baseline-freeze)
@@ -27,7 +27,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [DPL-12.26 - Scope Limitation](#dpl-1226-scope-limitation)
     - [DPL-12.27 - Backport Requirement](#dpl-1227-backport-requirement)
   - [2. Relationship to Code-Level 12.x Rules](#2-relationship-to-code-level-12x-rules)
-  - [3. Versioning & Governance](#3-versioning-governance)
+  - [3. Versioning and Governance](#3-versioning-and-governance)
   - [4. Summary](#4-summary)
 
 ---
@@ -69,7 +69,7 @@ This separation ensures that conceptual guidance remains stable while allowing b
 
 ---
 
-## 1. Deployment & Baseline Rule Catalog (DPL-12.x)
+## 1. Deployment and Baseline Rule Catalog (DPL-12.x)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -84,7 +84,7 @@ Each rule has:
 - **Scope** - optional rule application scope
 - **Explanation** - intent and usage
 
-### 1.1 Environment & Immutability
+### 1.1 Environment and Immutability
 
 **DPL-12.1 - Immutable Production Deployment**
 - **Category**: Deployment Environment
@@ -130,10 +130,10 @@ Production environments MUST NOT install, upgrade, or remove Python packages at 
 
 ---
 
-### 1.2 Baseline & CBM
+### 1.2 Baseline and CBM
 
 **DPL-12.5 - Certified Baseline Requirement for Deployment**
-- **Category**: Baseline & CBM
+- **Category**: Baseline and CBM
 - **Type**: Governance
 - **Profiles**:
   - Core: MUST
@@ -152,7 +152,7 @@ Deploying without a certified baseline is forbidden.
 ---
 
 **DPL-12.6 - Deployment = Tested Configuration Only**
-- **Category**: Baseline & CBM
+- **Category**: Baseline and CBM
 - **Type**: Process
 - **Profiles**:
   - Core: MUST
@@ -163,7 +163,7 @@ The configuration deployed to production MUST match a configuration **that has b
 ---
 
 **DPL-12.7 - PROD Must Match CBM Identically**
-- **Category**: Baseline & CBM
+- **Category**: Baseline and CBM
 - **Type**: Configuration
 - **Profiles**:
   - Core: MUST
@@ -174,7 +174,7 @@ Before deployment, the target production environment SHALL be checked against th
 ---
 
 **DPL-12.8 - CBM Completeness and Traceability**
-- **Category**: Baseline & CBM
+- **Category**: Baseline and CBM
 - **Type**: Configuration
 - **Profiles**:
   - Core: MUST
@@ -195,7 +195,7 @@ The CBM SHALL be stored alongside test artifacts and Compliance Certificates.
 
 ---
 
-### 1.3 Releases & Immutability
+### 1.3 Releases and Immutability
 
 **DPL-12.9 - Release Immutability Mandated**
 - **Category**: Release Management
@@ -238,10 +238,10 @@ The registry MUST be immutable and auditable.
 
 ---
 
-### 1.4 Updates & Upgrade Process
+### 1.4 Updates and Upgrade Process
 
 **DPL-12.12 - Controlled Upgrade Process**
-- **Category**: Updates & Upgrades
+- **Category**: Updates and Upgrades
 - **Type**: Process
 - **Profiles**:
   - Core: MUST
@@ -258,7 +258,7 @@ All changes to a deployed system (code, dependencies, configuration, Python vers
 ---
 
 **DPL-12.13 - Automated Updates Forbidden in PROD**
-- **Category**: Updates & Upgrades
+- **Category**: Updates and Upgrades
 - **Type**: Configuration
 - **Profiles**:
   - Core: MUST-NOT
@@ -269,7 +269,7 @@ Automatic updates in production (e.g. OS unattended upgrades, package auto-updat
 ---
 
 **DPL-12.14.1 - Rollback Strategy Required**
-- **Category**: Updates & Upgrades
+- **Category**: Updates and Upgrades
 - **Type**: Process
 - **Profiles**:
   - Core: SHOULD
@@ -382,7 +382,7 @@ Evidence MAY be captured as part of SCEM and operational readiness.
 
 ---
 
-### 1.5 CI/CD & Deployment Pipeline
+### 1.5 CI/CD and Deployment Pipeline
 
 **DPL-12.15 - Deployment via Controlled Pipeline Only**
 - **Category**: CI/CD
@@ -424,7 +424,7 @@ Deployment configuration (runtime options, environment variables, feature flags)
 
 ---
 
-### 1.6 Environment Parity & Testing
+### 1.6 Environment Parity and Testing
 
 **DPL-12.18 - Environment Parity Across TEST/PRE-PROD/PROD**
 - **Category**: Environment Parity
@@ -528,14 +528,14 @@ Certified baselines (code, CBM, artifacts) MUST be stored in durable, redundant 
 **Phase 3 - Test Requalification**
 - Re-run full TEP
 - Re-run platform matrix
-- Re-run performance & reliability tests
+- Re-run performance and reliability tests
 
 **Phase 4 - New Baseline Creation**
 - Create new CBM
 - Update RCR, TEP, SBR
 - Assign new Baseline ID
 
-**Phase 5 - Approval & Release**
+**Phase 5 - Approval and Release**
 - Independent approval
 - Issue new Compliance Certificate
 
@@ -598,7 +598,7 @@ No divergence.
 > [⬆ Back to Table of Contents](#toc)
 
 
-The **DPL-12.x** rules in this document complement the **CRSS-12.x** code-level configuration & deployment integrity rules defined in the Core/Strict catalogs.
+The **DPL-12.x** rules in this document complement the **CRSS-12.x** code-level configuration and deployment integrity rules defined in the Core/Strict catalogs.
 
 - `CRSS-12.x` → what the **code and technical configuration** must guarantee.
 - `DPL-12.x`  → what the **organization and deployment process** must enforce.
@@ -607,7 +607,7 @@ Both sets MUST be satisfied for a project to claim full CRSS-Python compliance.
 
 ---
 
-## 3. Versioning & Governance
+## 3. Versioning and Governance
 
 > [⬆ Back to Table of Contents](#toc)
 

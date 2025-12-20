@@ -1,4 +1,4 @@
-# CRSS-Python Overview & Repository Map
+# CRSS-Python Overview and Repository Map
 
 **Version:** v1.0.0  
 **Status:** Informative  
@@ -10,7 +10,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Overview & Repository Map](#crss-python-overview-repository-map)
+- [CRSS-Python Overview and Repository Map](#crss-python-overview-repository-map)
   - [Table of Contents](#table-of-contents)
   - [1. CRSS-Python Overview](#1-crss-python-overview)
     - [1.1 What Is CRSS-Python?](#11-what-is-crss-python)
@@ -36,12 +36,12 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [2. Repository Map (CRSS/)](#2-repository-map-crss)
     - [2.1 Overview](#21-overview)
     - [2.2 Specifications](#22-specifications)
-    - [2.3 Governance & Evidence](#23-governance-evidence)
-    - [2.4 Deployment & Baselines](#24-deployment-baselines)
+    - [2.3 Governance and Evidence](#23-governance-and-evidence)
+    - [2.4 Deployment and Baselines](#24-deployment-and-baselines)
     - [2.5 Policies](#25-policies)
-    - [2.6 Annexes, Guides & Roadmaps](#26-annexes-guides-roadmaps)
+    - [2.6 Annexes and Roadmaps](#26-annexes-and-roadmaps)
     - [2.7 Examples](#27-examples)
-    - [2.8 Release & Meta](#28-release-meta)
+    - [2.8 Release and Meta](#28-release-and-meta)
 
 ---
 
@@ -211,11 +211,11 @@ Still must follow rules - but less restrictive.
 
 Compliance follows a **5-phase process**:
 
-1. Requirements & Traceability  
+1. Requirements and Traceability  
 2. Rule Compliance  
-3. Testing & Coverage  
+3. Testing and Coverage  
 4. Baseline (CBM) Freeze  
-5. Approval & Certification  
+5. Approval and Certification  
 
 Compliance is **binary**:
 
@@ -326,11 +326,11 @@ Regardless of project stage:
 
 | If you want to understand… | Read |
 |----------------------------|------|
-| Overall rules & concepts | **Standard Safety Master** |
+| Overall rules and concepts | **Standard Safety Master** |
 | How to prove compliance | **Compliance Process Master** |
 | Evidence and certification | **Safety Case Evidence Model (SCEM)** |
-| Deployment & release | **Deployment Master** |
-| Tooling automation | **Tooling & Automation Master** |
+| Deployment and release | **Deployment Master** |
+| Tooling automation | **Tooling and Automation Master** |
 
 The Overview Page is your **map**.  
 The specs are the **manuals**.
@@ -389,17 +389,17 @@ All paths below are under the `CRSS/` folder of the public repository.
 
 ### 2.1 Overview
 
-- [CRSS-Python Overview & Repository Map](./crss_python_overview_landing.md)  
+- [CRSS-Python Overview and Repository Map](./crss_python_overview_landing.md)  
   High-level introduction, concepts, and navigation map.
 
-- [Study Path & Curriculum](./crss_python_study_path_curriculum.md)  
+- [Study Path and Curriculum](./crss_python_study_path_curriculum.md)  
   Recommended learning order and topics.
 
 - [FAQ (General)](./crss_python_FAQ_general.md)  
-  General CRSS-Python Q&A.
+  General CRSS-Python QandA.
 
-- [FAQ (Auditors & Regulators)](./crss_python_FAQ_auditors_regulators.md)  
-  Certification-facing and regulator-oriented Q&A.
+- [FAQ (Auditors and Regulators)](./crss_python_FAQ_auditors_regulators.md)  
+  Certification-facing and regulator-oriented QandA.
 
 ---
 
@@ -416,7 +416,7 @@ All paths below are under the `CRSS/` folder of the public repository.
 
 ---
 
-### 2.3 Governance & Evidence
+### 2.3 Governance and Evidence
 
 - [Compliance Process Master](../2-Governance/crss_python_compliance_process_master.md)  
 - [Safety Case Evidence Model](../2-Governance/crss_python_safety_case_evidence_model.md)  
@@ -424,11 +424,11 @@ All paths below are under the `CRSS/` folder of the public repository.
 - [Certification Readiness Kit](../2-Governance/crss_python_certification_readiness_kit.md)  
 - [External Assessment Master](../2-Governance/crss_python_external_assessment_master.md)  
 - [Integration with V-Model and ASPICE](../2-Governance/crss_python_integration_with_v-model_and-ASPICE.md)  
-- [Tooling & Automation Master](../2-Governance/crss_python_tooling_automation_master.md)
+- [Tooling and Automation Master](../2-Governance/crss_python_tooling_automation_master.md)
 
 ---
 
-### 2.4 Deployment & Baselines
+### 2.4 Deployment and Baselines
 
 - [Deployment Master](../3-Deployment/crss_python_deployment_master.md)  
 - [Release Management](../3-Deployment/crss_python_release_management.md)  
@@ -444,7 +444,7 @@ All paths below are under the `CRSS/` folder of the public repository.
 
 ---
 
-### 2.6 Annexes, Guides & Roadmaps
+### 2.6 Annexes and Roadmaps
 
 - [Architecture Blueprint](../5-Annexes/crss_python_architecture_blueprint.md)  
 - [Architecture Guide](../5-Annexes/crss_python_architecture_guide.md)  
@@ -467,7 +467,7 @@ All paths below are under the `CRSS/` folder of the public repository.
 
 ---
 
-### 2.8 Release & Meta
+### 2.8 Release and Meta
 
 - [Release Notes v1.0.0](../7-Release/release_notes_v1-0-0.md)  
 - [Whitepaper (PDF)](../7-Release/CRSS_Python_Whitepaper_v1_0_0.pdf)

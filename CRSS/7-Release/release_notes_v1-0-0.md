@@ -38,7 +38,7 @@ This is the first official, public, and immutable release of the CRSS-Python Saf
 - Full Deployment, Baseline, and Zero-Drift Policy
 - Compliance Master with Acceptance Criteria
 - SCEM Evidence and Maturity Model
-- Tooling & Automation Governance
+- Tooling and Automation Governance
 - Official Release Package Specification
 
 ## Added
