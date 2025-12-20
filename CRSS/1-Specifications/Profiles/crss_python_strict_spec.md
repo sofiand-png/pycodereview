@@ -19,41 +19,14 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [1.2 Criticality Levels](#12-criticality-levels)
     - [1.3 Companion Documents](#13-companion-documents)
     - [1.4 Python Version Scope and Relation to Core](#14-python-version-scope-and-relation-to-core)
-  - [2. Strengthened Rules (Core --> Strict)](#2-strengthened-rules-core-strict)
-  - [3. Strict-Only Rules](#3-strict-only-rules)
+  - [2.1. Strengthened Rules (Core --> Strict)](#21-strengthened-rules-core-strict)
+  - [2.2. Strict-Only Rules](#22-strict-only-rules)
   - [3. Core Language Usage](#3-core-language-usage)
-    - [CRSS-11.3.3 - Structural typing prohibited in Strict code (Strict-only)](#crss-1133-structural-typing-prohibited-in-strict-code-strict-only)
   - [4. Error Handling, Exceptions and Control Flow](#4-error-handling-exceptions-and-control-flow)
-    - [CRSS-11.4.1 - Loops must be demonstrably bounded](#crss-1141-loops-must-be-demonstrably-bounded)
-    - [CRSS-11.4.2 - No raw `while True` loops](#crss-1142-no-raw-while-true-loops)
-    - [CRSS-11.4.3 - No unbounded recursion in Strict code](#crss-1143-no-unbounded-recursion-in-strict-code)
-    - [CRSS-11.4.5 - No dependence on scheduling or GC timing](#crss-1145-no-dependence-on-scheduling-or-gc-timing)
-    - [CRSS-11.4.6 - Documented execution bounds for Strict units](#crss-1146-documented-execution-bounds-for-strict-units)
-    - [CRSS-11.4.7 - No blocking operations in Strict units](#crss-1147-no-blocking-operations-in-strict-units)
-    - [CRSS-11.4.8 - No dependence on wall-clock time for correctness](#crss-1148-no-dependence-on-wall-clock-time-for-correctness)
   - [5. Data and Interfaces](#5-data-and-interfaces)
-    - [CRSS-11.5.1 - Object-oriented design restrictions](#crss-1151-object-oriented-design-restrictions)
-    - [CRSS-11.5.2 - Decorator whitelist (Strict-only)](#crss-1152-decorator-whitelist-strict-only)
-    - [CRSS-11.5.3 - No I/O in core computational logic - I/O vs Critical and Non-Critical Phases](#crss-1153-no-io-in-core-computational-logic-io-vs-critical-non-critical-phases)
-    - [CRSS-11.5.6 - No dynamic allocation in critical execution paths (Strict-only)](#crss-1156-no-dynamic-allocation-in-critical-execution-paths-strict-only)
-    - [CRSS-11.5.7 - GC disabled during Strict critical execution](#crss-1157-gc-disabled-during-strict-critical-execution)
-    - [CRSS-11.5.8 - No finalizers (__del__) in Strict object graphs](#crss-1158-no-finalizers-__del__-in-strict-object-graphs)
-    - [CRSS-11.5.9 - Acyclic Strict-owned object graphs](#crss-1159-acyclic-strict-owned-object-graphs)
-    - [CRSS-11.6.1 - Strict execution shall be single-threaded](#crss-1161-strict-execution-shall-be-single-threaded)
   - [7. Robustness and Portability](#7-robustness-and-portability)
-    - [CRSS-11.7.1 - No wildcard imports (Strict-only)](#crss-1171-no-wildcard-imports-strict-only)
-    - [CRSS-11.7.2 - No implicit relative imports (Strict-only)](#crss-1172-no-implicit-relative-imports-strict-only)
-    - [CRSS-11.7.3 - Process isolation for safety-critical Python](#crss-1173-process-isolation-for-safety-critical-python)
-    - [CRSS-11.7.4 - Safe-state watchdog for Strict processes](#crss-1174-safe-state-watchdog-for-strict-processes)
   - [8. Maintainability and Documentation](#8-maintainability-and-documentation)
-    - [CRSS-11.8.1 - Single responsibility per Strict module (Strict-only)](#crss-1181-single-responsibility-per-strict-module-strict-only)
   - [9. Testing and Coverage Guidelines](#9-testing-and-coverage-guidelines)
-    - [CRSS-11.9.1 - 100% branch coverage for Strict modules](#crss-1191-100-branch-coverage-for-strict-modules)
-    - [CRSS-11.9.2 - MC/DC for critical decisions](#crss-1192-mcdc-for-critical-decisions)
-    - [CRSS-11.9.3 - Documented test matrices for critical logic](#crss-1193-documented-test-matrices-for-critical-logic)
-    - [CRSS-11.9.4 - Requirements traceability for Strict units](#crss-1194-requirements-traceability-for-strict-units)
-    - [CRSS-11.9.5 - Guideline Compliance Summary for CRSS-Strict](#crss-1195-guideline-compliance-summary-for-crss-strict)
-    - [CRSS-11.9.7 - Fault injection for safety mechanisms](#crss-1197-fault-injection-for-safety-mechanisms)
 
 ---
 
@@ -225,7 +198,7 @@ and profile selection, see the Core specification chapter 10 and the
 
 ------------------------------------------------------------------------
 
-## 2. Strengthened Rules (Core --> Strict)
+## 2.1 Strengthened Rules (Core --> Strict)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -335,7 +308,7 @@ code.
 
 ------------------------------------------------------------------------
 
-## 3. Strict-Only Rules
+## 2.2 Strict-Only Rules
 
 > [⬆ Back to Table of Contents](#toc)
 
