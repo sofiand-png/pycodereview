@@ -18,9 +18,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [1. Purpose](#1-purpose)
   - [2. System Interaction Topology](#2-system-interaction-topology)
   - [3. Interactions and Contracts](#3-interactions-and-contracts)
-    - [3.1 Core-C Gateway - Core-B Fusion](#31-core-c-gateway-core-b-fusion)
-    - [3.2 Core-B Fusion - Strict-A Controller](#32-core-b-fusion-strict-a-controller)
-    - [3.3 Strict-A Controller - Core-C Output Gateway](#33-strict-a-controller-core-c-output-gateway)
+    - [3.1 Core-C Gateway To Core-B Fusion](#31-core-c-gateway-to-core-b-fusion)
+    - [3.2 Core-B Fusion To Strict-A Controller](#32-core-b-fusion-to-trict-a-controller)
+    - [3.3 Strict-A Controller To Core-C Output Gateway](#33-strict-a-controller-to-core-c-output-gateway)
   - [4. Fault Containment](#4-fault-containment)
     - [4.1 Isolation Rules](#41-isolation-rules)
     - [4.2 State Recovery](#42-state-recovery)
@@ -63,20 +63,20 @@ Additional optional:
 > [⬆ Back to Table of Contents](#toc)
 
 
-### 3.1 Core-C Gateway - Core-B Fusion
+### 3.1 Core-C Gateway To Core-B Fusion
 Payloads:
 - bounded arrays
 - validated numeric lists
 - deterministic shape
 
-### 3.2 Core-B Fusion - Strict-A Controller
+### 3.2 Core-B Fusion To Strict-A Controller
 Strict-A input must be:
 - fixed-length numeric arrays
 - pre-sanitized
 - pre-bounded
 - plausibility-filtered
 
-### 3.3 Strict-A Controller - Core-C Output Gateway
+### 3.3 Strict-A Controller To Core-C Output Gateway
 Output consists only of:
 - float command
 - status enum
