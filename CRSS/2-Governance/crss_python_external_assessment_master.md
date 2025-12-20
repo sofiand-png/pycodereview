@@ -25,11 +25,11 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [1.9 Non-Conformance (NC)](#19-non-conformance-nc)
   - [2. Assessment Inputs](#2-assessment-inputs)
   - [3. Assessment Stages](#3-assessment-stages)
-    - [3.1 Stage 0 Intake and Eligibility](#31-stage-0-intake-and-eligibility)
-    - [3.2 Stage 1 Structural Completeness](#32-stage-1-structural-completeness)
-    - [3.3 Stage 2 Evidence and RCR Verification](#33-stage-2-evidence-and-rcr-verification)
-    - [3.4 Stage 3 Technical Deep-Dive Sampling](#34-stage-3-technical-deep-dive-sampling)
-    - [3.5 Stage 4 Decision and Reporting](#35-stage-4-decision-and-reporting)
+    - [3.1 Stage0 Intake and Eligibility](#31-stage0-intake-and-eligibility)
+    - [3.2 Stage1 Structural Completeness](#32-stage1-structural-completeness)
+    - [3.3 Stage2 Evidence and RCR Verification](#33-stage2-evidence-and-rcr-verification)
+    - [3.4 Stage3 Technical Deep-Dive Sampling](#34-stage3-technical-deep-dive-sampling)
+    - [3.5 Stage4 Decision and Reporting](#35-stage4-decision-and-reporting)
     - [3.6 Interpretation of Conditional Stage Outcomes](#36-interpretation-of-conditional-stage-outcomes)
   - [4. Non-Conformance Handling](#4-non-conformance-handling)
   - [5. Revocation and Reassessment](#5-revocation-nd-reassessment)
@@ -224,7 +224,7 @@ For Strict Level A, certification SHALL ONLY be granted if all applicable stages
 Any unresolved COND-Sx SHALL result in NOT CERTIFIED.
 ---
 
-### 3.1 Stage 0 - Intake and Eligibility
+### 3.1 Stage0 Intake and Eligibility
 
 EA SHALL:
 
@@ -241,7 +241,7 @@ If **FAIL-S0**, the system is marked **NOT ASSESSABLE**; no further stages are e
 
 ---
 
-### 3.2 Stage 1 - Structural Completeness
+### 3.2 Stage1 Structural Completeness
 
 EA SHALL confirm:
 
@@ -259,7 +259,7 @@ Strict Level A: any **COND-S1** must be resolved to **PASS-S1** before final app
 
 ---
 
-### 3.3 Stage 2 - Evidence and RCR Verification
+### 3.3 Stage2 Evidence and RCR Verification
 
 EA SHALL validate:
 
@@ -280,7 +280,7 @@ Strict Level A: any **COND-S2** must be resolved to **PASS-S2**. Any **FAIL-S2**
 
 ---
 
-### 3.4 Stage 3 - Technical Deep-Dive Sampling
+### 3.4 Stage3 Technical Deep-Dive Sampling
 
 EA SHALL:
 
@@ -299,7 +299,7 @@ Strict Level A: conditional passes (**COND-S3**) require remediation and re-samp
 
 ---
 
-### 3.5 Stage 4 - Decision and Reporting
+### 3.5 Stage4 Decision and Reporting
 
 The External Assessor SHALL synthesize S0-S3 outcomes into a final decision:
 - **CERTIFIED**
