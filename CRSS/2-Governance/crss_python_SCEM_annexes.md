@@ -16,10 +16,10 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [1. Annex A - FMEA Template](#1-annex-a-fmea-template)
     - [A.1 FMEA Table](#a1-fmea-table)
     - [A.2 Rules](#a2-rules)
-  - [2. Annex B - Hazard Log Template](#2-annex-b-hazard-log-template)
-  - [3. Annex C - Safety Architecture Diagram Requirements](#3-annex-c-safety-architecture-diagram-requirements)
-  - [4. Annex D - Auditor Checklist](#4-annex-d-auditor-checklist)
-  - [5. Annex E - Timing Evidence Protocol](#5-annex-e-timing-evidence-protocol)
+  - [2. Annex B Hazard Log Template](#2-annex-b-hazard-log-template)
+  - [3. Annex C Safety Architecture Diagram Requirements](#3-annex-c-safety-architecture-diagram-requirements)
+  - [4. Annex D Auditor Checklist](#4-annex-d-auditor-checklist)
+  - [5. Annex E Timing Evidence Protocol](#5-annex-e-timing-evidence-protocol)
   - [6. Summary](#6-summary)
 
 ---
@@ -69,7 +69,7 @@ All Strict Level A systems MUST use these annexes.
 
 ---
 
-## 2. Annex B - Hazard Log Template
+## 2. Annex B Hazard Log Template
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -86,7 +86,7 @@ All Strict Level A systems MUST use these annexes.
 
 ---
 
-## 3. Annex C - Safety Architecture Diagram Requirements
+## 3. Annex C Safety Architecture Diagram Requirements
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -103,7 +103,7 @@ Format: PDF or PNG, under version control.
 
 ---
 
-## 4. Annex D - Auditor Checklist
+## 4. Annex D Auditor Checklist
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -118,7 +118,7 @@ Auditors MUST verify:
 
 ---
 
-## 5. Annex E - Timing Evidence Protocol
+## 5. Annex E Timing Evidence Protocol
 
 > [⬆ Back to Table of Contents](#toc)
 
