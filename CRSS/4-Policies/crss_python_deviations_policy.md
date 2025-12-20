@@ -64,7 +64,7 @@ ASIL-D / SIL-3 supervisory safety expectations.
 > [⬆ Back to Table of Contents](#toc)
 
 
-### 2.1 Deviations Are NEVER Allowed for MUST / MUST-NOT
+### 2.1 Deviations Are NEVER Allowed for MUST and MUST-NOT
 
 A CRSS rule of type:
 
@@ -152,7 +152,7 @@ This is the **highest severity** deviation.
 
 ---
 
-## 4. Deviations - Forbidden Categories
+## 4. Forbidden Deviations Categories
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -177,7 +177,7 @@ Violating any of these is always unsafe.
 
 ---
 
-## 5. Deviations - Allowed Categories
+## 5. Allowed Deviations Categories
 
 > [⬆ Back to Table of Contents](#toc)
 
