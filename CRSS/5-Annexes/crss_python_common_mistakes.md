@@ -25,7 +25,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [11. Untested Edge Cases](#11-untested-edge-cases)
 - [12. Skipping Documentation Early](#12-skipping-documentation-early)
 - [13. Overusing Shared State](#13-overusing-shared-state)
-- [14. Assuming Compliance = Safety](#14-assuming-compliance-safety)
+- [14. Assuming Compliance Equals Safety](#14-assuming-compliance-equals-safety)
 - [15. Trying to Jump Directly to Strict-A](#15-trying-to-jump-directly-to-strict-a)
 - [Summary](#summary)
 
@@ -161,7 +161,7 @@ Prefer immutable data, message-passing, and clear interfaces.
 
 ---
 
-# 14. Assuming Compliance = Safety
+# 14. Assuming Compliance Equals Safety
 
 **Mistake:**
 Thinking passing rules means the system is safe.
@@ -173,6 +173,7 @@ Safety also depends on:
 - Redundancy
 - Validation
 - Human factors
+- External components/systems
 
 CRSS-Python covers **software integrity**, not full system safety.
 

@@ -27,7 +27,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [4.2 File Format Requirements](#42-file-format-requirements)
 - [5. Toolchain Version Control](#5-toolchain-version-control)
   - [5.1 One-Version Rule](#51-one-version-rule)
-  - [5.2 Toolchain Drift = Automatic FAIL](#52-toolchain-drift-automatic-fail)
+  - [5.2 Toolchain Drift](#52-toolchain-drift)
 - [6. SCEM Tool-Assisted Templates](#6-scem-tool-assisted-templates)
   - [6.1 MAR Template](#61-mar-template)
   - [6.2 Propagation Report Template](#62-propagation-report-template)
@@ -211,7 +211,7 @@ All tools used in certification:
 - Must be captured in CBM
 - Must not auto-update
 
-## 5.2 Toolchain Drift = Automatic FAIL
+## 5.2 Toolchain Drift
 
 > [⬆ Back to Table of Contents](#toc)
 

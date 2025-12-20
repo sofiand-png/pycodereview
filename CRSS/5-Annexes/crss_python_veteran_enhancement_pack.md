@@ -25,9 +25,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [3.2 Forbidden Uses](#32-forbidden-uses)
     - [3.3 Recommended Pattern](#33-recommended-pattern)
   - [4. Pandas / NumPy Usage](#4-pandas-numpy-usage)
-    - [4.1 Strict-A = NEVER](#41-strict-a-never)
-    - [4.2 Core-B = LIMITED](#42-core-b-limited)
-    - [4.3 Core-C = FULL](#43-core-c-full)
+    - [4.1 Strict-A](#41-strict)
+    - [4.2 Core-B](#42-core-b)
+    - [4.3 Core-C](#43-core-c)
   - [5. Distributed Pipelines](#5-distributed-pipelines)
     - [5.1 Cross-Component Boundaries](#51-cross-component-boundaries)
     - [5.2 Isolation Strategy](#52-isolation-strategy)
@@ -104,20 +104,20 @@ FastAPI layer → Core-C wrapper → Strict-B validation → Strict-A Kernel →
 > [⬆ Back to Table of Contents](#toc)
 
 
-### 4.1 Strict-A = NEVER
+### 4.1 Strict-A
 Not allowed because:
 - memory allocations
 - unpredictable operations
 - implicit loops
 
-### 4.2 Core-B = LIMITED
+### 4.2 Core-B
 Allowed only if:
 - arrays are bounded
 - shapes validated first
 - copies avoided
 - no dynamic growth
 
-### 4.3 Core-C = FULL
+### 4.3 Core-C
 Simulation code, logs, analytics, etc.
 
 ---

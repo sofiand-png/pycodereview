@@ -16,7 +16,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [1. Core Concepts](#1-core-concepts)
     - [1.1 Profiles](#11-profiles)
     - [1.2 Safety Levels](#12-safety-levels)
-    - [1.3 Mode = Profile × Safety Level](#13-mode-profile-safety-level)
+    - [1.3 Mode](#13-mode)
       - [Strict-A (Strict Level A) Mode](#strict-a-strict-level-a-mode)
     - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
     - [1.5 Immutability of Mode](#15-immutability-of-mode)
@@ -235,7 +235,7 @@ A **Profile** defines which rule catalog applies to a codebase or component.
 
 Safety Levels apply to **functions/methods**, then propagate to classes and modules.
 
-### 1.3 Mode = Profile × Safety Level
+### 1.3 Mode
 
 A **Mode** is the enforcement identity of a code unit:
 
