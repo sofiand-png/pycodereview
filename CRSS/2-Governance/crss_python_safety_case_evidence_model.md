@@ -13,16 +13,16 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [CRSS-Python Safety Case and Maturity Master Specification](#crss-python-safety-case-and-maturity-master-specification)
   - [Table of Contents](#table-of-contents)
 - [0. Purpose](#0-purpose)
-- [1. SCEM - Safety Case Evidence Model](#1-scem-safety-case-evidence-model)
+- [1. SCEM Safety Case Evidence Model](#1-scem-safety-case-evidence-model)
   - [1.1 Objective](#11-objective)
   - [1.2 SCEM Evidence Categories](#12-scem-evidence-categories)
   - [1.3 Mandatory SCEM Artifacts](#13-mandatory-scem-artifacts)
-    - [D1 - Requirements and Classification](#d1-requirements-and-classification)
-    - [D2 - Design and Architecture](#d2-design-and-architecture)
-    - [D3 - Compliance Artifacts](#d3-compliance-artifacts)
-    - [D4 - Testing and Behavior](#d4-testing-and-behavior)
-    - [D5 - Configuration Integrity](#d5-configuration-integrity)
-    - [D6 - Operational Readiness](#d6-operational-readiness)
+    - [D1 Requirements and Classification](#d1-requirements-and-classification)
+    - [D2 Design and Architecture](#d2-design-and-architecture)
+    - [D3 Compliance Artifacts](#d3-compliance-artifacts)
+    - [D4 Testing and Behavior](#d4-testing-and-behavior)
+    - [D5 Configuration Integrity](#d5-configuration-integrity)
+    - [D6 Operational Readiness](#d6-operational-readiness)
   - [1.4 SCEM Completion Rules](#14-scem-completion-rules)
   - [1.5 SCEM and Modes](#15-scem-and-modes)
   - [1.6 Quantitative Verification Targets per Mode](#16-quantitative-verification-targets-per-mode)
@@ -30,20 +30,20 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [1.6.2 Robustness and Fault Injection](#162-robustness-and-fault-injection)
     - [1.6.3 Independence](#163-independence)
 - [2. SCEM Annexes (Consolidated)](#2-scem-annexes-consolidated)
-  - [Annex A - Mode Assignment Register (MAR)](#annex-a-mode-assignment-register-mar)
-  - [Annex B - Critical Boundary Declaration (CBD)](#annex-b-critical-boundary-declaration-cbd)
-  - [Annex C - Mode Propagation Record](#annex-c-mode-propagation-record)
-  - [Annex D - Deviation Register](#annex-d-deviation-register)
-  - [Annex E - Determinism Validation Checklist (Strict-A Only)](#annex-e-determinism-validation-checklist-strict-a-only)
-  - [Annex F - One-Version Python Confirmation](#annex-f-one-version-python-confirmation)
+  - [Annex A Mode Assignment Register (MAR)](#annex-a-mode-assignment-register-mar)
+  - [Annex B Critical Boundary Declaration (CBD)](#annex-b-critical-boundary-declaration-cbd)
+  - [Annex C Mode Propagation Record](#annex-c-mode-propagation-record)
+  - [Annex D Deviation Register](#annex-d-deviation-register)
+  - [Annex E Determinism Validation Checklist (Strict-A Only)](#annex-e-determinism-validation-checklist-strict-a-only)
+  - [Annex F One-Version Python Confirmation](#annex-f-one-version-python-confirmation)
 - [3. Safety Maturity Model (SMM)](#3-safety-maturity-model-smm)
   - [3.1 Purpose](#31-purpose)
   - [3.2 Levels](#32-levels)
   - [3.3 Maturity Requirements](#33-maturity-requirements)
-    - [S1 - Controlled](#s1-controlled)
-    - [S2 - Managed](#s2-managed)
-    - [S3 - Verified](#s3-verified)
-    - [S4 - Certified](#s4-certified)
+    - [S1 Controlled](#s1-controlled)
+    - [S2 Managed](#s2-managed)
+    - [S3 Verified](#s3-verified)
+    - [S4 Certified](#s4-certified)
   - [3.4 Maturity Assessment Output](#34-maturity-assessment-output)
 - [4. Summary](#4-summary)
 
@@ -53,7 +53,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 This master document consolidates and replaces three prior specifications:
 
-1. **SCEM - Safety Case Evidence Model**
+1. **SCEM Safety Case Evidence Model**
 2. **SCEM Annexes**
 3. **Safety Maturity Model**
 
@@ -70,7 +70,7 @@ This is the **single authoritative reference** for building, maintaining, and ev
 
 ---
 
-# 1. SCEM - Safety Case Evidence Model
+# 1. SCEM Safety Case Evidence Model
 
 ## 1.1 Objective
 
@@ -115,35 +115,35 @@ Each domain contains required artifacts.
 > [⬆ Back to Table of Contents](#toc)
 
 
-### D1 - Requirements and Classification
+### D1 Requirements and Classification
 - Requirements Traceability Matrix (RTM)
 - Mode Assignment Register (MAR)
 - Critical Boundary Declaration (CBD)
 
-### D2 - Design and Architecture
+### D2 Design and Architecture
 - System Architecture Diagram
 - Module/Class Dependency Map
 - Mode Propagation Analysis
 - Critical/Non-Critical Interaction Matrix
 
-### D3 - Compliance Artifacts
+### D3 Compliance Artifacts
 - Rule Compliance Report (RCR)
 - Deviation Register (if applicable)
 - Static Analysis Logs
 
-### D4 - Testing and Behavior
+### D4 Testing and Behavior
 - Coverage Report (per Mode)
 - Determinism Validation Report (Strict-A)
 - Fault Injection Logs
 - MC/DC Results (`@critical`, Strict-A only)
 
-### D5 - Configuration Integrity
+### D5 Configuration Integrity
 - Configuration Baseline Manifest (CBM)
 - Reproducible Build Snapshot
 - One-Version Python Confirmation
 - Toolchain Version Registry
 
-### D6 - Operational Readiness
+### D6 Operational Readiness
 - Watchdog Configuration
 - Monitoring/Telemetry Policy
 - Safe-State/Fallback Strategy
@@ -246,13 +246,13 @@ For **Strict-A**:
 - Independence MUST be documented in SCEM-D3 (Compliance Artifacts) and in the Compliance Certificate (CC).   
 
 
-# 2. SCEM Annexes (Consolidated)
+# 2. SCEM Annexes
 
 The following annexes define **standard templates** for SCEM artifacts.
 
 ---
 
-## Annex A - Mode Assignment Register (MAR)
+## Annex A Mode Assignment Register (MAR)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -272,7 +272,7 @@ Modes MUST NOT be downgraded after assignment.
 
 ---
 
-## Annex B - Critical Boundary Declaration (CBD)
+## Annex B Critical Boundary Declaration (CBD)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -291,7 +291,7 @@ Critical code may **never** call non-critical code.
 
 ---
 
-## Annex C - Mode Propagation Record
+## Annex C Mode Propagation Record
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -309,7 +309,7 @@ Modes only **increase**.
 
 ---
 
-## Annex D - Deviation Register
+## Annex D Deviation Register
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -329,7 +329,7 @@ Strict-A `@critical` deviations are **not permitted**.
 
 ---
 
-## Annex E - Determinism Validation Checklist (Strict-A Only)
+## Annex E Determinism Validation Checklist (Strict-A Only)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -346,7 +346,7 @@ Failure -> Strict-A **BLOCKER**.
 
 ---
 
-## Annex F - One-Version Python Confirmation
+## Annex F One-Version Python Confirmation
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -397,20 +397,20 @@ The SMM assesses **process maturity**, not code correctness.
 > [⬆ Back to Table of Contents](#toc)
 
 
-### S1 - Controlled
+### S1 Controlled
 - Rules known
 - Basic documentation
 
-### S2 - Managed
+### S2 Managed
 - Formal compliance lifecycle
 - SCEM mandatory for Strict
 
-### S3 - Verified
+### S3 Verified
 - Independent review
 - Full SCEM
 - Mode tracking automated
 
-### S4 - Certified
+### S4 Certified
 - Strict-A certification achieved
 - Organization capable of:
   - MC/DC tooling
