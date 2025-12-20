@@ -67,7 +67,7 @@ Instead:
 
 - Safety goals and hazards are defined at system level (e.g. ISO 26262 Part 3/4).  
 - The resulting safety requirements are allocated to software components.  
-- CRSS Safety Levels (A/B/C) are then assigned to **code units** according to those allocations and recorded in the **Mode Assignment Register (MAR)** (SCEM-D1). :contentReference[oaicite:5]{index=5}  
+- CRSS Safety Levels (A/B/C) are then assigned to **code units** according to those allocations and recorded in the **Mode Assignment Register (MAR)** (SCEM-D1). 
 
 ---
 
