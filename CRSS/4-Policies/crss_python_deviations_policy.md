@@ -1,27 +1,27 @@
-# CRSS-Python Deviation Policy — Full Expanded Specification
+# CRSS-Python Deviation Policy
 
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
 
-- [CRSS-Python Deviation Policy — Full Expanded Specification (v3.0)](#crss-python-deviation-policy-full-expanded-specification-v30)
+- [CRSS-Python Deviation Policy](#crss-python-deviation-policy)
   - [1. Purpose](#1-purpose)
   - [2. Principles (Foundational)](#2-principles-foundational)
     - [2.1 Deviations Are **NEVER Allowed** for MUST / MUST-NOT](#21-deviations-are-never-allowed-for-must-must-not)
     - [2.2 Deviations Are **NEVER Allowed** Inside Strict-A @critical](#22-deviations-are-never-allowed-inside-strict-a-critical)
     - [2.3 Deviations Are Allowed **Only for SHOULD / SHOULD-NOT**](#23-deviations-are-allowed-only-for-should-should-not)
   - [3. Deviation Types (Formal)](#3-deviation-types-formal)
-    - [3.1 **RIC — Rule Interpretation Clarification**](#31-ric-rule-interpretation-clarification)
-    - [3.2 **CD — Conditional Deviation**](#32-cd-conditional-deviation)
-    - [3.3 **ED — Exceptional Deviation**](#33-ed-exceptional-deviation)
-  - [4. Deviations — Forbidden Categories](#4-deviations-forbidden-categories)
-  - [5. Deviations — Allowed Categories](#5-deviations-allowed-categories)
+    - [3.1 **RIC - Rule Interpretation Clarification**](#31-ric-rule-interpretation-clarification)
+    - [3.2 **CD - Conditional Deviation**](#32-cd-conditional-deviation)
+    - [3.3 **ED - Exceptional Deviation**](#33-ed-exceptional-deviation)
+  - [4. Deviations - Forbidden Categories](#4-deviations-forbidden-categories)
+  - [5. Deviations - Allowed Categories](#5-deviations-allowed-categories)
   - [6. Required Contents of a Deviation (DMR)](#6-required-contents-of-a-deviation-dmr)
     - [Identification](#identification)
     - [Technical Justification](#technical-justification)
@@ -99,7 +99,7 @@ These represent strong guidance but can be deviated through a **controlled proce
 
 ## 3. Deviation Types (Formal)
 
-### 3.1 **RIC — Rule Interpretation Clarification**
+### 3.1 **RIC - Rule Interpretation Clarification**
 
 Used when:
 
@@ -111,7 +111,7 @@ Used when:
 
 ---
 
-### 3.2 **CD — Conditional Deviation**
+### 3.2 **CD - Conditional Deviation**
 
 Used when:
 
@@ -124,7 +124,7 @@ Used when:
 
 ---
 
-### 3.3 **ED — Exceptional Deviation**
+### 3.3 **ED - Exceptional Deviation**
 
 Used when:
 
@@ -142,7 +142,7 @@ This is the **highest severity** deviation.
 
 ---
 
-## 4. Deviations — Forbidden Categories
+## 4. Deviations - Forbidden Categories
 
 These rules can **NEVER** be deviated:
 
@@ -164,7 +164,7 @@ Violating any of these is always unsafe.
 
 ---
 
-## 5. Deviations — Allowed Categories
+## 5. Deviations - Allowed Categories
 
 Permitted ONLY for SHOULD/SHOULD-NOT rules in:
 
@@ -242,7 +242,7 @@ Example rows:
 
 | Rule ID | Core A/B/C | Strict-A | Strict B/C | Phase | Allowed? | Deviation Type | Approval |
 |---------|-------------|----------|------------|--------|----------|----------------|----------|
-| CRSS-7.8.3 | YES | NO | CD | Critical | | — | — |
+| CRSS-7.8.3 | YES | NO | CD | Critical | | - | - |
 | CRSS-5.4.9 | YES | NO | YES | Non-Critical | Yes | CD | TL + SA |
 | CRSS-6.4.4 | YES | ED | ED | Any | Yes | ED | ISA |
 
@@ -302,4 +302,4 @@ This deviation model:
 - Is fully certifier-ready
 - Enables automated tooling
 
-This is the **normative deviation scheme for CRSS-Python v3.0**.
+This is the **normative deviation scheme for CRSS-Python v1.0.0*.
