@@ -14,13 +14,13 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [CRSS-Python Deviation Policy](#crss-python-deviation-policy)
   - [1. Purpose](#1-purpose)
   - [2. Principles (Foundational)](#2-principles-foundational)
-    - [2.1 Deviations Are **NEVER Allowed** for MUST / MUST-NOT](#21-deviations-are-never-allowed-for-must-must-not)
-    - [2.2 Deviations Are **NEVER Allowed** Inside Strict-A @critical](#22-deviations-are-never-allowed-inside-strict-a-critical)
-    - [2.3 Deviations Are Allowed **Only for SHOULD / SHOULD-NOT**](#23-deviations-are-allowed-only-for-should-should-not)
+    - [2.1 Deviations Are NEVER Allowed for MUST / MUST-NOT](#21-deviations-are-never-allowed-for-must-must-not)
+    - [2.2 Deviations Are NEVER Allowed Inside Strict-A @critical](#22-deviations-are-never-allowed-inside-strict-a-critical)
+    - [2.3 Deviations Are Allowed Only for SHOULD / SHOULD-NOT](#23-deviations-are-allowed-only-for-should-should-not)
   - [3. Deviation Types (Formal)](#3-deviation-types-formal)
-    - [3.1 **RIC - Rule Interpretation Clarification**](#31-ric-rule-interpretation-clarification)
-    - [3.2 **CD - Conditional Deviation**](#32-cd-conditional-deviation)
-    - [3.3 **ED - Exceptional Deviation**](#33-ed-exceptional-deviation)
+    - [3.1 RIC - Rule Interpretation Clarification](#31-ric-rule-interpretation-clarification)
+    - [3.2 CD - Conditional Deviation](#32-cd-conditional-deviation)
+    - [3.3 ED - Exceptional Deviation](#33-ed-exceptional-deviation)
   - [4. Deviations - Forbidden Categories](#4-deviations-forbidden-categories)
   - [5. Deviations - Allowed Categories](#5-deviations-allowed-categories)
   - [6. Required Contents of a Deviation (DMR)](#6-required-contents-of-a-deviation-dmr)
@@ -31,7 +31,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [Evidence](#evidence)
     - [Approvals](#approvals)
     - [Traceability](#traceability)
-  - [7. Deviation Matrix (Formal, v2.0)](#7-deviation-matrix-formal-v20)
+  - [7. Deviation Matrix](#7-deviation-matrix)
   - [8. Scope Rules](#8-scope-rules)
   - [9. Integration With Mode Model](#9-integration-with-mode-model)
   - [10. Final Policy Statement (Normative)](#10-final-policy-statement-normative)
@@ -64,7 +64,7 @@ ASIL-D / SIL-3 supervisory safety expectations.
 > [⬆ Back to Table of Contents](#toc)
 
 
-### 2.1 Deviations Are **NEVER Allowed** for MUST / MUST-NOT
+### 2.1 Deviations Are NEVER Allowed for MUST / MUST-NOT
 
 A CRSS rule of type:
 
@@ -81,7 +81,7 @@ A violation of a MUST/MUST-NOT rule is **always non-compliant**.
 
 ---
 
-### 2.2 Deviations Are **NEVER Allowed** Inside Strict-A @critical
+### 2.2 Deviations Are NEVER Allowed Inside Strict-A @critical
 
 Inside **Strict-Level-A + @critical phase**:
 
@@ -93,7 +93,7 @@ Strict-A critical code is a **zero-tolerance** zone.
 
 ---
 
-### 2.3 Deviations Are Allowed **Only for SHOULD / SHOULD-NOT**
+### 2.3 Deviations Are Allowed Only for SHOULD / SHOULD-NOT
 
 Valid deviation candidates must be rules of type:
 
@@ -109,7 +109,7 @@ These represent strong guidance but can be deviated through a **controlled proce
 > [⬆ Back to Table of Contents](#toc)
 
 
-### 3.1 **RIC - Rule Interpretation Clarification**
+### 3.1 RIC - Rule Interpretation Clarification
 
 Used when:
 
@@ -121,7 +121,7 @@ Used when:
 
 ---
 
-### 3.2 **CD - Conditional Deviation**
+### 3.2 CD - Conditional Deviation
 
 Used when:
 
@@ -134,7 +134,7 @@ Used when:
 
 ---
 
-### 3.3 **ED - Exceptional Deviation**
+### 3.3 ED - Exceptional Deviation
 
 Used when:
 
@@ -251,7 +251,7 @@ Every deviation MUST include:
 
 ---
 
-## 7. Deviation Matrix (Formal, v2.0)
+## 7. Deviation Matrix
 
 > [⬆ Back to Table of Contents](#toc)
 
