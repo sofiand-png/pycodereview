@@ -3,14 +3,14 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
-
 - [CRSS-Python Tooling & Automation Master Specification](#crss-python-tooling-automation-master-specification)
+  - [Table of Contents](#table-of-contents)
 - [0. Purpose](#0-purpose)
 - [1. Tooling Governance Model](#1-tooling-governance-model)
   - [1.1 Role of Tools in CRSS](#11-role-of-tools-in-crss)
@@ -34,8 +34,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - [7. Tool Acceptance Criteria](#7-tool-acceptance-criteria)
   - [7.1 Automated Evidence Acceptance](#71-automated-evidence-acceptance)
   - [7.2 Automatic Rejection Conditions](#72-automatic-rejection-conditions)
-  - [7.3 Tool Confidence Categories](#73-tool-confidence-categories)
-  - [7.4 Minimum Expectations per Category](#74-minimum-expectations-per-category)
+    - [7.3 Tool Confidence Categories](#73-tool-confidence-categories)
+    - [7.4 Minimum Expectations per Category](#74-minimum-expectations-per-category)
 - [8. Summary](#8-summary)
 
 ---
@@ -253,26 +253,26 @@ Accepted only if:
 
 Tools are grouped into three confidence categories:
 
-- **Q0 — Advisory Tools**  
+- **Q0 - Advisory Tools**  
   - Linting, style checkers, non-safety-critical analyzers.  
   - Findings are advisory; no certification reliance.  
 
-- **Q1 — Supporting Safety Evidence**  
+- **Q1 - Supporting Safety Evidence**  
   - Static analyzers, type checkers, coverage tools used to build SCEM evidence, but with cross-checks and manual review.  
 
-- **Q2 — Safety-Critical Decision Tools**  
+- **Q2 - Safety-Critical Decision Tools**  
   - Tools whose output is directly used as *primary evidence* that safety requirements are met (e.g., the main CRSS compliance analyzer for Strict-A).  
 
 ### 7.4 Minimum Expectations per Category
 
-**Q1 – Supporting Safety Evidence:**
+**Q1 - Supporting Safety Evidence:**
 
 - Fixed-version in CBM  
 - No auto-update  
 - Results cross-checked with at least one other tool or manual sampling  
 - Failures cannot directly hide a violation; human review present  
 
-**Q2 – Safety-Critical Decision Tools:**
+**Q2 - Safety-Critical Decision Tools:**
 
 - All Q1 expectations, plus:  
   - Documented failure modes and mitigations  

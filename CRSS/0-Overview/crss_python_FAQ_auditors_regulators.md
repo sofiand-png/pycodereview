@@ -3,29 +3,30 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
-
-- [1. What Is the Certification Scope of CRSS-Python?](#1-what-is-the-certification-scope-of-crss-python)
-- [2. What Safety Levels Can CRSS-Python Support?](#2-what-safety-levels-can-crss-python-support)
-- [3. Is Compliance Binary?](#3-is-compliance-binary)
-- [4. What Are the Core Enforcement Mechanisms?](#4-what-are-the-core-enforcement-mechanisms)
-- [5. What Evidence Is Required?](#5-what-evidence-is-required)
-- [6. What Violations Automatically Fail Certification?](#6-what-violations-automatically-fail-certification)
-- [7. Are Deviations Allowed?](#7-are-deviations-allowed)
-  - [Strict-A `@critical`](#strict-a-critical)
-  - [Strict-A `@non_critical_phase`](#strict-a-non_critical_phase)
-  - [Strict-B/C and Core](#strict-bc-and-core)
-- [8. How Is Determinism Verified?](#8-how-is-determinism-verified)
-- [9. How Is the Interpreter Addressed?](#9-how-is-the-interpreter-addressed)
-- [10. How Are Deployments Certified?](#10-how-are-deployments-certified)
-- [11. What Is the Role of Organizational Maturity?](#11-what-is-the-role-of-organizational-maturity)
-- [12. What Is the Auditor’s Checklist?](#12-what-is-the-auditors-checklist)
-- [13. Final Summary](#13-final-summary)
+- [CRSS-Python Certification FAQ for Auditors & Regulators](#crss-python-certification-faq-for-auditors-regulators)
+  - [Table of Contents](#table-of-contents)
+  - [1. What Is the Certification Scope of CRSS-Python?](#1-what-is-the-certification-scope-of-crss-python)
+  - [2. What Safety Levels Can CRSS-Python Support?](#2-what-safety-levels-can-crss-python-support)
+  - [3. Is Compliance Binary?](#3-is-compliance-binary)
+  - [4. What Are the Core Enforcement Mechanisms?](#4-what-are-the-core-enforcement-mechanisms)
+  - [5. What Evidence Is Required?](#5-what-evidence-is-required)
+  - [6. What Violations Automatically Fail Certification?](#6-what-violations-automatically-fail-certification)
+  - [7. Are Deviations Allowed?](#7-are-deviations-allowed)
+    - [Strict-A `@critical`](#strict-a-critical)
+    - [Strict-A `@non_critical_phase`](#strict-a-non_critical_phase)
+    - [Strict-B/C and Core](#strict-bc-and-core)
+  - [8. How Is Determinism Verified?](#8-how-is-determinism-verified)
+  - [9. How Is the Interpreter Addressed?](#9-how-is-the-interpreter-addressed)
+  - [10. How Are Deployments Certified?](#10-how-are-deployments-certified)
+  - [11. What Is the Role of Organizational Maturity?](#11-what-is-the-role-of-organizational-maturity)
+  - [12. What Is the Auditor’s Checklist?](#12-what-is-the-auditors-checklist)
+  - [13. Final Summary](#13-final-summary)
 
 ---
 
@@ -99,13 +100,13 @@ These are non-negotiable for certification.
 
 Evidence is produced through the SCEM (Safety Case Evidence Model). Mandatory artifacts include:
 
-- **MAR** – Mode Assignment Register
-- **RCR** – Rule Compliance Report
-- **TEP** – Test Evidence Package
-- **CBM** – Configuration Baseline Manifest
-- **SCEM** – Consolidated evidence
-- **CRC** – Certification Readiness Checklist
-- **CC** – Compliance Certificate
+- **MAR** - Mode Assignment Register
+- **RCR** - Rule Compliance Report
+- **TEP** - Test Evidence Package
+- **CBM** - Configuration Baseline Manifest
+- **SCEM** - Consolidated evidence
+- **CRC** - Certification Readiness Checklist
+- **CC** - Compliance Certificate
 
 All must be versioned, immutable, and traceable.
 
@@ -230,6 +231,6 @@ CRSS-Python certification confirms:
 
 It does **not** certify Python for primary real-time actuation.
 
-Certification is rigorous by design — ensuring maximum safety.
+Certification is rigorous by design - ensuring maximum safety.
 
 ---

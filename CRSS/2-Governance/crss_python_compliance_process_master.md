@@ -3,13 +3,14 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen — All Rights Reserved
+© 2025 Sofian Daghsen - All Rights Reserved
 Distributed under CC BY-NC-ND 4.0
 
 ---
 
 ## Table of Contents
-
+- [CRSS-Python Compliance Master Specification](#crss-python-compliance-master-specification)
+  - [Table of Contents](#table-of-contents)
 - [Purpose](#purpose)
 - [Scope](#scope)
 - [Normative References](#normative-references)
@@ -18,23 +19,37 @@ Distributed under CC BY-NC-ND 4.0
 - [Compliance Overview](#compliance-overview)
 - [Profiles](#profiles)
 - [Safety Levels](#safety-levels)
-- [MAR & Phase Model](#mar--phase-model)
+- [MAR & Phase Model](#mar-phase-model)
 - [Entry Criteria](#entry-criteria)
 - [Compliance Actor Roles](#compliance-actor-roles)
 - [Compliance Lifecycle (Five-Phase Model)](#compliance-lifecycle-five-phase-model)
-  - [Phase 1 — Design Compliance](#phase-1--design-compliance)
-  - [Phase 2 — Rule Compliance](#phase-2--rule-compliance)
-  - [Phase 3 — Test Compliance](#phase-3--test-compliance)
-  - [Phase 4 — Baseline Compliance](#phase-4--baseline-compliance)
-  - [Phase 5 — Certification Readiness](#phase-5--certification-readiness)
+  - [Phase 1 - Design Compliance](#phase-1-design-compliance)
+  - [Phase 2 - Rule Compliance](#phase-2-rule-compliance)
+  - [Phase 3 - Test Compliance](#phase-3-test-compliance)
+  - [Phase 4 - Baseline Compliance](#phase-4-baseline-compliance)
+  - [Phase 5 - Certification Readiness](#phase-5-certification-readiness)
   - [Release Approval](#release-approval)
   - [Post-Release Monitoring](#post-release-monitoring)
-- [Enforcement & Acceptance Model](#enforcement--acceptance-model)
+- [Enforcement & Acceptance Model](#enforcement-acceptance-model)
+  - [Rule Severity](#rule-severity)
+  - [Strict-A Requirements](#strict-a-requirements)
+  - [Deviations](#deviations)
+  - [No Silent Downgrade](#no-silent-downgrade)
 - [One-Version Rule (Interpreter Freeze)](#one-version-rule-interpreter-freeze)
 - [Mandatory Artifacts](#mandatory-artifacts)
+  - [RCR - Rule Compliance Report](#rcr-rule-compliance-report)
+  - [TEP - Test Evidence Package](#tep-test-evidence-package)
+  - [CBM - Configuration Baseline Manifest](#cbm-configuration-baseline-manifest)
+  - [SBR - Safety Baseline Report](#sbr-safety-baseline-report)
+  - [CC - Compliance Certificate](#cc-compliance-certificate)
+  - [DL - Deviations Log](#dl-deviations-log)
+  - [MAR - Mode Assignment Register](#mar-mode-assignment-register)
+  - [SCEM - Evidence Matrix](#scem-evidence-matrix)
 - [Artifact Chain](#artifact-chain)
 - [Re-Approval Rules](#re-approval-rules)
-- [Deviations & Exceptions](#deviations--exceptions)
+- [Deviations & Exceptions](#deviations-exceptions)
+  - [Allowed Deviations](#allowed-deviations)
+  - [Forbidden Deviations](#forbidden-deviations)
 - [Testing Compliance](#testing-compliance)
 - [Deployment Compliance](#deployment-compliance)
 - [Toolchain Confidence Assessment](#toolchain-confidence-assessment)
@@ -113,15 +128,15 @@ Compliance requires:
 ---
 
 # Profiles
-**Core** — general-purpose safety.
-**Strict** — high-integrity, critical subset with highest constraints.
+**Core** - general-purpose safety.
+**Strict** - high-integrity, critical subset with highest constraints.
 
 ---
 
 # Safety Levels
-- **A** – highest assurance
-- **B** – medium assurance
-- **C** – lowest assurance
+- **A** - highest assurance
+- **B** - medium assurance
+- **C** - lowest assurance
 
 Levels apply per unit/function, not module.
 
@@ -161,7 +176,7 @@ A project enters compliance when:
 
 # Compliance Lifecycle (Five-Phase Model)
 
-## Phase 1 — Design Compliance
+## Phase 1 - Design Compliance
 Activities:
 - hazard mapping
 - level assignment
@@ -170,14 +185,14 @@ Artifacts:
 - MAR
 - initial SBR
 
-## Phase 2 — Rule Compliance
+## Phase 2 - Rule Compliance
 Activities:
 - static analysis
 - manual review
 Artifact:
 - RCR
 
-## Phase 3 — Test Compliance
+## Phase 3 - Test Compliance
 Activities:
 - unit tests
 - MC/DC (for Level A)
@@ -187,7 +202,7 @@ Activities:
 Artifact:
 - TEP
 
-## Phase 4 — Baseline Compliance
+## Phase 4 - Baseline Compliance
 Activities:
 - freeze environment
 - produce CBM
@@ -198,7 +213,7 @@ The certification baseline SHALL reference a Certified Build as defined in the
 Release Management specification, including the certified wheel artifact and
 its associated dependency freeze evidence.
 
-## Phase 5 — Certification Readiness
+## Phase 5 - Certification Readiness
 Artifacts:
 - final SBR
 - SCEM
@@ -217,10 +232,10 @@ Artifacts:
 # Enforcement & Acceptance Model
 
 ## Rule Severity
-- **INFO** — informational
-- **WARN** — counts toward threshold
-- **ERROR** — blocking unless justified
-- **BLOCKER** — unconditional failure
+- **INFO** - informational
+- **WARN** - counts toward threshold
+- **ERROR** - blocking unless justified
+- **BLOCKER** - unconditional failure
 
 ## Strict-A Requirements
 - **0 WARN**
@@ -258,14 +273,14 @@ No partial acceptance.
 
 # Mandatory Artifacts
 
-## RCR — Rule Compliance Report
+## RCR - Rule Compliance Report
 Includes:
 - Release/Baseline IDs
 - mapping of rules
 - deviations
 - signatures
 
-## TEP — Test Evidence Package
+## TEP - Test Evidence Package
 Includes:
 - test suite version
 - platform matrix
@@ -274,7 +289,7 @@ Includes:
 - fault injection
 - negative & security tests
 
-## CBM — Configuration Baseline Manifest
+## CBM - Configuration Baseline Manifest
 Includes:
 - Python version
 - OS version
@@ -284,19 +299,19 @@ Includes:
 - hardware details
 - hashes
 
-## SBR — Safety Baseline Report
+## SBR - Safety Baseline Report
 Includes hazard mappings, risks, platform, deployment context.
 
-## CC — Compliance Certificate
+## CC - Compliance Certificate
 Includes official release certification.
 
-## DL — Deviations Log
+## DL - Deviations Log
 Contains rule ID, justification, approver, evidence.
 
-## MAR — Mode Assignment Register
+## MAR - Mode Assignment Register
 Defines unit -> level -> profile -> phase.
 
-## SCEM — Evidence Matrix
+## SCEM - Evidence Matrix
 Maps Requirements -> Rules -> Tests -> Evidence.
 
 ---

@@ -3,31 +3,31 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
-
-- [0. Purpose](#0-purpose)
-- [1. Deployment & Baseline Rule Catalog (DPL-12.x)](#1-deployment--baseline-rule-catalog-dpl-12x)
-  - [1.1 Environment & Immutability](#11-environment--immutability)
-  - [1.2 Baseline & CBM](#12-baseline--cbm)
-  - [1.3 Releases & Immutability](#13-releases--immutability)
-  - [1.4 Updates & Upgrade Process](#14-updates--upgrade-process)
-  - [1.5 CI/CD & Deployment Pipeline](#15-cicd--deployment-pipeline)
-  - [1.6 Environment Parity & Testing](#16-environment-parity--testing)
-  - [1.7 Production Safeguards](#17-production-safeguards)
-  - [1.8 Upgrade Process](#18-upgrade-process)
-    - [DPL-12.24 – Interpreter Version Range with Single-Baseline Freeze](#dpl-1224--interpreter-version-range-with-single-baseline-freeze)
-    - [DPL-12.25 – Emergency Release](#dpl-1225--emergency-release)
-    - [DPL-12.26 – Scope Limitation](#dpl-1226--scope-limitation)
-    - [DPL-12.27 – Backport Requirement](#dpl-1227--backport-requirement)
-- [2. Relationship to Code-Level 12.x Rules](#2-relationship-to-code-level-12x-rules)
-- [3. Versioning & Governance](#3-versioning--governance)
-- [4. Summary](#4-summary)
-
+- [CRSS-Python Deployment, Release & Baseline Master Specification](#crss-python-deployment-release-baseline-master-specification)
+  - [Table of Contents](#table-of-contents)
+  - [0. Purpose](#0-purpose)
+  - [1. Deployment & Baseline Rule Catalog (DPL-12.x)](#1-deployment-baseline-rule-catalog-dpl-12x)
+    - [1.1 Environment & Immutability](#11-environment-immutability)
+    - [1.2 Baseline & CBM](#12-baseline-cbm)
+    - [1.3 Releases & Immutability](#13-releases-immutability)
+    - [1.4 Updates & Upgrade Process](#14-updates-upgrade-process)
+    - [1.5 CI/CD & Deployment Pipeline](#15-cicd-deployment-pipeline)
+    - [1.6 Environment Parity & Testing](#16-environment-parity-testing)
+    - [1.7 Production Safeguards](#17-production-safeguards)
+  - [1.8 Upgrade process](#18-upgrade-process)
+    - [DPL-12.24 - Interpreter Version Range with Single-Baseline Freeze](#dpl-1224-interpreter-version-range-with-single-baseline-freeze)
+    - [DPL-12.25 - Emergency Release](#dpl-1225-emergency-release)
+    - [DPL-12.26 - Scope Limitation](#dpl-1226-scope-limitation)
+    - [DPL-12.27 - Backport Requirement](#dpl-1227-backport-requirement)
+  - [2. Relationship to Code-Level 12.x Rules](#2-relationship-to-code-level-12x-rules)
+  - [3. Versioning & Governance](#3-versioning-governance)
+  - [4. Summary](#4-summary)
 
 ---
 
@@ -46,8 +46,8 @@ All MUST / MUST-NOT / SHOULD / SHOULD-NOT statements in this document are identi
 
 CRSS deliberately separates architectural safety rules from release and build governance.
 
-The authoritative, normative definition of how a CRSS-compliant software artifact is produced — including dependency freezing, 
-offline installation, wheel generation, and evidence collection — is specified in the Release Management and Deployment Policy.
+The authoritative, normative definition of how a CRSS-compliant software artifact is produced - including dependency freezing, 
+offline installation, wheel generation, and evidence collection - is specified in the Release Management and Deployment Policy.
 
 The whitepaper does not re-define these procedures. Instead, it relies on the Release Management specification as the single source of truth for:
 
@@ -71,15 +71,15 @@ This section defines the **canonical deployment, release, and baseline rules**.
 
 Each rule has:
 
-- **Category** – thematic grouping
-- **Type** – Process / Configuration / Governance
-- **Profiles** – obligations per profile
+- **Category** - thematic grouping
+- **Type** - Process / Configuration / Governance
+- **Profiles** - obligations per profile
 - **Scope** - optional rule application scope
-- **Explanation** – intent and usage
+- **Explanation** - intent and usage
 
 ### 1.1 Environment & Immutability
 
-**DPL-12.1 – Immutable Production Deployment**
+**DPL-12.1 - Immutable Production Deployment**
 - **Category**: Deployment Environment
 - **Type**: Process
 - **Profiles**:
@@ -90,7 +90,7 @@ Production deployments SHALL be **immutable**. After deployment, no code, depend
 
 ---
 
-**DPL-12.2 – Zero-Drift Environment Enforcement**
+**DPL-12.2 - Zero-Drift Environment Enforcement**
 - **Category**: Deployment Environment
 - **Type**: Process
 - **Profiles**:
@@ -101,7 +101,7 @@ Runtime environments (TEST, PRE-PROD, PROD) MUST NOT drift from their recorded c
 
 ---
 
-**DPL-12.3 – One-Version-Per-Project Deployment Rule**
+**DPL-12.3 - One-Version-Per-Project Deployment Rule**
 - **Category**: Versioning
 - **Type**: Governance
 - **Profiles**:
@@ -112,7 +112,7 @@ Each project SHALL select exactly **one Python interpreter version** for its cer
 
 ---
 
-**DPL-12.4 – Runtime Package Installation Prohibition**
+**DPL-12.4 - Runtime Package Installation Prohibition**
 - **Category**: Dependencies
 - **Type**: Process
 - **Profiles**:
@@ -125,7 +125,7 @@ Production environments MUST NOT install, upgrade, or remove Python packages at 
 
 ### 1.2 Baseline & CBM
 
-**DPL-12.5 – Certified Baseline Requirement for Deployment**
+**DPL-12.5 - Certified Baseline Requirement for Deployment**
 - **Category**: Baseline & CBM
 - **Type**: Governance
 - **Profiles**:
@@ -144,7 +144,7 @@ Deploying without a certified baseline is forbidden.
 
 ---
 
-**DPL-12.6 – Deployment = Tested Configuration Only**
+**DPL-12.6 - Deployment = Tested Configuration Only**
 - **Category**: Baseline & CBM
 - **Type**: Process
 - **Profiles**:
@@ -155,7 +155,7 @@ The configuration deployed to production MUST match a configuration **that has b
 
 ---
 
-**DPL-12.7 – PROD Must Match CBM Identically**
+**DPL-12.7 - PROD Must Match CBM Identically**
 - **Category**: Baseline & CBM
 - **Type**: Configuration
 - **Profiles**:
@@ -166,7 +166,7 @@ Before deployment, the target production environment SHALL be checked against th
 
 ---
 
-**DPL-12.8 – CBM Completeness and Traceability**
+**DPL-12.8 - CBM Completeness and Traceability**
 - **Category**: Baseline & CBM
 - **Type**: Configuration
 - **Profiles**:
@@ -190,7 +190,7 @@ The CBM SHALL be stored alongside test artifacts and Compliance Certificates.
 
 ### 1.3 Releases & Immutability
 
-**DPL-12.9 – Release Immutability Mandated**
+**DPL-12.9 - Release Immutability Mandated**
 - **Category**: Release Management
 - **Type**: Governance
 - **Profiles**:
@@ -201,7 +201,7 @@ Each release SHALL be uniquely identified (e.g. semantic version + build number)
 
 ---
 
-**DPL-12.10 – No Hotfixes in Place**
+**DPL-12.10 - No Hotfixes in Place**
 - **Category**: Release Management
 - **Type**: Process
 - **Profiles**:
@@ -212,7 +212,7 @@ Applying hotfixes directly to running production systems (e.g. editing code on t
 
 ---
 
-**DPL-12.11 – Release Registry and Audit Trail**
+**DPL-12.11 - Release Registry and Audit Trail**
 - **Category**: Release Management
 - **Type**: Governance
 - **Profiles**:
@@ -233,7 +233,7 @@ The registry MUST be immutable and auditable.
 
 ### 1.4 Updates & Upgrade Process
 
-**DPL-12.12 – Controlled Upgrade Process**
+**DPL-12.12 - Controlled Upgrade Process**
 - **Category**: Updates & Upgrades
 - **Type**: Process
 - **Profiles**:
@@ -250,7 +250,7 @@ All changes to a deployed system (code, dependencies, configuration, Python vers
 
 ---
 
-**DPL-12.13 – Automated Updates Forbidden in PROD**
+**DPL-12.13 - Automated Updates Forbidden in PROD**
 - **Category**: Updates & Upgrades
 - **Type**: Configuration
 - **Profiles**:
@@ -261,7 +261,7 @@ Automatic updates in production (e.g. OS unattended upgrades, package auto-updat
 
 ---
 
-**DPL-12.14.1 – Rollback Strategy Required**
+**DPL-12.14.1 - Rollback Strategy Required**
 - **Category**: Updates & Upgrades
 - **Type**: Process
 - **Profiles**:
@@ -377,7 +377,7 @@ Evidence MAY be captured as part of SCEM and operational readiness.
 
 ### 1.5 CI/CD & Deployment Pipeline
 
-**DPL-12.15 – Deployment via Controlled Pipeline Only**
+**DPL-12.15 - Deployment via Controlled Pipeline Only**
 - **Category**: CI/CD
 - **Type**: Process
 - **Profiles**:
@@ -395,7 +395,7 @@ and MUST record dependency + toolchain versions into CBM.
 
 ---
 
-**DPL-12.16 – Separation of Duties in Deployment**
+**DPL-12.16 - Separation of Duties in Deployment**
 - **Category**: CI/CD
 - **Type**: Governance
 - **Profiles**:
@@ -406,7 +406,7 @@ For Strict projects, the person or role approving the release SHALL NOT be the s
 
 ---
 
-**DPL-12.17 – Configuration-as-Code for Deployment**
+**DPL-12.17 - Configuration-as-Code for Deployment**
 - **Category**: CI/CD
 - **Type**: Configuration
 - **Profiles**:
@@ -419,7 +419,7 @@ Deployment configuration (runtime options, environment variables, feature flags)
 
 ### 1.6 Environment Parity & Testing
 
-**DPL-12.18 – Environment Parity Across TEST/PRE-PROD/PROD**
+**DPL-12.18 - Environment Parity Across TEST/PRE-PROD/PROD**
 - **Category**: Environment Parity
 - **Type**: Configuration
 - **Profiles**:
@@ -430,7 +430,7 @@ TEST, PRE-PROD, and PROD environments SHOULD (Core) and MUST (Strict) be **as si
 
 ---
 
-**DPL-12.19 – Configuration Matrix Coverage**
+**DPL-12.19 - Configuration Matrix Coverage**
 - **Category**: Environment Parity
 - **Type**: Process
 - **Profiles**:
@@ -441,7 +441,7 @@ Projects SHALL define the **supported configuration matrix** (platforms, OSes, a
 
 ---
 
-**DPL-12.20 – On-Target or High-Fidelity Test Environments**
+**DPL-12.20 - On-Target or High-Fidelity Test Environments**
 - **Category**: Environment Parity
 - **Type**: Process
 - **Profiles**:
@@ -454,7 +454,7 @@ For Strict projects, at least one test environment MUST be **on-target** (same h
 
 ### 1.7 Production Safeguards
 
-**DPL-12.21 – Restricted Direct Shell Access to PROD**
+**DPL-12.21 - Restricted Direct Shell Access to PROD**
 - **Category**: Production Safeguards
 - **Type**: Governance
 - **Profiles**:
@@ -465,7 +465,7 @@ Direct shell access to production hosts SHOULD (Core) and MUST (Strict) be restr
 
 ---
 
-**DPL-12.22 – Logging and Monitoring of Deployments**
+**DPL-12.22 - Logging and Monitoring of Deployments**
 - **Category**: Production Safeguards
 - **Type**: Process
 - **Profiles**:
@@ -484,7 +484,7 @@ Monitoring SHOULD (Core) and MUST (Strict) detect configuration drift and unauth
 
 ---
 
-**DPL-12.23 – Disaster Recovery Baseline Preservation**
+**DPL-12.23 - Disaster Recovery Baseline Preservation**
 - **Category**: Production Safeguards
 - **Type**: Governance
 - **Profiles**:
@@ -505,27 +505,27 @@ Certified baselines (code, CBM, artifacts) MUST be stored in durable, redundant 
     -   Core: SHOULD
     -   Strict: MUST
 
-**Phase 1 — Change Proposal**
+**Phase 1 - Change Proposal**
 - Document requested change
 - Identify affected baseline elements
 - Classify change (code, dependency, interpreter, OS, hardware)
 
-**Phase 2 — Impact Analysis**
+**Phase 2 - Impact Analysis**
 - Identify safety impact
 - Reassess hazards
 - Update risk analysis
 
-**Phase 3 — Test Requalification**
+**Phase 3 - Test Requalification**
 - Re-run full TEP
 - Re-run platform matrix
 - Re-run performance & reliability tests
 
-**Phase 4 — New Baseline Creation**
+**Phase 4 - New Baseline Creation**
 - Create new CBM
 - Update RCR, TEP, SBR
 - Assign new Baseline ID
 
-**Phase 5 — Approval & Release**
+**Phase 5 - Approval & Release**
 - Independent approval
 - Issue new Compliance Certificate
 

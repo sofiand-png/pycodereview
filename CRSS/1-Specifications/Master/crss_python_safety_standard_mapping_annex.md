@@ -3,21 +3,21 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen — All Rights Reserved
+© 2025 Sofian Daghsen - All Rights Reserved
 Distributed under CC BY-NC-ND 4.0
 
 ---
 
 ## Table of Contents
-
-- [0. Purpose](#0-purpose)
-- [1. Safety Requirements and Levels](#1-safety-requirements-and-levels)
-  - [1.1 CRSS Safety Levels vs Industry Notions](#11-crss-safety-levels-vs-industry-notions)
-  - [1.2 Safety Goals -> CRSS Safety Levels](#12-safety-goals---crss-safety-levels)
-- [2. CRSS Artifacts vs Safety Case Artifacts](#2-crss-artifacts-vs-safety-case-artifacts)
-  - [2.1 High-Level Mapping](#21-high-level-mapping)
-- [3. Process Alignment (V-Model / ASPICE)](#3-process-alignment-v-model--aspice)
-
+- [CRSS-Python Safety Standard Mapping Annex](#crss-python-safety-standard-mapping-annex)
+  - [Table of Contents](#table-of-contents)
+  - [0. Purpose](#0-purpose)
+  - [1. Safety Requirements and Levels](#1-safety-requirements-and-levels)
+    - [1.1 CRSS Safety Levels vs Industry Notions](#11-crss-safety-levels-vs-industry-notions)
+    - [1.2 Safety Goals -> CRSS Safety Levels](#12-safety-goals-crss-safety-levels)
+  - [2. CRSS Artifacts vs Safety Case Artifacts](#2-crss-artifacts-vs-safety-case-artifacts)
+    - [2.1 High-Level Mapping](#21-high-level-mapping)
+  - [3. Process Alignment (V-Model / ASPICE)](#3-process-alignment-v-model-aspice)
 
 ---
 
@@ -41,9 +41,9 @@ It is **non-normative**: it does not change any CRSS requirements, but helps aud
 
 CRSS Safety Levels are internal abstractions:
 
-- Level A — highest criticality  
-- Level B — elevated risk  
-- Level C — low/limited safety impact  
+- Level A - highest criticality  
+- Level B - elevated risk  
+- Level C - low/limited safety impact  
 
 They conceptually correspond to:
 
@@ -87,8 +87,8 @@ These artifacts are already defined normatively in the SCEM and Compliance Maste
 
 CRSS compliance phases map onto a V-model / ASPICE-style lifecycle as follows:
 
-- CRSS Phase 0–1 -> Concept, system & software requirements, planning (ASPICE SYS.x / SWE.1)  
-- CRSS Phase 2 -> Design and implementation constraints + static compliance (SWE.2–SWE.3)  
+- CRSS Phase 0-1 -> Concept, system & software requirements, planning (ASPICE SYS.x / SWE.1)  
+- CRSS Phase 2 -> Design and implementation constraints + static compliance (SWE.2-SWE.3)  
 - CRSS Phase 3 -> Verification & validation (SWE.4, SWE.5)  
 - CRSS Phase 4 -> Integration of evidence into a single SCEM package (SUP.x, SYS.4)  
 - CRSS Phase 5 -> Independent assessment and release decision (SUP.1, safety management roles) :contentReference[oaicite:7]{index=7}  

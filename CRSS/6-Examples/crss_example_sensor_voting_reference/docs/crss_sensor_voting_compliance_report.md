@@ -1,54 +1,26 @@
-# CRSS Compliance Report — Sensor Voting Reference Example
+# CRSS Compliance Report - Sensor Voting Reference Example
 
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
+- [CRSS Compliance Report - Sensor Voting Reference Example](#crss-compliance-report-sensor-voting-reference-example)
+  - [Table of Contents](#table-of-contents)
+  - [1. Scope](#1-scope)
+  - [2. Rule Mapping Summary](#2-rule-mapping-summary)
+    - [2.1 Strict-A Deterministic Control Logic](#21-strict-a-deterministic-control-logic)
+    - [2.2 Phase-Aware Boundaries & Data Flow](#22-phase-aware-boundaries-data-flow)
+    - [2.3 Configuration & Safe Defaults](#23-configuration-safe-defaults)
+    - [2.4 JSON I/O & Validation (Non-critical)](#24-json-io-validation-non-critical)
+    - [2.5 Deviations](#25-deviations)
+  - [3. Deviations](#3-deviations)
 
-- [1. Scope](#1-scope)
-- [2. Rule Mapping Summary](#2-rule-mapping-summary)
-  - [2.1 Strict-A Deterministic Control Logic](#21-strict-a-deterministic-control-logic)
-  - [2.2 Phase-Aware Boundaries & Data Flow](#22-phase-aware-boundaries--data-flow)
-  - [2.3 Configuration & Safe Defaults](#23-configuration--safe-defaults)
-  - [2.4 JSON I/O & Validation (Non-critical)](#24-json-io--validation-non-critical)
-- [3. Deviations](#3-deviations)
-
-
-- **Project**: CRSS Python Sensor Voting Reference Example
-- **Version**: 1.0.0
-- **Language**: Python 3.11.x
-- **CRSS Modes Used (Profile + Safety Level)**:
-  - Strict-A: safety controller (voting + envelope)
-  - Strict-B: config model, sensor interfaces, inner orchestrator (framing + sequencing)
-  - Core-B: outer orchestrators (offline step, TCP client harness)
-  - Core-C: simulation, TCP server, logging, JSON I/O
-
-## 1. Scope
-
-This report covers:
-
-- `crss_example_sensor_voting.safety_logic.*`
-- `crss_example_sensor_voting.config.*`
-- `crss_example_sensor_voting.actuator.*`
-- `crss_example_sensor_voting.crss_phase.markers`
-- `crss_example_sensor_voting.io.json_protocol`
-- `crss_example_sensor_voting.app.main_loop` (offline)
-- Unit, MC/DC-style, and integration tests in `tests/`
-
-Non-critical I/O helpers (TCP server/client, simulation, logging) are excluded from
-Strict-A compliance and coverage metrics; they are treated as **Core-C test harness**.
-
-## 2. Rule Mapping Summary
-
-### 2.1 Strict-A Deterministic Control Logic
-
-| Rule ID      | Title (short)                                      | Module(s)                                           | Compliance |
-|-------------|------------------------------------------------------|-----------------------------------------------------|-----------|
+-------------|------------------------------------------------------|-----------------------------------------------------|-----------|
 | CRSS-5.4.x  | Deterministic triple-sensor voting                  | `safety_logic.voting.compute_voted_value`          | **YES**   |
 | CRSS-5.4.y  | Defined behaviour for missing / invalid readings    | `safety_logic.voting.compute_voted_value`          | **YES**   |
 | CRSS-5.5.x  | Monotonic safety envelope (clamp + rate limit)      | `safety_logic.envelope.apply_safety_envelope`      | **YES**   |

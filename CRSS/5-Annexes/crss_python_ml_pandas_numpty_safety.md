@@ -3,8 +3,8 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 **Domain:** Data Processing, ML Pipelines
 **Audience:** ML Engineers, Data Engineers, Architects
@@ -12,17 +12,20 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 ---
 
 ## Table of Contents
-
-- [1. Purpose](#1-purpose)
-- [2. ML in Safety Context](#2-ml-in-safety-context)
-  - [2.1 Strict-A: Fully Forbidden](#21-strict-a-fully-forbidden)
-  - [2.2 Core-B: Allowed With Restrictions](#22-core-b-allowed-with-restrictions)
-  - [2.3 Core-C: Fully Allowed](#23-core-c-fully-allowed)
-- [3. Pandas / Numpy](#3-pandas--numpy)
-- [4. ML Safety Patterns](#4-ml-safety-patterns)
-  - [4.1 ML-Assisted Monitoring Layer](#41-ml-assisted-monitoring-layer)
-- [5. Conclusion](#5-conclusion)
-
+- [CRSS ML / Pandas / Numpy Safety Annex](#crss-ml-pandas-numpy-safety-annex)
+  - [Table of Contents](#table-of-contents)
+  - [1. Purpose](#1-purpose)
+  - [2. ML in Safety Context](#2-ml-in-safety-context)
+    - [2.1 Strict-A: Fully Forbidden](#21-strict-a-fully-forbidden)
+    - [2.2 Core-B: Allowed With Restrictions](#22-core-b-allowed-with-restrictions)
+    - [2.3 Core-C: Fully Allowed](#23-core-c-fully-allowed)
+  - [3. Pandas / Numpy](#3-pandas-numpy)
+    - [Allowed:](#allowed)
+    - [Forbidden in Strict-A:](#forbidden-in-strict-a)
+    - [Allowed in Core-B:](#allowed-in-core-b)
+  - [4. ML Safety Patterns](#4-ml-safety-patterns)
+    - [4.1 ML-Assisted Monitoring Layer](#41-ml-assisted-monitoring-layer)
+  - [5. Conclusion](#5-conclusion)
 
 ---
 

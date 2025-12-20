@@ -1,10 +1,10 @@
-# CRSS Reference Specification – Sensor Voting & Safe Actuation System
+# CRSS Reference Specification - Sensor Voting & Safe Actuation System
 
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
@@ -17,72 +17,77 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 ---
 
 ## Table of Contents
-- [1. Introduction](#1-introduction)
-- [2. Goals of the Example](#2-goals-of-the-example)
-- [3. System Overview](#3-system-overview)
-- [3.1 Safety Goals Overview](#31-safety-goals)
-- [3.2 Hazards](#32-hazards)
-- [3.3 Design Model](#33-design-model)
-- [3.4 Functional Requirements](#34-functional-requirements)
-- [4. High-Level Architecture](#4-high-level-architecture)
-- [5. Key CRSS Compliance Principles Used](#5-key-crss-compliance-principles-used)
-- [6. Actors and Data Flow](#6-actors-and-data-flow)
-- [7. Profiles and Criticality Zones](#7-profiles-and-criticality-zones)
-- [8. Detailed External Interface](#8-detailed-external-interface)
-- [9. Message Timing Requirements](#9-message-timing-requirements)
-- [10. Data Model (Full Definition)](#10-data-model-full-definition)
-  - [10.1 SensorFrame Structure](#101-sensorframe-structure)
-  - [10.2 SensorFrame Validation Rules (Core-C)](#102-sensorframe-validation-rules-core-c)
-- [11. ActuatorRequest Structure](#11-actuatorrequest-structure)
-- [12. JSON Schemas (Canonical Version)](#12-json-schemas-canonical-version)
-  - [12.1 SensorFrame Schema](#121-sensorframe-schema)
-  - [12.2 ActuatorRequest Schema](#122-actuatorrequest-schema)
-- [13. Fault Model: Full Specification](#13-fault-model-full-specification)
-  - [13.1 Fault Modes Overview](#131-fault-modes-overview)
-  - [13.2 Deterministic Fault Selection](#132-deterministic-fault-selection)
-- [14. Sensor Simulation: Full Behavioral Specification](#14-sensor-simulation-full-behavioral-specification)
-  - [14.1 Value Generation Base Logic](#141-value-generation-base-logic)
-  - [14.2 Mode: high_fault](#142-mode-high_fault)
-  - [14.3 Mode: low_fault](#143-mode-low_fault)
-  - [14.4 Mode: severe_disagreement](#144-mode-severe_disagreement)
-  - [14.5 Mode: frozen](#145-mode-frozen)
-  - [14.6 Mode: stuck_drift](#146-mode-stuck_drift)
-- [15. Voting Algorithm (Core-B Deterministic Logic)](#15-voting-algorithm-core-b-deterministic-logic)
-  - [15.1 Pre-Voting Checks](#151-pre-voting-checks)
-  - [15.2 Spread and Disagreement](#152-spread-and-disagreement)
-  - [15.3 Voting Rule](#153-voting-rule)
-  - [15.4 Voting Status Output](#154-voting-status-output)
-- [16. Safety Envelope (Strict-A)](#16-safety-envelope-strict-a)
-  - [16.1 Inputs](#161-inputs)
-  - [16.2 Clamp to Safe Bounds](#162-clamp-to-safe-bounds)
-  - [16.3 Rate Limiting](#163-rate-limiting)
-  - [16.4 Severe Disagreement → FAILSAFE](#164-severe-disagreement--failsafe)
-  - [16.5 Frozen Sensors](#165-frozen-sensors)
-  - [16.6 Stuck-Drift Behavior](#166-stuck-drift-behavior)
-- [17. Actuator Command Classification](#17-actuator-command-classification)
-- [18. Logging Rules (Core-C)](#18-logging-rules-core-c)
-- [19. Execution Model (End-to-End)](#19-execution-model-end-to-end)
-- [20. Timing Constraints](#20-timing-constraints)
-  - [20.1 Gateway Timing](#201-gateway-timing)
-- [21. Configuration Model (CRSS-Compliant)](#21-configuration-model-crss-compliant)
-  - [21.1 CRSS Constraints for Config](#211-crss-constraints-for-config)
-  - [21.2 Parameters](#212-parameters)
-- [22. CRSS Compliance Mapping (Full Version)](#22-crss-compliance-mapping-full-version)
-  - [22.1 Strict-A Responsibilities](#221-strict-a-responsibilities)
-  - [22.2 Core-B Responsibilities](#222-core-b-responsibilities)
-  - [22.3 Core-C Responsibilities](#223-core-c-responsibilities)
-- [23. Test & Verification Requirements (Full)](#23-test--verification-requirements-full)
-  - [23.1 Unit Testing Requirements](#231-unit-testing-requirements)
-  - [23.2 MC/DC Requirements](#232-mcdc-requirements)
-  - [23.3 Integration Tests](#233-integration-tests)
-  - [23.4 Fault Injection Testing Requirements](#234-fault-injection-testing-requirements)
-- [24. CI/CD Pipeline Requirements](#24-cicd-pipeline-requirements)
-- [25. Deployment and Runtime Environment](#25-deployment-and-runtime-environment)
-  - [25.1 Environment Freezing](#251-environment-freezing)
-  - [25.2 Execution Isolation](#252-execution-isolation)
-  - [25.3 Safety Lifecycle Requirements](#253-safety-lifecycle-requirements)
-- [26. Shutdown and Restart Behavior](#26-shutdown-and-restart-behavior)
-- [27. Informative Domain-Specific Notes](#27-informative-domain-specific-notes)
+- [CRSS Reference Specification - Sensor Voting & Safe Actuation System](#crss-reference-specification-sensor-voting-safe-actuation-system)
+  - [Table of Contents](#table-of-contents)
+  - [1. Introduction](#1-introduction)
+  - [2. Goals of the Example](#2-goals-of-the-example)
+  - [3. System Overview](#3-system-overview)
+    - [3.1 Safety Goals](#31-safety-goals)
+    - [3.2 Hazards](#32-hazards)
+    - [3.3 Design Model](#33-design-model)
+    - [3.4 Functional Requirements](#34-functional-requirements)
+      - [3.4.1 Safety / Envelope Requirements](#341-safety-envelope-requirements)
+      - [3.4.2 Fault-Handling Requirements](#342-fault-handling-requirements)
+      - [3.4.3 Interface / JSON / TCP Requirements](#343-interface-json-tcp-requirements)
+      - [3.4.5 Test & Coverage Requirements](#345-test-coverage-requirements)
+  - [4. High-Level Architecture](#4-high-level-architecture)
+  - [5. Key CRSS Compliance Principles Used](#5-key-crss-compliance-principles-used)
+  - [6. Actors and Data Flow](#6-actors-and-data-flow)
+  - [7. Profiles and Criticality Zones](#7-profiles-and-criticality-zones)
+  - [8. Detailed External Interface](#8-detailed-external-interface)
+  - [9. Message Timing Requirements](#9-message-timing-requirements)
+  - [10. Data Model (Full Definition)](#10-data-model-full-definition)
+    - [10.1 SensorFrame Structure](#101-sensorframe-structure)
+    - [10.2 SensorFrame Validation Rules (Core-C)](#102-sensorframe-validation-rules-core-c)
+  - [11. ActuatorRequest Structure](#11-actuatorrequest-structure)
+  - [12. JSON Schemas (Canonical Version)](#12-json-schemas-canonical-version)
+    - [12.1 SensorFrame Schema](#121-sensorframe-schema)
+    - [12.2 ActuatorRequest Schema](#122-actuatorrequest-schema)
+  - [13. Fault Model: Full Specification](#13-fault-model-full-specification)
+    - [13.1 Fault Modes Overview](#131-fault-modes-overview)
+    - [13.2 Deterministic Fault Selection](#132-deterministic-fault-selection)
+  - [14. Sensor Simulation: Full Behavioral Specification](#14-sensor-simulation-full-behavioral-specification)
+    - [14.1 Value Generation Base Logic](#141-value-generation-base-logic)
+    - [14.2 Mode: high_fault](#142-mode-high_fault)
+    - [14.3 Mode: low_fault](#143-mode-low_fault)
+    - [14.4 Mode: severe_disagreement](#144-mode-severe_disagreement)
+    - [14.5 Mode: frozen](#145-mode-frozen)
+    - [14.6 Mode: stuck_drift](#146-mode-stuck_drift)
+  - [15. Voting Algorithm (Core-B Deterministic Logic)](#15-voting-algorithm-core-b-deterministic-logic)
+    - [15.1 Pre-Voting Checks](#151-pre-voting-checks)
+    - [15.2 Spread and Disagreement](#152-spread-and-disagreement)
+    - [15.3 Voting Rule](#153-voting-rule)
+    - [15.4 Voting Status Output](#154-voting-status-output)
+  - [16. Safety Envelope (Strict-A)](#16-safety-envelope-strict-a)
+    - [16.1 Inputs](#161-inputs)
+    - [16.2 Clamp to Safe Bounds](#162-clamp-to-safe-bounds)
+    - [16.3 Rate Limiting](#163-rate-limiting)
+    - [16.4 Severe Disagreement → FAILSAFE](#164-severe-disagreement-failsafe)
+    - [16.5 Frozen Sensors](#165-frozen-sensors)
+    - [16.6 Stuck-Drift Behavior](#166-stuck-drift-behavior)
+  - [17. Actuator Command Classification](#17-actuator-command-classification)
+  - [18. Logging Rules (Core-C)](#18-logging-rules-core-c)
+  - [19. Execution Model (End-to-End)](#19-execution-model-end-to-end)
+  - [20. Timing Constraints](#20-timing-constraints)
+  - [21. Configuration Model (CRSS-Compliant)](#21-configuration-model-crss-compliant)
+    - [21.1 CRSS Constraints for Config](#211-crss-constraints-for-config)
+    - [21.2 Parameters](#212-parameters)
+  - [22. CRSS Compliance Mapping (Full Version)](#22-crss-compliance-mapping-full-version)
+    - [22.1 Strict-A Responsibilities](#221-strict-a-responsibilities)
+    - [22.2 Core-B Responsibilities](#222-core-b-responsibilities)
+    - [22.3 Core-C Responsibilities](#223-core-c-responsibilities)
+  - [23. Test & Verification Requirements (Full)](#23-test-verification-requirements-full)
+    - [23.1 Unit Testing Requirements](#231-unit-testing-requirements)
+    - [23.2 MC/DC Requirements](#232-mcdc-requirements)
+    - [23.3 Integration Tests](#233-integration-tests)
+    - [23.4 Fault Injection Testing Requirements](#234-fault-injection-testing-requirements)
+  - [24. CI/CD Pipeline Requirements](#24-cicd-pipeline-requirements)
+  - [25. Deployment and Runtime Environment](#25-deployment-and-runtime-environment)
+    - [25.1 Environment Freezing](#251-environment-freezing)
+    - [25.2 Execution Isolation](#252-execution-isolation)
+    - [25.3 Safety Lifecycle Requirements](#253-safety-lifecycle-requirements)
+  - [26. Shutdown and Restart Behavior](#26-shutdown-and-restart-behavior)
+  - [27. Informative Domain-Specific Notes](#27-informative-domain-specific-notes)
 
 ---
 
@@ -122,30 +127,30 @@ This system is intended to:
 ## 3. System Overview
 ### 3.1 Safety Goals
 
-- **SG-1 – Safe envelope:**
+- **SG-1 - Safe envelope:**
   The Safety Controller must not command an actuator value that exceeds a safe envelope
   (`MIN_SAFE ≤ cmd ≤ MAX_SAFE`) under any circumstances.
 
-- **SG-2 – Single-fault tolerance (sensors):**
+- **SG-2 - Single-fault tolerance (sensors):**
   The Safety Controller must tolerate one faulty sensor (1-out-of-3) without issuing an unsafe command.
 
-- **SG-3 – Fail-safe on severe disagreement:**
+- **SG-3 - Fail-safe on severe disagreement:**
   If available sensors disagree beyond a configured plausibility threshold, the Safety Controller must fail safe
   (e.g. use SAFE_DEFAULT; last safe command may be used only when explicitly configured).
 
-- **SG-4 – Deterministic @critical path:**
+- **SG-4 - Deterministic @critical path:**
   The Safety Controller must be deterministic in its `@critical` path:
   given the same inputs and internal state, it must produce the same output on every run.
 
-- **SG-5 – No non-deterministic Python features in Strict-A:**
+- **SG-5 - No non-deterministic Python features in Strict-A:**
   The Strict-A critical path must not rely on Python features that can introduce non-determinism
   (e.g. GC-visible allocation, threads, async scheduling, random number generation, system time).
 
-- **SG-6 – Bounded control logic:**
+- **SG-6 - Bounded control logic:**
   Strict-A logic must not contain unbounded loops, recursion, or unbounded collection growth.
   All loops must be statically bounded (e.g. over the fixed set of three sensors).
 
-- **SG-7 – Isolation of non-critical behavior:**
+- **SG-7 - Isolation of non-critical behavior:**
   Faults in non-critical code (simulation, logging, config loading, CLI) must **not** affect the behavior of the
   Strict-A `@critical` path beyond defined safe fallback modes.
   Strict-A logic receives normalized input structures only (already parsed and validated). It never processes raw JSON strings or external resources.
@@ -164,22 +169,22 @@ This system is intended to:
 
 ### 3.2 Hazards
 
-- **H-1 – Unsafe actuator command:**
+- **H-1 - Unsafe actuator command:**
   Actuator command outside the safe envelope, leading to hazardous physical behavior.
 
-- **H-2 – Incorrect voting:**
+- **H-2 - Incorrect voting:**
   Voting logic incorrectly accepts faulty sensor data, causing unsafe actuator commands.
 
-- **H-3 – Undetected sensor drift:**
+- **H-3 - Undetected sensor drift:**
   Slow drift of one or more sensors leads to subtle but long-term unsafe outputs.
 
-- **H-4 – Sensor disagreement mishandled:**
+- **H-4 - Sensor disagreement mishandled:**
   Multiple sensors disagree and the controller fails to enter a safe degraded or fail-safe mode.
 
-- **H-5 – Non-deterministic execution:**
+- **H-5 - Non-deterministic execution:**
   Timing, GC, or async behavior causes non-repeatable control outputs for identical inputs.
 
-- **H-6 – Non-critical faults bleed into critical path:**
+- **H-6 - Non-critical faults bleed into critical path:**
   Errors in logging, configuration loading, sensor simulation, or CLI cause changes to
   the Strict-A decision logic or mask unsafe behavior.
 
@@ -194,72 +199,72 @@ The system runs indefinitely (until Ctrl+C) at ~60 ms cycle time.
 
 ### 3.4 Functional Requirements
 
-**SV-FUNC-01 — Triple sensor input**
+**SV-FUNC-01 - Triple sensor input**
 The system shall process exactly three sensor channels per cycle and reject any SensorFrame that does not contain exactly three values.
 
-**SV-FUNC-02 — TMR voting**
+**SV-FUNC-02 - TMR voting**
 The system shall compute a single voted value from the three sensor inputs using a deterministic TMR-style voting algorithm (median-based).
 
-**SV-FUNC-03 — Stateless per-cycle computation**
+**SV-FUNC-03 - Stateless per-cycle computation**
 Each control cycle shall compute the actuator command using only the current SensorFrame and the previous actuator output; no additional hidden internal state is permitted.
 
 ---
 
 #### 3.4.1 Safety / Envelope Requirements
 
-**SV-SAF-01 — Envelope clamp**
+**SV-SAF-01 - Envelope clamp**
 The system shall ensure that every actuator command satisfies:
 `min_safe ≤ command_value ≤ max_safe`.
 
-**SV-SAF-02 — Rate limiting**
+**SV-SAF-02 - Rate limiting**
 The system shall ensure that the difference between successive actuator commands does not exceed `max_delta` in magnitude, except when transitioning to SAFE_DEFAULT.
 
-**SV-SAF-03 — SAFE_DEFAULT application**
+**SV-SAF-03 - SAFE_DEFAULT application**
 When the system enters FAILSAFE state, it shall set the actuator command to `SAFE_DEFAULT = min_safe` and may bypass rate limiting for that transition.
 
-**SV-SAF-04 — Deterministic Strict-A**
+**SV-SAF-04 - Deterministic Strict-A**
 For any given configuration, previous output, and set of validated sensor values, the Strict-A logic shall always return the same actuator command and status.
 
 ---
 
 #### 3.4.2 Fault-Handling Requirements
 
-**SV-FLT-01 — Single-sensor fault tolerance**
+**SV-FLT-01 - Single-sensor fault tolerance**
 If at most one sensor is faulty and a plausible pair exists, the system shall produce a bounded actuator command with status `DEGRADED` or `NORMAL`, never `FAILSAFE`.
 
-**SV-FLT-02 — Severe disagreement to FAILSAFE**
+**SV-FLT-02 - Severe disagreement to FAILSAFE**
 If no plausible sensor pair exists due to severe disagreement, the system shall enter FAILSAFE and output SAFE_DEFAULT.
 
-**SV-FLT-03 — Frozen behavior**
+**SV-FLT-03 - Frozen behavior**
 If sensor readings are detected as frozen over multiple cycles, the system shall hold or slowly adjust the actuator command within the configured envelope and mark the status as at most `DEGRADED`.
 
-**SV-FLT-04 — Stuck-drift behavior**
+**SV-FLT-04 - Stuck-drift behavior**
 Slow sensor drift within the safe band shall not cause oscillatory or unsafe actuator commands; the envelope shall keep the command bounded and rate-limited.
 
 ---
 
 #### 3.4.3 Interface / JSON / TCP Requirements
 
-**SV-INT-01 — SensorFrame format**
+**SV-INT-01 - SensorFrame format**
 The gateway shall send SensorFrame messages conforming to the specified JSON schema (IDs, values, statuses, timestamp, unit).
 
-**SV-INT-02 — ActuatorRequest format**
+**SV-INT-02 - ActuatorRequest format**
 The client shall send ActuatorRequest messages conforming to the specified JSON schema (command_value, status, safe_default_used, reason).
 
-**SV-INT-03 — Strict-A isolation**
+**SV-INT-03 - Strict-A isolation**
 Strict-A logic shall not directly handle JSON strings, sockets, or timestamps; it shall operate exclusively on normalized numeric values and configuration.
 
 ---
 
 #### 3.4.5 Test & Coverage Requirements
 
-**SV-TEST-01 — Unit coverage**
+**SV-TEST-01 - Unit coverage**
 All Strict-A modules shall achieve **100% statement coverage** and **≥ 95% branch coverage**.
 
-**SV-TEST-02 — MC/DC**
+**SV-TEST-02 - MC/DC**
 All decision points in Strict-A logic (envelope, fallback, status classification) shall be covered by MC/DC-style tests.
 
-**SV-TEST-03 — Fault injection coverage**
+**SV-TEST-03 - Fault injection coverage**
 The test suite shall exercise all six fault modes:
 `normal`, `high_fault`, `low_fault`, `severe_disagreement`, `frozen`, `stuck_drift`,
 and verify the resulting statuses and outputs.
@@ -358,8 +363,8 @@ Both are JSON, line-delimited, UTF-8 encoded. This ensures maximal tooling compa
 ## 10. Data Model (Full Definition)
 The reference system exchanges two structured message types:
 
-- `SensorFrame` — from gateway simulator to CRSS client
-- `ActuatorRequest` — from CRSS client to gateway
+- `SensorFrame` - from gateway simulator to CRSS client
+- `ActuatorRequest` - from CRSS client to gateway
 
 Both are line-delimited JSON objects.
 
@@ -697,7 +702,7 @@ Execution continues until:
 - a fatal network failure occurs (Core-C)
 - the deployment environment forces shutdown
 
-Strict-A code never handles exceptions nor performs retries — exception handling belongs to Core-C.
+Strict-A code never handles exceptions nor performs retries - exception handling belongs to Core-C.
 
 ## 20. Timing Constraints
 This reference example does not implement real-time scheduling, jitter monitoring, deadlines, or latency tracking.
@@ -836,7 +841,7 @@ MC/DC must cover:
 - sign-changing deltas
 - previous-state memory behavior
 
-The version 3 test suite achieves approximately 95–98% MC/DC.
+The version 3 test suite achieves approximately 95-98% MC/DC.
 
 ### 23.3 Integration Tests
 Integration tests must validate:

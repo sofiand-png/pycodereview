@@ -3,117 +3,146 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
 - [CRSS-Python Standard Safety Master](#crss-python-standard-safety-master)
+  - [Table of Contents](#table-of-contents)
   - [0. Purpose and Conflict Resolution](#0-purpose-and-conflict-resolution)
   - [1. Core Concepts](#1-core-concepts)
-    - [1.1 Profiles](#1-1-profiles)
-    - [1.2 Safety Levels](#1-2-safety-levels)
-    - [1.3 Mode = Profile × Safety Level](#1-3-mode-profile-safety-level)
-    - [1.4 Critical and Non-Critical Code](#1-4-critical-and-non-critical-code)
-    - [1.5 Immutability of Mode](#1-5-immutability-of-mode)
-  - [1.6 Granularity of Safety Levels, Profiles, and Modes](#1-6-granularity-of-safety-levels-profiles-and-modes)
-    - [1.6.1 Enforcement Granularity — One Mode per Module](#1-6-1-enforcement-granularity-one-mode-per-module)
-    - [1.6.2 Promotion by Highest Safety Level](#1-6-2-promotion-by-highest-safety-level)
-    - [1.6.3 Allowed Module Modes](#1-6-3-allowed-module-modes)
-    - [1.6.4 Propagation of Safety Levels](#1-6-4-propagation-of-safety-levels)
-    - [1.6.5 Documentation vs Enforcement](#1-6-5-documentation-vs-enforcement)
-  - [1.7 Profile Granularity Model (Core vs Strict)](#1-7-profile-granularity-model-core-vs-strict)
-    - [1.7.1 Where Profiles Apply](#1-7-1-where-profiles-apply)
-    - [1.7.2 Cross-Profile Call Rules (Baseline)](#1-7-2-cross-profile-call-rules-baseline)
-    - [1.7.3 Recommended Architecture Pattern](#1-7-3-recommended-architecture-pattern)
-  - [2. Environment and Boundaries (Rewritten / Expanded)](#2-environment-and-boundaries-rewritten-expanded)
-    - [2.1 Definition of Boundaries](#2-1-definition-of-boundaries)
-    - [2.2 No Promotion Across Boundaries](#2-2-no-promotion-across-boundaries)
-    - [2.3 No Safety Leakage Beyond Boundaries](#2-3-no-safety-leakage-beyond-boundaries)
-    - [2.4 Boundary Interaction Contracts](#2-4-boundary-interaction-contracts)
-    - [2.5 Call Graph Interaction with Boundaries](#2-5-call-graph-interaction-with-boundaries)
-    - [2.6 Boundary Failures Must Not Break Level-A Logic](#2-6-boundary-failures-must-not-break-level-a-logic)
-    - [2.7 Summary of Boundary Rules](#2-7-summary-of-boundary-rules)
-    - [2.8 Final Statement](#2-8-final-statement)
+    - [1.1 Profiles](#11-profiles)
+    - [1.2 Safety Levels](#12-safety-levels)
+    - [1.3 Mode = Profile × Safety Level](#13-mode-profile-safety-level)
+      - [Strict-A (Strict Level A) Mode](#strict-a-strict-level-a-mode)
+    - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
+    - [1.5 Immutability of Mode](#15-immutability-of-mode)
+  - [1.6 Granularity of Safety Levels, Profiles, and Modes](#16-granularity-of-safety-levels-profiles-and-modes)
+    - [1.6.1 Enforcement Granularity - One Mode per Module](#161-enforcement-granularity-one-mode-per-module)
+- [CRSS_PROFILE: strict](#crss_profile-strict)
+- [CRSS_SAFETY_LEVEL: A](#crss_safety_level-a)
+- [CRSS_MODE: Strict-A](#crss_mode-strict-a)
+    - [1.6.2 Promotion by Highest Safety Level](#162-promotion-by-highest-safety-level)
+      - [1.6.3 Class-Level Mixing of Safety Levels](#163-class-level-mixing-of-safety-levels)
+    - [1.6.3 Allowed Module Modes](#163-allowed-module-modes)
+    - [1.6.4 Propagation of Safety Levels](#164-propagation-of-safety-levels)
+    - [1.6.5 Documentation vs Enforcement](#165-documentation-vs-enforcement)
+  - [1.7 Profile Granularity Model (Core vs Strict)](#17-profile-granularity-model-core-vs-strict)
+    - [1.7.1 Where Profiles Apply](#171-where-profiles-apply)
+    - [1.7.2 Safety Level vs Profile](#172-safety-level-vs-profile)
+    - [1.7.3 Core vs Strict Imports](#173-core-vs-strict-imports)
+      - [1.7.5 How Profiles and Safety Levels Interact](#175-how-profiles-and-safety-levels-interact)
+  - [2. Environment and Boundaries](#2-environment-and-boundaries)
+  - [2.1 Definition of Boundaries](#21-definition-of-boundaries)
+    - [2.1.1 OS Process Boundary](#211-os-process-boundary)
+    - [2.1.2 Service / Network Boundary](#212-service-network-boundary)
+    - [2.1.3 Hardware Integration Boundary](#213-hardware-integration-boundary)
+  - [2.2 No Promotion Across Boundaries](#22-no-promotion-across-boundaries)
+  - [2.3 No Safety Leakage Beyond Boundaries](#23-no-safety-leakage-beyond-boundaries)
+  - [2.4 Boundary Interaction Contracts](#24-boundary-interaction-contracts)
+    - [2.4.1 OS Process Boundary Contract](#241-os-process-boundary-contract)
+    - [2.4.2 Service / Network Boundary Contract](#242-service-network-boundary-contract)
+    - [2.4.3 Hardware Integration Boundary Contract](#243-hardware-integration-boundary-contract)
+  - [2.5 Call Graph Interaction with Boundaries](#25-call-graph-interaction-with-boundaries)
+    - [Example 1 - Correct](#example-1-correct)
+    - [Example 2 - Incorrect](#example-2-incorrect)
+    - [Example 3 - Incorrect](#example-3-incorrect)
+    - [Example 4 - Allowed (Constrained)](#example-4-allowed-constrained)
+  - [2.6 Boundary Failures Must Not Break Level-A Logic](#26-boundary-failures-must-not-break-level-a-logic)
+  - [2.7 Summary of Boundary Rules](#27-summary-of-boundary-rules)
+  - [2.8 Final Statement](#28-final-statement)
   - [3. Safety Level Assignment and Propagation](#3-safety-level-assignment-and-propagation)
-    - [3.1 Assignment from Requirements](#3-1-assignment-from-requirements)
-    - [3.2 Propagation Along Calls (Call-Chain Promotion)](#3-2-propagation-along-calls-call-chain-promotion)
-    - [3.3 Class Promotion](#3-3-class-promotion)
-    - [3.4 No Demotion](#3-4-no-demotion)
+    - [3.1 Assignment from Requirements](#31-assignment-from-requirements)
+    - [3.2 Propagation Along Calls (Call-Chain Promotion)](#32-propagation-along-calls-call-chain-promotion)
+    - [3.3 Class Promotion](#33-class-promotion)
+    - [3.4 No Demotion](#34-no-demotion)
   - [4. Critical vs Non-Critical Execution Model](#4-critical-vs-non-critical-execution-model)
-    - [4.1 Definitions](#4-1-definitions)
-    - [4.2 Golden Interaction Rule](#4-2-golden-interaction-rule)
-    - [4.3 Phase Boundaries](#4-3-phase-boundaries)
-    - [4.4 Operational Relaxation vs Rule Relaxation](#4-4-operational-relaxation-vs-rule-relaxation)
+    - [4.1 Definitions](#41-definitions)
+    - [4.2 Golden Interaction Rule](#42-golden-interaction-rule)
+    - [4.3 Phase Boundaries](#43-phase-boundaries)
+    - [4.4 Operational Relaxation vs Rule Relaxation](#44-operational-relaxation-vs-rule-relaxation)
+- [CRSS-Python Unified Safety Specification - Remaining Sections](#crss-python-unified-safety-specification-remaining-sections)
   - [5. Rule Categorization](#5-rule-categorization)
-    - [5.1 Scope](#5-1-scope)
-    - [5.2 Type and Severity (MUST/SHOULD)](#5-2-type-and-severity-must-should)
+    - [5.1 Scope](#51-scope)
+      - [5.1.1 Global Rules](#511-global-rules)
+      - [5.1.2 Phase-Scoped Rules (Critical-Only)](#512-phase-scoped-rules-critical-only)
+    - [5.2 Type and Severity (MUST/SHOULD)](#52-type-and-severity-mustshould)
   - [6. Error and Violation Categorization](#6-error-and-violation-categorization)
-    - [6.1 Severity Levels](#6-1-severity-levels)
-    - [6.2 Enforcement Matrix](#6-2-enforcement-matrix)
+  - [6.1 Severity Levels](#61-severity-levels)
+  - [6.2 Enforcement Matrix](#62-enforcement-matrix)
   - [7. Critical-Phase Rules (CP)](#7-critical-phase-rules-cp)
-    - [CP-1 — No Allocation in Critical](#cp-1-no-allocation-in-critical)
-    - [CP-2 — No Blocking or External I/O](#cp-2-no-blocking-or-external-i-o)
-    - [CP-3 — No GC Interference](#cp-3-no-gc-interference)
-    - [CP-4 — Deterministic Control Flow](#cp-4-deterministic-control-flow)
+    - [CP-1 - No Allocation in Critical](#cp-1-no-allocation-in-critical)
+    - [CP-2 - No Blocking or External I/O](#cp-2-no-blocking-or-external-io)
+    - [CP-3 - No GC Interference](#cp-3-no-gc-interference)
+    - [CP-4 - Deterministic Control Flow](#cp-4-deterministic-control-flow)
   - [8. Non-Critical-Phase Rules (NCP)](#8-non-critical-phase-rules-ncp)
-    - [NCP-1 — Allowed Operations](#ncp-1-allowed-operations)
-    - [NCP-2 — Still Under Profile Rules](#ncp-2-still-under-profile-rules)
-    - [NCP-3 — Prepare and Freeze](#ncp-3-prepare-and-freeze)
-  - [9. Import Policy](#9-import-policy)
-    - [9.1 Core vs Strict](#9-1-core-vs-strict)
-    - [9.2 Mode-Specific Restrictions](#9-2-mode-specific-restrictions)
-    - [9.3 Utility Exemption](#9-3-utility-exemption)
+    - [NCP-1 - Allowed Operations](#ncp-1-allowed-operations)
+    - [NCP-2 - Still Under Profile Rules](#ncp-2-still-under-profile-rules)
+    - [NCP-3 - Prepare and Freeze](#ncp-3-prepare-and-freeze)
   - [10. Inheritance Policy](#10-inheritance-policy)
-    - [10.1 Depth Constraint](#10-1-depth-constraint)
-    - [10.2 Mode Constraints](#10-2-mode-constraints)
-    - [10.3 Promotion via Inheritance](#10-3-promotion-via-inheritance)
+    - [10.1 Depth Constraint](#101-depth-constraint)
+    - [10.2 Mode Constraints](#102-mode-constraints)
+    - [10.3 Promotion via Inheritance](#103-promotion-via-inheritance)
   - [11. Exceptions and Utilities](#11-exceptions-and-utilities)
-    - [11.1 Logging](#11-1-logging)
-    - [11.2 Telemetry / Metrics](#11-2-telemetry-metrics)
-    - [11.3 Diagnostics and Debug](#11-3-diagnostics-and-debug)
+    - [11.1 Logging](#111-logging)
+    - [11.2 Telemetry / Metrics](#112-telemetry-metrics)
+    - [11.3 Diagnostics and Debug](#113-diagnostics-and-debug)
   - [12. Compliance and Acceptance Model](#12-compliance-and-acceptance-model)
-    - [12.1 Core-Only Projects](#12-1-core-only-projects)
-    - [12.2 Strict-Only Projects (No Level A)](#12-2-strict-only-projects-no-level-a)
-    - [12.3 Strict-A Components](#12-3-strict-a-components)
-    - [12.4 Mixed Systems (Core + Strict + Strict-A)](#12-4-mixed-systems-core-strict-strict-a)
+    - [12.1 Core-Only Projects](#121-core-only-projects)
+    - [12.2 Strict-Only Projects (No Level A)](#122-strict-only-projects-no-level-a)
+    - [12.3 Strict-A Components](#123-strict-a-components)
+    - [12.4 Mixed Systems (Core + Strict + Strict-A)](#124-mixed-systems-core-strict-strict-a)
   - [13. Certification-Grade Conditions (High-Level)](#13-certification-grade-conditions-high-level)
   - [14. Reference Use Case (Mode + Phases + Dependencies)](#14-reference-use-case-mode-phases-dependencies)
-    - [14.1 Scenario](#14-1-scenario)
-    - [14.2 Architecture](#14-2-architecture)
-    - [14.3 Modes](#14-3-modes)
-    - [14.4 Python Example](#14-4-python-example)
-    - [14.5 Compliance Interpretation](#14-5-compliance-interpretation)
+    - [14.1 Scenario](#141-scenario)
+    - [14.2 Architecture](#142-architecture)
+    - [14.3 Modes](#143-modes)
+    - [14.4 Python Example](#144-python-example)
+- [logger.py (Core-C)](#loggerpy-core-c)
+- [config_loader.py (Strict-B, non-critical)](#config_loaderpy-strict-b-non-critical)
+- [sensor.py (Strict-B, non-critical)](#sensorpy-strict-b-non-critical)
+- [safety_controller.py (Strict-A)](#safety_controllerpy-strict-a)
+- [main.py (Strict-B or Strict-A non-critical orchestrator)](#mainpy-strict-b-or-strict-a-non-critical-orchestrator)
+    - [14.5 Compliance Interpretation](#145-compliance-interpretation)
   - [15. Third-Party Library and Framework Containment](#15-third-party-library-and-framework-containment)
-    - [15.1 Policy](#15-1-policy)
-    - [15.2 Certified Builds and Dependency Freezing](#15-2-certified-builds-and-dependency-freezing)
-    - [15.3 Critical vs Non-Critical Usage](#15-3-critical-vs-non-critical-usage)
-    - [15.4 SCEM Impact](#15-4-scem-impact)
+    - [15.1 Scope](#151-scope)
+    - [15.2 Version and Source Control](#152-version-and-source-control)
+    - [15.3 Critical vs Non-Critical Usage](#153-critical-vs-non-critical-usage)
+    - [15.4 SCEM Impact](#154-scem-impact)
   - [16 Call Graph, Orchestrators, and Level-A Data Validation](#16-call-graph-orchestrators-and-level-a-data-validation)
-    - [16.1 Purpose](#16-1-purpose)
-    - [16.2 Definitions](#16-2-definitions)
-    - [16.3 Safety-Level Call Constraints (A/B/C)](#16-3-safety-level-call-constraints-a-b-c)
-    - [16.4 Profile Call Constraints (Strict vs Core)](#16-4-profile-call-constraints-strict-vs-core)
-    - [16.5 Phase Interaction](#16-5-phase-interaction)
-    - [16.6 Level-A Separation](#16-6-level-a-separation)
-    - [16.7 Canonical Data Flow](#16-7-canonical-data-flow)
-    - [16.8 Orchestrators](#16-8-orchestrators)
-    - [16.9 Concrete Call Graph Examples](#16-9-concrete-call-graph-examples)
-    - [16.10 Data Handling](#16-10-data-handling)
-    - [16.11 Level-A Output & Actuation Boundary](#16-11-level-a-output-actuation-boundary)
-    - [16.12 Level-A API & Signature Rules](#16-12-level-a-api-signature-rules)
-    - [16.13 Upstream Responsibility for Uncallable Cases](#16-13-upstream-responsibility-for-uncallable-cases)
-    - [16.14 Level-A Composition and Call Graph](#16-14-level-a-composition-and-call-graph)
+    - [16.1 Purpose](#161-purpose)
+    - [16.2 Definitions](#162-definitions)
+    - [16.3 Safety-Level Call Constraints (A/B/C)](#163-safety-level-call-constraints-abc)
+      - [16.3.1 Absolute Rules for Level-A Code](#1631-absolute-rules-for-level-a-code)
+      - [16.3.2 Rules for Level-B and Level-C](#1632-rules-for-level-b-and-level-c)
+  - [16.4 Profile Call Constraints (Strict vs Core)](#164-profile-call-constraints-strict-vs-core)
+  - [16.5 Phase Interaction](#165-phase-interaction)
+  - [16.6 Level-A Separation](#166-level-a-separation)
+  - [16.7 Canonical Data Flow](#167-canonical-data-flow)
+  - [16.8 Orchestrators](#168-orchestrators)
+    - [16.9 Concrete Call Graph Examples](#169-concrete-call-graph-examples)
+- [strict_a_controller.py  (Level A, Strict-A)](#strict_a_controllerpy-level-a-strict-a)
+- [bad_example.py](#bad_examplepy)
+- [strict_b_step.py  (Level B, Strict-B)](#strict_b_steppy-level-b-strict-b)
+    - [16.10 Data Handling](#1610-data-handling)
+    - [16.11 Level-A Output & Actuation Boundary](#1611-level-a-output-actuation-boundary)
+    - [16.12 Level-A API & Signature Rules](#1612-level-a-api-signature-rules)
+      - [16.12.1 Defaults in Level-A Signatures](#16121-defaults-in-level-a-signatures)
+      - [16.12.2 Handling “Non-Provided” or Unknown Data](#16122-handling-non-provided-or-unknown-data)
+    - [16.13 Upstream Responsibility for Uncallable Cases](#1613-upstream-responsibility-for-uncallable-cases)
+    - [16.14 Level-A Composition and Call Graph](#1614-level-a-composition-and-call-graph)
+- [strict_a_controller.py   (Mode: Strict-A)](#strict_a_controllerpy-mode-strict-a)
+- [strict_b_orchestrator.py  (Mode: Strict-B)](#strict_b_orchestratorpy-mode-strict-b)
   - [17. Machine-Readable Metadata (Optional Annex)](#17-machine-readable-metadata-optional-annex)
   - [18 Allowed / Forbidden Matrix](#18-allowed-forbidden-matrix)
-    - [18.1 Modes](#18-1-modes)
-    - [18.2 Safety-Level Matrix](#18-2-safety-level-matrix)
-    - [18.3 Mode→Mode Matrix (Baseline)](#18-3-mode-mode-matrix-baseline)
-    - [18.4 Utility & Logging Rules](#18-4-utility-logging-rules)
-    - [18.5 Canonical Safe Pattern](#18-5-canonical-safe-pattern)
+    - [18.1 Modes](#181-modes)
+    - [18.2 Safety-Level Matrix](#182-safety-level-matrix)
+    - [18.3 Mode→Mode Matrix (Baseline)](#183-modemode-matrix-baseline)
+    - [18.4 Utility & Logging Rules](#184-utility-logging-rules)
+    - [18.5 Canonical Safe Pattern](#185-canonical-safe-pattern)
   - [19. Summary](#19-summary)
-
 
 ---
 
@@ -194,8 +223,8 @@ A **Profile** defines which rule catalog applies to a codebase or component.
 | Level | Meaning            | Typical Mapping                                |
 |-------|--------------------|-----------------------------------------------|
 | **A** | Highest criticality | ASIL D, SIL 3 (supervisory), Class C (multi-layer) |
-| **B** | Medium–high        | ASIL C, SIL 2–3                              |
-| **C** | Low–medium         | ASIL A/B, SIL 1–2                            |
+| **B** | Medium-high        | ASIL C, SIL 2-3                              |
+| **C** | Low-medium         | ASIL A/B, SIL 1-2                            |
 
 Safety Levels apply to **functions/methods**, then propagate to classes and modules.
 
@@ -233,8 +262,8 @@ Not a third profile, but a Mode with additional obligations.
 
 A code unit can be annotated as:
 
-- `@critical` — safety-critical, timing-critical, deterministic segment.
-- `@non_critical_phase` — preparatory, shutdown, or reconfiguration segment.
+- `@critical` - safety-critical, timing-critical, deterministic segment.
+- `@non_critical_phase` - preparatory, shutdown, or reconfiguration segment.
 
 These annotations are Phase labels within a Mode.
 
@@ -268,7 +297,7 @@ This section defines:
 
 ---
 
-### 1.6.1 Enforcement Granularity — One Mode per Module
+### 1.6.1 Enforcement Granularity - One Mode per Module
 
 **CRSS-Gran-1 (Normative)**
 A **module** (`.py` file) is the enforcement unit.
@@ -601,7 +630,7 @@ Strict-A/B components MUST assume:
 
 Boundaries **break** call-graph promotion.
 
-### Example 1 — Correct
+### Example 1 - Correct
 
 ```
 MCU → TCP → Core-C Gateway
@@ -614,7 +643,7 @@ Promotion applies **after** validators.
 
 ---
 
-### Example 2 — Incorrect
+### Example 2 - Incorrect
 
 ```
 Strict-A Critical Kernel → driver SPI read
@@ -629,7 +658,7 @@ Violations:
 
 ---
 
-### Example 3 — Incorrect
+### Example 3 - Incorrect
 
 ```
 Strict-A @critical → REST API → cloud
@@ -644,7 +673,7 @@ Violations:
 
 ---
 
-### Example 4 — Allowed (Constrained)
+### Example 4 - Allowed (Constrained)
 
 ```
 Core Orchestrator → Strict-B Validator → Strict-A Validator → Strict-A @critical
@@ -662,7 +691,7 @@ Valid because:
 ## 2.6 Boundary Failures Must Not Break Level-A Logic
 
 **CRSS-Boundary-3 (Normative)**
-External failure — timeout, corruption, crash, stall — MUST NOT break:
+External failure - timeout, corruption, crash, stall - MUST NOT break:
 
 - Level-A determinism
 - Level-A safe outputs
@@ -828,7 +857,7 @@ In other words:
 
 ---
 
-# CRSS-Python Unified Safety Specification — Remaining Sections
+# CRSS-Python Unified Safety Specification - Remaining Sections
 
 ## 5. Rule Categorization
 
@@ -900,8 +929,8 @@ This section aligns analyzer severities with the updated Profile and Safety-Leve
 |--------------------------|---------------------------------|--------------------------------------|
 | **Core (any phase)**   | ERROR                           | WARN                                 |
 | **Strict (any phase)** | ERROR                           | WARN (≤10% cumulative, explainable)  |
-| **Strict-A — Critical**| **BLOCKER**                   | **BLOCKER** (treated as MUST)        |
-| **Strict-A — Non-Crit.** | BLOCKER (with deviation process) | WARN/ERROR per Strict rules          |
+| **Strict-A - Critical**| **BLOCKER**                   | **BLOCKER** (treated as MUST)        |
+| **Strict-A - Non-Crit.** | BLOCKER (with deviation process) | WARN/ERROR per Strict rules          |
 
 **Interpretation for Strict-A non-critical:**
 
@@ -917,14 +946,14 @@ A violation is **BLOCKER** by default, but may be accepted *only if*:
 
 ## 7. Critical-Phase Rules (CP)
 
-### CP-1 — No Allocation in Critical
+### CP-1 - No Allocation in Critical
 
 Within `@critical`:
 
 - No creation of new heap objects
   (beyond trivial, bounded local temporaries that tools can approve)
 
-### CP-2 — No Blocking or External I/O
+### CP-2 - No Blocking or External I/O
 
 Within `@critical`:
 
@@ -933,7 +962,7 @@ Within `@critical`:
 - No acquiring possibly-blocking locks
 - No waiting on conditions, futures, or external events
 
-### CP-3 — No GC Interference
+### CP-3 - No GC Interference
 
 For Strict-A:
 
@@ -943,7 +972,7 @@ Evidence must show:
 
 - No GC pause can occur during critical windows.
 
-### CP-4 — Deterministic Control Flow
+### CP-4 - Deterministic Control Flow
 
 Within `@critical`:
 
@@ -955,7 +984,7 @@ Within `@critical`:
 
 ## 8. Non-Critical-Phase Rules (NCP)
 
-### NCP-1 — Allowed Operations
+### NCP-1 - Allowed Operations
 
 In `@non_critical_phase` (Strict & Strict-A):
 
@@ -968,7 +997,7 @@ In `@non_critical_phase` (Strict & Strict-A):
 - Subprocess usage (within profile rules)
 - Logging and monitoring
 
-### NCP-2 — Still Under Profile Rules
+### NCP-2 - Still Under Profile Rules
 
 Global profile rules continue to apply:
 
@@ -979,7 +1008,7 @@ Global profile rules continue to apply:
 
 MUST violations still produce **ERROR/BLOCKER** as per Mode.
 
-### NCP-3 — Prepare and Freeze
+### NCP-3 - Prepare and Freeze
 
 Any data used in `@critical` must:
 
@@ -1328,7 +1357,7 @@ It applies to:
 
 ### 15.2 Version and Source Control
 
-**TPL-1 — Pinned Versions Only**
+**TPL-1 - Pinned Versions Only**
 All third-party dependencies MUST be:
 
 - Version-pinned in the dependency manifest, and
@@ -1338,18 +1367,18 @@ The generation, freezing, and verification of pinned dependency sets SHALL be
 performed according to the Certified Build and Packaging Process defined in the
 Release Management specification.
 
-**TPL-2 — No Implicit Online Resolution**
+**TPL-2 - No Implicit Online Resolution**
 Production builds and certification builds MUST NOT fetch packages from the public internet at build or deploy time. All dependencies MUST come from:
 
 - an internal mirror, or
 - a pre-frozen local repository.
 
-**TPL-2.1 — Certification Build Offline Enforcement (Normative)**
+**TPL-2.1 - Certification Build Offline Enforcement (Normative)**
 Certification builds SHALL enforce “no public internet resolution” by one of:
 - installing exclusively from an internal mirror (configured index URL), OR
 - using pip --no-index --find-links with a pre-frozen local repository.
 
-**TPL-2.2 — Frozen Repository Requirement (Normative)**
+**TPL-2.2 - Frozen Repository Requirement (Normative)**
 When installing CRSS project code in certification builds:
 - dependency resolution MUST be disabled (e.g. pip install . --no-deps)
 - all dependencies MUST be installed explicitly from the approved source.
@@ -1370,7 +1399,7 @@ as defined in the Release Management specification.
 
 ### 15.3 Critical vs Non-Critical Usage
 
-TPL-3 — **No Direct Third-Party Calls in Strict-A @critical**
+TPL-3 - **No Direct Third-Party Calls in Strict-A @critical**
 
 `@critical` Strict-A code MUST NOT call third-party libraries directly (including pure Python or native extensions).
 
@@ -1379,7 +1408,7 @@ Third-party usage MAY occur in:
 - Core-C / Strict-B **non-critical** code paths, or
 - Strict/Strict-A **non-critical** initialization, configuration loading, or preprocessing steps, provided that the results are validated and converted into CRSS-controlled data structures before entering `@critical` code.
 
-TPL-4 — **Adapter Pattern for Safety Boundaries**
+TPL-4 - **Adapter Pattern for Safety Boundaries**
 
 If third-party functionality is required for safety-relevant behavior, it MUST be wrapped in a **Strict-compliant adapter**:
 
@@ -1388,7 +1417,7 @@ If third-party functionality is required for safety-relevant behavior, it MUST b
 - All outputs are range-checked and converted into CRSS-controlled types.
 - Only the adapter’s stable, deterministic result is passed into `@critical` code.
 
-TPL-5 — **Core Profile Isolation**
+TPL-5 - **Core Profile Isolation**
 
 Third-party libraries that are not amenable to static analysis (heavy reflection, dynamic imports, metaprogramming) MUST be confined to **Core-C** utilities and MUST NOT influence Strict-A control decisions except through:
 
@@ -1488,7 +1517,7 @@ Interpretation:
 
 Level-A code is the most sensitive. We enforce a **hard separation**:
 
-**CRSS-Call-1 (Normative — Level-A Isolation)**
+**CRSS-Call-1 (Normative - Level-A Isolation)**
 
 1. A Level-A function (critical or non-critical):
 
@@ -1523,7 +1552,7 @@ This guarantees that:
 
 Level-B and Level-C are less strict but still controlled.
 
-**CRSS-Call-2 (Normative — Level-B)**
+**CRSS-Call-2 (Normative - Level-B)**
 
 1. Level-B functions:
 
@@ -1531,7 +1560,7 @@ Level-B and Level-C are less strict but still controlled.
    - Strict-B functions are not allowed to call Core-B functions (both direct and indirect calls are forbidden)
 
 
-**CRSS-Call-3 (Normative — Level-C)**
+**CRSS-Call-3 (Normative - Level-C)**
 
 1. Level-C functions:
 
@@ -1595,7 +1624,7 @@ Strict-A Level-A Validator
 Strict-A Critical Kernel
 ```
 
-**CRSS-Call-A-2 — No Direct Core→Level-A Flow**
+**CRSS-Call-A-2 - No Direct Core→Level-A Flow**
 Strict-A MUST NOT consume raw Core-C/B data.
 It MUST pass through:
 
@@ -1624,7 +1653,7 @@ Must be Strict-B or higher; must appear in SCEM; must not call Core on critical 
 
 ### 16.9 Concrete Call Graph Examples
 
-**Example 1 — Correct (Level-A isolated)**
+**Example 1 - Correct (Level-A isolated)**
 
 ```python
 # strict_a_controller.py  (Level A, Strict-A)
@@ -1640,7 +1669,7 @@ No logging, no Core utilities → fully compliant with CRSS-Call-1.
 
 ---
 
-**Example 2 — Wrong (Level-A calling lower level)**
+**Example 2 - Wrong (Level-A calling lower level)**
 
 ```python
 # bad_example.py
@@ -1657,7 +1686,7 @@ Violations:
 
 ---
 
-**Example 3 — Correct (B calling A)**
+**Example 3 - Correct (B calling A)**
 
 ```python
 # strict_b_step.py  (Level B, Strict-B)
@@ -1674,7 +1703,7 @@ Level-B failure does not change Level-A logic, only whether we reach it.
 
 ### 16.10 Data Handling
 
-**CRSS-Call-Data-1 (Normative — Level-A Data Entry Chain)**
+**CRSS-Call-Data-1 (Normative - Level-A Data Entry Chain)**
 Any data (inputs, configuration, thresholds, state) that influences a Level-A `@critical` decision MUST traverse the following chain:
 
 1. **Ingestion at Core-C/B or Strict-B** (gateway, I/O, files, JSON, env, bus).
@@ -1684,7 +1713,7 @@ Any data (inputs, configuration, thresholds, state) that influences a Level-A `@
 
 Direct feeding of raw or partially validated data into Strict-A validators or kernels (e.g. `Core → Strict-A kernel`, `Strict-B → Strict-A kernel` without steps 2 and 3) is **NOT ALLOWED** and constitutes a violation of **CRSS-Call-Data-1**.
 
-**CRSS-Data-Ownership-1 (Normative — Level-A Data Ownership & Immutability)**
+**CRSS-Data-Ownership-1 (Normative - Level-A Data Ownership & Immutability)**
 
 1. Any data or configuration used by Level-A validators or Level-A critical kernels
    SHALL be treated as **owned by Level-A** once validation is complete.
@@ -1714,7 +1743,7 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
    - and the justification that no downward mutation is possible.
 
 
-**CRSS-Config-1 (Normative — Configuration Boundary for Level-A)**
+**CRSS-Config-1 (Normative - Configuration Boundary for Level-A)**
 
 1. All configuration ingestion, parsing, and initial decoding (JSON, YAML, TOML, env vars, CLI, raw bytes, bus payloads) MUST be implemented at Safety Level B or C (Core or Strict).
 2. Level-A code (validators and kernel) MUST operate only on already validated, normalized, bounded configuration structures provided by Strict-B Config/Data Providers.
@@ -1723,7 +1752,7 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
    - parse JSON/YAML/etc.,
    - reinterpret raw strings, bytes, or untyped dictionaries as configuration.
 
-**CRSS-Call-Profile-2 (Normative — Strict→Core Only in Non-Baseline Artifacts)**
+**CRSS-Call-Profile-2 (Normative - Strict→Core Only in Non-Baseline Artifacts)**
 
 1. In the certified safety baseline (code included in CBM/SCEM and production artifacts), Strict code (Strict-A/B/C) MUST NOT:
    - import Core modules, or
@@ -1740,7 +1769,7 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
 
 ### 16.11 Level-A Output & Actuation Boundary
 
-**CRSS-Output-1 (Normative — Level-A Output Semantics)**
+**CRSS-Output-1 (Normative - Level-A Output Semantics)**
 
 1. Strict-A Critical Kernels MUST produce **abstract, immutable outputs** that fully represent the safety-relevant decision, e.g. `ActuatorCommand` with:
    - bounded numeric value,
@@ -1748,7 +1777,7 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
    - `safe_default_used` flag.
 2. Strict-A kernels MUST NOT perform I/O, network, bus operations, or hardware access to apply these commands directly to external systems.
 
-**CRSS-Output-2 (Normative — Actuation Adapter Role)**
+**CRSS-Output-2 (Normative - Actuation Adapter Role)**
 
 1. Application of Level-A outputs to the outside world (actuator buses, RTOS hooks, hardware drivers, external protocols) MUST be implemented by an **Actuation Adapter** at:
    - Strict-B, or
@@ -1763,7 +1792,7 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
    - relax any Level-A safety constraint or envelope,
    - silently substitute a different command without being treated as a safety-relevant component itself.
 
-**CRSS-Output-3 (Normative — One-Way Semantic Dependence)**
+**CRSS-Output-3 (Normative - One-Way Semantic Dependence)**
 
 1. Level-A decision logic MUST NOT depend on the behavior of the Actuation Adapter: the adapter is downstream only.
 2. Failures in the Actuation Adapter MUST be treated in the safety case as:
@@ -1775,7 +1804,7 @@ Direct feeding of raw or partially validated data into Strict-A validators or ke
    - where they are adapted to external interfaces,
    - what guarantees exist that adaptation cannot violate Level-A decisions.
 
-**CRSS-Output-4 (Normative — Level-A Safety Closure)**
+**CRSS-Output-4 (Normative - Level-A Safety Closure)**
 Any Level-A Strict-A kernel function MUST guarantee that for all inputs within its representable domain:
 
 - The produced actuator command is either:
@@ -1784,7 +1813,7 @@ Any Level-A Strict-A kernel function MUST guarantee that for all inputs within i
 
 and MUST NEVER produce an actuator output that violates the declared safe envelope.
 
-**CRSS-Kernel-Total-1 (Normative — Total Safe Behavior)**
+**CRSS-Kernel-Total-1 (Normative - Total Safe Behavior)**
 Level-A Strict-A kernel functions SHALL be designed and verified as total safe functions over their representable input domain:
 
 - For any combination of input data and internal state reachable in the system, the kernel MUST NOT produce an actuator command that violates the configured safe envelope or the declared safety goals.
@@ -1810,7 +1839,7 @@ The validator chain exists for assurance and clarity, not as a fragile precondit
 
 ### 16.12 Level-A API & Signature Rules
 
-**CRSS-API-1 (Normative — Closed Signatures for Level-A)**
+**CRSS-API-1 (Normative - Closed Signatures for Level-A)**
 Level-A Strict-A kernel functions SHALL use fixed, explicit signatures:
 
 - No `*args`
@@ -1826,7 +1855,7 @@ Level-A functions MAY only accept:
 **Rationale:**
 Signatures must be statically inspectable and analyzable. No dynamic or flexible API shape on the critical kernel.
 
-**CRSS-API-2 (Normative — No Arity Flexibility)**
+**CRSS-API-2 (Normative - No Arity Flexibility)**
 Level-A kernel functions SHALL NOT rely on optional positional parameters whose presence/absence changes behavior:
 
 - Either the parameter is always required (and enforced by the caller), or
@@ -1842,11 +1871,11 @@ class VotedInputs:
     has_valid_vote: bool
 ```
 
-Kernel always receives `VotedInputs` and handles `has_valid_vote` explicitly — no “missing argument” concept at runtime.
+Kernel always receives `VotedInputs` and handles `has_valid_vote` explicitly - no “missing argument” concept at runtime.
 
 #### 16.12.1 Defaults in Level-A Signatures
 
-**CRSS-API-3 (Normative — Default Values in Level-A)**
+**CRSS-API-3 (Normative - Default Values in Level-A)**
 
 - No mutable defaults.
 - Level-A functions MUST NOT use mutable default arguments (`list`, `dict`, custom objects).
@@ -1864,7 +1893,7 @@ For Level-A kernels, prefer no defaults at all and require fully constructed inp
 
 #### 16.12.2 Handling “Non-Provided” or Unknown Data
 
-**CRSS-API-4 (Normative — Explicit Representation of Missing Data)**
+**CRSS-API-4 (Normative - Explicit Representation of Missing Data)**
 
 Level-A kernels MUST NOT infer “missingness” of data from call-shape (e.g. checking argument count or presence in `**kwargs`).
 
@@ -1881,7 +1910,7 @@ Level-A kernel MUST handle all allowed combinations of these states by:
 
 ### 16.13 Upstream Responsibility for Uncallable Cases
 
-**CRSS-API-5 (Normative — No “Half-Baked” Calls into Level-A)**
+**CRSS-API-5 (Normative - No “Half-Baked” Calls into Level-A)**
 
 Gateways and Strict-B providers MUST ensure that Level-A kernel functions are never called with:
 - wrong arity,
@@ -1896,7 +1925,7 @@ If raw inputs cannot be parsed or mapped into the Level-A input model:
 
 ### 16.14 Level-A Composition and Call Graph
 
-**CRSS-Call-Graph-1 (Normative — Level-A Call Graph Structure)**
+**CRSS-Call-Graph-1 (Normative - Level-A Call Graph Structure)**
 For Level-A code, the call graph MUST form a Directed Acyclic Graph (DAG) at the module or service boundary.
 
 Where Level-A cycles are unavoidable (e.g. small mutual recursion):
@@ -1909,7 +1938,7 @@ Where Level-A cycles are unavoidable (e.g. small mutual recursion):
   - timing analysis,
   - state convergence and stability.
 
-**CRSS-LA-Chain-1 (Normative — Composition of Level-A Kernels)**
+**CRSS-LA-Chain-1 (Normative - Composition of Level-A Kernels)**
 When a Level-A function A-2 consumes a value produced by another Level-A function A-1:
 
 - The preferred pattern is a pure Level-A pipeline: the orchestration (A1 → A2) is itself implemented as Level-A Strict.
@@ -1922,7 +1951,7 @@ If a Strict-B orchestrator wires A-1 and A-2, it MUST NOT:
 
 Any such behavior MUST be moved into Level-A code.
 
-**Pattern 1 — Recommended: Level-A orchestrates Level-A**
+**Pattern 1 - Recommended: Level-A orchestrates Level-A**
 ```python
 # strict_a_controller.py   (Mode: Strict-A)
 
@@ -1939,7 +1968,7 @@ def A_step(cfg: SafetyConfig, inputs: VotedInputs) -> ActuatorCommand:
     return cmd
 ```
 
-**Pattern 2 — Acceptable: Strict-B wires A₁ and A₂ only as a pass-through**
+**Pattern 2 - Acceptable: Strict-B wires A₁ and A₂ only as a pass-through**
 ```python
 # strict_b_orchestrator.py  (Mode: Strict-B)
 
@@ -1962,7 +1991,7 @@ Pattern 1 is valid because the orchestration is itself Level-A Strict code; it i
 in the profile sense. The ‘inner orchestrator’ rule applies when orchestration is implemented outside Level-A.”
 
 
-**CRSS-LA-Result-1 (Normative — Single Source of Truth for Level-A Results)**
+**CRSS-LA-Result-1 (Normative - Single Source of Truth for Level-A Results)**
 Safety-relevant derived quantities at Level-A (e.g. voted value, final actuator command, safety envelope status) SHOULD have a single authoritative implementation.
 
 It is NOT ALLOWED to have multiple ad-hoc implementations of the same safety concept in different Level-A functions, whose outputs are treated as equally authoritative, unless:
@@ -1971,7 +2000,7 @@ It is NOT ALLOWED to have multiple ad-hoc implementations of the same safety con
 
 Reusing the same Level-A helper function in multiple places is encouraged; duplicating its logic in different modules/classes is discouraged and may be treated as a finding in review.
 
-**CRSS-LA-Result-2 (Normative — No Downward Re-Derivation)**
+**CRSS-LA-Result-2 (Normative - No Downward Re-Derivation)**
 Lower-level components (Level-B/C, Core) MUST NOT re-compute or reinterpret Level-A kernel results for **safety decisions**.
 
 They may:
@@ -1983,7 +2012,7 @@ but any further safety decision or transformation based on these results MUST be
 
 A “safety decision” here means any logic that can change actuation behavior relative to the Level-A command based on reinterpretation or recomputation of Level-A derived quantities. Adapters may still **tighten** safety (drop/clamp), but MUST NOT compute an alternative actuation target from Level-A results.
 
-**CRSS-LA-Decision-Model-1 (Normative — Single Logical Level-A Decision)**
+**CRSS-LA-Decision-Model-1 (Normative - Single Logical Level-A Decision)**
 
 Even when implemented as multiple Level-A Strict-A functions, a safety decision
 SHALL be considered a single logical Level-A decision if:

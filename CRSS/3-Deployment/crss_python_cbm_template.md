@@ -1,15 +1,15 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 **Note:** The structure in this template is Informative. 
 The normative CBM content requirements are defined in the Deployment Master and Release Management specifications.
 
 ---
 ## Table of Contents
-
+  - [Table of Contents](#table-of-contents)
 - [1. Requirements](#1-requirements)
 - [2. Source Code](#2-source-code)
 - [3. Python Interpreter](#3-python-interpreter)
@@ -18,7 +18,7 @@ The normative CBM content requirements are defined in the Deployment Master and 
 - [6. Container/VM Image (if applicable)](#6-containervm-image-if-applicable)
 - [7. Hardware Platform](#7-hardware-platform)
 - [8. Build Configuration](#8-build-configuration)
-- [9. Database / External State (if applicable)](#9-database--external-state-if-applicable)
+- [9. Database / External State (if applicable)](#9-database-external-state-if-applicable)
 - [10. Test Context](#10-test-context)
 - [11. Linked Artifacts (Mandatory)](#11-linked-artifacts-mandatory)
 - [12. Integrity](#12-integrity)

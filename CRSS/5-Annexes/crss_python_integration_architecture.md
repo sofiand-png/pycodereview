@@ -3,26 +3,29 @@
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
-
-- [1. Purpose](#1-purpose)
-- [2. Integration Tiers](#2-integration-tiers)
-- [3. Integration Boundaries (CRSS-Critical)](#3-integration-boundaries-crss-critical)
-- [4. Hardware Integration Patterns](#4-hardware-integration-patterns)
-  - [4.1 Gateway Shield (Recommended)](#41-gateway-shield-recommended)
-  - [4.2 HAL Wrapper](#42-hal-wrapper)
-  - [4.3 RTOS Push Model](#43-rtos-push-model)
-- [5. Allowed/Forbidden Operations](#5-allowedforbidden-operations)
-- [6. Safety Timing Model](#6-safety-timing-model)
-- [7. Watchdog Integration](#7-watchdog-integration)
-- [8. Deployment Considerations](#8-deployment-considerations)
-- [9. Example: Sensor Voting System](#9-example-sensor-voting-system)
-
+- [CRSS Integration Architecture Annex](#crss-integration-architecture-annex)
+  - [Table of Contents](#table-of-contents)
+  - [1. Purpose](#1-purpose)
+  - [2. Integration Tiers](#2-integration-tiers)
+  - [3. Integration Boundaries (CRSS-Critical)](#3-integration-boundaries-crss-critical)
+    - [Strict-A components:](#strict-a-components)
+    - [Core-B components:](#core-b-components)
+    - [Core-C components:](#core-c-components)
+  - [4. Hardware Integration Patterns](#4-hardware-integration-patterns)
+    - [4.1 Gateway Shield (Recommended)](#41-gateway-shield-recommended)
+    - [4.2 HAL Wrapper](#42-hal-wrapper)
+    - [4.3 RTOS Push Model](#43-rtos-push-model)
+  - [5. Allowed/Forbidden Operations](#5-allowedforbidden-operations)
+  - [6. Safety Timing Model](#6-safety-timing-model)
+  - [7. Watchdog Integration](#7-watchdog-integration)
+  - [8. Deployment Considerations](#8-deployment-considerations)
+  - [9. Example: Sensor Voting System](#9-example-sensor-voting-system)
 
 ---
 
@@ -42,9 +45,9 @@ CRSS defines three integration tiers:
 
 | Tier | Description |
 |------|-------------|
-| **T1 – Direct Embedded** | Python runs on the same physical controller/ECU |
-| **T2 – Gateway-Mediated** | Python app communicates via IPC / TCP / CAN gateway |
-| **T3 – Cloud-Supervisory** | Python provides monitoring, analytics, or configuration |
+| **T1 - Direct Embedded** | Python runs on the same physical controller/ECU |
+| **T2 - Gateway-Mediated** | Python app communicates via IPC / TCP / CAN gateway |
+| **T3 - Cloud-Supervisory** | Python provides monitoring, analytics, or configuration |
 
 The reference example corresponds to **Tier 2**.
 

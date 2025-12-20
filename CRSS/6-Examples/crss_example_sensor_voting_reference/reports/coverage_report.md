@@ -1,90 +1,32 @@
-# Coverage Report — Sensor Voting Reference Example
+# Coverage Report - Sensor Voting Reference Example
 
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
-
-- [1. Tools](#1-tools)
-- [2. Test Suite Breakdown](#2-test-suite-breakdown)
-  - [Unit tests](#unit-tests)
-  - [MC/DC-style tests (logical decisions)](#mcdc-style-tests-logical-decisions)
-  - [Integration tests](#integration-tests)
-- [3. Coverage Metrics (core logic only)](#3-coverage-metrics-core-logic-only)
-- [4. MC/DC Justification (summary)](#4-mcdc-justification-summary)
-  - [4.1 compute_voted_value (voting)](#41-compute_voted_value-voting)
-  - [4.2 apply_safety_envelope (envelope)](#42-apply_safety_envelope-envelope)
-  - [4.3 SafetyController.step (controller)](#43-safetycontrollerstep-controller)
+- [Coverage Report - Sensor Voting Reference Example](#coverage-report-sensor-voting-reference-example)
+  - [Table of Contents](#table-of-contents)
+  - [1. Tools](#1-tools)
+  - [2. Test Suite Breakdown](#2-test-suite-breakdown)
+    - [Unit tests](#unit-tests)
+    - [MC/DC-style tests (logical decisions)](#mcdc-style-tests-logical-decisions)
+    - [Integration tests](#integration-tests)
+  - [3. Coverage Metrics (core logic only)](#3-coverage-metrics-core-logic-only)
+  - [4. MC/DC Justification (summary)](#4-mcdc-justification-summary)
+    - [4.1 compute_voted_value (voting)](#41-compute_voted_value-voting)
+    - [4.2 apply_safety_envelope (envelope)](#42-apply_safety_envelope-envelope)
+    - [4.3 SafetyController.step (controller)](#43-safetycontrollerstep-controller)
 - [5. Fault Injection Report](#5-fault-injection-report)
   - [5.1 Fault model](#51-fault-model)
   - [5.2 Fault Classes Exercised](#52-fault-classes-exercised)
   - [5.3 Evidence: Test Locations](#53-evidence-test-locations)
   - [5.4 Expected Safety Response](#54-expected-safety-response)
 
-## 1. Tools
-- **Test runner**: pytest
-- **Coverage tool**: coverage.py (branch coverage enabled)
-- **Command**:
-```bash
-coverage run --branch -m pytest
-coverage xml
-coverage html
-```
-Config: `.coveragerc` excludes non-critical harness modules:
-```
-*/app/tcp_sensor_server.py
-*/app/tcp_controller_client.py
-*/logging_utils/*
-*/sensors/simulation.py
-```
-## 2. Test Suite Breakdown
-### Unit tests
-- tests/unit/test_voting.py
-- tests/unit/test_envelope.py
-- tests/unit/test_controller.py
-- tests/unit/test_config_loader.py
-- tests/unit/test_markers.py
-- tests/unit/test_json_protocol_validation.py
-### MC/DC-style tests (logical decisions)
-- tests/mcdc/test_voting_mcdc.py
-- tests/mcdc/test_envelope_mcdc.py
-- tests/mcdc/test_controller_mcdc.py
-### Integration tests
-- tests/integration/test_single_step_integration.py
-## 3. Coverage Metrics (core logic only)
-**Statement coverage (core modules): ~100%**
-`safety_logic.*`, `config.*`, `actuator.interface`, `crss_phase.markers`,
-`io.json_protocol`, `app.main_loop`, `crss_modes.modes`
-**Branch coverage (core modules): ~95–98%**
-All key decisions in:
-- `compute_voted_value`
-- `apply_safety_envelope`
-- `SafetyController.step`
-are exercised by MC/DC-style tests.
-For detailed line-by-line coverage, see `htmlcov/index.html`.
-## 4. MC/DC Justification (summary)
-### 4.1 compute_voted_value (voting)
-Decisions covered:
-- **D1**: `len(values) != 3`
-- **D2**: any plausible pair exists
-- **D3**: all three pairs plausible (NORMAL) vs only one pair (DEGRADED)
-### 4.2 apply_safety_envelope (envelope)
-Decisions covered:
-- **D1**: `voted_value < min_safe` → clamp to min
-- **D2**: `voted_value > max_safe` → clamp to max
-- **D3**: `delta > max_delta` → positive rate limit
-- **D4**: `delta < -max_delta` → negative rate limit
-- **D5**: otherwise → use clamped value unchanged
-### 4.3 SafetyController.step (controller)
-Decisions covered:
-- **D1**: voting returns FAILSAFE → FAILSAFE command
-- **D2**: voting returns DEGRADED → DEGRADED command
-- **D3**: voting returns NORMAL → NORMAL command
 ---
 
 # 5. Fault Injection Report

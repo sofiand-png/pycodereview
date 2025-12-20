@@ -3,41 +3,44 @@
 **Version:** v1.0.0  
 **Status:** Informative  
 **Maturity:** Stable  
-© 2025 Sofian Daghsen – All rights reserved  
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved  
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
-
-- [1. CRSS-Python Overview](#1-crss-python-overview)
-  - [1.1 What Is CRSS-Python?](#11-what-is-crss-python)
-  - [1.2 Why Does This Matter?](#12-why-does-this-matter)
-  - [1.3 High-Level Concept Map](#13-high-level-concept-map)
-  - [1.4 Profiles: How Strict Are the Rules?](#14-profiles-how-strict-are-the-rules)
-  - [1.5 Safety Levels: How Dangerous Is Failure?](#15-safety-levels-how-dangerous-is-failure)
-  - [1.6 Modes: The Enforcement Engine](#16-modes-the-enforcement-engine)
-  - [1.7 Phases: Critical vs Non-Critical](#17-phases-critical-vs-non-critical)
-  - [1.8 The Compliance Journey](#18-the-compliance-journey)
-  - [1.9 Recommended Strategy by Project Type](#19-recommended-strategy-by-project-type)
-    - [1.9.1 New Projects (Greenfield)](#191-new-projects-greenfield)
-    - [1.9.2 Mid-Development Projects](#192-mid-development-projects)
-    - [1.9.3 Production Systems Scaling Up](#193-production-systems-scaling-up)
-  - [1.10 Architecture Recommendations](#110-architecture-recommendations)
-  - [1.11 How to Navigate the Framework](#111-how-to-navigate-the-framework)
-  - [1.12 Two Worlds: Readers vs Auditors](#112-two-worlds-readers-vs-auditors)
-    - [Developers / Readers](#developers--readers)
-    - [Auditors / Regulators](#auditors--regulators)
-  - [1.13 Final Message](#113-final-message)
-- [2. Repository Map (CRSS/)](#2-repository-map-crss)
-  - [2.1 Overview](#21-overview)
-  - [2.2 Specifications](#22-specifications)
-  - [2.3 Governance & Evidence](#23-governance--evidence)
-  - [2.4 Deployment & Baselines](#24-deployment--baselines)
-  - [2.5 Policies](#25-policies)
-  - [2.6 Annexes, Guides & Roadmaps](#26-annexes-guides--roadmaps)
-  - [2.7 Examples](#27-examples)
-  - [2.8 Release & Meta](#28-release--meta)
+- [CRSS-Python Overview & Repository Map](#crss-python-overview-repository-map)
+  - [Table of Contents](#table-of-contents)
+  - [1. CRSS-Python Overview](#1-crss-python-overview)
+    - [1.1 What Is CRSS-Python?](#11-what-is-crss-python)
+    - [1.2 Why Does This Matter?](#12-why-does-this-matter)
+    - [1.3 High-Level Concept Map](#13-high-level-concept-map)
+    - [1.4 Profiles: How Strict Are the Rules?](#14-profiles-how-strict-are-the-rules)
+    - [1.5 Safety Levels: How Dangerous Is Failure?](#15-safety-levels-how-dangerous-is-failure)
+    - [1.6 Modes: The Enforcement Engine](#16-modes-the-enforcement-engine)
+    - [1.7 Phases: Critical vs Non-Critical](#17-phases-critical-vs-non-critical)
+      - [Properties `@critical`](#properties-critical)
+      - [Properties `@non_critical_phase`](#properties-non_critical_phase)
+    - [1.8 The Compliance Journey](#18-the-compliance-journey)
+    - [1.9 Recommended Strategy by Project Type](#19-recommended-strategy-by-project-type)
+      - [1.9.1 New Projects (Greenfield)](#191-new-projects-greenfield)
+      - [1.9.2 Mid-Development Projects](#192-mid-development-projects)
+      - [1.9.3 Production Systems Scaling Up](#193-production-systems-scaling-up)
+    - [1.10 Architecture Recommendations](#110-architecture-recommendations)
+    - [1.11 How to Navigate the Framework](#111-how-to-navigate-the-framework)
+    - [1.12 Two Worlds: Readers vs Auditors](#112-two-worlds-readers-vs-auditors)
+      - [Developers / Readers](#developers-readers)
+      - [Auditors / Regulators](#auditors-regulators)
+    - [1.13 Final Message](#113-final-message)
+  - [2. Repository Map (CRSS/)](#2-repository-map-crss)
+    - [2.1 Overview](#21-overview)
+    - [2.2 Specifications](#22-specifications)
+    - [2.3 Governance & Evidence](#23-governance-evidence)
+    - [2.4 Deployment & Baselines](#24-deployment-baselines)
+    - [2.5 Policies](#25-policies)
+    - [2.6 Annexes, Guides & Roadmaps](#26-annexes-guides-roadmaps)
+    - [2.7 Examples](#27-examples)
+    - [2.8 Release & Meta](#28-release-meta)
 
 ---
 
@@ -80,7 +83,7 @@ In safety-critical domains, software failures can lead to:
 - Regulatory violations
 - Legal and financial consequences
 
-Python is popular—but normally considered too dynamic and unpredictable.
+Python is popular-but normally considered too dynamic and unpredictable.
 
 CRSS-Python changes that by:
 
@@ -176,7 +179,7 @@ CRSS-Python distinguishes:
 
 #### Properties `@critical`
 
-Where safety decisions happen — must be:
+Where safety decisions happen - must be:
 
 - Deterministic
 - No allocation or blocking
@@ -194,7 +197,7 @@ Used for:
 - Networking
 - File access
 
-Still must follow rules — but less restrictive.
+Still must follow rules - but less restrictive.
 
 > **Key rule:** Critical code may **not** call non-critical code.
 
@@ -444,7 +447,7 @@ All paths below are under the `CRSS/` folder of the public repository.
 - [Toolchain Hardening Guide](../5-Annexes/crss_python_toolchain_hardening_guide.md)  
 - [ML / Pandas / NumPy Safety](../5-Annexes/crss_python_ml_pandas_numpty_safety.md)  
 - [Common Mistakes](../5-Annexes/crss_python_common_mistakes.md)  
-- [Ecosystem Improvement Roadmap](../5-Annexes/crss_python_ecosystem_improvement_roadmap.md)  
+- [Ecosystem Improvement Roadmap](../5-Annexes/crss_python_ecosystem_evolution_directions.md)  
 - [Veteran Enhancement Pack](../5-Annexes/crss_python_veteran_enhancement_pack.md)
 
 ---

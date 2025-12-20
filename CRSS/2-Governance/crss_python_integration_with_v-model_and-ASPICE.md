@@ -3,7 +3,7 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen — All Rights Reserved
+© 2025 Sofian Daghsen - All Rights Reserved
 Distributed under CC BY-NC-ND 4.0
 
 ---
@@ -23,6 +23,6 @@ This section is informative. It describes how the CRSS compliance lifecycle alig
   CBM, one-version Python policy, and drift-prevention rules define configuration and environment integrity.
 
 - **Safety Case & Assessment:**  
-  SCEM (D1–D6) plus Phase 5 (Independent Approval & Release) provide the structured evidence used as the software part of the safety case for an external assessment or certification program.
+  SCEM (D1-D6) plus Phase 5 (Independent Approval & Release) provide the structured evidence used as the software part of the safety case for an external assessment or certification program.
 
 Organizations MAY attach their internal ASPICE mapping tables and safety management processes to this section without modifying CRSS requirements.

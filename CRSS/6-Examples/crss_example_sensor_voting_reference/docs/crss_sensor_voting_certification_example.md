@@ -1,10 +1,10 @@
-# CRSS-Python Certification Example — Sensor Voting Reference
+# CRSS-Python Certification Example - Sensor Voting Reference
 
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 

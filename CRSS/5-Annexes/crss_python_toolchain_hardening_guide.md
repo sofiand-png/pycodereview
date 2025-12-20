@@ -3,8 +3,8 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 **Domain:** CI/CD, Build System, DevSecOps  
 **Audience:** DevOps, Toolchain Maintainers, Safety Engineers
@@ -12,20 +12,21 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 ---
 
 ## Table of Contents
-
-- [1. Purpose](#1-purpose)
-- [2. Interpreter Hardening](#2-interpreter-hardening)
-  - [2.1 Pin Python Version](#21-pin-python-version)
-  - [2.2 Disable Sources of Nondeterminism](#22-disable-sources-of-nondeterminism)
-- [3. Build Hardening](#3-build-hardening)
-  - [3.1 Reproducible Installations](#31-reproducible-installations)
-  - [3.2 Dependency Whitelisting](#32-dependency-whitelisting)
-- [4. Testing Pipeline Improvements](#4-testing-pipeline-improvements)
-  - [4.1 MC/DC Reporting](#41-mcdc-reporting)
-  - [4.2 Fault Injection Evidence](#42-fault-injection-evidence)
-- [5. Evidence Aggregation](#5-evidence-aggregation)
-- [6. Conclusion](#6-conclusion)
-
+- [CRSS Toolchain Hardening Guide](#crss-toolchain-hardening-guide)
+  - [Table of Contents](#table-of-contents)
+  - [1. Purpose](#1-purpose)
+  - [2. Interpreter Hardening](#2-interpreter-hardening)
+    - [2.1 Pin Python Version](#21-pin-python-version)
+    - [2.2 Disable Sources of Nondeterminism](#22-disable-sources-of-nondeterminism)
+  - [3. Build Hardening](#3-build-hardening)
+    - [3.1 Reproducible Installations](#31-reproducible-installations)
+    - [3.2 Dependency Whitelisting](#32-dependency-whitelisting)
+  - [4. Testing Pipeline Improvements](#4-testing-pipeline-improvements)
+    - [4.1 MC/DC Reporting](#41-mcdc-reporting)
+    - [4.2 Fault Injection Evidence](#42-fault-injection-evidence)
+  - [5. Evidence Aggregation](#5-evidence-aggregation)
+    - [Mandatory](#mandatory)
+  - [6. Conclusion](#6-conclusion)
 
 ---
 

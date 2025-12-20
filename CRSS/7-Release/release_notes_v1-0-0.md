@@ -2,16 +2,16 @@
 
 **Version:** v1.0.0
 **Status:** Release/Informative
-**Release Date**: 30-11-2025
+**Release Date**: 20-12-2025
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
 ## Table of Contents
-
 - [CRSS-Python v1.0.0 Release Notes](#crss-python-v100-release-notes)
+  - [Table of Contents](#table-of-contents)
   - [Summary](#summary)
   - [Major Features](#major-features)
   - [Added](#added)
@@ -42,7 +42,7 @@ This is the first official, public, and immutable release of the CRSS-Python Saf
 - FAQs and study path
 
 ## Breaking Changes
-None — this is the first official version.
+None - this is the first official version.
 
 ## Compatibility Notes
 Python projects must target a single interpreter version per project. The standard does not provide primary control certification for hard real-time actuation loops.
