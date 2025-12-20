@@ -21,8 +21,8 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [3.1 Strict-A Allowed Inputs](#31-strict-a-allowed-inputs)
     - [3.2 Strict-A Outputs](#32-strict-a-outputs)
   - [4. Message-Passing Contracts](#4-message-passing-contracts)
-    - [4.1 Core-C → Strict-A Contract](#41-core-c-strict-a-contract)
-    - [4.2 Strict-A → Core-C Contract](#42-strict-a-core-c-contract)
+    - [4.1 Core-C To Strict-A Contract](#41-core-c-to-strict-a-contract)
+    - [4.2 Strict-A To Core-C Contract](#42-strict-a-to-core-c-contract)
   - [5. Fault Propagation Rules](#5-fault-propagation-rules)
     - [5.1 Critical Path Isolation](#51-critical-path-isolation)
     - [5.2 Failsafe Guarantees](#52-failsafe-guarantees)
@@ -100,13 +100,13 @@ No metadata, no timestamps.
 > [⬆ Back to Table of Contents](#toc)
 
 
-### 4.1 Core-C → Strict-A Contract
+### 4.1 Core-C To Strict-A Contract
 - Flat arrays
 - All numeric values validated before entry
 - Arrays with fixed length
 - No undefined/null/NaN
 
-### 4.2 Strict-A → Core-C Contract
+### 4.2 Strict-A To Core-C Contract
 - Command + status
 - No embedded types
 - No unbounded payloads
