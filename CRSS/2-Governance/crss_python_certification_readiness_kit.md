@@ -17,15 +17,15 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [2. Certification Readiness Checklist (CRC)](#2-certification-readiness-checklist-crc)
   - [2.1 CRC Sections](#21-crc-sections)
   - [2.2 CRC Requirements](#22-crc-requirements)
-    - [CRC1 Compliance Completion](#crc1-compliance-completion)
-    - [CRC2 SCEM Completion](#crc2-scem-completion)
-    - [CRC3 Toolchain Integrity](#crc3-toolchain-integrity)
-    - [CRC4 Configuration Immutability](#crc4-configuration-immutability)
-    - [CRC5 Mode Enforcement Confirmation](#crc5-mode-enforcement-confirmation)
-    - [CRC6 Critical Phase Integrity](#crc6-critical-phase-integrity)
-    - [CRC7 Deviation Resolution](#crc7-deviation-resolution)
-    - [CRC8 Build Reproducibility](#crc8-build-reproducibility)
-    - [CRC9 Organizational Readiness](#crc9-organizational-readiness)
+    - [CRC1 Compliance Completion](#-crc1-compliance-completion)
+    - [CRC2 SCEM Completion](#-crc2-scem-completion)
+    - [CRC3 Toolchain Integrity](#-crc3-toolchain-integrity)
+    - [CRC4 Configuration Immutability](#-crc4-configuration-immutability)
+    - [CRC5 Mode Enforcement Confirmation](#-crc5-mode-enforcement-confirmation)
+    - [CRC6 Critical Phase Integrity](#-crc6-critical-phase-integrity)
+    - [CRC7 Deviation Resolution](#-crc7-deviation-resolution)
+    - [CRC8 Build Reproducibility](#-crc8-build-reproducibility)
+    - [CRC9 Organizational Readiness](#-crc9-organizational-readiness)
 - [3. Certification Blocking Conditions](#3-certification-blocking-conditions)
 - [4. Mandatory Certification Artifacts](#4-mandatory-certification-artifacts)
 - [5. Certification Readiness Workflow](#5-certification-readiness-workflow)
@@ -98,51 +98,51 @@ The CRC is a mandatory artifact confirming readiness.
 > [⬆ Back to Table of Contents](#toc)
 
 
-### CRC-1 - Compliance Completion
+### CRC1 Compliance Completion
 - Phases 1-4 completed
 - All mandatory artifacts exist
 - Missing artifacts -> NOT READY
 
-### CRC-2 - SCEM Completion
+### CRC2 SCEM Completion
 - All SCEM domains complete
 - All annex artifacts complete
 - Missing items -> NOT READY
 
-### CRC-3 - Toolchain Integrity
+### CRC3 Toolchain Integrity
 - All tools fixed-version
 - TCL levels documented
 - No auto-update
 - Tool drift -> NOT READY
 
-### CRC-4 - Configuration Immutability
+### CRC4 Configuration Immutability
 - CBM finalized
 - No config changes pending
 - Unfrozen configuration -> NOT READY
 
-### CRC-5 - Mode Enforcement Confirmation
+### CRC5 Mode Enforcement Confirmation
 - MAR finalized
 - Propagation resolved
 - Critical never calls non-critical
 - Unresolved promotions -> NOT READY
 
-### CRC-6 - Critical Phase Integrity
+### CRC6 Critical Phase Integrity
 - Critical boundaries defined
 - Determinism validated
 - Strict-A: zero violations in `@critical`
 - Any `@critical` violation -> NOT READY
 
-### CRC-7 - Deviation Resolution
+### CRC7 Deviation Resolution
 - Strict-A deviations documented
 - Strict-A deviations approved
 - Strict-A deviations isolated
 - Unapproved deviation -> NOT READY
 
-### CRC-8 - Build Reproducibility
+### CRC8 Build Reproducibility
 - Rebuild = identical result
 - Reproducibility demonstrated
 - Non-reproducible builds -> NOT READY
 
-### CRC-9 - Organizational Readiness
+### CRC9 Organizational Readiness
 - SMM Level ≥ **S2** for Strict
 - SMM Level ≥ **S4** for Strict-A
 - Organizational gaps -> NOT READY
