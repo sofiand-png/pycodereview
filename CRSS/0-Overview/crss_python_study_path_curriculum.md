@@ -168,7 +168,7 @@ This curriculum:
 
 - Provides a step-by-step path
 - Supports all roles (developer -> auditor)
-- Aligns with the v3.0.0 framework
+- Aligns with the v1.0.0 framework
 - Prepares teams for real-world certification
 
 CRSS-Python isn’t just rules - it’s a guided journey toward safe, reliable, and certifiable software.

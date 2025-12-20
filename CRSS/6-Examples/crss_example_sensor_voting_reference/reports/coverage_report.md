@@ -28,6 +28,94 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [5.3 Evidence: Test Locations](#53-evidence-test-locations)
   - [5.4 Expected Safety Response](#54-expected-safety-response)
 
+
+## 1. Tools
+
+> [⬆ Back to Table of Contents](#toc)
+
+
+- **Test runner**: pytest
+- **Coverage tool**: coverage.py (branch coverage enabled)
+- **Command**:
+```bash
+coverage run --branch -m pytest
+coverage xml
+coverage html
+```
+Config: `.coveragerc` excludes non-critical harness modules:
+```
+*/app/tcp_sensor_server.py
+*/app/tcp_controller_client.py
+*/logging_utils/*
+*/sensors/simulation.py
+```
+## 2. Test Suite Breakdown
+
+> [⬆ Back to Table of Contents](#toc)
+
+
+### Unit tests
+- tests/unit/test_voting.py
+- tests/unit/test_envelope.py
+- tests/unit/test_controller.py
+- tests/unit/test_config_loader.py
+- tests/unit/test_markers.py
+- tests/unit/test_json_protocol_validation.py
+### MC/DC-style tests (logical decisions)
+- tests/mcdc/test_voting_mcdc.py
+- tests/mcdc/test_envelope_mcdc.py
+- tests/mcdc/test_controller_mcdc.py
+### Integration tests
+- tests/integration/test_single_step_integration.py
+
+## 3. Coverage Metrics (core logic only)
+
+> [⬆ Back to Table of Contents](#toc)
+
+
+**Statement coverage (core modules): ~100%**
+`safety_logic.*`, `config.*`, `actuator.interface`, `crss_phase.markers`,
+`io.json_protocol`, `app.main_loop`, `crss_modes.modes`
+**Branch coverage (core modules): ~95–98%**
+All key decisions in:
+- `compute_voted_value`
+- `apply_safety_envelope`
+- `SafetyController.step`
+are exercised by MC/DC-style tests.
+For detailed line-by-line coverage, see `htmlcov/index.html`.
+
+## 4. MC/DC Justification (summary)
+
+### 4.1 compute_voted_value (voting)
+
+> [⬆ Back to Table of Contents](#toc)
+
+
+Decisions covered:
+- **D1**: `len(values) != 3`
+- **D2**: any plausible pair exists
+- **D3**: all three pairs plausible (NORMAL) vs only one pair (DEGRADED)
+### 4.2 apply_safety_envelope (envelope)
+
+> [⬆ Back to Table of Contents](#toc)
+
+
+Decisions covered:
+- **D1**: `voted_value < min_safe` → clamp to min
+- **D2**: `voted_value > max_safe` → clamp to max
+- **D3**: `delta > max_delta` → positive rate limit
+- **D4**: `delta < -max_delta` → negative rate limit
+- **D5**: otherwise → use clamped value unchanged
+### 4.3 SafetyController.step (controller)
+
+> [⬆ Back to Table of Contents](#toc)
+
+
+Decisions covered:
+- **D1**: voting returns FAILSAFE → FAILSAFE command
+- **D2**: voting returns DEGRADED → DEGRADED command
+- **D3**: voting returns NORMAL → NORMAL command
+
 ---
 
 # 5. Fault Injection Report

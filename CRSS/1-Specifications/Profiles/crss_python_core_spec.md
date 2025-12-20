@@ -332,7 +332,7 @@ Other tools may implement CRSS support as long as they respect the rule IDs and 
 
 ### 0.8 Python Version Scope
 
-CRSS-Python Core v0.1.0 defines rules for a stable subset of the Python
+CRSS-Python Core v1.0.0 defines rules for a stable subset of the Python
 language. To ensure deterministic behaviour and consistent analysis,
 this specification is defined for:
 
@@ -357,7 +357,7 @@ claims to support at runtime, deployment, testing, and certification.
 The following constraints apply:
 
 1. The project-declared range **MUST be contained** within the CRSS-Core
-   supported range (3.9-3.12 for v0.1.0). Projects that declare versions
+   supported range (3.9-3.12 for v1.0.0). Projects that declare versions
    outside this interval are not CRSS-compliant.
 
 2. A project MAY restrict itself to a single version by setting
@@ -369,10 +369,10 @@ The following constraints apply:
      than `target_python_max`; and
    - warn or reject configurations where the project-declared range is
      incompatible with the CRSS-Core version in use.
-4. CRSS v0.1.0 requires that projects declare a continuous Python version
+4. CRSS v1.0.0 requires that projects declare a continuous Python version
    range [min, max] fully contained within the CRSS-supported range.
    Non-contiguous version sets (e.g. {3.9, 3.11} without 3.10) are not
-   considered CRSS-compliant in v0.1.0.
+   considered CRSS-compliant in v1.0.0.
 
 This separation between **spec range** and **project range** ensures that
 CRSS-Core remains stable and conservative at the standard level, while each

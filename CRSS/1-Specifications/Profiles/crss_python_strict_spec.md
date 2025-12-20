@@ -186,7 +186,7 @@ Import, inheritance, deviation and criticality behaviour are detailed in:
 
 ### 1.4 Python Version Scope and Relation to Core
 
-CRSS-Python Strict v0.1.0 is defined as a strengthening of the
+CRSS-Python Strict v1.0.0 is defined as a strengthening of the
 CRSS-Python Core profile. It inherits the same interpreter and Python
 
 Declaring a Strict profile does not change the supported version range,
@@ -208,7 +208,7 @@ Python version target, using the same project-declared model as Core:
 The following constraints apply:
 
 1. The declared target python version **MUST** be declared in the CRSS-Strict
-   supported range (3.9-3.12 for v0.1.0).
+   supported range (3.9-3.12 for v1.0.0).
 
 2. When a unit or module is treated as **critical** (e.g. by annotation or
    configuration), the applicable profile is Strict, regardless of the

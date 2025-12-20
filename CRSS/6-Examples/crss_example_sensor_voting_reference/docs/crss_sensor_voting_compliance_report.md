@@ -21,6 +21,37 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
     - [2.5 Deviations](#25-deviations)
   - [3. Deviations](#3-deviations)
 
+- **Project**: CRSS Python Sensor Voting Reference Example
+- **Version**: 1.0.0
+- **Language**: Python 3.11.x
+- **CRSS Modes Used (Profile + Safety Level)**:
+  - Strict-A: safety controller (voting + envelope)
+  - Strict-B: config model, sensor interfaces, inner orchestrator (framing + sequencing)
+  - Core-B: outer orchestrators (offline step, TCP client harness)
+  - Core-C: simulation, TCP server, logging, JSON I/O
+
+## 1. Scope
+
+This report covers:
+
+- `crss_example_sensor_voting.safety_logic.*`
+- `crss_example_sensor_voting.config.*`
+- `crss_example_sensor_voting.actuator.*`
+- `crss_example_sensor_voting.crss_phase.markers`
+- `crss_example_sensor_voting.io.json_protocol`
+- `crss_example_sensor_voting.app.main_loop` (offline)
+- Unit, MC/DC-style, and integration tests in `tests/`
+
+Non-critical I/O helpers (TCP server/client, simulation, logging) are excluded from
+Strict-A compliance and coverage metrics; they are treated as **Core-C test harness**.
+
+## 2. Rule Mapping Summary
+
+### 2.1 Strict-A Deterministic Control Logic
+
+| Rule ID      | Title (short)                                      | Module(s)                                           | Compliance |
+|-------------|------------------------------------------------------|-----------------------------------------------------|-----------|
+
 -------------|------------------------------------------------------|-----------------------------------------------------|-----------|
 | CRSS-5.4.x  | Deterministic triple-sensor voting                  | `safety_logic.voting.compute_voted_value`          | **YES**   |
 | CRSS-5.4.y  | Defined behaviour for missing / invalid readings    | `safety_logic.voting.compute_voted_value`          | **YES**   |
