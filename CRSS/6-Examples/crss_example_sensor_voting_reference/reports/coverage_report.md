@@ -76,7 +76,7 @@ Config: `.coveragerc` excludes non-critical harness modules:
 **Statement coverage (core modules): ~100%**
 `safety_logic.*`, `config.*`, `actuator.interface`, `crss_phase.markers`,
 `io.json_protocol`, `app.main_loop`, `crss_modes.modes`
-**Branch coverage (core modules): ~95–98%**
+**Branch coverage (core modules): ~95-98%**
 All key decisions in:
 - `compute_voted_value`
 - `apply_safety_envelope`

@@ -45,6 +45,7 @@ It addresses:
 - tooling and CI hardening
 
 It is **not normative** but provides recommended evolution steps for CRSS adopters.
+**This roadmap is aspirational. Items may never be implemented and do not affect CRSS compliance.**
 
 ---
 

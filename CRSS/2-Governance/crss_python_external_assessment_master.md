@@ -51,7 +51,7 @@ The **CRSS-Python External Assessment Protocol (EAP)** defines how independent a
 - Decide certification, non-certification, and revocation
 - Ensure every term, artifact, and component is unambiguously defined
 
-This version (v1.0.0) introduces:
+This version introduces:
 
 - Explicit inclusion of the **Rule Compliance Report (RCR)** as a mandatory input
 - Definitions for all referenced terms not previously defined

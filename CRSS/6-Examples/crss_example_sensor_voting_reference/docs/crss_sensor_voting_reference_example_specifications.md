@@ -200,7 +200,7 @@ This system is intended to:
 
 ### 3.3 Design Model
 
-The implemented Version-3 system is a closed-loop sensor-voting controller that processes a continuous stream of three temperature sensor values, determines the safest output command, and returns a bounded and deterministic actuator value.
+The implemented system is a closed-loop sensor-voting controller that processes a continuous stream of three temperature sensor values, determines the safest output command, and returns a bounded and deterministic actuator value.
 
 Loop:
 `[SENSOR GATEWAY] → SensorFrame JSON → [CLIENT] → Strict-A logic → ActuatorRequest JSON → [GATEWAY]`
@@ -911,7 +911,7 @@ MC/DC must cover:
 - sign-changing deltas
 - previous-state memory behavior
 
-The version 3 test suite achieves approximately 95-98% MC/DC.
+Test suite achieves approximately 95-98% MC/DC.
 
 ### 23.3 Integration Tests
 Integration tests must validate:
