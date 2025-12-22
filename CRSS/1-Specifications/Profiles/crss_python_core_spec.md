@@ -1,7 +1,5 @@
 # CRSS-Python Core Profile
 
-> [⬆ Back to Table of Contents](#toc)
-
 **Version:** v1.0.0  
 **Status:** Normative  
 **Maturity:** Stable  
@@ -18,16 +16,16 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [4. CRSS Rule Model](#4-crss-rule-model)
 - [5. Core Language and Dynamic Features](#5-core-language-and-dynamic-features)
 - [6. Error Handling, Exceptions, and Control Flow](#6-error-handling-exceptions-and-control-flow)
-- [7. State, Determinism, and Time](#7-state-determinism-and-time-crss-52-53x)
+- [7. State, Determinism, and Time](#7-state-determinism-and-time)
 - [8. Resources, Memory, and Performance](#8-resources-memory-and-performance)
-- [9. Robustness Against Index / Key / Buffer Errors](#9-robustness-against-index-key-buffer-errors)
+- [9. Robustness Against Index Errors](#9-robustness-against-index-errors)
 - [10. Caching and Derived State](#10-caching-and-derived-state)
 - [11. Signal Processing and Threshold Safety](#11-signal-processing-and-threshold-safety)
 - [12. Security Rules (Core)](#12-security-rules-core)
 - [13. Testing, Verification, and Process Expectations](#13-testing-verification-and-process-expectations)
 - [14. Big Data and Large Dataset Handling](#14-big-data-and-large-dataset-handling)
 - [15. Sensitive Data Handling](#15-sensitive-data-handling)
-- [16. Key Exchange and Cryptographic Material)](#16-key-exchange-and-cryptographic-material)
+- [16. Key Exchange and Cryptographic Material](#16-key-exchange-and-cryptographic-material)
 - [17. Python Versioning and Tooling Compatibility](#17-python-versioning-and-tooling-compatibility)
 - [18. Phase-Aware Interpretation Rules](#18-phase-aware-interpretation-rules)
 - [19. Summary](#19-summary)
@@ -211,6 +209,8 @@ Each rule has:
     -   Strict: MUST / SHOULD / SHOULD-NOT / MUST-NOT / N/A
 -   **Rationale** (optional)
 -   **Examples** (optional)
+-   **Scope** (optional)
+
 
 This document is the **canonical catalog** of CRSS rules.
 The **Strict** profile reuses these IDs with stronger requirements and
@@ -773,60 +773,6 @@ for t in tasks:
 ```
 
 ---
-### CRSS-4.4.1 - Index bounds validation on externally derived indices
-
--   **Category**: Defensive Programming
--   **Type**: Static / Process
--   **Profiles**:
-    -   Core: SHOULD
-    -   Strict: MUST
--   **Scope**: `all_code`
-
-Where list or array indices are derived from external data (user input, network, files), Strict code shall:
-
-- validate that indices are within valid bounds before access, or
-- use safe patterns (`for element in sequence`) instead of direct indexing.
-
-Blind indexing based on external offsets without validation is forbidden.
-
----
-
-### CRSS-4.4.2 - Safe dictionary access for external keys
-
--   **Category**: Defensive Programming
--   **Type**: Static / Process
--   **Profiles**:
-    -   Core: SHOULD
-    -   Strict: MUST
--   **Scope**: `all_code`
-
-When accessing dictionaries with keys from external sources, Strict code must:
-
-- check key presence (`if key in mapping`), or
-- use `mapping.get(key)` with a well-defined default, or
-- catch `KeyError` and handle it explicitly.
-
-Relying on unguarded key access without error handling in critical logic is prohibited.
-
----
-
-### CRSS-4.4.3 - Safe unpacking and length assumptions
-
--   **Category**: Defensive Programming
--   **Type**: Static
--   **Profiles**:
-    -   Core: SHOULD
-    -   Strict: MUST
--   **Scope**: `all_code`
-
-Strict code shall not assume that sequences derived from external data have a fixed length when unpacking (for example `a, b, c = external_list`).
-
-Length assumptions must be validated, and invalid length must be treated as an error path.
-
-**Rationale**
-Malformed input can produce sequences of unexpected length, causing `ValueError` or misaligned semantics.
-
----
 
 ### CRSS-5.1.1 - Type hints on public APIs
 
@@ -846,7 +792,7 @@ Malformed input can produce sequences of unexpected length, causing `ValueError`
     -   Strict: MUST-NOT
 -   **Scope**: `all_code`
 
-### CRSS-5.1.3 – Use nominal interfaces (ABCs) for Strict code
+### CRSS-5.1.3 - Use nominal interfaces (ABCs) for Strict code
 
 - **Category**: Types & Interfaces
 - **Type**: Static / Design
@@ -964,7 +910,7 @@ def get_speed(raw: Any) -> float:
         raise ValueError(f"Invalid speed value: {raw!r}")
     return float(raw)
 ```
-### CRSS-5.1.6 – Explicit module exports via `__all__` in Strict
+### CRSS-5.1.6 - Explicit module exports via `__all__` in Strict
 
 - **Category**: Types & Interfaces / Encapsulation
 - **Type**: Static
@@ -1582,13 +1528,64 @@ Inefficient queries can cause slowdowns or lock contention, impacting timely saf
 
 ---
 
-## 9. Robustness Against Index / Key / Buffer Errors
+## 9. Robustness Against Index Errors
 
 > [⬆ Back to Table of Contents](#toc)
 
 > Python does not suffer from classic C-style buffer overflows, but it is still vulnerable to memory blowup, `IndexError`, `KeyError`, and unchecked growth when driven by external input.
 
-1. Cache Policy and Scope
+### CRSS-4.4.1 - Index bounds validation on externally derived indices
+
+-   **Category**: Defensive Programming
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
+
+Where list or array indices are derived from external data (user input, network, files), Strict code shall:
+
+- validate that indices are within valid bounds before access, or
+- use safe patterns (`for element in sequence`) instead of direct indexing.
+
+Blind indexing based on external offsets without validation is forbidden.
+
+---
+
+### CRSS-4.4.2 - Safe dictionary access for external keys
+
+-   **Category**: Defensive Programming
+-   **Type**: Static / Process
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
+
+When accessing dictionaries with keys from external sources, Strict code must:
+
+- check key presence (`if key in mapping`), or
+- use `mapping.get(key)` with a well-defined default, or
+- catch `KeyError` and handle it explicitly.
+
+Relying on unguarded key access without error handling in critical logic is prohibited.
+
+---
+
+### CRSS-4.4.3 - Safe unpacking and length assumptions
+
+-   **Category**: Defensive Programming
+-   **Type**: Static
+-   **Profiles**:
+    -   Core: SHOULD
+    -   Strict: MUST
+-   **Scope**: `all_code`
+
+Strict code shall not assume that sequences derived from external data have a fixed length when unpacking (for example `a, b, c = external_list`).
+
+Length assumptions must be validated, and invalid length must be treated as an error path.
+
+**Rationale**
+Malformed input can produce sequences of unexpected length, causing `ValueError` or misaligned semantics.
 
 ---
 

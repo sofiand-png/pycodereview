@@ -19,7 +19,7 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
   - [1.5 Immutability of Mode](#15-immutability-of-mode)
 - [1.6 Granularity of Safety Levels, Profiles, and Modes](#16-granularity-of-safety-levels-profiles-and-modes)
-  - [1.6.1 Enforcement Granularity - One Mode per Module](#161-enforcement-granularity-one-mode-per-module)
+  - [1.6.1 Enforcement Granularity One Mode per Module](#161-enforcement-granularity-one-mode-per-module)
   - [1.6.2 Promotion by Highest Safety Level](#162-promotion-by-highest-safety-level)
   - [1.6.3 Allowed Module Modes](#163-allowed-module-modes)
   - [1.6.4 Propagation of Safety Levels](#164-propagation-of-safety-levels)
@@ -31,13 +31,13 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 - [2. Environment and Boundaries](#2-environment-and-boundaries)
 - [2.1 Definition of Boundaries](#21-definition-of-boundaries)
   - [2.1.1 OS Process Boundary](#211-os-process-boundary)
-  - [2.1.2 Service / Network Boundary](#212-service-network-boundary)
+  - [2.1.2 Service Network Boundary](#212-service-network-boundary)
   - [2.1.3 Hardware Integration Boundary](#213-hardware-integration-boundary)
 - [2.2 No Promotion Across Boundaries](#22-no-promotion-across-boundaries)
 - [2.3 No Safety Leakage Beyond Boundaries](#23-no-safety-leakage-beyond-boundaries)
 - [2.4 Boundary Interaction Contracts](#24-boundary-interaction-contracts)
   - [2.4.1 OS Process Boundary Contract](#241-os-process-boundary-contract)
-  - [2.4.2 Service / Network Boundary Contract](#242-service-network-boundary-contract)
+  - [2.4.2 Service Network Boundary Contract](#242-service-network-boundary-contract)
   - [2.4.3 Hardware Integration Boundary Contract](#243-hardware-integration-boundary-contract)
 - [2.5 Call Graph Interaction with Boundaries](#25-call-graph-interaction-with-boundaries)
 - [2.6 Boundary Failures Must Not Break Level-A Logic](#26-boundary-failures-must-not-break-level-a-logic)
@@ -73,9 +73,9 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
   - [12.1 Core-Only Projects](#121-core-only-projects)
   - [12.2 Strict-Only Projects (No Level A)](#122-strict-only-projects-no-level-a)
   - [12.3 Strict-A Components](#123-strict-a-components)
-  - [12.4 Mixed Systems (Core + Strict + Strict-A)](#124-mixed-systems-core-strict-strict-a)
+  - [12.4 Mixed Systems](#124-mixed-systems)
 - [13. Certification-Grade Conditions (High-Level)](#13-certification-grade-conditions-high-level)
-- [14. Reference Use Case (Mode + Phases + Dependencies)](#14-reference-use-case-mode-phases-dependencies)
+- [14. Reference Use Case](#14-reference-use-case)
   - [14.1 Scenario](#141-scenario)
   - [14.2 Architecture](#142-architecture)
   - [14.3 Modes](#143-modes)
@@ -271,7 +271,7 @@ This section defines:
 
 ---
 
-### 1.6.1 Enforcement Granularity - One Mode per Module
+### 1.6.1 Enforcement Granularity One Mode per Module
 
 **CRSS-Gran-1 (Normative)**
 A **module** (`.py` file) is the enforcement unit.
@@ -477,7 +477,7 @@ Crossing the process boundary means:
 
 ---
 
-### 2.1.2 Service / Network Boundary
+### 2.1.2 Service Network Boundary
 
 Examples:
 
@@ -574,7 +574,7 @@ Strict-A/B components MUST assume:
 
 ---
 
-### 2.4.2 Service / Network Boundary Contract
+### 2.4.2 Service Network Boundary Contract
 
 **Allowed:**
 
@@ -1166,7 +1166,7 @@ For `@non_critical_phase`:
   - Isolation from critical proven
   - Approved by independent safety function.
 
-### 12.4 Mixed Systems (Core + Strict + Strict-A)
+### 12.4 Mixed Systems
 
 System passes only if:
 
@@ -1203,7 +1203,7 @@ Python is **not** used:
 
 ---
 
-## 14. Reference Use Case (Mode + Phases + Dependencies)
+## 14. Reference Use Case
 
 > [⬆ Back to Table of Contents](#toc)
 
