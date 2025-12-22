@@ -867,7 +867,6 @@ In other words:
 
 ---
 
-# CRSS-Python Unified Safety Specification - Remaining Sections
 
 ## 5. Rule Categorization
 
