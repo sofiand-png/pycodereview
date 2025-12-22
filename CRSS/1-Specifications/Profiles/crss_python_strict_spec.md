@@ -10,24 +10,30 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 <a id="toc"></a>
 ## Table of Contents
-- [CRSS-Python Strict Profile](#crss-python-strict-profile)
-  - [Table of Contents](#table-of-contents)
-    - [0.1 Purpose and Objectives](#01-purpose-and-objectives)
-    - [0.1 What Strict Is Not](#01-what-strict-is-not)
-  - [1. Relation to Core Profile and Intention](#1-relation-to-core-profile-and-intention)
-    - [1.1 Rule ID and Chapter Mapping](#11-rule-id-and-chapter-mapping)
-    - [1.2 Criticality Levels](#12-criticality-levels)
-    - [1.3 Companion Documents](#13-companion-documents)
-    - [1.4 Python Version Scope and Relation to Core](#14-python-version-scope-and-relation-to-core)
-  - [2. Strengthened Rules From Core To Strict](#2-strengthened-rules-from-core-to-strict)
-  - [3. Core Language Usage](#3-core-language-usage)
-  - [4. Error Handling, Exceptions and Control Flow](#4-error-handling-exceptions-and-control-flow)
-  - [5. Data and Interfaces](#5-data-and-interfaces)
-  - [7. Robustness and Portability](#7-robustness-and-portability)
-  - [8. Maintainability and Documentation](#8-maintainability-and-documentation)
-  - [9. Testing and Coverage Guidelines](#9-testing-and-coverage-guidelines)
+
+- [1. Introduction](#1-introduction)
+- [2. Relation to Core Profile and Intention](#2-relation-to-core-profile-and-intention)
+- [3. Strengthened Rules From Core To Strict](#3-strengthened-rules-from-core-to-strict)
+- [4. Core Language Usage](#4-core-language-usage)
+  - [4.1 Type System Restrictions](#41-type-system-restrictions)
+- [5. Error Handling, Exceptions and Control Flow](#5-error-handling-exceptions-and-control-flow)
+  - [5.1 Looping and Termination](#51-looping-and-termination)
+  - [5.2 Timing and Blocking Constraints](#52-timing-and-blocking-constraints)
+- [6. Types, Data and Interfaces](#6-types-data-and-interfaces)
+  - [6.1 Object Design and Allocation Rules](#61-object-design-and-allocation-rules)
+- [7. Robustness and Portability](#7-robustness-and-portability)
+  - [7.1 Imports and Isolation](#71-imports-and-isolation)
+- [8. Maintainability and Documentation](#8-maintainability-and-documentation)
+  - [8.1 Module Design](#81-module-design)
+- [9. Testing and Coverage Guidelines](#9-testing-and-coverage-guidelines)
+  - [9.1 Verification and Evidence](#91-verification-and-evidence)
 
 ---
+
+## 1. Introduction
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 0.1 Purpose and Objectives
 
@@ -68,7 +74,9 @@ Its primary goals are:
 
 ------------------------------------------------------------------------
 
-## 1. Relation to Core Profile and Intention
+---
+
+## 2. Relation to Core Profile and Intention
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -197,7 +205,9 @@ and profile selection, see the Core specification chapter 10 and the
 
 ------------------------------------------------------------------------
 
-## 2 Strengthened Rules From Core To Strict
+---
+
+## 3. Strengthened Rules From Core To Strict
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -241,7 +251,7 @@ the Strict profile:
 | CRSS-5.4.1  | Avoid unbounded growth of in-memory collect... | SHOULD       | MUST           |      |
 | CRSS-5.4.2  | Explicit lifecycle for large objects and bu... | SHOULD       | MUST           |      |
 | CRSS-5.4.3  | Resource pools and caches must support expl... | SHOULD       | MUST           |      |
-| CRSS-6.1.2  | Hardcoded secrets                              | must not; only with strong justification | Not allowed    |      |
+| CRSS-6.1.2  | Hardcoded secrets                              | SHOULD-NOT | MUST-NOT    |      |
 | CRSS-6.2.1  | Insecure HTTP and disabled TLS verification    | SHOULD-NOT   | MUST-NOT       |      |
 | CRSS-6.3.1  | Input validation for external data             | SHOULD       | MUST           |      |
 | CRSS-7.1.1  | Explicit encoding for text file I/O            | SHOULD       | MUST           |      |
@@ -282,12 +292,12 @@ the Strict profile:
 | CRSS-6.4.3   | Redaction and minimization in logs | SHOULD   | MUST   |      |
 | CRSS-6.4.4   | Access control for sensitive data flows | SHOULD   | MUST   |      |
 | CRSS-6.4.5   | Approved key exchange and storage | SHOULD   | MUST   |      |
-| CRSS-6.4.6   | Key rotation and expiry | SHOULD   | SHOULD (MUST for internet-exposed systems)   |      |
+| CRSS-6.4.6   | Key rotation and expiry | SHOULD   | MUST   |      |
 | CRSS-6.4.7   | No long-lived caching of sensitive data | SHOULD   | MUST   |      |
-| CRSS-6.4.8   | Cache isolation between tenants/security domains | SHOULD   | MUST when multi-tenant   |      |
+| CRSS-6.4.8   | Cache isolation between tenants/security domains | SHOULD   | MUST  |      |
 | CRSS-7.8.1   | Stable service contracts and versioning | SHOULD   | MUST   |      |
 | CRSS-7.8.2   | Bounded payload sizes and rates | SHOULD   | MUST   |      |
-| CRSS-7.8.3   | Circuit breakers and backpressure for critical dependencies | SHOULD   | SHOULD (MUST for Level A services)   |      |
+| CRSS-7.8.3   | Circuit breakers and backpressure for critical dependencies | SHOULD   | MUST   |      |
 | CRSS-7.8.4   | Latency budgets for critical network operations | SHOULD   | MUST   |      |
 | CRSS-7.8.5   | Distributed cache consistency for critical data | SHOULD   | MUST   |      |
 | CRSS-7.8.6   | Cache is never the source of truth | SHOULD   | MUST   |      |
@@ -310,11 +320,14 @@ they are described here (Core: N/A, Strict: MUST/SHOULD/MUST-NOT).
 
 ------------------------------------------------------------------------
 
+---
 
-## 3. Core Language Usage
+## 4. Core Language Usage
 
 > [⬆ Back to Table of Contents](#toc)
 
+
+### 4.1 Type System Restrictions
 
 ### CRSS-11.3.3 - Structural typing prohibited in Strict code (Strict-only)
 -   **Profiles**:
@@ -351,10 +364,14 @@ Structural typing:
 
 Strict requires **explicit, verifiable, nominal interfaces**.
 
-## 4. Error Handling, Exceptions and Control Flow
+---
+
+## 5. Error Handling, Exceptions and Control Flow
 
 > [⬆ Back to Table of Contents](#toc)
 
+
+### 5.1 Looping and Termination
 
 ### CRSS-11.4.1 - Loops must be demonstrably bounded
 -   **Category**: Control Flow
@@ -394,6 +411,8 @@ Recursive functions in Strict code must have statically evident depth
 bounds (e.g. recursion limited by a small constant or input bound) or
 be refactored to iterative forms with explicit bounds. Deep or
 data-dependent recursion is not allowed.
+
+### 5.2 Timing and Blocking Constraints
 
 ### CRSS-11.4.5 - No dependence on scheduling or GC timing
 -   **Category**: Runtime Behavior
@@ -466,10 +485,14 @@ Strict units shall not use wall-clock time (e.g. time.time(), datetime.now()) to
 
 External clock behavior is platform-dependent and vulnerable to drift, NTP jumps, etc. Critical correctness must not depend on it.
 
-## 5. Data and Interfaces
+---
+
+## 6. Types, Data and Interfaces
 
 > [⬆ Back to Table of Contents](#toc)
 
+
+### 6.1 Object Design and Allocation Rules
 
 ### CRSS-11.5.1 - Object-oriented design restrictions
 -   **Category**: Design / Types
@@ -594,8 +617,6 @@ Static analysis and design review must:
 
 Acyclic graphs ensure refcounting alone is sufficient for reclamation and avoid GC-dependence for memory release.
 
- ## 6. Security
-
 ### CRSS-11.6.1 - Strict execution shall be single-threaded
 -   **Category**: Concurrency / Architecture
 -   **Type**: Static / Process
@@ -612,10 +633,14 @@ Strict modules and @critical units must execute in a single OS thread:
 
 Single-threaded execution eliminates data races and heavily simplifies reasoning about timing.
 
+---
+
 ## 7. Robustness and Portability
 
 > [⬆ Back to Table of Contents](#toc)
 
+
+### 7.1 Imports and Isolation
 
 ### CRSS-11.7.1 - No wildcard imports (Strict-only)
 -   **Category**: Imports
@@ -680,10 +705,14 @@ the watchdog must drive the system into a defined safe state.
 
 Even with strict coding rules, unexpected faults must not lead to uncontrolled behavior; a simple external monitor provides a last-resort safety net.
 
+---
+
 ## 8. Maintainability and Documentation
 
 > [⬆ Back to Table of Contents](#toc)
 
+
+### 8.1 Module Design
 
 ### CRSS-11.8.1 - Single responsibility per Strict module (Strict-only)
 -   **Category**: Design / Maintainability
@@ -696,10 +725,14 @@ Even with strict coding rules, unexpected faults must not lead to uncontrolled b
 Each Strict module should have a single, clear purpose. Mixing unrelated
 concerns in one file is discouraged.
 
+---
+
 ## 9. Testing and Coverage Guidelines
 
 > [⬆ Back to Table of Contents](#toc)
 
+
+### 9.1 Verification and Evidence
 
 ### CRSS-11.9.1 - 100% branch coverage for Strict modules
 -   **Category**: Testing and Coverage
@@ -797,3 +830,5 @@ Test suites must show that the system reaches defined safe states under these fa
 
 **Rationale**
 High ASIL/SIL levels explicitly expect fault-injection-based verification of safety mechanisms.
+
+---
