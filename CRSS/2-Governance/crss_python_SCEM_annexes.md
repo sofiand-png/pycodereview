@@ -3,27 +3,31 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [0. Purpose](#0-purpose)
-- [1. Annex A — FMEA Template](#1-annex-a--fmea-template)
-  - [A.1 FMEA Table](#a1-fmea-table)
-  - [A.2 Rules](#a2-rules)
-- [2. Annex B — Hazard Log Template](#2-annex-b--hazard-log-template)
-- [3. Annex C — Safety Architecture Diagram Requirements](#3-annex-c--safety-architecture-diagram-requirements)
-- [4. Annex D — Auditor Checklist](#4-annex-d--auditor-checklist)
-- [5. Annex E — Timing Evidence Protocol](#5-annex-e--timing-evidence-protocol)
-- [6. Summary](#6-summary)
-
+- [CRSS-Python SCEM Annexes](#crss-python-scem-annexes)
+  - [Table of Contents](#table-of-contents)
+  - [0. Purpose](#0-purpose)
+  - [1. Annex A - FMEA Template](#1-annex-a-fmea-template)
+    - [A.1 FMEA Table](#a1-fmea-table)
+    - [A.2 Rules](#a2-rules)
+  - [2. Annex B Hazard Log Template](#2-annex-b-hazard-log-template)
+  - [3. Annex C Safety Architecture Diagram Requirements](#3-annex-c-safety-architecture-diagram-requirements)
+  - [4. Annex D Auditor Checklist](#4-annex-d-auditor-checklist)
+  - [5. Annex E Timing Evidence Protocol](#5-annex-e-timing-evidence-protocol)
+  - [6. Summary](#6-summary)
 
 ---
 
 ## 0. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This annex set formalizes templates, checklists, and required structures that support SCEM v1.0. These annexes ensure that safety cases are:
 
@@ -37,7 +41,10 @@ All Strict Level A systems MUST use these annexes.
 
 ---
 
-## 1. Annex A — FMEA Template
+## 1. Annex A - FMEA Template
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### A.1 FMEA Table
 
@@ -47,8 +54,8 @@ All Strict Level A systems MUST use these annexes.
 | Description | What fails |
 | Cause | Root cause |
 | Effect | Impact on system |
-| Severity | Ranked 1–5 |
-| Likelihood | Ranked 1–5 |
+| Severity | Ranked 1-5 |
+| Likelihood | Ranked 1-5 |
 | Detection Method | How failure is detected |
 | Mitigation | Design-level prevention |
 | Safe State | Behavior on failure |
@@ -62,7 +69,10 @@ All Strict Level A systems MUST use these annexes.
 
 ---
 
-## 2. Annex B — Hazard Log Template
+## 2. Annex B Hazard Log Template
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 | Field | Description |
 |-------|-------------|
@@ -76,7 +86,10 @@ All Strict Level A systems MUST use these annexes.
 
 ---
 
-## 3. Annex C — Safety Architecture Diagram Requirements
+## 3. Annex C Safety Architecture Diagram Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Diagrams MUST include:
 
@@ -90,7 +103,10 @@ Format: PDF or PNG, under version control.
 
 ---
 
-## 4. Annex D — Auditor Checklist
+## 4. Annex D Auditor Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Auditors MUST verify:
 
@@ -102,12 +118,18 @@ Auditors MUST verify:
 
 ---
 
-## 5. Annex E — Timing Evidence Protocol
+## 5. Annex E Timing Evidence Protocol
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 See Formal Timing Methodology.
 
 ---
 
 ## 6. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 These annexes convert SCEM into a repeatable, certifiable workflow.

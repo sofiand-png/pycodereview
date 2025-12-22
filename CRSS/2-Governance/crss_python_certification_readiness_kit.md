@@ -3,27 +3,29 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
+- [CRSS-Python Certification Readiness Master Kit](#crss-python-certification-readiness-master-kit)
+  - [Table of Contents](#table-of-contents)
 - [0. Purpose](#0-purpose)
 - [1. Certification Readiness Definition](#1-certification-readiness-definition)
 - [2. Certification Readiness Checklist (CRC)](#2-certification-readiness-checklist-crc)
   - [2.1 CRC Sections](#21-crc-sections)
   - [2.2 CRC Requirements](#22-crc-requirements)
-    - [CRC-1 — Compliance Completion](#crc-1--compliance-completion)
-    - [CRC-2 — SCEM Completion](#crc-2--scem-completion)
-    - [CRC-3 — Toolchain Integrity](#crc-3--toolchain-integrity)
-    - [CRC-4 — Configuration Immutability](#crc-4--configuration-immutability)
-    - [CRC-5 — Mode Enforcement Confirmation](#crc-5--mode-enforcement-confirmation)
-    - [CRC-6 — Critical Phase Integrity](#crc-6--critical-phase-integrity)
-    - [CRC-7 — Deviation Resolution](#crc-7--deviation-resolution)
-    - [CRC-8 — Build Reproducibility](#crc-8--build-reproducibility)
-    - [CRC-9 — Organizational Readiness](#crc-9--organizational-readiness)
+    - [CRC1 Compliance Completion](#crc1-compliance-completion)
+    - [CRC2 SCEM Completion](#crc2-scem-completion)
+    - [CRC3 Toolchain Integrity](#crc3-toolchain-integrity)
+    - [CRC4 Configuration Immutability](#crc4-configuration-immutability)
+    - [CRC5 Mode Enforcement Confirmation](#crc5-mode-enforcement-confirmation)
+    - [CRC6 Critical Phase Integrity](#crc6-critical-phase-integrity)
+    - [CRC7 Deviation Resolution](#crc7-deviation-resolution)
+    - [CRC8 Build Reproducibility](#crc8-build-reproducibility)
+    - [CRC9 Organizational Readiness](#crc9-organizational-readiness)
 - [3. Certification Blocking Conditions](#3-certification-blocking-conditions)
 - [4. Mandatory Certification Artifacts](#4-mandatory-certification-artifacts)
 - [5. Certification Readiness Workflow](#5-certification-readiness-workflow)
@@ -39,7 +41,7 @@ This master document consolidates and replaces the former **Certification Readin
 - CRSS Unified Safety Specification v3.0.0
 - Compliance Master v3.0.1
 - SCEM Master v3.0.0
-- Tooling & Automation Master v3.0.0
+- Tooling and Automation Master v3.0.0
 
 It defines:
 
@@ -56,7 +58,7 @@ This document represents the **final gateway** before external certification (EA
 
 A project is **Certification-Ready** only when:
 
-- All compliance phases (1–4) are complete
+- All compliance phases (1-4) are complete
 - SCEM is complete, versioned, and validated
 - Toolchain is frozen and recorded in CBM
 - One fixed Python version is used
@@ -76,6 +78,9 @@ The CRC is a mandatory artifact confirming readiness.
 
 ## 2.1 CRC Sections
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Section | Purpose |
 |--------|---------|
 | CRC-1 | Compliance Completion |
@@ -90,51 +95,54 @@ The CRC is a mandatory artifact confirming readiness.
 
 ## 2.2 CRC Requirements
 
-### CRC-1 — Compliance Completion
-- Phases 1–4 completed
+> [⬆ Back to Table of Contents](#toc)
+
+
+### CRC1 Compliance Completion
+- Phases 1-4 completed
 - All mandatory artifacts exist
 - Missing artifacts -> NOT READY
 
-### CRC-2 — SCEM Completion
+### CRC2 SCEM Completion
 - All SCEM domains complete
 - All annex artifacts complete
 - Missing items -> NOT READY
 
-### CRC-3 — Toolchain Integrity
+### CRC3 Toolchain Integrity
 - All tools fixed-version
 - TCL levels documented
 - No auto-update
 - Tool drift -> NOT READY
 
-### CRC-4 — Configuration Immutability
+### CRC4 Configuration Immutability
 - CBM finalized
 - No config changes pending
 - Unfrozen configuration -> NOT READY
 
-### CRC-5 — Mode Enforcement Confirmation
+### CRC5 Mode Enforcement Confirmation
 - MAR finalized
 - Propagation resolved
 - Critical never calls non-critical
 - Unresolved promotions -> NOT READY
 
-### CRC-6 — Critical Phase Integrity
+### CRC6 Critical Phase Integrity
 - Critical boundaries defined
 - Determinism validated
 - Strict-A: zero violations in `@critical`
 - Any `@critical` violation -> NOT READY
 
-### CRC-7 — Deviation Resolution
+### CRC7 Deviation Resolution
 - Strict-A deviations documented
 - Strict-A deviations approved
 - Strict-A deviations isolated
 - Unapproved deviation -> NOT READY
 
-### CRC-8 — Build Reproducibility
+### CRC8 Build Reproducibility
 - Rebuild = identical result
 - Reproducibility demonstrated
 - Non-reproducible builds -> NOT READY
 
-### CRC-9 — Organizational Readiness
+### CRC9 Organizational Readiness
 - SMM Level ≥ **S2** for Strict
 - SMM Level ≥ **S4** for Strict-A
 - Organizational gaps -> NOT READY

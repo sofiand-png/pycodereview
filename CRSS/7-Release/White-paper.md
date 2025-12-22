@@ -1,7 +1,10 @@
 # CRSS-Python v1.0.0  
 ## A Full-Lifecycle Safety Standard for Python
 
-**CRSS = Certifiable Reliability & Safety Standard for Python**
+> [⬆ Back to Table of Contents](#toc)
+
+
+**CRSS = Certifiable Reliability and Safety Standard for Python**
 
 © 2025 Sofian Daghsen - All rights reserved  
 Distributed under CC BY-NC-ND 4.0  
@@ -12,6 +15,9 @@ This whitepaper is provided “as is”, without warranties of any kind, includi
 ---
 
 ## 1. Executive Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Python has historically been excluded from safety-critical domains such as automotive (ASIL-D), aerospace, industrial automation, and medical devices—not because its expressive power is insufficient, but because its dynamic nature conflicts with the determinism, traceability, and evidence-based assurance demanded by high-integrity systems.
 
@@ -40,6 +46,9 @@ CRSS-Python enables what was previously difficult or impossible: safe, certifiab
 ---
 
 ## 2. Motivation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Python has become one of the world’s most widely used languages across AI, automation, robotics, DevOps, scientific computing, and embedded control. Yet when systems approach safety-critical thresholds, Python is almost always removed in favor of C, C++, Rust, Ada, or proprietary DSLs.
 
@@ -82,6 +91,9 @@ It is Python re-engineered into a predictable, traceable, analyzable environment
 ---
 
 ## 3. Industry Impact
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 The introduction of CRSS-Python changes the engineering calculus for safety-critical software.
 
@@ -155,6 +167,9 @@ A standard like this is a key step in making Python acceptable in safety-critica
 
 ## 4. CRSS Overview
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS-Python is a multi-component safety framework, not a single document. Its strength comes from the integration of three pillars:
 
 1. The Specification Layer  
@@ -187,12 +202,12 @@ CRSS is composed of coordinated specifications and documents:
 
 - Profiles (Core / Strict)
 - Safety Master Specification
-- Mode & Safety Model
+- Mode and Safety Model
 - Phase-Aware Rule Interpretation Model
 - SCEM (Safety Case Evidence Model)
 - Compliance Process Master
 - External Assessment Process
-- Tooling & Automation Specification
+- Tooling and Automation Specification
 - Deployment / Release Management Models
 
 This modular architecture ensures each domain is independently maintainable yet conceptually unified.
@@ -233,12 +248,18 @@ Imports, closures, async tasks, exceptions, and GC interactions must behave expl
 
 ---
 
-# A Modern Safety & Compliance Framework for High-Integrity Python Systems  
+# A Modern Safety and Compliance Framework for High-Integrity Python Systems  
 ## Part 2 — Sections 5–8
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ---
 
 ## 5. Profiles, Safety Levels, and Modes
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Modern safety engineering standards often rely on hierarchical constraint systems: a combination of functional criticality, operational integrity, and design-time constraints. CRSS follows this philosophy with a three-axis safety structure:
 
@@ -436,6 +457,9 @@ The highest Mode wins during evaluation.
 
 ## 6. Phase-Aware Rule Interpretation
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS introduces a novel concept: rules that behave differently depending on the phase of the code.
 
 In modern systems, not all code paths are equal. Some are critical, others are supportive, and some are purely auxiliary. Applying identical constraints everywhere reduces efficiency and increases false violations.
@@ -556,6 +580,9 @@ This avoids “one size fits all” safety policy.
 
 ## 7. CRSS Rule Architecture
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS rules encode all safety restrictions, allowed patterns, and prohibited constructs.
 
 Unlike traditional linters, CRSS rules include:
@@ -581,9 +608,9 @@ Example categories:
 
 - Control Flow
 - Dynamic Features
-- Types & Interfaces
+- Types and Interfaces
 - Concurrency
-- Memory & Resources
+- Memory and Resources
 - I/O
 - Security
 
@@ -690,6 +717,9 @@ Reflection remains allowed but restricted to predictable patterns.
 
 ## 8. Python Safety Hazards and Mitigations
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Python’s expressive power creates hazards that do not exist in strongly deterministic languages. CRSS directly targets these hazards.
 
 ### 8.1 The Python Safety Problem Space
@@ -713,7 +743,7 @@ CRSS eliminates or constrains each hazard.
 
 A classic Python pitfall that leads to shared state leaks.  
 CRSS Strict-A: Prohibited  
-CRSS Core: Warn & discourage
+CRSS Core: Warn and discourage
 
 #### 8.2.2 Late-Bound Closures
 
@@ -777,6 +807,9 @@ Async, cancellation, GC, and object lifetimes behave deterministically in Strict
 
 ## 9. Safety Case Evidence Model (SCEM)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The foundation of verifiable, certifiable Python safety.
 
 The Safety Case Evidence Model (SCEM) is the backbone of CRSS-Python. While rules define what constitutes safe and deterministic behavior, SCEM provides the mechanism to prove that the rules have been satisfied.
@@ -822,7 +855,7 @@ Domains typically include:
 - Dynamic/Runtime Evidence
 - Process Evidence
 - Toolchain Evidence
-- Release & Deployment Evidence
+- Release and Deployment Evidence
 - Exception Justification Evidence
 
 Each domain groups evidence of similar purpose but different origin.
@@ -945,6 +978,9 @@ It provides the engineer-to-assessor handshake that Python has historically lack
 
 ## 10. Compliance Process (Phases 0–5)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 From initial project enrollment to certification readiness.
 
 CRSS defines a structured lifecycle for compliance. It ensures teams progress systematically from project kickoff to certification readiness, with quantitative checkpoints and required outputs.
@@ -1006,7 +1042,7 @@ Outcome:
 
 This is often the longest phase.
 
-### 10.5 Phase 3 — Dynamic & Behavioral Analysis
+### 10.5 Phase 3 — Dynamic and Behavioral Analysis
 
 Artifacts:
 
@@ -1068,6 +1104,9 @@ Phase transitions are explicit and reviewed. No phase can be skipped.
 
 ## 11. External Assessment Process (EAP)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Independent validation for safety compliance.
 
 The External Assessment Process (EAP) ensures that compliance is not self-declared; it is independently validated by a qualified external entity.
@@ -1099,7 +1138,7 @@ Assessors check:
 - Runtime logs
 - Phase-aware rule interpretations
 
-#### 11.2.3 Rule Violations & Exceptions
+#### 11.2.3 Rule Violations and Exceptions
 
 Each exception must include:
 
@@ -1147,7 +1186,10 @@ Certification is based on objective, evidence-driven criteria.
 
 ---
 
-## 12. Tooling & Automation
+## 12. Tooling and Automation
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Automation is mandatory, not optional.
 
@@ -1160,7 +1202,7 @@ TCL defines the maturity of a tool:
 - TCL-1 — Basic analysis
 - TCL-2 — Deterministic behavior modeling
 - TCL-3 — Phase-aware interpretation
-- TCL-4 — Evidence export & SCEM integration
+- TCL-4 — Evidence export and SCEM integration
 - TCL-5 — Full automation with CI/CD blockers
 
 ### 12.2 Tool Compliance Attributes (TCA)
@@ -1215,12 +1257,18 @@ Automation is how CRSS ensures continuous integrity, not just manual integrity.
 
 ---
 
-# A Modern Safety & Compliance Framework for High-Integrity Python Systems  
+# A Modern Safety and Compliance Framework for High-Integrity Python Systems  
 ## Part 4 — Sections 13–16
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ---
 
-## 13. Deployment & Release Model
+## 13. Deployment and Release Model
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Ensuring deterministic and safe release pipelines.
 
@@ -1325,6 +1373,9 @@ No system can be considered safe if it drifts from its verified configuration.
 
 ## 14. Supported Python Versions
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS v1.0.0 officially supports:
 
 > Python 3.9.x → Python 3.12.x (inclusive)
@@ -1392,7 +1443,10 @@ CRSS intentionally delays adoption until safety integrity can be ensured.
 
 ---
 
-## 15. Architecture & Structural Safety
+## 15. Architecture and Structural Safety
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 15.1 Architectural Safety Principles
 
@@ -1464,7 +1518,7 @@ Critical safety decisions MUST occur locally to guarantee determinism.
 
 ↓ sanitized data  
 
-**Validation & Preprocessing**  
+**Validation and Preprocessing**  
 - Schema validation  
 - Bounds checking  
 - Sanitization  
@@ -1531,7 +1585,10 @@ These architectural guarantees form the backbone of certifiable Python systems.
 
 ---
 
-## 16. Network, Microservices & Distributed Safety
+## 16. Network, Microservices and Distributed Safety
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 16.1 Distributed Systems as a Safety Risk
 
@@ -1595,7 +1652,7 @@ Safety relies on predictable, bounded error behavior.
 
 ↓ validated and bounded  
 
-**Sanitization & Preprocessing**  
+**Sanitization and Preprocessing**  
 - Schema validation  
 - Size constraints  
 - Sanitization  
@@ -1615,7 +1672,7 @@ Safety relies on predictable, bounded error behavior.
 - Send API response  
 - Store to DB  
 
-### 16.7 Timeout, Retry & Backoff Safety Rules
+### 16.7 Timeout, Retry and Backoff Safety Rules
 
 CRSS requires:
 
@@ -1658,6 +1715,9 @@ CRSS delivers a deterministic, bounded, and certifiable model for microservice a
 ---
 
 ## 17. Glossary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A curated glossary for high-integrity Python engineering.
 
@@ -1706,6 +1766,9 @@ Unauthorized divergence from the validated CBM.
 ---
 
 ## 18. Conclusion
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 CRSS-Python v1.0.0 represents a major milestone:  
 a fully engineered, deterministic, traceable, and certifiable Python ecosystem.

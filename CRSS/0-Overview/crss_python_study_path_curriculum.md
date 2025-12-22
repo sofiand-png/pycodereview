@@ -1,38 +1,39 @@
-# CRSS-Python Study Path & Learning Curriculum
+# CRSS-Python Study Path and Learning Curriculum
 
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
+- [CRSS-Python Study Path and Learning Curriculum](#crss-python-study-path-learning-curriculum)
+  - [Table of Contents](#table-of-contents)
 - [Overview](#overview)
-- [Stage 1 — Foundation (Beginner)](#stage-1--foundation-beginner)
-  - [Learning Objectives](#stage-1-learning-objectives)
-  - [Required Reading](#stage-1-required-reading)
-  - [Skills Gained](#stage-1-skills-gained)
-- [Stage 2 — Practitioner (Core Profile)](#stage-2--practitioner-core-profile)
-  - [Learning Objectives](#stage-2-learning-objectives)
-  - [Required Reading](#stage-2-required-reading)
-  - [Hands-On Tasks](#stage-2-hands-on-tasks)
-- [Stage 3 — Advanced (Strict Profile)](#stage-3--advanced-strict-profile)
-  - [Learning Objectives](#stage-3-learning-objectives)
-  - [Required Reading](#stage-3-required-reading)
-  - [Hands-On Tasks](#stage-3-hands-on-tasks)
-- [Stage 4 — Specialist (Strict-A)](#stage-4--specialist-strict-a)
-  - [Learning Objectives](#stage-4-learning-objectives)
-  - [Required Reading](#stage-4-required-reading)
-  - [Hands-On Tasks](#stage-4-hands-on-tasks)
-- [Stage 5 — Auditor/Expert](#stage-5--auditorexpert)
-  - [Learning Objectives](#stage-5-learning-objectives)
-  - [Required Reading](#stage-5-required-reading)
-  - [Hands-On Tasks](#stage-5-hands-on-tasks)
+- [Stage 1 - Foundation (Beginner)](#stage-1-foundation-beginner)
+    - [Learning Objectives](#learning-objectives)
+    - [Required Reading](#required-reading)
+    - [Skills Gained](#skills-gained)
+- [Stage 2 - Practitioner (Core Profile)](#stage-2-practitioner-core-profile)
+    - [Learning Objectives](#learning-objectives)
+    - [Required Reading](#required-reading)
+    - [Hands-On Tasks](#hands-on-tasks)
+- [Stage 3 - Advanced (Strict Profile)](#stage-3-advanced-strict-profile)
+    - [Learning Objectives](#learning-objectives)
+    - [Required Reading](#required-reading)
+    - [Hands-On Tasks](#hands-on-tasks)
+- [Stage 4 - Specialist (Strict-A)](#stage-4-specialist-strict-a)
+    - [Learning Objectives](#learning-objectives)
+    - [Required Reading](#required-reading)
+    - [Hands-On Tasks](#hands-on-tasks)
+- [Stage 5 - Auditor/Expert](#stage-5-auditorexpert)
+    - [Learning Objectives](#learning-objectives)
+    - [Required Reading](#required-reading)
+    - [Hands-On Tasks](#hands-on-tasks)
 - [Summary](#summary)
-
 
 ---
 
@@ -52,7 +53,7 @@ Each stage builds on the previous one.
 
 ---
 
-#  Stage 1 — Foundation (Beginner)
+#  Stage 1 - Foundation (Beginner)
 
 **Audience:** Anyone new to CRSS-Python or safety concepts
 
@@ -63,7 +64,7 @@ Each stage builds on the previous one.
 
 ###  Required Reading
 - **Overview / Landing Page**
-- Profiles & Levels section of Unified Safety Spec
+- Profiles and Levels section of Unified Safety Spec
 
 ###  Skills Gained
 - Explain Core vs Strict
@@ -72,7 +73,7 @@ Each stage builds on the previous one.
 
 ---
 
-#  Stage 2 — Practitioner (Core Profile)
+#  Stage 2 - Practitioner (Core Profile)
 
 **Audience:** Developers and team members implementing basic safety
 
@@ -83,7 +84,7 @@ Each stage builds on the previous one.
 
 ###  Required Reading
 - Unified Safety Spec (Core rules)
-- Compliance Master (Phase 1 & 2)
+- Compliance Master (Phase 1 and 2)
 
 ###  Hands-On Tasks
 - Create a MAR
@@ -92,18 +93,18 @@ Each stage builds on the previous one.
 
 ---
 
-#  Stage 3 — Advanced (Strict Profile)
+#  Stage 3 - Advanced (Strict Profile)
 
 **Audience:** Engineers building high-integrity software
 
 ###  Learning Objectives
 - Strict rules and enforcement
 - Deterministic design
-- Testing & coverage requirements
+- Testing and coverage requirements
 
 ###  Required Reading
 - Unified Safety Spec (Strict rules)
-- Compliance Master (Phases 2–3)
+- Compliance Master (Phases 2-3)
 - SCEM Master (Evidence model)
 
 ###  Hands-On Tasks
@@ -113,7 +114,7 @@ Each stage builds on the previous one.
 
 ---
 
-#  Stage 4 — Specialist (Strict-A)
+#  Stage 4 - Specialist (Strict-A)
 
 **Audience:** Safety-critical engineers
 
@@ -121,7 +122,7 @@ Each stage builds on the previous one.
 - Strict-A zero-deviation policy
 - `@critical` execution rules
 - Determinism and WCET
-- Deployment & CBM
+- Deployment and CBM
 
 ###  Required Reading
 - Deployment Master
@@ -137,7 +138,7 @@ Each stage builds on the previous one.
 
 ---
 
-#  Stage 5 — Auditor/Expert
+#  Stage 5 - Auditor/Expert
 
 **Audience:** Auditors, regulators, certifiers
 
@@ -167,9 +168,9 @@ This curriculum:
 
 - Provides a step-by-step path
 - Supports all roles (developer -> auditor)
-- Aligns with the v3.0.0 framework
+- Aligns with the v1.0.0 framework
 - Prepares teams for real-world certification
 
-CRSS-Python isn’t just rules — it’s a guided journey toward safe, reliable, and certifiable software.
+CRSS-Python isn’t just rules - it’s a guided journey toward safe, reliable, and certifiable software.
 
 ---

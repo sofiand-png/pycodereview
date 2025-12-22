@@ -3,14 +3,15 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
 - [CRSS-Python External Assessment Protocol (EAP)](#crss-python-external-assessment-protocol-eap)
+  - [Table of Contents](#table-of-contents)
   - [0. Purpose](#0-purpose)
   - [1. Definitions](#1-definitions)
     - [1.1 Rule Compliance Report (RCR)](#11-rule-compliance-report-rcr)
@@ -24,19 +25,22 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
     - [1.9 Non-Conformance (NC)](#19-non-conformance-nc)
   - [2. Assessment Inputs](#2-assessment-inputs)
   - [3. Assessment Stages](#3-assessment-stages)
-    - [3.1 Stage 0 — Intake & Eligibility](#31-stage-0-intake-eligibility)
-    - [3.2 Stage 1 — Structural Completeness](#32-stage-1-structural-completeness)
-    - [3.3 Stage 2 — Evidence & RCR Verification](#33-stage-2-evidence-rcr-verification)
-    - [3.4 Stage 3 — Technical Deep-Dive Sampling](#34-stage-3-technical-deep-dive-sampling)
-    - [3.5 Stage 4 — Decision & Reporting](#35-stage-4-decision-reporting)
+    - [3.1 Stage0 Intake and Eligibility](#31-stage0-intake-and-eligibility)
+    - [3.2 Stage1 Structural Completeness](#32-stage1-structural-completeness)
+    - [3.3 Stage2 Evidence and RCR Verification](#33-stage2-evidence-and-rcr-verification)
+    - [3.4 Stage3 Technical Deep-Dive Sampling](#34-stage3-technical-deep-dive-sampling)
+    - [3.5 Stage4 Decision and Reporting](#35-stage4-decision-and-reporting)
     - [3.6 Interpretation of Conditional Stage Outcomes](#36-interpretation-of-conditional-stage-outcomes)
   - [4. Non-Conformance Handling](#4-non-conformance-handling)
-  - [5. Revocation & Reassessment](#5-revocation-reassessment)
+  - [5. Revocation and Reassessment](#5-revocation-nd-reassessment)
   - [6. Summary of Enhancements](#6-summary-of-enhancements)
 
 ---
 
 ## 0. Purpose
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 The **CRSS-Python External Assessment Protocol (EAP)** defines how independent assessors shall:
 
@@ -47,7 +51,7 @@ The **CRSS-Python External Assessment Protocol (EAP)** defines how independent a
 - Decide certification, non-certification, and revocation
 - Ensure every term, artifact, and component is unambiguously defined
 
-This version (v1.0.0) introduces:
+This version introduces:
 
 - Explicit inclusion of the **Rule Compliance Report (RCR)** as a mandatory input
 - Definitions for all referenced terms not previously defined
@@ -58,6 +62,9 @@ EAP is mandatory for all projects claiming **CRSS-Strict Level A** and recommend
 ---
 
 ## 1. Definitions
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 To eliminate ambiguity, all terms used in EAP are defined below.
 
@@ -155,6 +162,9 @@ Classified NC-0 to NC-3.
 
 ## 2. Assessment Inputs
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The External Assessor SHALL receive, at minimum:
 
 1. **Certification Readiness Kit (CRK)**, including:
@@ -163,13 +173,13 @@ The External Assessor SHALL receive, at minimum:
    - Hazard Log (HLG)
    - FMEA
    - Test Evidence Package (TEP)
-   - Performance & Timing Report (PTR)
+   - Performance and Timing Report (PTR)
    - Architecture Decision Records (ADR)
    - Third-Party Register (TPR)
    - Deployment Snapshot
    - Certified Artifact (.whl) exists and hash matches CBM.
 
-2. **Rule Compliance Report (RCR) — Mandatory**
+2. **Rule Compliance Report (RCR) - Mandatory**
    - Must be complete, signed, hashed, and versioned.
    - Must cover all MUST and SHOULD rules.
    - Must reference all supporting evidence.
@@ -179,7 +189,7 @@ The External Assessor SHALL receive, at minimum:
 
 4. **Toolchain Confidence Assessment (TCA)**
 
-5. **Deployment & Configuration Policy**
+5. **Deployment and Configuration Policy**
 
 6. **Release Management Records**
    - Baseline ID
@@ -193,25 +203,28 @@ If RCR is missing or incomplete, the assessment MUST be recorded as **“NOT ASS
 
 ## 3. Assessment Stages
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 EAP defines a **5-stage assessment sequence**:
 
-1. **Stage 0 — Intake & Eligibility Check**
-2. **Stage 1 — Structural Completeness Review**
-3. **Stage 2 — Evidence & RCR Verification**
-4. **Stage 3 — Technical Deep-Dive Sampling**
-5. **Stage 4 — Decision & Reporting**
+1. **Stage 0 - Intake and Eligibility Check**
+2. **Stage 1 - Structural Completeness Review**
+3. **Stage 2 - Evidence and RCR Verification**
+4. **Stage 3 - Technical Deep-Dive Sampling**
+5. **Stage 4 - Decision and Reporting**
 
 Each stage has explicit status codes (PASS / CONDITIONAL / FAIL) to keep the assessment outcome objective and traceable.
 
-- **PASS-Sx** — Stage x fully satisfied
-- **COND-Sx** — Stage x conditionally satisfied, minor issues remediable without full restart
-- **FAIL-Sx** — Stage x not satisfied; assessment cannot proceed until corrected
+- **PASS-Sx** - Stage x fully satisfied
+- **COND-Sx** - Stage x conditionally satisfied, minor issues remediable without full restart
+- **FAIL-Sx** - Stage x not satisfied; assessment cannot proceed until corrected
 
 For Strict Level A, certification SHALL ONLY be granted if all applicable stages reach PASS-Sx.
 Any unresolved COND-Sx SHALL result in NOT CERTIFIED.
 ---
 
-### 3.1 Stage 0 — Intake & Eligibility
+### 3.1 Stage0 Intake and Eligibility
 
 EA SHALL:
 
@@ -221,14 +234,14 @@ EA SHALL:
 
 **Outcome codes**
 
-- **PASS-S0** — Inputs received, scope consistent
-- **FAIL-S0** — Missing CRK, missing basic artifacts, or profile/scope mismatch
+- **PASS-S0** - Inputs received, scope consistent
+- **FAIL-S0** - Missing CRK, missing basic artifacts, or profile/scope mismatch
 
 If **FAIL-S0**, the system is marked **NOT ASSESSABLE**; no further stages are executed.
 
 ---
 
-### 3.2 Stage 1 — Structural Completeness
+### 3.2 Stage1 Structural Completeness
 
 EA SHALL confirm:
 
@@ -238,15 +251,15 @@ EA SHALL confirm:
 
 **Outcome codes**
 
-- **PASS-S1** — Structurally complete, no missing or inconsistent artifacts
-- **COND-S1** — Minor inconsistencies (for example, missing non-critical annotation) that can be corrected without altering code or baseline
-- **FAIL-S1** — Missing mandatory artifacts, inconsistent IDs, or untraceable elements
+- **PASS-S1** - Structurally complete, no missing or inconsistent artifacts
+- **COND-S1** - Minor inconsistencies (for example, missing non-critical annotation) that can be corrected without altering code or baseline
+- **FAIL-S1** - Missing mandatory artifacts, inconsistent IDs, or untraceable elements
 
 Strict Level A: any **COND-S1** must be resolved to **PASS-S1** before final approval.
 
 ---
 
-### 3.3 Stage 2 — Evidence & RCR Verification
+### 3.3 Stage2 Evidence and RCR Verification
 
 EA SHALL validate:
 
@@ -259,15 +272,15 @@ EA SHALL validate:
 
 **Outcome codes**
 
-- **PASS-S2** — RCR is internally consistent, thresholds are satisfied, and evidence fully supports the reported compliance status
-- **COND-S2** — Minor documentation gaps (for example, missing rationale text for a justified SHOULD violation) that do not change the compliance outcome but must be corrected
-- **FAIL-S2** — Any missing RCR, failed MUST rules, exceeded SHOULD thresholds, unjustified violations, or missing evidence references
+- **PASS-S2** - RCR is internally consistent, thresholds are satisfied, and evidence fully supports the reported compliance status
+- **COND-S2** - Minor documentation gaps (for example, missing rationale text for a justified SHOULD violation) that do not change the compliance outcome but must be corrected
+- **FAIL-S2** - Any missing RCR, failed MUST rules, exceeded SHOULD thresholds, unjustified violations, or missing evidence references
 
 Strict Level A: any **COND-S2** must be resolved to **PASS-S2**. Any **FAIL-S2** mandates rework of compliance and evidence before reassessment.
 
 ---
 
-### 3.4 Stage 3 — Technical Deep-Dive Sampling
+### 3.4 Stage3 Technical Deep-Dive Sampling
 
 EA SHALL:
 
@@ -278,17 +291,17 @@ EA SHALL:
 
 **Outcome codes**
 
-- **PASS-S3** — Samples confirm that claimed processes and evidence match reality; no systemic inconsistencies detected
-- **COND-S3** — Minor discrepancies in sampled modules that can be corrected with targeted fixes and follow-up evidence, without invalidating the overall process
-- **FAIL-S3** — Evidence of systemic misalignment (for example, tools misconfigured, rules routinely ignored, or RCR materially inconsistent with actual code)
+- **PASS-S3** - Samples confirm that claimed processes and evidence match reality; no systemic inconsistencies detected
+- **COND-S3** - Minor discrepancies in sampled modules that can be corrected with targeted fixes and follow-up evidence, without invalidating the overall process
+- **FAIL-S3** - Evidence of systemic misalignment (for example, tools misconfigured, rules routinely ignored, or RCR materially inconsistent with actual code)
 
 Strict Level A: conditional passes (**COND-S3**) require remediation and re-sampling; final approval requires **PASS-S3**.
 
 ---
 
-### 3.5 Stage 4 — Decision & Reporting
+### 3.5 Stage4 Decision and Reporting
 
-The External Assessor SHALL synthesize S0–S3 outcomes into a final decision:
+The External Assessor SHALL synthesize S0-S3 outcomes into a final decision:
 - **CERTIFIED**
 - **NOT CERTIFIED**
 
@@ -322,6 +335,9 @@ A system with any unresolved COND-Sx SHALL be considered NOT CERTIFIED.
 
 ## 4. Non-Conformance Handling
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 NC rules are unchanged:
 
 - NC-0: Informational
@@ -336,7 +352,10 @@ For Strict Level A:
 
 ---
 
-## 5. Revocation & Reassessment
+## 5. Revocation and Reassessment
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Certification SHALL be revoked if:
 
@@ -349,13 +368,14 @@ Certification SHALL be revoked if:
 
 ## 6. Summary of Enhancements
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - RCR added as a mandatory input
-- RCR verification added to Stage 2 & Stage 3
+- RCR verification added to Stage 2 and Stage 3
 - All undefined terms formally defined
 - End-to-end traceability clarified
 
 This closes the compliance loop:
 
 **RCR -> CC -> RC -> EAP -> AR**
-
-CRSS-Python is now a fully self-contained, auditable certification framework.

@@ -1,35 +1,40 @@
-# CRSS-Python Certification FAQ for Auditors & Regulators
+# CRSS-Python Certification FAQ for Auditors and Regulators
 
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [1. What Is the Certification Scope of CRSS-Python?](#1-what-is-the-certification-scope-of-crss-python)
-- [2. What Safety Levels Can CRSS-Python Support?](#2-what-safety-levels-can-crss-python-support)
-- [3. Is Compliance Binary?](#3-is-compliance-binary)
-- [4. What Are the Core Enforcement Mechanisms?](#4-what-are-the-core-enforcement-mechanisms)
-- [5. What Evidence Is Required?](#5-what-evidence-is-required)
-- [6. What Violations Automatically Fail Certification?](#6-what-violations-automatically-fail-certification)
-- [7. Are Deviations Allowed?](#7-are-deviations-allowed)
-  - [Strict-A `@critical`](#strict-a-critical)
-  - [Strict-A `@non_critical_phase`](#strict-a-non_critical_phase)
-  - [Strict-B/C and Core](#strict-bc-and-core)
-- [8. How Is Determinism Verified?](#8-how-is-determinism-verified)
-- [9. How Is the Interpreter Addressed?](#9-how-is-the-interpreter-addressed)
-- [10. How Are Deployments Certified?](#10-how-are-deployments-certified)
-- [11. What Is the Role of Organizational Maturity?](#11-what-is-the-role-of-organizational-maturity)
-- [12. What Is the Auditor’s Checklist?](#12-what-is-the-auditors-checklist)
-- [13. Final Summary](#13-final-summary)
+- [CRSS-Python Certification FAQ for Auditors and Regulators](#crss-python-certification-faq-for-auditors-regulators)
+  - [Table of Contents](#table-of-contents)
+  - [1. What Is the Certification Scope of CRSS-Python?](#1-what-is-the-certification-scope-of-crss-python)
+  - [2. What Safety Levels Can CRSS-Python Support?](#2-what-safety-levels-can-crss-python-support)
+  - [3. Is Compliance Binary?](#3-is-compliance-binary)
+  - [4. What Are the Core Enforcement Mechanisms?](#4-what-are-the-core-enforcement-mechanisms)
+  - [5. What Evidence Is Required?](#5-what-evidence-is-required)
+  - [6. What Violations Automatically Fail Certification?](#6-what-violations-automatically-fail-certification)
+  - [7. Are Deviations Allowed?](#7-are-deviations-allowed)
+    - [Strict-A `@critical`](#strict-a-critical)
+    - [Strict-A `@non_critical_phase`](#strict-a-non_critical_phase)
+    - [Strict-B/C and Core](#strict-bc-and-core)
+  - [8. How Is Determinism Verified?](#8-how-is-determinism-verified)
+  - [9. How Is the Interpreter Addressed?](#9-how-is-the-interpreter-addressed)
+  - [10. How Are Deployments Certified?](#10-how-are-deployments-certified)
+  - [11. What Is the Role of Organizational Maturity?](#11-what-is-the-role-of-organizational-maturity)
+  - [12. What Is the Auditor’s Checklist?](#12-what-is-the-auditors-checklist)
+  - [13. Final Summary](#13-final-summary)
 
 ---
 
 ##  1. What Is the Certification Scope of CRSS-Python?
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 CRSS-Python certification applies to **software units written in Python**, specifically:
 
@@ -50,6 +55,9 @@ CRSS-Python certification confirms **software compliance**, not system complianc
 
 ##  2. What Safety Levels Can CRSS-Python Support?
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Domain | Supported Level |
 |--------|------------------|
 | ISO 26262 | ASIL D (Supervisory only) |
@@ -68,6 +76,9 @@ CRSS-Python does **not** support:
 
 ##  3. Is Compliance Binary?
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Yes.
 
 CRSS-Python defines certification status as:
@@ -79,6 +90,9 @@ There is no partial, percentage-based, or “conditional” compliance.
 ---
 
 ##  4. What Are the Core Enforcement Mechanisms?
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Auditors should confirm:
 
@@ -97,21 +111,27 @@ These are non-negotiable for certification.
 
 ##  5. What Evidence Is Required?
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Evidence is produced through the SCEM (Safety Case Evidence Model). Mandatory artifacts include:
 
-- **MAR** – Mode Assignment Register
-- **RCR** – Rule Compliance Report
-- **TEP** – Test Evidence Package
-- **CBM** – Configuration Baseline Manifest
-- **SCEM** – Consolidated evidence
-- **CRC** – Certification Readiness Checklist
-- **CC** – Compliance Certificate
+- **MAR** - Mode Assignment Register
+- **RCR** - Rule Compliance Report
+- **TEP** - Test Evidence Package
+- **CBM** - Configuration Baseline Manifest
+- **SCEM** - Consolidated evidence
+- **CRC** - Certification Readiness Checklist
+- **CC** - Compliance Certificate
 
 All must be versioned, immutable, and traceable.
 
 ---
 
 ##  6. What Violations Automatically Fail Certification?
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - Critical code calling non-critical code
 - Dynamic allocation in `@critical`
@@ -127,6 +147,9 @@ Any one of these = **FAIL**.
 ---
 
 ##  7. Are Deviations Allowed?
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ###  Strict-A `@critical`
 - No deviations permitted.
@@ -149,6 +172,9 @@ Any one of these = **FAIL**.
 
 ##  8. How Is Determinism Verified?
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Auditors should require:
 
 - Bounded execution
@@ -163,6 +189,9 @@ Auditors should require:
 
 ##  9. How Is the Interpreter Addressed?
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS-Python uses:
 
 - Interpreter freezing in the CBM
@@ -175,6 +204,9 @@ Rebuilding MUST produce the same behavior.
 ---
 
 ##  10. How Are Deployments Certified?
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 PROD deployment is only allowed when:
 
@@ -190,6 +222,9 @@ No auto-deploy. No mutable builds.
 
 ##  11. What Is the Role of Organizational Maturity?
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Strict-A requires:
 
 - Safety Maturity Model Level S4
@@ -202,6 +237,9 @@ Low-maturity organizations cannot certify Strict-A.
 ---
 
 ##  12. What Is the Auditor’s Checklist?
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Auditors should confirm:
 
@@ -221,6 +259,9 @@ If any fail -> Certification fails.
 
 ##  13. Final Summary
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 CRSS-Python certification confirms:
 
 - The software follows strict rules
@@ -230,6 +271,6 @@ CRSS-Python certification confirms:
 
 It does **not** certify Python for primary real-time actuation.
 
-Certification is rigorous by design — ensuring maximum safety.
+Certification is rigorous by design - ensuring maximum safety.
 
 ---

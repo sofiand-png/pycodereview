@@ -3,13 +3,15 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen — All Rights Reserved
+© 2025 Sofian Daghsen - All Rights Reserved
 Distributed under CC BY-NC-ND 4.0
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
+- [CRSS-Python Compliance Master Specification](#crss-python-compliance-master-specification)
+  - [Table of Contents](#table-of-contents)
 - [Purpose](#purpose)
 - [Scope](#scope)
 - [Normative References](#normative-references)
@@ -18,23 +20,37 @@ Distributed under CC BY-NC-ND 4.0
 - [Compliance Overview](#compliance-overview)
 - [Profiles](#profiles)
 - [Safety Levels](#safety-levels)
-- [MAR & Phase Model](#mar--phase-model)
+- [MAR and Phase Model](#mar-and-phase-model)
 - [Entry Criteria](#entry-criteria)
 - [Compliance Actor Roles](#compliance-actor-roles)
 - [Compliance Lifecycle (Five-Phase Model)](#compliance-lifecycle-five-phase-model)
-  - [Phase 1 — Design Compliance](#phase-1--design-compliance)
-  - [Phase 2 — Rule Compliance](#phase-2--rule-compliance)
-  - [Phase 3 — Test Compliance](#phase-3--test-compliance)
-  - [Phase 4 — Baseline Compliance](#phase-4--baseline-compliance)
-  - [Phase 5 — Certification Readiness](#phase-5--certification-readiness)
+  - [Phase1 Design Compliance](#phase1-design-compliance)
+  - [Phase2 Rule Compliance](#phase2-rule-compliance)
+  - [Phase3 Test Compliance](#phase3-test-compliance)
+  - [Phase4 Baseline Compliance](#phase4-baseline-compliance)
+  - [Phase5 Certification Readiness](#phase5-certification-readiness)
   - [Release Approval](#release-approval)
   - [Post-Release Monitoring](#post-release-monitoring)
-- [Enforcement & Acceptance Model](#enforcement--acceptance-model)
+- [Enforcement and Acceptance Model](#enforcement-and-acceptance-model)
+  - [Rule Severity](#rule-severity)
+  - [Strict-A Requirements](#strict-a-requirements)
+  - [Deviations](#deviations)
+  - [No Silent Downgrade](#no-silent-downgrade)
 - [One-Version Rule (Interpreter Freeze)](#one-version-rule-interpreter-freeze)
 - [Mandatory Artifacts](#mandatory-artifacts)
+  - [RCR Rule Compliance Report](#rcr-rule-compliance-report)
+  - [TEP Test Evidence Package](#tep-test-evidence-package)
+  - [CBM Configuration Baseline Manifest](#cbm-configuration-baseline-manifest)
+  - [SBR Safety Baseline Report](#sbr-safety-baseline-report)
+  - [CC Compliance Certificate](#cc-compliance-certificate)
+  - [DL Deviations Log](#dl-deviations-log)
+  - [MAR Mode Assignment Register](#mar-mode-assignment-register)
+  - [SCEM Evidence Matrix](#scem-evidence-matrix)
 - [Artifact Chain](#artifact-chain)
 - [Re-Approval Rules](#re-approval-rules)
-- [Deviations & Exceptions](#deviations--exceptions)
+- [Deviations and Exceptions](#deviations-and-exceptions)
+  - [Allowed Deviations](#allowed-deviations)
+  - [Forbidden Deviations](#forbidden-deviations)
 - [Testing Compliance](#testing-compliance)
 - [Deployment Compliance](#deployment-compliance)
 - [Toolchain Confidence Assessment](#toolchain-confidence-assessment)
@@ -113,21 +129,21 @@ Compliance requires:
 ---
 
 # Profiles
-**Core** — general-purpose safety.
-**Strict** — high-integrity, critical subset with highest constraints.
+**Core** - general-purpose safety.
+**Strict** - high-integrity, critical subset with highest constraints.
 
 ---
 
 # Safety Levels
-- **A** – highest assurance
-- **B** – medium assurance
-- **C** – lowest assurance
+- **A** - highest assurance
+- **B** - medium assurance
+- **C** - lowest assurance
 
 Levels apply per unit/function, not module.
 
 ---
 
-# MAR & Phase Model
+# MAR and Phase Model
 The Mode Assignment Register specifies:
 - Level
 - Profile
@@ -161,7 +177,10 @@ A project enters compliance when:
 
 # Compliance Lifecycle (Five-Phase Model)
 
-## Phase 1 — Design Compliance
+## Phase1 Design Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - hazard mapping
 - level assignment
@@ -170,24 +189,33 @@ Artifacts:
 - MAR
 - initial SBR
 
-## Phase 2 — Rule Compliance
+## Phase2 Rule Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - static analysis
 - manual review
 Artifact:
 - RCR
 
-## Phase 3 — Test Compliance
+## Phase3 Test Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - unit tests
 - MC/DC (for Level A)
 - negative tests
-- performance & determinism tests
+- performance and determinism tests
 - security tests
 Artifact:
 - TEP
 
-## Phase 4 — Baseline Compliance
+## Phase4 Baseline Compliance
+
+> [⬆ Back to Table of Contents](#toc)
+
 Activities:
 - freeze environment
 - produce CBM
@@ -198,36 +226,54 @@ The certification baseline SHALL reference a Certified Build as defined in the
 Release Management specification, including the certified wheel artifact and
 its associated dependency freeze evidence.
 
-## Phase 5 — Certification Readiness
+## Phase5 Certification Readiness
+
+> [⬆ Back to Table of Contents](#toc)
+
 Artifacts:
 - final SBR
 - SCEM
 
 ## Release Approval
+
+> [⬆ Back to Table of Contents](#toc)
+
 - independent assessment
 - CC issued
 
 ## Post-Release Monitoring
+
+> [⬆ Back to Table of Contents](#toc)
+
 - anomaly tracking
 - dependency CVE monitoring
 - safety event logging
 
 ---
 
-# Enforcement & Acceptance Model
+# Enforcement and Acceptance Model
 
 ## Rule Severity
-- **INFO** — informational
-- **WARN** — counts toward threshold
-- **ERROR** — blocking unless justified
-- **BLOCKER** — unconditional failure
+
+> [⬆ Back to Table of Contents](#toc)
+
+- **INFO** - informational
+- **WARN** - counts toward threshold
+- **ERROR** - blocking unless justified
+- **BLOCKER** - unconditional failure
 
 ## Strict-A Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 - **0 WARN**
 - **0 ERROR**
 - **0 BLOCKER**
 
 ## Deviations
+
+> [⬆ Back to Table of Contents](#toc)
+
 Allowed only if:
 - no Level A @critical rule affected
 - documented risk assessment
@@ -240,6 +286,9 @@ Forbidden for:
 - interpreter freeze rules
 
 ## No Silent Downgrade
+
+> [⬆ Back to Table of Contents](#toc)
+
 Reviewers cannot reduce severity to pass compliance.
 
 ---
@@ -258,23 +307,32 @@ No partial acceptance.
 
 # Mandatory Artifacts
 
-## RCR — Rule Compliance Report
+## RCR Rule Compliance Report
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes:
 - Release/Baseline IDs
 - mapping of rules
 - deviations
 - signatures
 
-## TEP — Test Evidence Package
+## TEP Test Evidence Package
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes:
 - test suite version
 - platform matrix
 - coverage
 - MC/DC
 - fault injection
-- negative & security tests
+- negative and security tests
 
-## CBM — Configuration Baseline Manifest
+## CBM Configuration Baseline Manifest
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes:
 - Python version
 - OS version
@@ -284,19 +342,34 @@ Includes:
 - hardware details
 - hashes
 
-## SBR — Safety Baseline Report
+## SBR Safety Baseline Report
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes hazard mappings, risks, platform, deployment context.
 
-## CC — Compliance Certificate
+## CC Compliance Certificate
+
+> [⬆ Back to Table of Contents](#toc)
+
 Includes official release certification.
 
-## DL — Deviations Log
+## DL Deviations Log
+
+> [⬆ Back to Table of Contents](#toc)
+
 Contains rule ID, justification, approver, evidence.
 
-## MAR — Mode Assignment Register
+## MAR Mode Assignment Register
+
+> [⬆ Back to Table of Contents](#toc)
+
 Defines unit -> level -> profile -> phase.
 
-## SCEM — Evidence Matrix
+## SCEM Evidence Matrix
+
+> [⬆ Back to Table of Contents](#toc)
+
 Maps Requirements -> Rules -> Tests -> Evidence.
 
 ---
@@ -348,15 +421,21 @@ Severity:
 
 ---
 
-# Deviations & Exceptions
+# Deviations and Exceptions
 
 ## Allowed Deviations
+
+> [⬆ Back to Table of Contents](#toc)
+
 Only if:
 - not Level A critical
 - risk documented
 - Safety Manager approval
 
 ## Forbidden Deviations
+
+> [⬆ Back to Table of Contents](#toc)
+
 For:
 - Strict-Level-A MUST rules
 - deterministic behavior
@@ -436,22 +515,34 @@ Auditors verify:
 # Checklists
 
 ## Developer Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - no rule violations
 - tests complete
 - MAR correct
 - coverage adequate
 
 ## Reviewer Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - rule-by-rule analysis
 - static review
 - deviation validation
 
 ## Safety Manager Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - SBR correctness
 - SCEM completeness
 - risk soundness
 
 ## Release Authority Checklist
+
+> [⬆ Back to Table of Contents](#toc)
+
 - ID consistency
 - artifact integrity
 - signature and attestation

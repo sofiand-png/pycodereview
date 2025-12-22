@@ -3,13 +3,15 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
+- [CRSS-Python Architecture Guide](#crss-python-architecture-guide)
+  - [Table of Contents](#table-of-contents)
 - [1. Purpose](#1-purpose)
 - [2. Core Architectural Principles](#2-core-architectural-principles)
   - [2.1 Isolation Over Complexity](#21-isolation-over-complexity)
@@ -23,11 +25,10 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [5.1 Critical Module](#51-critical-module)
   - [5.2 Non-Critical Module](#52-non-critical-module)
 - [6. Data Flow Best Practices](#6-data-flow-best-practices)
-- [7. Logging & Monitoring Strategy](#7-logging--monitoring-strategy)
+- [7. Logging and Monitoring Strategy](#7-logging-and-monitoring-strategy)
 - [8. Architecture Anti-Patterns (Avoid)](#8-architecture-anti-patterns-avoid)
 - [9. Path to Strict-A Architecture](#9-path-to-strict-a-architecture)
 - [10. Summary](#10-summary)
-
 
 ---
 
@@ -40,13 +41,16 @@ This guide provides **practical architectural direction** for teams designing so
 - Support certification
 - Enable scalable, robust systems
 
-This is NOT a rulebook — it is **highly recommended guidance** to help build systems that naturally align with CRSS-Python compliance.
+This is NOT a rulebook - it is **highly recommended guidance** to help build systems that naturally align with CRSS-Python compliance.
 
 ---
 
 # 2. Core Architectural Principles
 
 ## 2.1 Isolation Over Complexity
+
+> [⬆ Back to Table of Contents](#toc)
+
 Prefer **small, isolated components** over large, multi-purpose modules.
 
 - Single responsibility
@@ -59,6 +63,9 @@ Prefer **small, isolated components** over large, multi-purpose modules.
 ---
 
 ## 2.2 Process, Not Thread Isolation
+
+> [⬆ Back to Table of Contents](#toc)
+
 For safety and determinism:
 
 - Isolate components into **separate processes**
@@ -70,6 +77,9 @@ Threads inside a shared interpreter increase unpredictability and risk.
 ---
 
 ## 2.3 Critical Code Must Be Minimal
+
+> [⬆ Back to Table of Contents](#toc)
+
 `@critical` code should be:
 
 - Small
@@ -82,6 +92,9 @@ Goal: **Make the critical core tiny, predictable, and rock-solid.**
 ---
 
 ## 2.4 Stateless-by-Default
+
+> [⬆ Back to Table of Contents](#toc)
+
 State introduces danger. Prefer:
 
 - Stateless processing
@@ -97,6 +110,9 @@ If state is required:
 ---
 
 ## 2.5 Defensive Boundaries
+
+> [⬆ Back to Table of Contents](#toc)
+
 All external inputs must be treated as untrusted.
 
 - Validate
@@ -157,13 +173,16 @@ Key rules:
 +------------------------------+
 ```
 
-Python must not command actuators directly — it must supervise or recommend.
+Python must not command actuators directly - it must supervise or recommend.
 
 ---
 
 # 5. Module Design Templates
 
 ## 5.1 Critical Module
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - No I/O
 - No allocation
@@ -174,12 +193,15 @@ Python must not command actuators directly — it must supervise or recommend.
 
 ## 5.2 Non-Critical Module
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - Initialization
 - File/Network access
 - Configuration loading
 - Pre-computation
 
-Still must follow rules — but more flexible.
+Still must follow rules - but more flexible.
 
 ---
 
@@ -195,7 +217,7 @@ Still must follow rules — but more flexible.
 
 ---
 
-# 7. Logging & Monitoring Strategy
+# 7. Logging and Monitoring Strategy
 
 Logging MUST NOT appear in `@critical`.
 
@@ -221,12 +243,12 @@ Recommended approach:
 
 # 9. Path to Strict-A Architecture
 
-Step 1 — Identify critical decisions
-Step 2 — Isolate into a dedicated module
-Step 3 — Shrink critical logic
-Step 4 — Split phases (`@non_critical_phase`)
-Step 5 — Pre-compute everything possible
-Step 6 — Freeze toolchain and CBM
+Step 1 - Identify critical decisions
+Step 2 - Isolate into a dedicated module
+Step 3 - Shrink critical logic
+Step 4 - Split phases (`@non_critical_phase`)
+Step 5 - Pre-compute everything possible
+Step 6 - Freeze toolchain and CBM
 
 ---
 

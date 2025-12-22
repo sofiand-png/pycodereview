@@ -1,23 +1,25 @@
-# CRSS Compliance Report — Sensor Voting Reference Example
+# CRSS Compliance Report - Sensor Voting Reference Example
 
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [1. Scope](#1-scope)
-- [2. Rule Mapping Summary](#2-rule-mapping-summary)
-  - [2.1 Strict-A Deterministic Control Logic](#21-strict-a-deterministic-control-logic)
-  - [2.2 Phase-Aware Boundaries & Data Flow](#22-phase-aware-boundaries--data-flow)
-  - [2.3 Configuration & Safe Defaults](#23-configuration--safe-defaults)
-  - [2.4 JSON I/O & Validation (Non-critical)](#24-json-io--validation-non-critical)
-- [3. Deviations](#3-deviations)
-
+- [CRSS Compliance Report - Sensor Voting Reference Example](#crss-compliance-report-sensor-voting-reference-example)
+  - [Table of Contents](#table-of-contents)
+  - [1. Scope](#1-scope)
+  - [2. Rule Mapping Summary](#2-rule-mapping-summary)
+    - [2.1 Strict-A Deterministic Control Logic](#21-strict-a-deterministic-control-logic)
+    - [2.2 Phase-Aware Boundaries and Data Flow](#22-phase-aware-boundaries-and-data-flow)
+    - [2.3 Configuration and Safe Defaults](#23-configuration-and-safe-defaults)
+    - [2.4 JSON I/O and Validation (Non-critical)](#24-json-io-and-validation-non-critical)
+    - [2.5 Deviations](#25-deviations)
+  - [3. Deviations](#3-deviations)
 
 - **Project**: CRSS Python Sensor Voting Reference Example
 - **Version**: 1.0.0
@@ -49,6 +51,8 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
 
 | Rule ID      | Title (short)                                      | Module(s)                                           | Compliance |
 |-------------|------------------------------------------------------|-----------------------------------------------------|-----------|
+
+-------------|------------------------------------------------------|-----------------------------------------------------|-----------|
 | CRSS-5.4.x  | Deterministic triple-sensor voting                  | `safety_logic.voting.compute_voted_value`          | **YES**   |
 | CRSS-5.4.y  | Defined behaviour for missing / invalid readings    | `safety_logic.voting.compute_voted_value`          | **YES**   |
 | CRSS-5.5.x  | Monotonic safety envelope (clamp + rate limit)      | `safety_logic.envelope.apply_safety_envelope`      | **YES**   |
@@ -64,7 +68,7 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
   - deterministic fallback (`SAFE_DEFAULT`) when no valid pair.
 - No randomness, no I/O, no mutable global state in Strict-A modules.
 
-### 2.2 Phase-Aware Boundaries & Data Flow
+### 2.2 Phase-Aware Boundaries and Data Flow
 
 | Rule ID      | Title (short)                               | Module(s)                                      | Compliance |
 |-------------|-----------------------------------------------|------------------------------------------------|-----------|
@@ -78,7 +82,7 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
 - Strict-A classes accept/return pure Python primitives / dataclasses (`ActuatorCommand`).
 - All socket and JSON handling is done in non-critical `app.tcp_controller_client` / `app.tcp_sensor_server`.
 
-### 2.3 Configuration & Safe Defaults
+### 2.3 Configuration and Safe Defaults
 
 | Rule ID      | Title (short)                     | Module(s)                   | Compliance |
 |-------------|------------------------------------|-----------------------------|-----------|
@@ -91,7 +95,7 @@ Strict-A compliance and coverage metrics; they are treated as **Core-C test harn
 - `SAFE_DEFAULT` = `0.0` used as fail-safe.
 - `SafetyConfig` is a frozen dataclass (immutable at runtime).
 
-### 2.4 JSON I/O & Validation (Non-critical)
+### 2.4 JSON I/O and Validation (Non-critical)
 
 | Rule ID      | Title (short)                             | Module(s)                             | Compliance |
 |-------------|--------------------------------------------|---------------------------------------|-----------|

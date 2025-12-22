@@ -1,16 +1,17 @@
-# CRSS-Python Tooling & Automation Master Specification
+# CRSS-Python Tooling and Automation Master Specification
 
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [CRSS-Python Tooling & Automation Master Specification](#crss-python-tooling-automation-master-specification)
+- [CRSS-Python Tooling and Automation Master Specification](#crss-python-tooling-automation-master-specification)
+  - [Table of Contents](#table-of-contents)
 - [0. Purpose](#0-purpose)
 - [1. Tooling Governance Model](#1-tooling-governance-model)
   - [1.1 Role of Tools in CRSS](#11-role-of-tools-in-crss)
@@ -26,7 +27,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
   - [4.2 File Format Requirements](#42-file-format-requirements)
 - [5. Toolchain Version Control](#5-toolchain-version-control)
   - [5.1 One-Version Rule](#51-one-version-rule)
-  - [5.2 Toolchain Drift = Automatic FAIL](#52-toolchain-drift-automatic-fail)
+  - [5.2 Toolchain Drift](#52-toolchain-drift)
 - [6. SCEM Tool-Assisted Templates](#6-scem-tool-assisted-templates)
   - [6.1 MAR Template](#61-mar-template)
   - [6.2 Propagation Report Template](#62-propagation-report-template)
@@ -34,8 +35,8 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - [7. Tool Acceptance Criteria](#7-tool-acceptance-criteria)
   - [7.1 Automated Evidence Acceptance](#71-automated-evidence-acceptance)
   - [7.2 Automatic Rejection Conditions](#72-automatic-rejection-conditions)
-  - [7.3 Tool Confidence Categories](#73-tool-confidence-categories)
-  - [7.4 Minimum Expectations per Category](#74-minimum-expectations-per-category)
+    - [7.3 Tool Confidence Categories](#73-tool-confidence-categories)
+    - [7.4 Minimum Expectations per Category](#74-minimum-expectations-per-category)
 - [8. Summary](#8-summary)
 
 ---
@@ -58,7 +59,7 @@ This document defines:
 - Automation rules
 - Evidence-generation workflows
 - Toolchain qualification
-- Data schemas & templates
+- Data schemas and templates
 - Acceptance criteria for automated outputs
 
 It is the **single source of truth** for automation and tool usage in CRSS-Python certification.
@@ -68,11 +69,14 @@ It is the **single source of truth** for automation and tool usage in CRSS-Pytho
 # 1. Tooling Governance Model
 
 ## 1.1 Role of Tools in CRSS
+
+> [⬆ Back to Table of Contents](#toc)
+
 Tools are used to:
 - Analyze code
 - Enforce rules
 - Generate evidence
-- Track Modes & Phases
+- Track Modes and Phases
 - Validate SCEM artifacts
 - Support certification audits
 
@@ -80,12 +84,15 @@ Tools **do not reduce** responsibility for correctness.
 
 ## 1.2 Tool Categories
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Category | Examples | Purpose |
 |----------|----------|---------|
 | Static Analysis | Rule checkers, linters | Detect violations |
 | Mode Analysis | Propagation engines | Compute Modes |
 | Test Automation | Coverage, MC/DC | Generate test evidence |
-| Build & Baseline | Package lock, container builder | Freeze configuration |
+| Build and Baseline | Package lock, container builder | Freeze configuration |
 | Monitoring | Determinism probes, timing checks | Validate runtime behavior |
 
 ---
@@ -94,9 +101,12 @@ Tools **do not reduce** responsibility for correctness.
 
 ## 2.1 Mandatory Automation Targets
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Automation must support:
 - Rule compliance checking
-- Mode & Phase detection
+- Mode and Phase detection
 - Dependency graph extraction
 - Critical boundary validation
 - Violation classification
@@ -104,6 +114,9 @@ Automation must support:
 - SCEM completeness validation
 
 ## 2.2 Non-Automatable Components
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 The following require human review:
 - Safety Level assignment
@@ -119,6 +132,9 @@ Human approval is mandatory for Strict-A.
 
 ## 3.1 Tool Confidence Levels (TCL)
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | TCL | Name | Usage |
 |-----|------|-------|
 | **TCL-0** | Unverified | Not allowed in certification |
@@ -132,6 +148,9 @@ Strict-A requires **TCL-3** for:
 - Mode propagation validation
 
 ## 3.2 Tool Confidence Assessment (TCA)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 TCA evaluates:
 - Correctness
@@ -150,6 +169,9 @@ A tool **cannot** be upgraded without:
 
 ## 4.1 Mandatory Artifacts
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Automation MUST generate:
 - Rule Compliance Report (RCR)
 - Mode Assignment Register (MAR)
@@ -160,6 +182,9 @@ Automation MUST generate:
 - SCEM Completeness Score
 
 ## 4.2 File Format Requirements
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 All automated outputs must be:
 - Deterministic
@@ -178,12 +203,18 @@ Recommended formats:
 
 ## 5.1 One-Version Rule
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 All tools used in certification:
 - Must be version-fixed
 - Must be captured in CBM
 - Must not auto-update
 
-## 5.2 Toolchain Drift = Automatic FAIL
+## 5.2 Toolchain Drift
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 If any tool changes version after CBM:
 - All automated evidence is invalid
@@ -194,6 +225,9 @@ If any tool changes version after CBM:
 # 6. SCEM Tool-Assisted Templates
 
 ## 6.1 MAR Template
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ```yaml
 - function: "module.Class.method"
@@ -209,6 +243,9 @@ If any tool changes version after CBM:
 
 ## 6.2 Propagation Report Template
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ```yaml
 propagation_events:
   - caller: "A"
@@ -219,6 +256,9 @@ propagation_events:
 ```
 
 ## 6.3 Coverage Template
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ```yaml
 coverage:
@@ -236,6 +276,9 @@ CRSS does not define a full ISO 26262 Tool Confidence Level (TCL) process, but p
 
 ## 7.1 Automated Evidence Acceptance
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Accepted only if:
 - TCL level is sufficient
 - Output matches CBM tool version
@@ -243,6 +286,9 @@ Accepted only if:
 - No missing artifacts
 
 ## 7.2 Automatic Rejection Conditions
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - Output generated after tool version drift
 - Missing data fields
@@ -253,26 +299,26 @@ Accepted only if:
 
 Tools are grouped into three confidence categories:
 
-- **Q0 — Advisory Tools**  
+- **Q0 - Advisory Tools**  
   - Linting, style checkers, non-safety-critical analyzers.  
   - Findings are advisory; no certification reliance.  
 
-- **Q1 — Supporting Safety Evidence**  
+- **Q1 - Supporting Safety Evidence**  
   - Static analyzers, type checkers, coverage tools used to build SCEM evidence, but with cross-checks and manual review.  
 
-- **Q2 — Safety-Critical Decision Tools**  
+- **Q2 - Safety-Critical Decision Tools**  
   - Tools whose output is directly used as *primary evidence* that safety requirements are met (e.g., the main CRSS compliance analyzer for Strict-A).  
 
 ### 7.4 Minimum Expectations per Category
 
-**Q1 – Supporting Safety Evidence:**
+**Q1 - Supporting Safety Evidence:**
 
 - Fixed-version in CBM  
 - No auto-update  
 - Results cross-checked with at least one other tool or manual sampling  
 - Failures cannot directly hide a violation; human review present  
 
-**Q2 – Safety-Critical Decision Tools:**
+**Q2 - Safety-Critical Decision Tools:**
 
 - All Q1 expectations, plus:  
   - Documented failure modes and mitigations  

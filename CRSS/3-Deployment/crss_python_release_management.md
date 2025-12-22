@@ -3,60 +3,73 @@
 **Version:** v1.0.0
 **Status:** Normative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [0. Purpose](#0-purpose)
-- [1. Definition of a Release](#1-definition-of-a-release)
-  - [CRSS Definition](#crss-definition)
-- [2. Required Properties of a Release](#2-required-properties-of-a-release)
-  - [2.1 Uniquely Identifiable](#21-uniquely-identifiable)
-  - [2.2 Immutable](#22-immutable)
-  - [2.3 Reproducible](#23-reproducible)
-  - [2.4 Tested](#24-tested)
-  - [2.5 Approved](#25-approved)
-  - [2.6 Deployable](#26-deployable)
-- [3. Release Contents](#3-release-contents)
-- [4. Distinction Between Build, Baseline, and Release](#4-distinction-between-build-baseline-and-release)
-- [5. Release Versioning Rules](#5-release-versioning-rules)
-  - [CRSS-13.1 – Unique Versioning](#crss-131--unique-versioning)
-  - [CRSS-13.2 – Single Unit Principle](#crss-132--single-unit-principle)
-  - [CRSS-13.3 – Supersession](#crss-133--supersession)
-- [6. Release Lifecycle](#6-release-lifecycle)
-  - [6.1 Stages](#61-stages)
-  - [6.2 State Transitions](#62-state-transitions)
-- [7. Release Registry Policy](#7-release-registry-policy)
-- [8. Release Deployment Rules](#8-release-deployment-rules)
-  - [8.1 Deployment Eligibility](#81-deployment-eligibility)
-  - [8.2 Deployment Prohibition](#82-deployment-prohibition)
-  - [8.3 Production Environment Rule](#83-production-environment-rule)
-- [9. Release Modification](#9-release-modification)
-  - [9.1 Zero Modification](#91-zero-modification)
-  - [9.2 Change Requires New Release](#92-change-requires-new-release)
-- [10. Release Approval Authority](#10-release-approval-authority)
-- [11. Certified Build and Packaging Process](#11-certified-build-and-packaging-process)
-  - [11.1 Purpose and Scope](#111-purpose-and-scope)
-  - [11.2 Conceptual Model](#112-conceptual-model)
-  - [11.3 Dependency Freeze Operation (Normative)](#113-dependency-freeze-operation-normative)
-  - [11.4 Certified Build (Normative)](#114-certified-build-normative)
-  - [11.5 Certified Build Outputs (Normative)](#115-certified-build-outputs-normative)
-  - [11.6 Packaging Rules and CRSS Implications](#116-packaging-rules-and-crss-implications)
-  - [11.7 Platform-Specific Certification Baselines](#117-platform-specific-certification-baselines)
-  - [11.8 Relationship to Other CRSS Artifacts](#118-relationship-to-other-crss-artifacts)
-- [12. Summary](#12-summary)
-
+- [CRSS-Python Release Management Specification](#crss-python-release-management-specification)
+  - [Table of Contents](#table-of-contents)
+  - [0. Purpose](#0-purpose)
+  - [1. Definition of a Release](#1-definition-of-a-release)
+    - [**CRSS Definition**](#crss-definition)
+  - [2. Required Properties of a Release](#2-required-properties-of-a-release)
+    - [2.1 Uniquely Identifiable](#21-uniquely-identifiable)
+    - [2.2 Immutable](#22-immutable)
+    - [2.3 Reproducible](#23-reproducible)
+    - [2.4 Tested](#24-tested)
+    - [2.5 Approved](#25-approved)
+    - [2.6 Deployable](#26-deployable)
+  - [3. Release Contents](#3-release-contents)
+  - [4. Distinction Between Build, Baseline, and Release](#4-distinction-between-build-baseline-and-release)
+  - [5. Release Versioning Rules](#5-release-versioning-rules)
+  - [6. Release Lifecycle](#6-release-lifecycle)
+    - [6.1 Stages](#61-stages)
+    - [6.2 State Transitions](#62-state-transitions)
+  - [7. Release Registry Policy](#7-release-registry-policy)
+  - [8. Release Deployment Rules](#8-release-deployment-rules)
+    - [8.1 Deployment Eligibility](#81-deployment-eligibility)
+    - [8.2 Deployment Prohibition](#82-deployment-prohibition)
+    - [8.3 Production Environment Rule](#83-production-environment-rule)
+  - [9. Release Modification](#9-release-modification)
+    - [9.1 Zero Modification](#91-zero-modification)
+    - [9.2 Change Requires New Release](#92-change-requires-new-release)
+  - [10. Release Approval Authority](#10-release-approval-authority)
+  - [11. Certified Build and Packaging Process](#11-certified-build-and-packaging-process)
+    - [11.1 Purpose and Scope](#111-purpose-and-scope)
+    - [11.2 Conceptual Model](#112-conceptual-model)
+    - [11.3 Dependency Freeze Operation (Normative)](#113-dependency-freeze-operation-normative)
+      - [11.3.1 Inputs](#1131-inputs)
+      - [11.3.2 Mandatory Outputs](#1132-mandatory-outputs)
+      - [11.3.3 Constraints](#1133-constraints)
+      - [11.3.4 Status](#1134-status)
+    - [11.4 Certified Build (Normative)](#114-certified-build-normative)
+      - [11.4.1 Certified Build Definition](#1141-certified-build-definition)
+      - [11.4.2 Network Policy](#1142-network-policy)
+      - [11.4.3 Certified Build Steps (Required Order)](#1143-certified-build-steps-required-order)
+      - [Step 1 - Offline Dependency Installation](#step-1-offline-dependency-installation)
+      - [Step 2 - Certified Wheel Generation](#step-2-certified-wheel-generation)
+      - [Step 3 - Offline Installation of Certified Artifact](#step-3-offline-installation-of-certified-artifact)
+      - [Step 4 - Verification and Testing](#step-4-verification-and-testing)
+    - [11.5 Certified Build Outputs (Normative)](#115-certified-build-outputs-normative)
+      - [11.5.1 Mandatory Evidence](#1151-mandatory-evidence)
+    - [11.6 Packaging Rules and CRSS Implications](#116-packaging-rules-and-crss-implications)
+    - [11.7 Platform-Specific Certification Baselines](#117-platform-specific-certification-baselines)
+    - [11.8 Relationship to Other CRSS Artifacts](#118-relationship-to-other-crss-artifacts)
+  - [12. Summary](#12-summary)
 
 ---
 
 ## 0. Purpose
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This document defines the mandatory requirements, definitions, processes, rules, and artifacts governing **Release Management** under the CRSS-Python standard.
 
-It acts as an official annex to the **CRSS-Python Configuration & Deployment Integrity Policy** and ensures that:
+It acts as an official annex to the **CRSS-Python Configuration and Deployment Integrity Policy** and ensures that:
 
 - Releases are unambiguous and formally defined
 - Releases are immutable, traceable, and certifiable
@@ -69,6 +82,9 @@ This specification is **non-deviable** for Strict Level A components.
 ---
 
 ## 1. Definition of a Release
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### **CRSS Definition**
 A **Release** is:
@@ -93,6 +109,9 @@ A Release exists **only after** Compliance Certification.
 ---
 
 ## 2. Required Properties of a Release
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A Release MUST be:
 
@@ -134,6 +153,9 @@ Only Releases may be deployed to Production.
 
 ## 3. Release Contents
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A Release SHALL consist of the following minimum components:
 
 | Component | Source |
@@ -156,6 +178,9 @@ If **any** required component is missing:
 
 ## 4. Distinction Between Build, Baseline, and Release
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 | Concept | Defines | Mutable? | Deployable? | Certified? |
 |--------|---------|----------|-------------|------------|
 | **Build** | Compiled artifact | Yes |  No |  No |
@@ -173,18 +198,21 @@ A Release is the **final authorized output**.
 
 ## 5. Release Versioning Rules
 
-### **CRSS-13.1 – Unique Versioning**
+> [⬆ Back to Table of Contents](#toc)
+
+
+### **CRSS-13.1 - Unique Versioning**
 - Every Release SHALL have a unique version number.
 - Version numbers SHALL NOT be reused.
 - Releases SHALL NOT be modified after approval.
 
-### **CRSS-13.2 – Single Unit Principle**
+### **CRSS-13.2 - Single Unit Principle**
 A Release SHALL be treated as **one indivisible unit**:
 - All components must share the same Release ID
 - All components must share the same Baseline ID
 - All components must reference the same Commit Hash
 
-### **CRSS-13.3 – Supersession**
+### **CRSS-13.3 - Supersession**
 A new Release:
 - Does NOT modify or delete previous Releases
 - Becomes the sole Production-authorized version
@@ -193,6 +221,9 @@ A new Release:
 ---
 
 ## 6. Release Lifecycle
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 6.1 Stages
 1. **Candidate Build** (DEV)
@@ -216,6 +247,9 @@ Transition rules:
 
 ## 7. Release Registry Policy
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A Release MUST be stored in a **controlled Release Registry** with:
 
 - Restricted write access
@@ -229,6 +263,9 @@ No Release may be deleted or overwritten.
 ---
 
 ## 8. Release Deployment Rules
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 8.1 Deployment Eligibility
 A Release is deployable ONLY IF:
@@ -249,6 +286,9 @@ Production SHALL execute **only one Release at a time** unless redundancy archit
 ---
 
 ## 9. Release Modification
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 9.1 Zero Modification
 Releases SHALL NOT be:
@@ -279,6 +319,9 @@ There is no partial acceptance.
 
 ## 10. Release Approval Authority
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A Release MUST be:
 - Reviewed
 - Validated
@@ -292,6 +335,9 @@ Developers and CI/CD systems **cannot self-approve** Releases.
 ---
 
 ## 11. Certified Build and Packaging Process
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 11.1 Purpose and Scope
 
@@ -400,7 +446,7 @@ Any violation SHALL be treated as hard non-compliance.
 
 A certified build SHALL execute the following steps in order:
 
-#### Step 1 — Offline Dependency Installation
+#### Step 1 - Offline Dependency Installation
 
 Dependencies MUST be installed exclusively from the frozen wheelhouse:
 
@@ -410,7 +456,7 @@ python -m pip install --no-index   --find-links third_party/wheelhouse/<platform
 
 This step SHALL fail if any dependency is missing.
 
-#### Step 2 — Certified Wheel Generation
+#### Step 2 - Certified Wheel Generation
 
 The project SHALL be packaged into an immutable wheel artifact:
 
@@ -424,7 +470,7 @@ Rules:
 - Dependency resolution is NOT allowed during packaging.
 - The wheel SHALL represent the exact certified software unit.
 
-#### Step 3 — Offline Installation of Certified Artifact
+#### Step 3 - Offline Installation of Certified Artifact
 
 The certified wheel SHALL be installed offline to verify installability:
 
@@ -438,7 +484,7 @@ This confirms:
 - no implicit resolution,
 - correct packaging metadata.
 
-#### Step 4 — Verification and Testing
+#### Step 4 - Verification and Testing
 
 All verification activities SHALL be executed against the installed wheel, including:
 
@@ -519,6 +565,9 @@ CRSS permits platform-specific certified builds.
 
 
 ## 12. Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 A Release is:
 - Immutable

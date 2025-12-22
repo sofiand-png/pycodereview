@@ -3,44 +3,51 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [1. What is CRSS-Python?](#1-what-is-crss-python)
-- [2. What problem does CRSS-Python solve?](#2-what-problem-does-crss-python-solve)
-- [3. Does CRSS-Python certify Python applications for ASIL-D / SIL3?](#3-does-crss-python-certify-python-applications-for-asil-d--sil3)
-- [4. What are Profiles, Levels, and Modes?](#4-what-are-profiles-levels-and-modes)
-- [5. What is `@critical`?](#5-what-is-critical)
-- [6. What is `@non_critical_phase`?](#6-what-is-non_critical_phase)
-- [7. Can we use multiple Python versions in a project?](#7-can-we-use-multiple-python-versions-in-a-project)
-- [8. Does CRSS-Python allow hotfixes?](#8-does-crss-python-allow-hotfixes)
-- [9. Is automated deployment allowed?](#9-is-automated-deployment-allowed)
-- [10. Can Python install dependencies at runtime?](#10-can-python-install-dependencies-at-runtime)
-- [11. Can CRSS-Python software use threads?](#11-can-crss-python-software-use-threads)
-- [12. Can we build microservices under CRSS-Python?](#12-can-we-build-microservices-under-crss-python)
-- [13. How are violations handled?](#13-how-are-violations-handled)
-- [14. How do we know if a project is compliant?](#14-how-do-we-know-if-a-project-is-compliant)
-- [15. Can CRSS-Python be extended?](#15-can-crss-python-be-extended)
-- [16. Can CRSS-Python be used for Machine Learning systems?](#16-can-crss-python-be-used-for-machine-learning-systems)
-- [17. Does CRSS-Python replace ISO 26262 / IEC 61508?](#17-does-crss-python-replace-iso-26262--iec-61508)
-- [18. Where do I start?](#18-where-do-i-start)
-- [19. How do I contribute?](#19-how-do-i-contribute)
-- [20. Is CRSS-Python unique?](#20-is-crss-python-unique)
-- [21. Which components define what in the overall CRSS ?](#21-which-components-define-what-in-the-overall-crss-)
-
+- [CRSS-Python Frequently Asked Questions (FAQ)](#crss-python-frequently-asked-questions-faq)
+  - [Table of Contents](#table-of-contents)
+  - [1. What is CRSS-Python?](#1-what-is-crss-python)
+  - [2. What problem does CRSS-Python solve?](#2-what-problem-does-crss-python-solve)
+  - [3. Does CRSS-Python certify Python applications for ASIL-D / SIL3?](#3-does-crss-python-certify-python-applications-for-asil-d-sil3)
+  - [4. What are Profiles, Levels, and Modes?](#4-what-are-profiles-levels-and-modes)
+  - [5. What is `@critical`?](#5-what-is-critical)
+  - [6. What is `@non_critical_phase`?](#6-what-is-non_critical_phase)
+  - [7. Can we use multiple Python versions in a project?](#7-can-we-use-multiple-python-versions-in-a-project)
+  - [8. Does CRSS-Python allow hotfixes?](#8-does-crss-python-allow-hotfixes)
+  - [9. Is automated deployment allowed?](#9-is-automated-deployment-allowed)
+  - [10. Can Python install dependencies at runtime?](#10-can-python-install-dependencies-at-runtime)
+  - [11. Can CRSS-Python software use threads?](#11-can-crss-python-software-use-threads)
+  - [12. Can we build microservices under CRSS-Python?](#12-can-we-build-microservices-under-crss-python)
+  - [13. How are violations handled?](#13-how-are-violations-handled)
+  - [14. How do we know if a project is compliant?](#14-how-do-we-know-if-a-project-is-compliant)
+  - [15. Can CRSS-Python be extended?](#15-can-crss-python-be-extended)
+  - [16. Can CRSS-Python be used for Machine Learning systems?](#16-can-crss-python-be-used-for-machine-learning-systems)
+  - [17. Does CRSS-Python replace ISO 26262 / IEC 61508?](#17-does-crss-python-replace-iso-26262-iec-61508)
+  - [18. Where do I start?](#18-where-do-i-start)
+  - [19. How do I contribute?](#19-how-do-i-contribute)
+  - [20. Is CRSS-Python unique?](#20-is-crss-python-unique)
+  - [21. Which components define what in the overall CRSS ?](#21-which-components-define-what-in-the-overall-crss-)
 
 ---
 
 ## 1. What is CRSS-Python?
+
+> [⬆ Back to Table of Contents](#toc)
+
 CRSS-Python is a rigorous safety and compliance framework for Python, enabling its use in high-integrity and mission-critical environments. It defines strict rules, processes, and evidence requirements to ensure predictable, deterministic, and certifiable software behavior.
 
 ---
 
 ## 2. What problem does CRSS-Python solve?
+
+> [⬆ Back to Table of Contents](#toc)
+
 Python is traditionally excluded from high-risk domains due to:
 - Dynamic behavior
 - Non-deterministic runtime features
@@ -53,6 +60,9 @@ CRSS-Python introduces architecture, rules, and governance to control risks and 
 ---
 
 ## 3. Does CRSS-Python certify Python applications for ASIL-D / SIL3?
+
+> [⬆ Back to Table of Contents](#toc)
+
 CRSS-Python enables Python to be used in:
 - ASIL-D supervisory roles
 - SIL3 supervisory/control roles
@@ -69,6 +79,9 @@ Python must operate as part of a **multilayer safety architecture**.
 ---
 
 ## 4. What are Profiles, Levels, and Modes?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - **Profiles**: Core, Strict
 - **Safety Levels**: A, B, C
 - **Mode** = Profile × Safety Level
@@ -84,6 +97,9 @@ Modes determine:
 ---
 
 ## 5. What is `@critical`?
+
+> [⬆ Back to Table of Contents](#toc)
+
 `@critical` marks code that executes safety decisions. It must be:
 - Deterministic
 - Free from allocation, I/O, blocking, GC
@@ -95,6 +111,9 @@ Critical code **may not call non-critical code**.
 ---
 
 ## 6. What is `@non_critical_phase`?
+
+> [⬆ Back to Table of Contents](#toc)
+
 It marks pre/post-critical functions where:
 - Initialization
 - Object creation
@@ -111,9 +130,12 @@ However:
 ---
 
 ## 7. Can we use multiple Python versions in a project?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - No.
 
-The standard covers Python **3.9–3.12**, but each project MUST:
+The standard covers Python **3.9-3.12**, but each project MUST:
 - Select exactly one version
 - Freeze it in the CBM
 - Never change it after approval
@@ -123,6 +145,9 @@ Switching versions = new baseline + new certification.
 ---
 
 ## 8. Does CRSS-Python allow hotfixes?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - No hotfixes.
 - No patch-in-production.
 - No runtime edits.
@@ -137,6 +162,9 @@ This ensures reproducibility and safety traceability.
 ---
 
 ## 9. Is automated deployment allowed?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - In TEST environment
 - Never in PROD
 
@@ -148,6 +176,9 @@ Prod deployments must be:
 ---
 
 ## 10. Can Python install dependencies at runtime?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Absolutely not.
 Runtime installation (pip, apt, conda, etc.) is prohibited.
 
@@ -159,6 +190,9 @@ Dependencies must be:
 ---
 
 ## 11. Can CRSS-Python software use threads?
+
+> [⬆ Back to Table of Contents](#toc)
+
 In Strict-A `@critical`: No
 In Strict: Allowed with restrictions
 In Core: Allowed
@@ -168,25 +202,34 @@ Strict-A requires single-threaded critical execution to guarantee determinism.
 ---
 
 ## 12. Can we build microservices under CRSS-Python?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Yes, with:
 - Process isolation
 - Stable APIs
 - Network timeout rules
-- Retry & fail-safe strategies
+- Retry and fail-safe strategies
 - Mode propagation policies
 
 ---
 
 ## 13. How are violations handled?
+
+> [⬆ Back to Table of Contents](#toc)
+
 Severity levels:
-- WARN – Should violation
-- ERROR – Violation of a MUST requirement (Core), or a MUST/SHOULD requirement (Strict)
-- BLOCKER – Any such violation inside Strict-A `@critical` code (certification failure)
+- WARN - Should violation
+- ERROR - Violation of a MUST requirement (Core), or a MUST/SHOULD requirement (Strict)
+- BLOCKER - Any such violation inside Strict-A `@critical` code (certification failure)
 
 
 ---
 
 ## 14. How do we know if a project is compliant?
+
+> [⬆ Back to Table of Contents](#toc)
+
 A project is compliant only if:
 - Compliance phases completed
 - SCEM complete
@@ -200,6 +243,9 @@ Compliance is **binary**:
 ---
 
 ## 15. Can CRSS-Python be extended?
+
+> [⬆ Back to Table of Contents](#toc)
+
 Yes, but extensions must:
 - Not weaken rules
 - Maintain compatibility with Modes
@@ -209,6 +255,9 @@ Yes, but extensions must:
 ---
 
 ## 16. Can CRSS-Python be used for Machine Learning systems?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Yes for:
 - Supervisory logic
 - Safety wrappers
@@ -223,6 +272,9 @@ ML models must be treated as untrusted components.
 ---
 
 ## 17. Does CRSS-Python replace ISO 26262 / IEC 61508?
+
+> [⬆ Back to Table of Contents](#toc)
+
 - No.
 
 It is a **coding and software governance standard**, not a full system-level safety standard. It must operate **under** the applicable domain standard.
@@ -230,6 +282,9 @@ It is a **coding and software governance standard**, not a full system-level saf
 ---
 
 ## 18. Where do I start?
+
+> [⬆ Back to Table of Contents](#toc)
+
 1. Read Unified Safety Spec v3.0.0
 2. Assign Modes in MAR
 3. Annotate `@critical` and `@non_critical_phase`
@@ -240,6 +295,9 @@ It is a **coding and software governance standard**, not a full system-level saf
 ---
 
 ## 19. How do I contribute?
+
+> [⬆ Back to Table of Contents](#toc)
+
 All proposals must:
 - Follow the repository publication standard
 - Use semantic versioning
@@ -249,11 +307,17 @@ All proposals must:
 ---
 
 ## 20. Is CRSS-Python unique?
+
+> [⬆ Back to Table of Contents](#toc)
+
 Yes. As of 2025, it is the **most comprehensive and strict Python safety framework ever published**, enabling Python in domains previously considered unreachable.
 
 ---
 
 ## 21. Which components define what in the overall CRSS ?
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - Core + Strict define the what
 - Phase model + scopes + phase-aware notes define the how and where

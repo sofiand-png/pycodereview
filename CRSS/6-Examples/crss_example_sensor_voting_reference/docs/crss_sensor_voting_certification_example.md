@@ -1,10 +1,10 @@
-# CRSS-Python Certification Example — Sensor Voting Reference
+# CRSS-Python Certification Example - Sensor Voting Reference
 
 **Version:** v1.0.0
 **Status:** Informative (Reference Example)
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
@@ -12,6 +12,7 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 > a CRSS-compliant component. It is not an official certificate from
 > any authority.
 
+<a id="toc"></a>
 ## Table of Contents
 
 - [1. Component Identification](#1-component-identification)
@@ -22,6 +23,9 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## 1. Component Identification
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 - **Name**: CRSS Python Sensor Voting Reference Example
 - **Version**: 1.0.0
 - **Language**: Python 3.11.x
@@ -29,6 +33,9 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 - **Domain**: Safety-critical software example (architecture compatible with automotive/avionics-style safety thinking)
 
 ## 2. Applicable Standard
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 - **Standard**: CRSS-Python (Core + Strict profiles)
 - **Profiles used**:
@@ -38,14 +45,17 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 
 ## 3. Evidence
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 The following artefacts are available:
 
-- **Specifications & design**:
+- **Specifications and design**:
   - Sensor voting use case specification (cooling temperature)
   - Safety baseline: `docs/crss_sensor_voting_safety_baseline.md`
 - **Rule compliance**:
   - CRSS compliance report: `docs/crss_sensor_voting_compliance_report.md`
-- **Testing & coverage**:
+- **Testing and coverage**:
   - Test suite: unit, MC/DC-style, and integration tests in `tests/`
   - Coverage report: `reports/coverage_report.md` (statement and branch coverage)
 - **Fault injection**:
@@ -53,11 +63,14 @@ The following artefacts are available:
   - Fault model implemented in simulation + status inconsistencies.
 - **SCEM artefacts**:
   - Modes and allocation: `scem/mar.yaml`
-  - Test & evidence plan: `scem/tep.yaml`
-  - Build & environment metadata: `scem/cbm.json` (if present)
+  - Test and evidence plan: `scem/tep.yaml`
+  - Build and environment metadata: `scem/cbm.json` (if present)
   - Rule compliance summary: this document + compliance report.
 
 ## 4. Summary Assessment (Example)
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Based on the artefacts listed above:
 

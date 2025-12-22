@@ -2,16 +2,17 @@
 
 **Version:** v1.0.0
 **Status:** Release/Informative
-**Release Date**: 30-11-2025
+**Release Date**: 20-12-2025
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
 - [CRSS-Python v1.0.0 Release Notes](#crss-python-v100-release-notes)
+  - [Table of Contents](#table-of-contents)
   - [Summary](#summary)
   - [Major Features](#major-features)
   - [Added](#added)
@@ -21,9 +22,15 @@ Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
 ---
 
 ## Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 This is the first official, public, and immutable release of the CRSS-Python Safety Standard. It introduces a complete, certification-grade framework enabling Python to be used in high-integrity and supervisory safety roles across ASIL D, SIL 3, and comparable domains.
 
 ## Major Features
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Core and Strict Specifications
 - Safety Master Specification
 - Critical/Non-Critical Phase Model
@@ -31,10 +38,13 @@ This is the first official, public, and immutable release of the CRSS-Python Saf
 - Full Deployment, Baseline, and Zero-Drift Policy
 - Compliance Master with Acceptance Criteria
 - SCEM Evidence and Maturity Model
-- Tooling & Automation Governance
+- Tooling and Automation Governance
 - Official Release Package Specification
 
 ## Added
+
+> [⬆ Back to Table of Contents](#toc)
+
 - Full rule catalogs with IDs (CRSS-x.y.z, DPL-12.x, CPR-9.x, SCM-9.2x, TOL-10.x)
 - Repository and publishing structure
 - Architecture blueprint and use case examples
@@ -42,7 +52,13 @@ This is the first official, public, and immutable release of the CRSS-Python Saf
 - FAQs and study path
 
 ## Breaking Changes
-None — this is the first official version.
+
+> [⬆ Back to Table of Contents](#toc)
+
+None - this is the first official version.
 
 ## Compatibility Notes
+
+> [⬆ Back to Table of Contents](#toc)
+
 Python projects must target a single interpreter version per project. The standard does not provide primary control certification for hard real-time actuation loops.

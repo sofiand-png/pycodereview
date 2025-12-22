@@ -3,8 +3,8 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 
 **This document is NON-NORMATIVE.**
@@ -18,20 +18,21 @@ This document MUST NOT introduce new requirements beyond those in the Master.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [0. Scope of this document](#0-scope-of-this-document)
-- [1. Interpretation in `@critical` Code](#1-interpretation-in-critical-code)
-  - [Forbidden in Critical Code](#forbidden-in-critical-code)
-  - [Critical Code Principle](#critical-code-principle)
-- [2. Interpretation in Non-Critical Code](#2-interpretation-in-non-critical-code)
-  - [[OK] Permitted in Non-Critical Code](#ok-permitted-in-non-critical-code)
-- [3. Meaning for Compliance Tools](#3-meaning-for-compliance-tools)
-  - [Tool Interpretation Matrix](#tool-interpretation-matrix)
-- [4. Meaning for Human Review](#4-meaning-for-human-review)
-- [5. Meaning for Runtime / Architecture](#5-meaning-for-runtime--architecture)
-- [Summary](#summary)
-
+- [CRSS Phase-Aware Rule Interpretation Model](#crss-phase-aware-rule-interpretation-model)
+  - [Table of Contents](#table-of-contents)
+  - [0. Scope of this document](#0-scope-of-this-document)
+  - [1. Interpretation in `@critical` Code](#1-interpretation-in-critical-code)
+    - [Forbidden in Critical Code](#forbidden-in-critical-code)
+    - [Critical Code Principle](#critical-code-principle)
+  - [2. Interpretation in Non-Critical Code](#2-interpretation-in-non-critical-code)
+    - [[OK] Permitted in Non-Critical Code](#ok-permitted-in-non-critical-code)
+  - [3. Meaning for Compliance Tools](#3-meaning-for-compliance-tools)
+    - [Tool Interpretation Matrix](#tool-interpretation-matrix)
+  - [4. Meaning for Human Review](#4-meaning-for-human-review)
+  - [5. Meaning for Runtime / Architecture](#5-meaning-for-runtime-architecture)
+  - [Summary](#summary)
 
 ---
 
@@ -40,6 +41,9 @@ A rule marked **`Scope: all_code (phase-aware)`** **shall be interpreted using t
 ---
 
 ## 0. Scope of this document
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This document defines normative semantics for CRSS execution phases
 (e.g. `@critical`, `@non_critical_phase`) and the interpretation of
@@ -56,6 +60,9 @@ In case of any conflict, the CRSS Master Specification SHALL prevail.
 
 
 ## 1. Interpretation in `@critical` Code
+
+> [⬆ Back to Table of Contents](#toc)
+
 Applicable to:
 
 - Strict-A critical functions
@@ -94,12 +101,15 @@ When inside a **critical execution phase**, a phase-aware rule is enforced at **
 
 ## 2. Interpretation in Non-Critical Code
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 Phase-aware rules still apply, but with **operational relaxation**.
 
 ### [OK] Permitted in Non-Critical Code
 
 - File / network I/O
-- Memory allocation & object creation
+- Memory allocation and object creation
 - Caching, buffering, lookup tables
 - Subprocess invocation
 - Configuration loading
@@ -121,6 +131,9 @@ However, these allowances are valid only if:
 
 ## 3. Meaning for Compliance Tools
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A **phase-aware rule** MUST be evaluated in two contexts:
 
 ###  Tool Interpretation Matrix
@@ -128,7 +141,7 @@ A **phase-aware rule** MUST be evaluated in two contexts:
 | Context     | Required Interpretation                                                                                 |
 |-------------|----------------------------------------------------------------------------------------------------------|
 | **Critical**     | *Stricter interpretation:* I/O forbidden, allocation forbidden, boundedness MUST be statically provable, determinism required |
-| **Non-Critical** | *Normal interpretation:* I/O & allocation allowed, but rule semantics still enforced; must ensure no leakage into critical |
+| **Non-Critical** | *Normal interpretation:* I/O and allocation allowed, but rule semantics still enforced; must ensure no leakage into critical |
 
 Tools must:
 
@@ -140,6 +153,9 @@ Tools must:
 ---
 
 ## 4. Meaning for Human Review
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 Human reviewers must apply this principle:
 
@@ -155,20 +171,26 @@ Meaning:
 
 ## 5. Meaning for Runtime / Architecture
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 A phase-aware rule MUST guarantee:
 
 - **No critical execution path is polluted** by non-deterministic behavior originating from non-critical code.
 - **All non-critical effects occur strictly outside critical execution windows.**
 - **MAR boundaries are respected**:
   - If MAR classifies a function as critical, phase-aware strictness applies.
-  - If MAR classifies a function as non-critical, relaxed interpretation applies — but rule still applies.
+  - If MAR classifies a function as non-critical, relaxed interpretation applies - but rule still applies.
 
-> **Phase boundaries (critical / non-critical) are architectural—
+> **Phase boundaries (critical / non-critical) are architectural-
 > not dynamic, not implicit, not inferred by tools.**
 
 ---
 
 ## Summary
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 This model ensures:
 

@@ -3,44 +3,53 @@
 **Version:** v1.0.0
 **Status:** Informative
 **Maturity:** Stable
-© 2025 Sofian Daghsen – All rights reserved
-Distributed under CC BY-NC-ND 4.0 — see LICENSE-CRSS.
+© 2025 Sofian Daghsen - All rights reserved
+Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 
 ---
 
+<a id="toc"></a>
 ## Table of Contents
-
-- [0. Purpose](#0-purpose)
-- [1. Example Scenario – Safety Supervisory System](#1-example-scenario--safety-supervisory-system)
-- [2. High-Level Architecture](#2-high-level-architecture)
-  - [2.1 Logical View](#21-logical-view)
-  - [2.2 Process View](#22-process-view)
-- [3. Component Breakdown](#3-component-breakdown)
-  - [3.1 Components Overview](#31-components-overview)
-  - [3.2 Critical vs Non-Critical](#32-critical-vs-non-critical)
-- [4. Modes & Phases in the Blueprint](#4-modes--phases-in-the-blueprint)
-  - [4.1 Mode Assignment](#41-mode-assignment)
-  - [4.2 Phase Interaction Rules](#42-phase-interaction-rules)
-- [5. Example Code – Core Critical Flow](#5-example-code--core-critical-flow)
-  - [5.1 Input & Config (Non-Critical)](#51-input--config-non-critical)
-  - [5.2 Safety Controller (Strict-A)](#52-safety-controller-strict-a)
-  - [5.3 Decision Publishing (Non-Critical)](#53-decision-publishing-non-critical)
-  - [5.4 Orchestrator (Non-Critical Main Loop)](#54-orchestrator-non-critical-main-loop)
-- [6. Deployment & CBM View](#6-deployment--cbm-view)
-  - [6.1 Deployment Diagram](#61-deployment-diagram)
-  - [6.2 CBM Excerpt](#62-cbm-excerpt)
-- [7. Compliance Story for the Blueprint](#7-compliance-story-for-the-blueprint)
-  - [7.1 Modes and Enforcement](#71-modes-and-enforcement)
-  - [7.2 What Makes This Certifiable?](#72-what-makes-this-certifiable)
-- [8. How to Adapt This Blueprint](#8-how-to-adapt-this-blueprint)
-- [9. Summary](#9-summary)
-
+- [CRSS-Python Architecture Blueprint (Reference Example)](#crss-python-architecture-blueprint-reference-example)
+  - [Table of Contents](#table-of-contents)
+  - [0. Purpose](#0-purpose)
+  - [1. Example Scenario - Safety Supervisory System](#1-example-scenario-safety-supervisory-system)
+  - [2. High-Level Architecture](#2-high-level-architecture)
+    - [2.1 Logical View](#21-logical-view)
+    - [2.2 Process View](#22-process-view)
+  - [3. Component Breakdown](#3-component-breakdown)
+    - [3.1 Components Overview](#31-components-overview)
+    - [3.2 Critical vs Non-Critical](#32-critical-vs-non-critical)
+  - [4. Modes and Phases in the Blueprint](#4-modes-and-phases-in-the-blueprint)
+    - [4.1 Mode Assignment](#41-mode-assignment)
+    - [4.2 Phase Interaction Rules](#42-phase-interaction-rules)
+  - [5. Example Code - Core Critical Flow](#5-example-code-core-critical-flow)
+    - [5.1 Input and Config (Non-Critical)](#51-input-and-config-non-critical)
+- [input_gateway.py (Strict-B, non-critical)](#input_gatewaypy-strict-b-non-critical)
+- [config_manager.py (Strict-B, non-critical)](#config_managerpy-strict-b-non-critical)
+    - [5.2 Safety Controller (Strict-A)](#52-safety-controller-strict-a)
+- [safety_controller.py (Strict-A)](#safety_controllerpy-strict-a)
+    - [5.3 Decision Publishing (Non-Critical)](#53-decision-publishing-non-critical)
+- [decision_publisher.py (Strict-B, non-critical)](#decision_publisherpy-strict-b-non-critical)
+    - [5.4 Orchestrator (Non-Critical Main Loop)](#54-orchestrator-non-critical-main-loop)
+- [main_supervisor.py (Strict-B orchestrator)](#main_supervisorpy-strict-b-orchestrator)
+  - [6. Deployment and CBM View](#6-deployment-and-cbm-view)
+    - [6.1 Deployment Diagram](#61-deployment-diagram)
+    - [6.2 CBM Excerpt](#62-cbm-excerpt)
+  - [7. Compliance Story for the Blueprint](#7-compliance-story-for-the-blueprint)
+    - [7.1 Modes and Enforcement](#71-modes-and-enforcement)
+    - [7.2 What Makes This Certifiable?](#72-what-makes-this-certifiable)
+  - [8. How to Adapt This Blueprint](#8-how-to-adapt-this-blueprint)
+  - [9. Summary](#9-summary)
 
 ---
 
 ## 0. Purpose
 
-This document provides a **complete reference architecture blueprint** for a CRSS-Python–compliant system.
+> [⬆ Back to Table of Contents](#toc)
+
+
+This document provides a **complete reference architecture blueprint** for a CRSS-Python-compliant system.
 
 It is designed to show, end-to-end:
 
@@ -54,7 +63,10 @@ This blueprint is **non-normative** (informative), but fully aligned with all v3
 
 ---
 
-## 1. Example Scenario – Safety Supervisory System
+## 1. Example Scenario - Safety Supervisory System
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 We model a generic **Safety Supervisory System** used in domains such as:
 
@@ -76,19 +88,22 @@ Python is **not** directly commanding actuators. It supervises and decides; cert
 
 ## 2. High-Level Architecture
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 2.1 Logical View
 
 ```text
 +-----------------------------------------------------------+
 |                  Safety Supervisory System                |
 +---------------------------+-------------------------------+
-|   Input & Health Layer    |      Safety Decision Layer    |
+|   Input and Health Layer    |      Safety Decision Layer    |
 |  (Strict-B / Core)        |       (Strict-A)              |
 +---------------------------+-------------------------------+
             |                              |
             v                              v
 +---------------------------+    +---------------------------+
-|     Logging & Telemetry   |    |    Certified Actuation    |
+|     Logging and Telemetry   |    |    Certified Actuation    |
 |         (Core)            |    |  System / Safety PLC etc. |
 +---------------------------+    +---------------------------+
 ```
@@ -107,7 +122,7 @@ Python is **not** directly commanding actuators. It supervises and decides; cert
 +-----------------------+
 ```
 
-- The **supervisor** process runs CRSS-Python–compliant code.
+- The **supervisor** process runs CRSS-Python-compliant code.
 - The **actuator** process is a certified safety PLC/RTOS or equivalent.
 - Communication is **bounded, validated, and monitored**.
 
@@ -115,12 +130,15 @@ Python is **not** directly commanding actuators. It supervises and decides; cert
 
 ## 3. Component Breakdown
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 3.1 Components Overview
 
 | Component                  | Responsibility                         | Mode        |
 |---------------------------|-----------------------------------------|-------------|
 | `InputGateway`            | Read raw signals, preprocess            | Strict-B    |
-| `ConfigManager`           | Load & validate config                  | Strict-B    |
+| `ConfigManager`           | Load and validate config                  | Strict-B    |
 | `SafetyController`        | Apply safety decision logic             | Strict-A    |
 | `DecisionPublisher`       | Send decisions to Actuation System      | Strict-B    |
 | `Logger`                  | Local logging only                      | Core-C      |
@@ -132,13 +150,16 @@ All Python components run inside the **supervisor** process.
 
 Only **part of `SafetyController`** is `@critical`:
 
-- `SafetyController.initialize()` – `@non_critical_phase`
-- `SafetyController.update_inputs()` – `@non_critical_phase` (data pre-processing)
-- `SafetyController.decide()` – `@critical` (Strict-A core decision function)
+- `SafetyController.initialize()` - `@non_critical_phase`
+- `SafetyController.update_inputs()` - `@non_critical_phase` (data pre-processing)
+- `SafetyController.decide()` - `@critical` (Strict-A core decision function)
 
 ---
 
-## 4. Modes & Phases in the Blueprint
+## 4. Modes and Phases in the Blueprint
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 4.1 Mode Assignment
 
@@ -192,9 +213,12 @@ Example entries (MAR-style):
 
 ---
 
-## 5. Example Code – Core Critical Flow
+## 5. Example Code - Core Critical Flow
 
-### 5.1 Input & Config (Non-Critical)
+> [⬆ Back to Table of Contents](#toc)
+
+
+### 5.1 Input and Config (Non-Critical)
 
 ```python
 # input_gateway.py (Strict-B, non-critical)
@@ -319,7 +343,10 @@ This orchestrator is **non-critical**; only `decide()` is `@critical`.
 
 ---
 
-## 6. Deployment & CBM View
+## 6. Deployment and CBM View
+
+> [⬆ Back to Table of Contents](#toc)
+
 
 ### 6.1 Deployment Diagram
 
@@ -381,6 +408,9 @@ Prod deployment must match this CBM exactly.
 
 ## 7. Compliance Story for the Blueprint
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 ### 7.1 Modes and Enforcement
 
 - `SafetyController.decide` → Strict-A, `@critical`
@@ -405,6 +435,9 @@ Prod deployment must match this CBM exactly.
 
 ## 8. How to Adapt This Blueprint
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 You can adapt this architecture for:
 
 - Multiple sensors and channels
@@ -413,7 +446,7 @@ You can adapt this architecture for:
 
 Guiding rules:
 
-- Keep the critical core small & isolated
+- Keep the critical core small and isolated
 - Push all I/O and complexity to non-critical layers
 - Enforce immutable deploys with CBM
 - Use Modes rigorously in MAR
@@ -422,13 +455,16 @@ Guiding rules:
 
 ## 9. Summary
 
+> [⬆ Back to Table of Contents](#toc)
+
+
 This blueprint shows:
 
 - How CRSS-Python can be applied in a realistic system
 - How architecture, Modes, Phases, deployment, and evidence work together
 - How to design for **maximum safety with realistic constraints**
 
-It is an example — not a limit. You can extend it, but you should always preserve:
+It is an example - not a limit. You can extend it, but you should always preserve:
 
 - Simplicity
 - Determinism
