@@ -172,17 +172,17 @@ Options:
 
 ---
 
-### Learn more about CRSS-Python (v2.0.0)
+### Learn more about CRSS-Python (v1.0.0)
 
 CRSS-Python is a safety and compliance standard that pycodereview progressively supports.
 
-- **CRSS-Python Overview & Repository Map (v2.0.0)**  
+- **CRSS-Python Overview & Repository Map (v1.0.0)**  
   https://github.com/sofiand-png/pycodereview/tree/v2.0.0/CRSS/0-Overview/crss_python_overview_landing.md
 
 **CRSS-Python (Certifiable Reliability Safety Standard - Python)** is an original safety and reliability standard for Python,
 authored by **Sofian Daghsen**. It defines two profiles:
-- **CRSS-Core** – a pragmatic profile for general Python code.
-- **CRSS-Strict** – a constrained, analyzable subset for critical units
+- **CRSS-Core** - a pragmatic profile for general Python code.
+- **CRSS-Strict** - a constrained, analyzable subset for critical units
 
 **CRSS-Python** makes Python suitable for:
 - Automotive safety systems
@@ -291,7 +291,7 @@ The **pycodereview** software (source code, binaries, and package artifacts) is 
 
 ### CRSS-Python standard text (specifications)
 The CRSS-Python specification documents (Core, Strict, and all specifications) are licensed under the
-**Creative Commons Attribution–NonCommercial–NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)**.
+**Creative Commons Attribution-NonCommercial–NoDerivatives 4.0 International License (CC BY-NC-ND 4.0)**.
 
 You are free to:
 - Share: copy and redistribute the material in any medium or format
