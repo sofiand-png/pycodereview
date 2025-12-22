@@ -396,10 +396,10 @@ All paths below are under the `CRSS/` folder of the public repository.
   Recommended learning order and topics.
 
 - [FAQ (General)](./crss_python_FAQ_general.md)  
-  General CRSS-Python QandA.
+  General CRSS-Python Q&A.
 
 - [FAQ (Auditors and Regulators)](./crss_python_FAQ_auditors_regulators.md)  
-  Certification-facing and regulator-oriented QandA.
+  Certification-facing and regulator-oriented Q&A.
 
 ---
 

@@ -64,18 +64,18 @@ Its objectives are:
 - **Remain broadly usable**
   across non-critical and mixed-criticality systems without prohibitive cost.
 
-### 1.1 What Core Is Not
+### 2.1 What Core Is Not
 
 - It is **not** a formal certification standard.
 - It is **not** a performance or optimization guide.
 - It **does not** enforce the extreme constraints required for mission-critical logic (that is Strict’s role).
 
-### 1.2 Relation to Strict
+### 2.2 Relation to Strict
 
 - **Strict builds on Core.**
 - Core can be used alone for general reliability, while Strict applies to critical paths requiring the highest assurance.
 
-### 1.3 Versioning and Rule ID Stability
+### 2.3 Versioning and Rule ID Stability
 
 CRSS-Python uses semantic versioning: `vMAJOR.MINOR.PATCH`.
 
@@ -85,7 +85,7 @@ CRSS-Python uses semantic versioning: `vMAJOR.MINOR.PATCH`.
 - Rule IDs are stable across profiles: the same `CRSS-x.y.z` refers to
   the same conceptual rule in both Core and Strict.
 
-### 1.4 Chapter Structure and ID Ranges
+### 2.4 Chapter Structure and ID Ranges
 
 The following chapters define stable ranges for rule IDs:
 
@@ -106,7 +106,7 @@ Within each chapter, rule IDs (`CRSS-x.y.z`) are not reused. When a rule
 is retired, its ID remains reserved and is marked as deprecated rather
 than being reassigned.
 
-### 1.5 Companion Documents and Annexes
+### 2.5 Companion Documents and Annexes
 
 This Core specification defines the **normative rules** for the CRSS-Python Core profile
 (rule IDs `CRSS-x.y.z`).
@@ -125,12 +125,12 @@ Additional guidance and process details are provided in companion documents:
 Where there is any conflict between this specification and a companion document,
 **this specification is authoritative for the meaning and applicability of CRSS rule IDs**.
 
-### 1.6 Tooling
+### 2.6 Tooling
 CRSS-Python is tool-independent.
 pycodereview is a reference implementation that can enforce CRSS profiles (Core and Strict).
 Other tools may implement CRSS support as long as they respect the rule IDs and semantics defined in this standard.
 
-### 1.7 Python Version Scope
+### 2.7 Python Version Scope
 
 CRSS-Python Core v1.0.0 defines rules for a stable subset of the Python
 language. To ensure deterministic behaviour and consistent analysis,
@@ -143,7 +143,7 @@ Within this range, CRSS-Core rules and their intended semantics are
 guaranteed. Use of CRSS-Core on other versions or interpreters is at the
 user’s risk and is not covered by this specification.
 
-### 1.8 Project-Declared Python Target Version
+### 2.8 Project-Declared Python Target Version
 
 Each project applying CRSS-Core MUST declare the Python versions it
 intends to support.
@@ -1984,8 +1984,6 @@ Access to sensitive data in code must:
 
 ---
 
-### 6.x Network Failure Modes and Partial Operations
-
 ### CRSS-6.4.5 - Approved key exchange and storage
 
 -   **Category**: Security / Cryptography
@@ -2092,7 +2090,7 @@ and reduces security-related safety failures.
 
 ---
 
-### **CRSS-6.4.10 - Secret Storage and Lifecycle**
+### CRSS-6.4.10 - Secret Storage and Lifecycle
 
 - **Category**: Security / Secrets
 - **Type**: Design / Process
@@ -2126,7 +2124,7 @@ Secret leakage leads to system compromise and loss of trust in safety-significan
 
 ---
 
-### **CRSS-6.4.11 - Password and Credential Policy**
+### CRSS-6.4.11 - Password and Credential Policy
 
 - **Category**: Security / Authentication
 - **Type**: Design / Process
@@ -2152,11 +2150,7 @@ Weak credential handling is a major source of compromise in operational systems.
 
 ---
 
-### 2. Token and Session Management Rules (6.4.x)
-
----
-
-### **CRSS-6.4.12 - Token and Session Lifetime Management**
+### CRSS-6.4.12 - Token and Session Lifetime Management
 
 - **Category**: Security / Sessions and Tokens
 - **Type**: Design / Process
@@ -2186,7 +2180,7 @@ Long-lived or unchecked sessions create unsafe implicit trust.
 
 ---
 
-### **CRSS-6.4.13 - Authentication vs Authorization Separation**
+### CRSS-6.4.13 - Authentication vs Authorization Separation
 
 - **Category**: Security / Access Control
 - **Type**: Design / Static
@@ -2217,7 +2211,7 @@ Auth bypass is one of the most common and catastrophic security failures.
 
 ---
 
-### **CRSS-6.4.14 - Safety-Significant Action Authorization**
+### CRSS-6.4.14 - Safety-Significant Action Authorization
 
 - **Category**: Security / Safety Interaction
 - **Type**: Design / Process
@@ -2309,7 +2303,7 @@ annotated `@critical`) must pass strict static type checking (e.g.
 Type-ignores (`# type: ignore`) are disallowed or must be treated as
 explicit deviations with justification and impact analysis.
 
-### **CRSS-9.2.1 - Authentication, Token and Session Negative Testing**
+### CRSS-9.2.1 - Authentication, Token and Session Negative Testing
 
 - **Category**: Testing and Security
 - **Type**: Process
@@ -2339,7 +2333,7 @@ Negative testing is essential for verifying robustness under malicious or degrad
 
 ---
 
-### **CRSS-9.2.2 - SCEM Evidence for Authentication and Authorization**
+### CRSS-9.2.2 - SCEM Evidence for Authentication and Authorization
 
 - **Category**: SCEM and Compliance
 - **Type**: Process
@@ -2500,10 +2494,6 @@ Any difference between Testing environment and Deployment environment must be:
 
 ---
 
----
-
-### 12.x Maintainability and Documentation (CRSS-8.x)
-
 ### CRSS-8.1.1 - Limit cyclomatic complexity
 
 -   **Category**: Maintainability
@@ -2562,10 +2552,6 @@ def process_items(items: Sequence[Mapping[str, int]]) -> None:
 ```
 
 ---
-
----
-
-### 12.y Robustness and Portability (CRSS-7.x)
 
 ### CRSS-7.1.1 - Explicit encoding for text file I/O
 
@@ -4024,7 +4010,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 14.1. Collections, Allocation and Resource Management  
+### 18.1. Collections, Allocation and Resource Management  
 *(CRSS-5.4.1 / CRSS-5.4.2 / CRSS-5.4.3)*
 
 #### Critical Phase
@@ -4042,7 +4028,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 14.2. Bulk Data Processing and Queries  
+### 18.2. Bulk Data Processing and Queries  
 *(CRSS-5.5.2 / CRSS-5.5.3)*
 
 #### Critical Phase
@@ -4066,7 +4052,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 14.3. Cache Semantics and Safety  
+### 18.3. Cache Semantics and Safety  
 *(CRSS-5.6.1 / 5.6.2 / 5.6.3 / 7.8.5 / 7.8.6)*
 
 #### Critical Phase
@@ -4090,7 +4076,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 14.4. Network, Microservices and Distributed Interaction  
+### 18.4. Network, Microservices and Distributed Interaction  
 *(CRSS-7.6.4 / 7.6.5 / 7.7.x / 7.8.2-7.8.4 / 7.9.4-7.9.6)*
 
 #### Critical Phase
@@ -4116,7 +4102,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 14.5. Parsing, Validation and Transfer Integrity  
+### 18.5. Parsing, Validation and Transfer Integrity  
 *(CRSS-7.9.1-7.9.3 / 7.9.5)*
 
 #### Critical Phase
@@ -4141,7 +4127,7 @@ Unless explicitly stated otherwise, **Critical Phase rules take precedence**.
 
 ---
 
-### 14.6. OS and Environment Interaction  
+### 18.6. OS and Environment Interaction  
 *(CRSS-7.10.1 / 7.10.2)*
 
 #### Critical Phase

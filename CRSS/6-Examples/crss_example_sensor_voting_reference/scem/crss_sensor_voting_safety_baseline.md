@@ -1,4 +1,4 @@
-# Safety Baseline — CRSS Python Sensor Voting Reference Example
+# Safety Baseline - CRSS Python Sensor Voting Reference Example
 
 ## 1. System Overview
 
