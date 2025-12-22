@@ -11,117 +11,112 @@ Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
 <a id="toc"></a>
 ## Table of Contents
 
-- [CRSS-Python Standard Safety Master](#crss-python-standard-safety-master)
-  - [0. Purpose and Conflict Resolution](#0-purpose-and-conflict-resolution)
-  - [1. Core Concepts](#1-core-concepts)
-    - [1.1 Profiles](#11-profiles)
-    - [1.2 Safety Levels](#12-safety-levels)
-    - [1.3 Mode](#13-mode)
-    - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
-    - [1.5 Immutability of Mode](#15-immutability-of-mode)
-  - [1.6 Granularity of Safety Levels, Profiles, and Modes](#16-granularity-of-safety-levels-profiles-and-modes)
-    - [1.6.1 Enforcement Granularity - One Mode per Module](#161-enforcement-granularity-one-mode-per-module)
-    - [1.6.2 Promotion by Highest Safety Level](#162-promotion-by-highest-safety-level)
-    - [1.6.3 Allowed Module Modes](#163-allowed-module-modes)
-    - [1.6.4 Propagation of Safety Levels](#164-propagation-of-safety-levels)
-    - [1.6.5 Documentation vs Enforcement](#165-documentation-vs-enforcement)
-  - [1.7 Profile Granularity Model (Core vs Strict)](#17-profile-granularity-model-core-vs-strict)
-    - [1.7.1 Where Profiles Apply](#171-where-profiles-apply)
-    - [1.7.2 Safety Level vs Profile](#172-safety-level-vs-profile)
-    - [1.7.3 Core vs Strict Imports](#173-core-vs-strict-imports)
-  - [2. Environment and Boundaries](#2-environment-and-boundaries)
-  - [2.1 Definition of Boundaries](#21-definition-of-boundaries)
-    - [2.1.1 OS Process Boundary](#211-os-process-boundary)
-    - [2.1.2 Service / Network Boundary](#212-service-network-boundary)
-    - [2.1.3 Hardware Integration Boundary](#213-hardware-integration-boundary)
-  - [2.2 No Promotion Across Boundaries](#22-no-promotion-across-boundaries)
-  - [2.3 No Safety Leakage Beyond Boundaries](#23-no-safety-leakage-beyond-boundaries)
-  - [2.4 Boundary Interaction Contracts](#24-boundary-interaction-contracts)
-    - [2.4.1 OS Process Boundary Contract](#241-os-process-boundary-contract)
-    - [2.4.2 Service / Network Boundary Contract](#242-service-network-boundary-contract)
-    - [2.4.3 Hardware Integration Boundary Contract](#243-hardware-integration-boundary-contract)
-  - [2.5 Call Graph Interaction with Boundaries](#25-call-graph-interaction-with-boundaries)
-    - [Example 1 - Correct](#example-1-correct)
-    - [Example 2 - Incorrect](#example-2-incorrect)
-    - [Example 3 - Incorrect](#example-3-incorrect)
-    - [Example 4 - Allowed (Constrained)](#example-4-allowed-constrained)
-  - [2.6 Boundary Failures Must Not Break Level-A Logic](#26-boundary-failures-must-not-break-level-a-logic)
-  - [2.7 Summary of Boundary Rules](#27-summary-of-boundary-rules)
-  - [2.8 Final Statement](#28-final-statement)
-  - [3. Safety Level Assignment and Propagation](#3-safety-level-assignment-and-propagation)
-    - [3.1 Assignment from Requirements](#31-assignment-from-requirements)
-    - [3.2 Propagation Along Calls (Call-Chain Promotion)](#32-propagation-along-calls-call-chain-promotion)
-    - [3.3 Class Promotion](#33-class-promotion)
-    - [3.4 No Demotion](#34-no-demotion)
-  - [4. Critical vs Non-Critical Execution Model](#4-critical-vs-non-critical-execution-model)
-    - [4.1 Definitions](#41-definitions)
-    - [4.2 Golden Interaction Rule](#42-golden-interaction-rule)
-    - [4.3 Phase Boundaries](#43-phase-boundaries)
-    - [4.4 Operational Relaxation vs Rule Relaxation](#44-operational-relaxation-vs-rule-relaxation)
-- [CRSS-Python Unified Safety Specification - Remaining Sections](#crss-python-unified-safety-specification-remaining-sections)
-  - [5. Rule Categorization](#5-rule-categorization)
-    - [5.1 Scope](#51-scope)
-    - [5.2 Type and Severity (MUST/SHOULD)](#52-type-and-severity-mustshould)
-  - [6. Error and Violation Categorization](#6-error-and-violation-categorization)
-  - [6.1 Severity Levels](#61-severity-levels)
-  - [6.2 Enforcement Matrix](#62-enforcement-matrix)
-  - [7. Critical-Phase Rules (CP)](#7-critical-phase-rules-cp)
-  - [8. Non-Critical-Phase Rules (NCP)](#8-non-critical-phase-rules-ncp)
-  - [10. Inheritance Policy](#10-inheritance-policy)
-    - [10.1 Depth Constraint](#101-depth-constraint)
-    - [10.2 Mode Constraints](#102-mode-constraints)
-    - [10.3 Promotion via Inheritance](#103-promotion-via-inheritance)
-  - [11. Exceptions and Utilities](#11-exceptions-and-utilities)
-    - [11.1 Logging](#111-logging)
-    - [11.2 Telemetry / Metrics](#112-telemetry-metrics)
-    - [11.3 Diagnostics and Debug](#113-diagnostics-and-debug)
-  - [12. Compliance and Acceptance Model](#12-compliance-and-acceptance-model)
-    - [12.1 Core-Only Projects](#121-core-only-projects)
-    - [12.2 Strict-Only Projects (No Level A)](#122-strict-only-projects-no-level-a)
-    - [12.3 Strict-A Components](#123-strict-a-components)
-    - [12.4 Mixed Systems (Core + Strict + Strict-A)](#124-mixed-systems-core-strict-strict-a)
-  - [13. Certification-Grade Conditions (High-Level)](#13-certification-grade-conditions-high-level)
-  - [14. Reference Use Case (Mode + Phases + Dependencies)](#14-reference-use-case-mode-phases-dependencies)
-    - [14.1 Scenario](#141-scenario)
-    - [14.2 Architecture](#142-architecture)
-    - [14.3 Modes](#143-modes)
-    - [14.4 Python Example](#144-python-example)
-    - [14.5 Compliance Interpretation](#145-compliance-interpretation)
-  - [15. Third-Party Library and Framework Containment](#15-third-party-library-and-framework-containment)
-    - [15.1 Scope](#151-scope)
-    - [15.2 Version and Source Control](#152-version-and-source-control)
-    - [15.3 Critical vs Non-Critical Usage](#153-critical-vs-non-critical-usage)
-    - [15.4 SCEM Impact](#154-scem-impact)
-  - [16 Call Graph, Orchestrators, and Level-A Data Validation](#16-call-graph-orchestrators-and-level-a-data-validation)
-    - [16.1 Purpose](#161-purpose)
-    - [16.2 Definitions](#162-definitions)
-    - [16.3 Safety-Level Call Constraints (A/B/C)](#163-safety-level-call-constraints-abc)
+- [0. Purpose and Conflict Resolution](#0-purpose-and-conflict-resolution)
+- [1. Core Concepts](#1-core-concepts)
+  - [1.1 Profiles](#11-profiles)
+  - [1.2 Safety Levels](#12-safety-levels)
+  - [1.3 Mode](#13-mode)
+  - [1.4 Critical and Non-Critical Code](#14-critical-and-non-critical-code)
+  - [1.5 Immutability of Mode](#15-immutability-of-mode)
+- [1.6 Granularity of Safety Levels, Profiles, and Modes](#16-granularity-of-safety-levels-profiles-and-modes)
+  - [1.6.1 Enforcement Granularity - One Mode per Module](#161-enforcement-granularity-one-mode-per-module)
+  - [1.6.2 Promotion by Highest Safety Level](#162-promotion-by-highest-safety-level)
+  - [1.6.3 Allowed Module Modes](#163-allowed-module-modes)
+  - [1.6.4 Propagation of Safety Levels](#164-propagation-of-safety-levels)
+  - [1.6.5 Documentation vs Enforcement](#165-documentation-vs-enforcement)
+- [1.7 Profile Granularity Model (Core vs Strict)](#17-profile-granularity-model-core-vs-strict)
+  - [1.7.1 Where Profiles Apply](#171-where-profiles-apply)
+  - [1.7.2 Safety Level vs Profile](#172-safety-level-vs-profile)
+  - [1.7.3 Core vs Strict Imports](#173-core-vs-strict-imports)
+- [2. Environment and Boundaries](#2-environment-and-boundaries)
+- [2.1 Definition of Boundaries](#21-definition-of-boundaries)
+  - [2.1.1 OS Process Boundary](#211-os-process-boundary)
+  - [2.1.2 Service / Network Boundary](#212-service-network-boundary)
+  - [2.1.3 Hardware Integration Boundary](#213-hardware-integration-boundary)
+- [2.2 No Promotion Across Boundaries](#22-no-promotion-across-boundaries)
+- [2.3 No Safety Leakage Beyond Boundaries](#23-no-safety-leakage-beyond-boundaries)
+- [2.4 Boundary Interaction Contracts](#24-boundary-interaction-contracts)
+  - [2.4.1 OS Process Boundary Contract](#241-os-process-boundary-contract)
+  - [2.4.2 Service / Network Boundary Contract](#242-service-network-boundary-contract)
+  - [2.4.3 Hardware Integration Boundary Contract](#243-hardware-integration-boundary-contract)
+- [2.5 Call Graph Interaction with Boundaries](#25-call-graph-interaction-with-boundaries)
+- [2.6 Boundary Failures Must Not Break Level-A Logic](#26-boundary-failures-must-not-break-level-a-logic)
+- [2.7 Summary of Boundary Rules](#27-summary-of-boundary-rules)
+- [2.8 Final Statement](#28-final-statement)
+- [3. Safety Level Assignment and Propagation](#3-safety-level-assignment-and-propagation)
+  - [3.1 Assignment from Requirements](#31-assignment-from-requirements)
+  - [3.2 Propagation Along Calls (Call-Chain Promotion)](#32-propagation-along-calls-call-chain-promotion)
+  - [3.3 Class Promotion](#33-class-promotion)
+  - [3.4 No Demotion](#34-no-demotion)
+- [4. Critical vs Non-Critical Execution Model](#4-critical-vs-non-critical-execution-model)
+  - [4.1 Definitions](#41-definitions)
+  - [4.2 Golden Interaction Rule](#42-golden-interaction-rule)
+  - [4.3 Phase Boundaries](#43-phase-boundaries)
+  - [4.4 Operational Relaxation vs Rule Relaxation](#44-operational-relaxation-vs-rule-relaxation)
+- [5. Rule Categorization](#5-rule-categorization)
+  - [5.1 Scope](#51-scope)
+  - [5.2 Type and Severity (MUST/SHOULD)](#52-type-and-severity-mustshould)
+- [6. Error and Violation Categorization](#6-error-and-violation-categorization)
+- [6.1 Severity Levels](#61-severity-levels)
+- [6.2 Enforcement Matrix](#62-enforcement-matrix)
+- [7. Critical-Phase Rules (CP)](#7-critical-phase-rules-cp)
+- [8. Non-Critical-Phase Rules (NCP)](#8-non-critical-phase-rules-ncp)
+- [10. Inheritance Policy](#10-inheritance-policy)
+  - [10.1 Depth Constraint](#101-depth-constraint)
+  - [10.2 Mode Constraints](#102-mode-constraints)
+  - [10.3 Promotion via Inheritance](#103-promotion-via-inheritance)
+- [11. Exceptions and Utilities](#11-exceptions-and-utilities)
+  - [11.1 Logging](#111-logging)
+  - [11.2 Telemetry / Metrics](#112-telemetry-metrics)
+  - [11.3 Diagnostics and Debug](#113-diagnostics-and-debug)
+- [12. Compliance and Acceptance Model](#12-compliance-and-acceptance-model)
+  - [12.1 Core-Only Projects](#121-core-only-projects)
+  - [12.2 Strict-Only Projects (No Level A)](#122-strict-only-projects-no-level-a)
+  - [12.3 Strict-A Components](#123-strict-a-components)
+  - [12.4 Mixed Systems (Core + Strict + Strict-A)](#124-mixed-systems-core-strict-strict-a)
+- [13. Certification-Grade Conditions (High-Level)](#13-certification-grade-conditions-high-level)
+- [14. Reference Use Case (Mode + Phases + Dependencies)](#14-reference-use-case-mode-phases-dependencies)
+  - [14.1 Scenario](#141-scenario)
+  - [14.2 Architecture](#142-architecture)
+  - [14.3 Modes](#143-modes)
+  - [14.4 Python Example](#144-python-example)
+  - [14.5 Compliance Interpretation](#145-compliance-interpretation)
+- [15. Third-Party Library and Framework Containment](#15-third-party-library-and-framework-containment)
+  - [15.1 Scope](#151-scope)
+  - [15.2 Version and Source Control](#152-version-and-source-control)
+  - [15.3 Critical vs Non-Critical Usage](#153-critical-vs-non-critical-usage)
+  - [15.4 SCEM Impact](#154-scem-impact)
+- [16. Call Graph, Orchestrators, and Level-A Data Validation](#16-call-graph-orchestrators-and-level-a-data-validation)
+  - [16.1 Purpose](#161-purpose)
+  - [16.2 Definitions](#162-definitions)
+  - [16.3 Safety-Level Call Constraints (A/B/C)](#163-safety-level-call-constraints-abc)
   - [16.4 Profile Call Constraints (Strict vs Core)](#164-profile-call-constraints-strict-vs-core)
   - [16.5 Phase Interaction](#165-phase-interaction)
   - [16.6 Level-A Separation](#166-level-a-separation)
   - [16.7 Canonical Data Flow](#167-canonical-data-flow)
   - [16.8 Orchestrators](#168-orchestrators)
-    - [16.9 Concrete Call Graph Examples](#169-concrete-call-graph-examples)
-    - [16.10 Data Handling](#1610-data-handling)
-    - [16.11 Level-A Output and Actuation Boundary](#1611-level-a-output-and-actuation-boundary)
-    - [16.12 Level-A API and Signature Rules](#1612-level-a-api-and-signature-rules)
-    - [16.13 Upstream Responsibility for Uncallable Cases](#1613-upstream-responsibility-for-uncallable-cases)
-    - [16.14 Level-A Composition and Call Graph](#1614-level-a-composition-and-call-graph)
-  - [17. Machine-Readable Metadata (Optional Annex)](#17-machine-readable-metadata-optional-annex)
-  - [18 Allowed / Forbidden Matrix](#18-allowed-forbidden-matrix)
-    - [18.1 Modes](#181-modes)
-    - [18.2 Safety-Level Matrix](#182-safety-level-matrix)
-    - [18.3 Mode→Mode Matrix (Baseline)](#183-modemode-matrix-baseline)
-    - [18.4 Utility and Logging Rules](#184-utility-and-logging-rules)
-    - [18.5 Canonical Safe Pattern](#185-canonical-safe-pattern)
-  - [19. Summary](#19-summary)
+  - [16.9 Concrete Call Graph Examples](#169-concrete-call-graph-examples)
+  - [16.10 Data Handling](#1610-data-handling)
+  - [16.11 Level-A Output and Actuation Boundary](#1611-level-a-output-and-actuation-boundary)
+  - [16.12 Level-A API and Signature Rules](#1612-level-a-api-and-signature-rules)
+  - [16.13 Upstream Responsibility for Uncallable Cases](#1613-upstream-responsibility-for-uncallable-cases)
+  - [16.14 Level-A Composition and Call Graph](#1614-level-a-composition-and-call-graph)
+- [17. Machine-Readable Metadata (Optional Annex)](#17-machine-readable-metadata-optional-annex)
+- [18 Allowed / Forbidden Matrix](#18-allowed-forbidden-matrix)
+  - [18.1 Modes](#181-modes)
+  - [18.2 Safety-Level Matrix](#182-safety-level-matrix)
+  - [18.3 Mode→Mode Matrix (Baseline)](#183-modemode-matrix-baseline)
+  - [18.4 Utility and Logging Rules](#184-utility-and-logging-rules)
+  - [18.5 Canonical Safe Pattern](#185-canonical-safe-pattern)
+- [19. Summary](#19-summary)
 
+---
 ## 0. Purpose and Conflict Resolution
 
 > [⬆ Back to Table of Contents](#toc)
 
 
-The **CRSS-Python Unified Safety Specification** is the **single, authoritative** standard for:
+The **CRSS-Python Standard Safety Master Specification** is the **single, authoritative** standard for:
 
 - Profiles (**Core**, **Strict**)
 - Safety Levels (**A**, **B**, **C**)
@@ -1488,8 +1483,7 @@ For Strict-A systems, auditors SHOULD be able to see a clear **“third-party de
 - Any third-party influence is bounded and validated before it affects safety decisions.
 
 
-## 16 Call Graph, Orchestrators, and Level-A Data Validation
-
+## 16. Call Graph, Orchestrators, and Level-A Data Validation
 > [⬆ Back to Table of Contents](#toc)
 
 
@@ -1627,7 +1621,7 @@ tools, UI adapters, etc.).
 
 ---
 
-## 16.4 Profile Call Constraints (Strict vs Core)
+### 16.4 Profile Call Constraints (Strict vs Core)
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1645,7 +1639,7 @@ Strict→Core allowed only in tests/tools.
 
 ---
 
-## 16.5 Phase Interaction
+### 16.5 Phase Interaction
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1658,7 +1652,7 @@ Strict→Core allowed only in tests/tools.
 
 ---
 
-## 16.6 Level-A Separation
+### 16.6 Level-A Separation
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1675,7 +1669,7 @@ Logging must occur in wrappers (Strict-B/Core-C), not within Level-A.
 
 ---
 
-## 16.7 Canonical Data Flow
+### 16.7 Canonical Data Flow
 
 > [⬆ Back to Table of Contents](#toc)
 
@@ -1701,7 +1695,7 @@ before any @critical use.
 
 ---
 
-## 16.8 Orchestrators
+### 16.8 Orchestrators
 
 > [⬆ Back to Table of Contents](#toc)
 

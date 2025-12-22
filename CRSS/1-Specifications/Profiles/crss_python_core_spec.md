@@ -224,8 +224,6 @@ adds a small number of Strict-only rules (see `crss_python_strict_spec.md`).
 
 > [⬆ Back to Table of Contents](#toc)
 
-### 5.1 Runtime Code Generation and Imports
-
 ### CRSS-3.1.1 - Avoid runtime code generation
 
 -   **Category**: Dynamic Features
