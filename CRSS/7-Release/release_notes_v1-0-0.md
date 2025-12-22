@@ -2,7 +2,7 @@
 
 **Version:** v1.0.0
 **Status:** Release/Informative
-**Release Date**: 20-12-2025
+**Release Date**: 22-12-2025
 **Maturity:** Stable
 © 2025 Sofian Daghsen - All rights reserved
 Distributed under CC BY-NC-ND 4.0 - see LICENSE-CRSS.
